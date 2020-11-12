@@ -37,7 +37,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="First name"
-                                        defaultValue="Mark"
+                                        defaultValue="First Name"
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
@@ -47,7 +47,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="Middle name"
-                                        defaultValue="Otto"
+                                        defaultValue="Middle Name"
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
@@ -57,7 +57,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="Last name"
-                                        defaultValue="Otto"
+                                        defaultValue="Last Name"
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
