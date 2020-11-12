@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Col, Container, Button, InputGroup, Row, Image } from 'react-bootstrap';
 
-import logo1 from '../img/logo1.png';
+import logo from '../img/logo.png';
 
 
 interface IProps {
@@ -16,7 +16,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                     <Col className="p-3">
                         <Row>
                             <Col>
-                                <Image className="mt-3 ml-3" src={logo1} fluid width="80rem"/>
+                                <Image className="mt-3 ml-3" src={logo} fluid width="80rem"/>
                             </Col>
                         </Row>
                         <Row className="d-flex justify-content-center mt-5">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image } from 'react-bootstrap';
-import logo1 from '../img/logo1.png';
+import logo from '../img/logo.png';
  
 interface IProps {
 
@@ -16,7 +16,7 @@ return (
             <Col lg xs="12" className="p-2" style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
                     <Col className="mt-3 ml-3">
-                        <Image src={logo1} fluid width="80rem"/>
+                        <Image src={logo} fluid width="80rem"/>
                     </Col>
                 </Row>
                 <Row className="d-flex justify-content-center">
