@@ -5,7 +5,8 @@ import { RouteComponentProps  } from 'react-router';
 
 import RegisterContainer from './registerContainer';
 import LoginContainer from './loginContainer';
-// import SensorListContainer from './sensorListContainer';
+import DashboardContainer from './dashboardContainer';
+// import SideBarContainer from './sideBarContainer';
 // import SensorDetailContainer from './sensorDetailContainer';
 // import UserProfileRetrieveContainer from './userProfileRetrieveContainer';
 // import UserProfileUpdateContainer from './userProfileUpdateContainer';
@@ -20,8 +21,8 @@ class AppContainers extends Component<RouteComponentProps> {
            <Switch>
                <Route path="/register" exact component={RegisterContainer} />
                <Route path="/login" exact component={LoginContainer} />
-               {/* <Route path="/contact" exact component={ContactContainer} />
-               <Route path="/login" exact component={LoginContainer} />
+               <Route path="/dashboard" exact component={DashboardContainer} />
+               {/* <Route path="/login" exact component={LoginContainer} />
                <Route path="/register" exact component={RegisterContainer} />
                <Route path="/sensor-list" exact component={SensorListContainer} />
                <Route path="/sensor-detail/:name" exact component={SensorDetailContainer} />
