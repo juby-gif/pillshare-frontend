@@ -34,7 +34,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                 <Image className="menu rounded img-fluid mb-5" style={{display: "block",marginLeft: "auto",marginRight: "auto"}} src={logo} width="120rem" height="100rem"/>
                 <Link id="dashboard" className="menu ml-1 p-2" to="/dashboard"><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</Link>
                 <Link id="profile" className="menu ml-1 p-2" to="/user-profile"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;&nbsp;Account</Link>
-                <Link id="health-check" className="menu p-2" to="/"><FontAwesomeIcon icon={faBalanceScale} />&nbsp;&nbsp;Health Check</Link>
+                <Link id="health-check" className="menu p-2" to="/health-check"><FontAwesomeIcon icon={faBalanceScale} />&nbsp;&nbsp;Health Check</Link>
                 <Link id="medication-history" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication logs</Link>
                 <Link id="share" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faShareAlt} />&nbsp;&nbsp;Share</Link>
                 <Link id="logout" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faSignOutAlt} />&nbsp;&nbsp;Logout</Link>
@@ -92,7 +92,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         <span>Help</span>
                                     </DropdownItem>
                                     <DropdownItem divider />
-                                    <DropdownItem to="/login" onClick={e => e.preventDefault()}>
+                                    <DropdownItem to="/login" tag={Link} onClick={e => e.preventDefault()}>
                                         <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
                                         <span>Logout</span>
                                     </DropdownItem>
