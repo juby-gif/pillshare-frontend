@@ -769,12 +769,26 @@ a.btn-icon-only {
   .display-2 {
   font-size: calc(1.5rem + 1.8vw);
     } }
+@media (max-width: 860px){
+  h3.display-3 {
+  font-size: calc(1.0rem + 1.8vw);
+    } }
 
-.display-2{
+@media (min-width: 860px){
+  h3.display-3 {
+  font-size: calc(1.2rem + 1.8vw);
+    } }
+
+h3.display-2{
   font-family: "arial";
   font-weight: 700;
   line-height: 1.5; 
 }
+.display-3 {
+  font-size: calc(1.5rem + 1.8vw);
+  font-weight: 700;
+  line-height: 1.5;
+    }
 
 .d-md-flex {
   display: flex !important; }

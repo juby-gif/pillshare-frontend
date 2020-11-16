@@ -1,8 +1,8 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faExclamationCircle,faCheckCircle,faQuestionCircle, faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import { Row,Col,Card,Container,CardDeck,Table,Image } from 'react-bootstrap';
+import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faQuestionCircle, faUserAlt,faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
+import { Row,Col,Container,Image,InputGroup, FormControl,Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   Nav,
   Media,
 } from "reactstrap";
+import Rating from 'react-rating';
 
 import '../App.css';
 import logo from '../img/logo.png';
@@ -21,10 +22,6 @@ import pro from '../img/pro-pic.jpg';
 
 interface IProps {
     showSettings: (event: React.SyntheticEvent) => void;
-}
-
-interface TableProps {
-
 }
 
 const HealthCheckComponent = (props: IProps) : JSX.Element => {
@@ -105,8 +102,156 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                         </Navbar>
                         {/* --- Navigation ---*/}
 
-                        
-                        
+                        <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
+                            <h3 className="display-3 d-flex justify-content-center">Health check profile tracking</h3>
+                            <Row>
+                                <ol className="ml-5 mt-5">
+                                    <li>How are you feeling today?</li>
+                                    <Row className="p-3">
+                                        <Link to="/">
+                                            <FontAwesomeIcon icon={faPlus} />
+                                            <span style={{display:"inline-block",lineHeight: "0.97",fontSize:"1.1rem",fontWeight:"bold"}} className="ml-2">Add Symptoms</span> 
+                                        </Link>
+                                    </Row>
+                                    <Row>
+                                        <Col className="ml-2 mr-4 mb-3">
+                                        <label>Date:</label>
+                                            <InputGroup>
+                                                <FormControl
+                                                    placeholder=""
+                                                    aria-label="Date"
+                                                    type="date"
+                                                />
+                                            </InputGroup>
+                                        </Col>
+                                        <Col className="ml-2 mr-4 mb-3">
+                                        <label>Time:</label>
+                                            <InputGroup>
+                                                <FormControl
+                                                    placeholder=""
+                                                    aria-label="Time"
+                                                    type="time"
+                                                />
+                                            </InputGroup>
+                                        </Col>
+                                        <Col xs="8" md="5" lg="4"  className="ml-2 mr-4 mb-3">
+                                        <label>Intensity:</label><br/>
+                                            <Rating 
+                                                start = {0}
+                                                stop = {5}
+                                                step = {1}
+                                                onClick={e=> alert(e)}
+                                                fullSymbol= {<FontAwesomeIcon icon={faStar} /> }
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <li className="mt-3">Do you feel any transition in your disposition? If yes, select the ones that suits</li>
+                                    <Row className="mt-3 p-2">
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Anxiety"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Irritability"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Depression"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Peaceful"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Happy"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Others"
+                                            />
+                                        </InputGroup>
+
+                                        {/* For Others option */}
+
+                                        {/* {!0 && <InputGroup as={Col} xs="10" md="5" lg="5" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Checkbox aria-label="mood" />
+                                            </InputGroup.Prepend>
+                                            <FormControl aria-label="Text input with checkbox"
+                                                value="Others"
+                                            />
+                                        </InputGroup>} */}
+                                    </Row>
+                                    <li>How do you feel overall?</li>
+                                    <Row className="mt-3 p-2">
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Radio name="feel" />
+                                            </InputGroup.Prepend>
+                                            <FormControl 
+                                                id="feel4" 
+                                                value="Improving"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Radio name="feel" />
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                                id="feel1" 
+                                                value="Remains the same"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Radio name="feel" />
+                                            </InputGroup.Prepend>
+                                            <FormControl
+                                                id="feel2" 
+                                                value="Bad"
+                                            />
+                                        </InputGroup>
+                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
+                                            <InputGroup.Prepend>
+                                            <InputGroup.Radio name="feel" />
+                                            </InputGroup.Prepend>
+                                            <FormControl 
+                                                id="feel3" 
+                                                value="Getting Worse"
+                                            />
+                                        </InputGroup>
+                                    </Row>
+                                </ol>
+                            </Row>
+                            <Button className="ml-5">
+                                Submit
+                            </Button>
+                        </Container>
                         {/* ----------------------The page content ends here---------------------- */}
                     </div>
                 </div>
