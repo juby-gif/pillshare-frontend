@@ -8,7 +8,7 @@ import LoginContainer from './loginContainer';
 import DashboardContainer from './dashboardContainer';
 import UserProfileContainer from './userProfileContainer';
 import HealthCheckContainer from './healthCheckContainer';
-// import UserProfileRetrieveContainer from './userProfileRetrieveContainer';
+import MedicationLogsContainer from './medicationLogsContainer';
 // import UserProfileUpdateContainer from './userProfileUpdateContainer';
 // import LandingPageContainer from './landingPageContainer';
 // import AboutContainer from './aboutContainer';
@@ -24,8 +24,8 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/dashboard" exact component={DashboardContainer} />
                <Route path="/user-profile" exact component={UserProfileContainer} />
                <Route path="/health-check" exact component={HealthCheckContainer} />
-               {/* <Route path="/sensor-list" exact component={SensorListContainer} />
-               <Route path="/sensor-detail/:name" exact component={SensorDetailContainer} />
+               <Route path="/medication-logs" exact component={MedicationLogsContainer} />
+               {/* <Route path="/sensor-detail/:name" exact component={SensorDetailContainer} />
                <Route path="/user-profile" exact component={UserProfileRetrieveContainer} />
                <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>
