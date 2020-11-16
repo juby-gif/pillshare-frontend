@@ -24,7 +24,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                     <Menu width={'280px'} >
                         <Image className="rounded img-fluid mb-5" style={{display: "block",marginLeft: "auto",marginRight: "auto"}} src={logo} width="120rem" height="100rem"/>
                         <a id="dashboard" className="ml-1 p-2" href="/dashboard"><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</a>
-                        <a id="profile" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;&nbsp;Account</a>
+                        <a id="profile" className="ml-1 p-2" href="/user-profile"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;&nbsp;Account</a>
                         <a id="health-check" className="p-2" href="/"><FontAwesomeIcon icon={faBalanceScale} />&nbsp;&nbsp;Health Check</a>
                         <a id="medication-history" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication logs</a>
                         <a id="share" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faShareAlt} />&nbsp;&nbsp;Share</a>

@@ -20,7 +20,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                             </Col>
                         </Row>
                         <Row className="d-flex justify-content-center mt-5">
-                            <h3 className="mb=0">Welcome back to Pillshare!</h3>
+                            <h3>Welcome back to Pillshare!</h3>
                         </Row>
                         <Row>
                             <Col></Col>
