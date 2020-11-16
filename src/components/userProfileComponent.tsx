@@ -1,8 +1,18 @@
 import React from 'react';
 import { Row,Col,Card,Container,Table,Image,Form, Button } from 'react-bootstrap';
-import { slide as Menu } from 'react-burger-menu'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faMapMarkerAlt,faBriefcase } from '@fortawesome/free-solid-svg-icons'
+import { slide as Menu } from 'react-burger-menu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faMapMarkerAlt,faBriefcase,faUserAlt,faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    DropdownToggle,
+    Navbar,
+    Nav,
+    Media
+  } from "reactstrap";
+import { Link } from 'react-router-dom';
 
 import '../App.css';
 import logo from '../img/logo.png';
@@ -21,16 +31,77 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
     return(
         <React.Fragment>
             <Menu width={ '280px' } >
-                <Image className="rounded img-fluid mb-5" style={{display: "block",marginLeft: "auto",marginRight: "auto"}} src={logo} width="120rem" height="100rem"/>
-                <a id="dashboard" className="ml-1 p-2" href="/dashboard"><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</a>
-                <a id="profile" className="ml-1 p-2" href="/user-profile"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;&nbsp;Account</a>
-                <a id="health-check" className="p-2" href="/"><FontAwesomeIcon icon={faBalanceScale} />&nbsp;&nbsp;Health Check</a>
-                <a id="medication-history" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication logs</a>
-                <a id="share" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faShareAlt} />&nbsp;&nbsp;Share</a>
-                <a id="logout" className="ml-1 p-2" href="/"><FontAwesomeIcon icon={faSignOutAlt} />&nbsp;&nbsp;Logout</a>
+                <Image className="menu rounded img-fluid mb-5" style={{display: "block",marginLeft: "auto",marginRight: "auto"}} src={logo} width="120rem" height="100rem"/>
+                <Link id="dashboard" className="menu ml-1 p-2" to="/dashboard"><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</Link>
+                <Link id="profile" className="menu ml-1 p-2" to="/user-profile"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;&nbsp;Account</Link>
+                <Link id="health-check" className="menu p-2" to="/"><FontAwesomeIcon icon={faBalanceScale} />&nbsp;&nbsp;Health Check</Link>
+                <Link id="medication-history" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication logs</Link>
+                <Link id="share" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faShareAlt} />&nbsp;&nbsp;Share</Link>
+                <Link id="logout" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faSignOutAlt} />&nbsp;&nbsp;Logout</Link>
             </Menu>
             <div id="page-wrap" style={{height: "100%",overflow:"auto"}}>
                 {/* ----------------------The page content starts here---------------------- */}
+
+                {/* --- Navigation ---*/}
+                <Navbar className="navbar-top navbar-dark" expand="md" id="navigation" >
+                    <Container fluid>
+                        <Link
+                        className="ml-5 h4 mb-0 text-white text-uppercase d-lg-inline-block"
+                        to="/"
+                        style={{textShadow: "0 0 10px rgba(0,0,0,1.5)"}}
+                        >
+                            Pillshare
+                        </Link>
+                        <Nav className="align-items-center d-md-flex" navbar>
+                            <UncontrolledDropdown nav>
+                                <DropdownToggle nav>
+                                    <Media className="align-items-center">
+                                        <span className="avatar avatar-sm rounded-circle">
+                                            <img
+                                                alt="..."
+                                                src={pro}
+                                            />
+                                        </span>
+                                        <Media className="ml-2 d-lg-block">
+                                            <span className="mb-0 text-sm font-weight-bold">
+                                                Frank Herbert
+                                            </span>
+                                        </Media>
+                                    </Media>
+                                </DropdownToggle>
+                                <DropdownMenu className="dropdown-menu-arrow" right>
+                                    <DropdownItem header >
+                                        <h6 style={{fontSize: ".820rem"}} className="text-overflow m-0">Welcome!</h6>
+                                    </DropdownItem>
+                                    <DropdownItem to="/user-profile" tag={Link}>
+                                        <FontAwesomeIcon className="mr-2" icon={faUserAlt} />
+                                        <span>My profile</span>
+                                    </DropdownItem>
+                                    {/*------------------- For Phase 2 ------------------- */}
+
+                                    {/* <DropdownItem to="/admin/user-profile" tag={Link}>
+                                        <i className="ni ni-settings-gear-65" />
+                                        <span>Settings</span>
+                                    </DropdownItem> */}
+                                    {/* <DropdownItem to="/admin/user-profile" tag={Link}>
+                                        <i className="ni ni-calendar-grid-58" />
+                                        <span>Activity</span>
+                                    </DropdownItem> */}
+                                    <DropdownItem to="#help" tag={Link}>
+                                        <FontAwesomeIcon className="mr-2" icon={faQuestionCircle} />   
+                                        <span>Help</span>
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem to="/login" onClick={e => e.preventDefault()}>
+                                        <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
+                                        <span>Logout</span>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Nav>
+                    </Container>
+                </Navbar>
+                {/* --- Navigation ---*/}
                 
                 {/* Header container */}
                 <Container className="d-flex align-items-center header pt-5 pt-lg-8" style={{position:"absolute",
@@ -59,7 +130,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 <Row className="justify-content-center">
                                     <Col className="order-lg-2" lg="3">
                                         <div className="card-profile-image">
-                                            <a href="/" onClick={e => e.preventDefault()}>
+                                            <Link to="/" onClick={e => e.preventDefault()}>
                                                 <img
                                                 alt="..."
                                                 className="rounded-circle"
@@ -67,7 +138,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 width="100rem"
                                                 height="100rem"
                                                 />
-                                            </a>
+                                            </Link>
                                         </div>
                                     </Col>
                                 </Row>
@@ -113,7 +184,6 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
@@ -124,7 +194,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                         <div className="pl-lg-4">
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridUsername">
+                                                <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
                                                     <label
                                                     className="form-control-label"
                                                     htmlFor="input-username"
@@ -139,7 +209,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="frank123"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridEmail">
+                                                <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
                                                     <label
                                                     className="form-control-label"
                                                     htmlFor="input-email"
@@ -166,7 +236,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="Frank"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridMName">
+                                                <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
                                                     <Form.Label>Middle Name</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -188,7 +258,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Form.Group>
                                             </Form.Row>
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="2" md="3" lg="3" controlId="formGridAge">
+                                                <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
                                                     <Form.Label>Age</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -208,13 +278,14 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="Male"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="6" md="3" lg="4" controlId="formGridDOB">
+                                                <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
                                                     <Form.Label>Date of Birth</Form.Label>
                                                     <Form.Control
                                                             readOnly
                                                             required
                                                             type="date"
                                                             placeholder="Date of Birth"
+                                                            defaultValue="1995-04-01"
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -232,7 +303,6 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
@@ -243,7 +313,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                         <div className="pl-lg-4">
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="7" md="6" lg="7" controlId="formGridAddress">
+                                                <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridAddress">
                                                     <Form.Label>Address</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -265,7 +335,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="London"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridState">
+                                                <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridState">
                                                     <Form.Label>Province/State</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -287,7 +357,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Form.Group>
                                             </Form.Row>
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridZip">
+                                                <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridZip">
                                                     <Form.Label>Zip</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -297,7 +367,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="N6G 3P8"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridPhoneNumber">
+                                                <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridPhoneNumber">
                                                     <Form.Label>Phone Number</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -323,7 +393,6 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
@@ -334,7 +403,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                         <div className="pl-lg-4">
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridWeight">
+                                                <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridWeight">
                                                     <Form.Label>Weight</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -354,7 +423,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="173 cm"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridBMI">
+                                                <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridBMI">
                                                     <Form.Label>Body Mass Index</Form.Label>
                                                     <Form.Control
                                                         disabled
@@ -376,7 +445,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="O+"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="7" md="6" lg="7" controlId="formGridHealthIssues">
+                                                <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridHealthIssues">
                                                     <Form.Label>Underlying Health Issues</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -386,7 +455,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         defaultValue="Obesity,Diabetics,Cardiovascular disease"
                                                     />
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="7" md="6" lg="7" controlId="formGridOtherHealthIssues">
+                                                <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridOtherHealthIssues">
                                                     <Form.Label>Other Health Issues</Form.Label>
                                                     <Form.Control
                                                         readOnly
@@ -411,7 +480,6 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        href="#pablo"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
@@ -466,7 +534,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             </Form.Row>
                                             <Form.Row>
                                                 <Form.Group as={Col} xs="10" md="5" lg="5" controlId="formGridWeight">
-                                                    <Form.Label>Weight</Form.Label>
+                                                    <Form.Label>UUID</Form.Label>
                                                     <Form.Control
                                                         disabled
                                                         type="text"
