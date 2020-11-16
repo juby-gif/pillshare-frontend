@@ -1,8 +1,8 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faQuestionCircle, faUserAlt,faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
-import { Row,Col,Container,Image,InputGroup, FormControl,Button } from 'react-bootstrap';
+import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faQuestionCircle, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { Container,Image,Table } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -13,7 +13,6 @@ import {
   Nav,
   Media,
 } from "reactstrap";
-import Rating from 'react-rating';
 
 import '../App.css';
 import logo from '../img/logo.png';
@@ -22,6 +21,9 @@ import pro from '../img/pro-pic.jpg';
 
 interface IProps {
     showSettings: (event: React.SyntheticEvent) => void;
+}
+interface TableProps {
+
 }
 
 const MedicationLogsComponent = (props: IProps) : JSX.Element => {
@@ -103,7 +105,25 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
                         {/* --- Navigation ---*/}
 
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
-                            <h3 className="display-3 d-flex justify-content-center">Health check profile tracking</h3>
+                            <h3 className="display-3 d-flex justify-content-center">Medication Logs</h3>
+                            <Table className="mt-3" responsive="xl" striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>SL.No</th>
+                                        <th>Pill Name</th>
+                                        <th>Dose</th>
+                                        <th>Dosage</th>
+                                        <th>Before / After Food</th>
+                                        <th>Duration</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Time Taken</th>
+                                        <th>Reason for taking this medication</th>
+                                        <th>Taken / Missed</th>
+                                    </tr>
+                                </thead>
+                            <TableBodyComponent />
+                        </Table>
                         </Container>
                         {/* ----------------------The page content ends here---------------------- */}
                     </div>
@@ -113,3 +133,53 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
     );
 }
 export default MedicationLogsComponent;
+
+
+
+
+const TableBodyComponent = (props:TableProps):JSX.Element => {
+
+    return (
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Hydrocodone</td>
+                <td>2 tablets</td>
+                <td>EOD</td>
+                <td>Before</td>
+                <td>30</td>
+                <td>21-03-2020</td>
+                <td>21-04-2020</td>
+                <td>Morning - 9:30am</td>
+                <td>pain medication</td>
+                <td>Morning-Taken</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Hydrocodone</td>
+                <td>2 tablets</td>
+                <td>EOD</td>
+                <td>Before</td>
+                <td>30</td>
+                <td>21-03-2020</td>
+                <td>21-04-2020</td>
+                <td>Night - 8:45pm</td>
+                <td>pain medication</td>
+                <td>Night-Missed</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Simvastatin</td>
+                <td>1 tablet</td>
+                <td>SID</td>
+                <td>After</td>
+                <td>30</td>
+                <td>21-03-2020</td>
+                <td>21-04-2020</td>
+                <td>Night - 8:45pm</td>
+                <td>to lower the number of triglycerides and LDL</td>
+                <td>Night-Taken</td>
+            </tr>
+        </tbody>
+    );
+}
