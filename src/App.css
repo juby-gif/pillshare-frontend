@@ -748,3 +748,12 @@ h3.display-2{
   background-color: rgba(104, 50, 117, 0.993);
   box-sizing: border-box;
 }
+
+
+@media only screen and (max-device-width: 360px) and (min-device-width: 331px){
+.menu1_hor {
+    width: 100% !important;
+    min-width: 300px !important;
+    max-width: 360px !important;
+    overflow-x: hidden;
+}}

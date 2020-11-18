@@ -125,22 +125,22 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                 <Row>
                                     <Col className="m-auto">
                                         <div className={classes.root}>
-                                            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                                            <Stepper className="menu1_hor" alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
                                                 {steps.map((label) => (
                                                 <Step key={label}>
                                                     <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
                                                 </Step>
                                                 ))}
                                             </Stepper>
-                                            <div>
+                                            <div className="ml-1 mb-5">
                                                 {activeStep === steps.length ? (
                                                     <div>
-                                                        <Typography className={classes.instructions}>
+                                                        {/* <Typography className={classes.instructions}>
                                                             All steps completed - you&apos;re finished
                                                         </Typography>
                                                         <Button onClick={handleReset} className={classes.button}>
                                                             Reset
-                                                        </Button>
+                                                        </Button> */}
                                                     </div>
                                                     ) : (
                                                     <div>
