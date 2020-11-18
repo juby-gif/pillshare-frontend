@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { BrowserRouter as Router,withRouter, Route, Switch } from 'react-router-dom'
 import { RouteComponentProps  } from 'react-router';
@@ -9,8 +8,7 @@ import DashboardContainer from './dashboardContainer';
 import UserProfileContainer from './userProfileContainer';
 import HealthCheckContainer from './healthCheckContainer';
 import MedicationLogsContainer from './medicationLogsContainer';
-// import UserProfileUpdateContainer from './userProfileUpdateContainer';
-// import LandingPageContainer from './landingPageContainer';
+import MeasurementContainerWizard from './measurementContainerWizard';
 // import AboutContainer from './aboutContainer';
 // import ContactContainer from './contactContainer';
 
@@ -25,9 +23,9 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/user-profile" exact component={UserProfileContainer} />
                <Route path="/health-check" exact component={HealthCheckContainer} />
                <Route path="/medication-logs" exact component={MedicationLogsContainer} />
-               {/* <Route path="/sensor-detail/:name" exact component={SensorDetailContainer} />
-               <Route path="/user-profile" exact component={UserProfileRetrieveContainer} />
-               <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
+               <Route path="/measurement" exact component={MeasurementContainerWizard} />
+               {/* <Route path="/new" exact component={Example} /> */}
+               {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>
        </Router>
     );
