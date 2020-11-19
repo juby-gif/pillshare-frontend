@@ -24,6 +24,7 @@ import { StepConnectorProps } from '@material-ui/core';
 import '../App.css';
 import logo from '../img/logo.png';
 import pro from '../img/pro-pic.jpg';
+import ModalContainer from '../containers/modalContainer';
 
   
 
@@ -33,7 +34,6 @@ interface IProps {
     steps : string[];
     handleNext : (event: React.SyntheticEvent) => void;
     handleBack : (event: React.SyntheticEvent) => void;
-    handleReset : (event: React.SyntheticEvent) => void;
     getStepContent : (step: number) => JSX.Element | "404";
     ColorlibStepIcon:(props: StepIconProps)=> JSX.Element;
     ColorlibConnector :React.ComponentType<StepConnectorProps>
@@ -41,7 +41,7 @@ interface IProps {
     }
 
 const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
-    const { classes, activeStep, steps, handleNext, handleBack, handleReset, getStepContent, ColorlibConnector,ColorlibStepIcon} = props;
+    const { classes, activeStep, steps, handleNext, handleBack,getStepContent, ColorlibConnector,ColorlibStepIcon} = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
@@ -135,12 +135,7 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                             <div className="ml-1 mb-5">
                                                 {activeStep === steps.length ? (
                                                     <div>
-                                                        {/* <Typography className={classes.instructions}>
-                                                            All steps completed - you&apos;re finished
-                                                        </Typography>
-                                                        <Button onClick={handleReset} className={classes.button}>
-                                                            Reset
-                                                        </Button> */}
+                                                        <ModalContainer modalShow={true}/>
                                                     </div>
                                                     ) : (
                                                     <div>
@@ -155,7 +150,7 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                                                     onClick={handleNext}
                                                                     className={classes.button}
                                                                 >
-                                                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                                                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                                                                 </Button>
                                                             </div>
                                                     </div>

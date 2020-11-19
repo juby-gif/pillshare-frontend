@@ -142,9 +142,6 @@ export default function CustomizedSteppers() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   return (
     <MeasurementComponentWizard 
@@ -153,7 +150,6 @@ export default function CustomizedSteppers() {
       steps = {steps}
       handleNext = {handleNext}
       handleBack = {handleBack}
-      handleReset = {handleReset}
       getStepContent = {getStepContent}
       ColorlibConnector = {ColorlibConnector}
       ColorlibStepIcon = {ColorlibStepIcon}
