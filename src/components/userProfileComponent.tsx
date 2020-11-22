@@ -18,6 +18,7 @@ import '../App.css';
 import logo from '../img/logo.png';
 import bg from '../img/bg-image.jpg';
 import pro from '../img/pro-pic.jpg';
+// import UserInformationModalContainer from '../containers/modalContainers/userInformationModalConatiner';
 
 
 interface TableProps {
@@ -183,13 +184,17 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                     </h6>
                                                 </Col>
                                                 <Col className="text-right" xs="4">
-                                                    <Button
+                                                    {/* <Button
                                                         color="primary"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
                                                         Update
-                                                    </Button>
+                                                    </Button> */}
+
+                                                    {/* Modal For updating User Information */}
+
+                                                    {/* <UserInformationModalContainer modalShow={true}/> */}
                                                 </Col>
                                             </Row>
                                         </span>

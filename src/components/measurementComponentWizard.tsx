@@ -24,7 +24,7 @@ import { StepConnectorProps } from '@material-ui/core';
 import '../App.css';
 import logo from '../img/logo.png';
 import pro from '../img/pro-pic.jpg';
-import ModalContainer from '../containers/modalContainer';
+import MeasurementModalContainer from '../containers/modalContainers/measurementModalContainer';
 
   
 
@@ -135,7 +135,7 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                             <div className="ml-1 mb-5">
                                                 {activeStep === steps.length ? (
                                                     <div>
-                                                        <ModalContainer modalShow={true}/>
+                                                        <MeasurementModalContainer modalShow={true}/>
                                                     </div>
                                                     ) : (
                                                     <div>

@@ -2,11 +2,29 @@ import React from 'react';
 import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image } from 'react-bootstrap';
 import logo from '../img/logo.png';
  
-interface IProps {
-
+interface FuncProps {
+    username : string;
+    password : string;
+    response : string;
+    message : string;
+    validated : boolean;
+    onLoginClick: (event: React.SyntheticEvent) => void;
+    onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onRegisterClick: (event: React.SyntheticEvent) => void;
 }
 
-const LoginComponent = (props: IProps) : JSX.Element => {
+const LoginComponent = (props: FuncProps) : JSX.Element => {
+    const { username,
+            password,
+            response,
+            message,
+            validated,
+            onLoginClick,
+            onUsernameChange,
+            onPasswordChange,
+            onRegisterClick,
+    } = props;
 return (
 <React.Fragment>
     <Container  fluid className="p-5">
@@ -23,9 +41,9 @@ return (
                     <h3 className="d-flex justify-content-center mb-4 mt-3">Log-in</h3>
                 </Row>
                 <Row className="d-flex justify-content-center">
-                    <Form>
+                    <Form noValidate>
                         <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} md="10" controlId="validationUsername">
+                            <Form.Group as={Col} sm="5" md="12" lg="10">
                                 <Form.Label>
                                     Username
                                 </Form.Label>
@@ -33,34 +51,37 @@ return (
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>@</InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <FormControl id="inlineFormInputGroup" placeholder="Username" />
+                                    <FormControl id="inlineFormInputGroup" placeholder="Username" value={username} onChange={onUsernameChange} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please provide a valid username.
+                                    </Form.Control.Feedback>
                                 </InputGroup>
                             </Form.Group>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} md="10" controlId="validationPassword">
+                            <Form.Group as={Col} sm="5" md="12" lg="10">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" required />
+                                <Form.Control type="password" placeholder="Password" value={password} onChange={onPasswordChange} required />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a valid password.
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
-                        <Form.Row className="d-flex justify-content-center">
+                        {/* <Form.Row className="d-flex justify-content-center">
                             <Form.Check
                                 type="checkbox"
                                 id="autoSizingCheck"
                                 className="mt-2 mb-4"
                                 label="Remember me"
                             />
-                        </Form.Row>
-                        <Form.Row className="d-flex justify-content-center">
-                            <Button type="submit" className="mb-2">
+                        </Form.Row> */}
+                        <Form.Row className="d-flex justify-content-center mt-3">
+                            <Button type="submit" className="mb-2" onClick={onLoginClick}>
                                 Login
                             </Button>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-center">
-                            <Button type="button" className="mb-2">
+                            <Button type="button" className="mb-2" onClick={onRegisterClick}>
                                 Register
                             </Button>
                         </Form.Row>

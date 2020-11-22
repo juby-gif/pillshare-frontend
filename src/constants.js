@@ -1,0 +1,9 @@
+export const BIODB_PAGE = "biodb-page";
+export const LOGIN_PAGE_ID = "login-page";
+export const REGISTER_PAGE_ID = "register-page";
+export const DASHBOARD_LIST_PAGE_ID = "dashboard-page";
+export const SENSOR_NAME = "sensor-name";
+export const SENSOR_DETAIL_PAGE_ID = "sensor-detail";
+export const BIODB_TOKEN = "BioDB-token";
+export const BIODB_USER_DETAIL = "BioDB-UserDetailKey";
+export const BIODB_LOGGED_IN_USER = "BioDB-Logged-in-User";
