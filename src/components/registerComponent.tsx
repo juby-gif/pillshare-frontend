@@ -5,9 +5,53 @@ import logo from '../img/logo.png';
 
 
 interface IProps {
-    
+firstName : string;
+middleName : string;
+lastName : string;
+username : string;
+email : string;
+password : string;
+retypePassword : string;
+checkedStatus : boolean;
+response : string;
+message : string;
+validated : boolean;
+onFirstNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+onMiddleNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+onLastNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+onEmailChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+onSignInClick: (event: React.SyntheticEvent) => void;
+onPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+onRetypePasswordChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+onRegisterClick: (event: React.SyntheticEvent) => void;
+onChangeCheck: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
 const RegisterComponent = (props:IProps): JSX.Element =>  {
+    const { 
+        firstName,
+        middleName,
+        lastName,
+        username,
+        email,
+        password,
+        retypePassword,
+        checkedStatus,
+        // response,
+        // message,
+        // validated,
+        onFirstNameChange,
+        onMiddleNameChange,
+        onLastNameChange,
+        onUsernameChange,
+        onEmailChange,
+        onSignInClick,
+        onPasswordChange,
+        onRetypePasswordChange,
+        onRegisterClick,
+        onChangeCheck,
+     } = props;
     return (
     <React.Fragment>
         <Container className="d-flex justify-content-center mt-5 p-5" fluid>
@@ -24,7 +68,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                         </Row>
                         <Row>
                             <Col></Col>
-                            <Col className="d-flex justify-content-center mt-3"><Button type="button">Sign-in</Button></Col>
+                            <Col className="d-flex justify-content-center mt-3"><Button type="button" onClick={onSignInClick}>Sign-in</Button></Col>
                             <Col></Col>
                         </Row>
                     </Col>
@@ -37,7 +81,8 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="First name"
-                                        defaultValue="First Name"
+                                        value={firstName}
+                                        onChange={onFirstNameChange}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
@@ -47,7 +92,8 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="Middle name"
-                                        defaultValue="Middle Name"
+                                        value={middleName}
+                                        onChange={onMiddleNameChange}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
@@ -57,7 +103,8 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required
                                         type="text"
                                         placeholder="Last name"
-                                        defaultValue="Last Name"
+                                        value={lastName}
+                                        onChange={onLastNameChange}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
@@ -70,7 +117,8 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         <Form.Control
                                             type="text"
                                             placeholder="Username"
-                                            aria-describedby="inputGroupPrepend"
+                                            value={username}
+                                            onChange={onUsernameChange}
                                             required
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -80,7 +128,13 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                 </Form.Group>
                                 <Form.Group as={Col} md="5" controlId="validationEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="text" placeholder="Email" required />
+                                    <Form.Control 
+                                        type="text" 
+                                        placeholder="Email" 
+                                        value={email}
+                                        onChange={onEmailChange}
+                                        required 
+                                    />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide your email.
                                     </Form.Control.Feedback>
@@ -89,7 +143,13 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                             <Form.Row>
                                 <Form.Group as={Col} md="5" controlId="validationPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" required />
+                                    <Form.Control 
+                                        type="password" 
+                                        placeholder="Password" 
+                                        value={password}
+                                        onChange={onPasswordChange}
+                                        required 
+                                    />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide a valid password.
                                     </Form.Control.Feedback>
@@ -98,7 +158,13 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                             <Form.Row>
                                 <Form.Group as={Col} md="5" controlId="validationReTypePassword">
                                     <Form.Label>Re-type Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Re-type Password" required />
+                                    <Form.Control 
+                                        type="password" 
+                                        placeholder="Re-type Password" 
+                                        value={retypePassword}
+                                        onChange={onRetypePasswordChange}
+                                        required 
+                                    />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide a valid password.
                                     </Form.Control.Feedback>
@@ -109,9 +175,11 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                     required
                                     label="I Agree to Terms and conditions"
                                     feedback="You must agree before submitting."
+                                    checked={checkedStatus}
+                                    onChange={onChangeCheck}
                                 />
                             </Form.Group>
-                            <Button type="submit">Register</Button>
+                            <Button type="submit" onClick={onRegisterClick}>Register</Button>
                         </Form>
                     </Col>
                 </Row>

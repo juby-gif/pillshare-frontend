@@ -3,8 +3,8 @@ import { RouteComponentProps  } from 'react-router';
 
 import LoginComponent from '../components/loginComponent';
 import { PILLSHARE_USER_TOKEN } from '../constants';
-import { postLogin } from "../API/loginAPI"
-import '../App.css'
+import { postLogin } from "../API/loginAPI";
+import '../App.css';
 
 
 interface IProps {
