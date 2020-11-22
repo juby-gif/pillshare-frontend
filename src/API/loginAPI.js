@@ -1,6 +1,4 @@
-const USER_TOKEN = "e8efdd1c-4ebc-480e-ad11-7e1d2eb94cf7";
-const LOGIN_KEY = "Login-data"
-
+import { LOGIN_KEY, USER_TOKEN } from '../constants';
 export function postLogin(postData, onSuccessCallBack, onFailureCallBack) {
     let userArrayJSON = localStorage.getItem(LOGIN_KEY);
 

@@ -104,7 +104,8 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     }
 
     onSuccessCallBack = (responseData: ResponseProps): void => {
-        console.log("Message => ",responseData.message,"Token => ",responseData.token);
+        // For debugging purpose only
+        // console.log("Message => ",responseData.message,"Token => ",responseData.token);
         sessionStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token)
         this.props.history.push("/dashboard");
 
