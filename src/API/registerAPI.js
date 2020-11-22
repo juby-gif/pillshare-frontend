@@ -21,7 +21,4 @@ export function postRegister(postData, onSuccessCallBack, onFailureCallBack) {
     }
     onFailureCallBack(responseData);
     
-
-    
-    
 }
