@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
 
 import LoginComponent from '../components/loginComponent';
+import { PILLSHARE_USER_TOKEN } from '../constants';
 import { postLogin } from "../API/loginAPI"
 import '../App.css'
 
@@ -19,7 +20,7 @@ validated : boolean;
 
 interface ResponseProps {
     message : string;
-    token ?: string;
+    token : string;
 }
 export default class LoginContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
@@ -103,7 +104,8 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     }
 
     onSuccessCallBack = (responseData: ResponseProps): void => {
-        console.log("Messege => ",responseData.message,"Token => ",responseData.token);
+        console.log("Message => ",responseData.message,"Token => ",responseData.token);
+        sessionStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token)
         this.props.history.push("/dashboard");
 
     }

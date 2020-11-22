@@ -17,9 +17,9 @@ interface FuncProps {
 const LoginComponent = (props: FuncProps) : JSX.Element => {
     const { username,
             password,
-            response,
-            message,
-            validated,
+            // response,
+            // message,
+            // validated,
             onLoginClick,
             onUsernameChange,
             onPasswordChange,
