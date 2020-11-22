@@ -1,12 +1,9 @@
-import { LOGIN_KEY, USER_TOKEN } from '../constants';
+import { USERS, USER_TOKEN } from '../constants';
 export function postLogin(postData, onSuccessCallBack, onFailureCallBack) {
-    let userArrayJSON = localStorage.getItem(LOGIN_KEY);
+    let userArrayJSON = localStorage.getItem(USERS);
 
-    if (userArrayJSON === null || userArrayJSON === "[]"){
-        localStorage.setItem(LOGIN_KEY,JSON.stringify([{username:"aaa",password:"123"},{username:"juby",password:"1234"},{username:"brad",password:"321"}]));
-    }
-
-    const userArray = JSON.parse(userArrayJSON);
+    if (userArrayJSON !== null || userArrayJSON !== undefined){
+        const userArray = JSON.parse(userArrayJSON);
 
     for (let userObj of userArray){
         if(userObj.username === postData.username){
@@ -25,6 +22,7 @@ export function postLogin(postData, onSuccessCallBack, onFailureCallBack) {
                 return;
             }
         }
+    }
     }
     const responseData = {
         message : "No user was found",

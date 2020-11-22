@@ -1,14 +1,27 @@
-import { LOGIN_KEY, USER_TOKEN } from '../constants';
+import { USERS } from '../constants';
 export function postRegister(postData, onSuccessCallBack, onFailureCallBack) {
-    let userArrayJSON = localStorage.getItem(LOGIN_KEY);
+    let userArrayJSON = localStorage.getItem(USERS);
 
     if (userArrayJSON === null || userArrayJSON === "[]"){
-        localStorage.setItem(LOGIN_KEY,JSON.stringify([{username:"aaa",password:"123"},{username:"juby",password:"1234"},{username:"brad",password:"321"}]));
+        localStorage.setItem(USERS,JSON.stringify([]));
     }
 
-    
+    const userArray = JSON.parse(userArrayJSON);
+    if(postData !== null || postData !== undefined) {
+        userArray.push(postData)
+        localStorage.setItem(USERS,JSON.stringify(userArray));
+        const responseData ={
+            message: "You have successfully registered!",
+        }
+        onSuccessCallBack(responseData);
+        return;
+    }
     const responseData = {
-        message : "No user was found",
+        message: "Something unexpected happened. Please contact Pillshare"
     }
     onFailureCallBack(responseData);
+    
+
+    
+    
 }

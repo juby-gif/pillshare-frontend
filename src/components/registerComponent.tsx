@@ -172,11 +172,11 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                             </Form.Row>
                             <Form.Group>
                                 <Form.Check
-                                    required
                                     label="I Agree to Terms and conditions"
                                     feedback="You must agree before submitting."
                                     checked={checkedStatus}
                                     onChange={onChangeCheck}
+                                    required
                                 />
                             </Form.Group>
                             <Button type="submit" onClick={onRegisterClick}>Register</Button>

@@ -76,11 +76,16 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         *  API callback functions
         *------------------------------------------------------------
     */
-    onRegisterAPIProcessCall = (username:string,password:string):void => {
+    onRegisterAPIProcessCall = (firstName:string,middleName:string,LastName:string,username:string,email:string,password:string,checkedStatus:boolean):void => {
         const { onSuccessCallBack,onFailureCallBack } = this;
         const postData = {
+            firstName: firstName,
+            middleName: middleName,
+            lastName: LastName,
             username: username,
+            email: email,
             password: password,
+            checkedStatus: checkedStatus,
         };
         postRegister(postData, onSuccessCallBack, onFailureCallBack);
     }
@@ -165,8 +170,12 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onRegisterClick = (event: React.SyntheticEvent): void => {
         event.preventDefault();
-        const {username,password} = this.state;
-        this.onRegisterAPIProcessCall(username,password);
+        const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus} = this.state;
+        if( password === retypePassword ){
+            this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus);
+        } else {
+            console.error("Your Password does not match");
+        }
     }
 
     onSignInClick = (event: React.SyntheticEvent): void => {
