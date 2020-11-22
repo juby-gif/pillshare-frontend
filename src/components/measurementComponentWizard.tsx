@@ -140,7 +140,7 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                                     ) : (
                                                     <div>
                                                         <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                                                            <div>
+                                                            <div style={{marginTop:"3rem",float:"right"}}>
                                                                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                                                                     Back
                                                                 </Button>

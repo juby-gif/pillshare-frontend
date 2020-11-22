@@ -2,11 +2,11 @@ import React from 'react';
 import { Row,Card,Container,Col,Form } from 'react-bootstrap';
 
 
-import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
-import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
-import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
-import GlucoseComponent from '../../components/measurementComponents/glucoseComponent';
-import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
+// import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
+// import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
+// import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
+// import GlucoseComponent from '../../components/measurementComponents/glucoseComponent';
+// import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
 
 
 interface IProps {
@@ -38,7 +38,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                 </span>
                                 <div className="pl-lg-4">
                                     <Row>
-                                        <HeartRateComponent readOnly={true}/>
+                                        {/* <HeartRateComponent readOnly={true}/> */}
                                     </Row>
                                 </div>
                                 <hr className="my-4" />
@@ -53,7 +53,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                 </span>
                                 <div className="pl-lg-4">
                                     <Row>
-                                        <BloodPressureComponent readOnly={true} />
+                                        {/* <BloodPressureComponent readOnly={true} /> */}
                                     </Row>
                                 </div>
                                 <hr className="my-4" />
@@ -68,7 +68,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                 </span>
                                 <div className="pl-lg-4">
                                     <Row>
-                                        <BodyTemperatureComponent readOnly={true}/>
+                                        {/* <BodyTemperatureComponent readOnly={true}/> */}
                                     </Row>
                                 </div>
                                 <hr className="my-4" />
@@ -83,7 +83,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                 </span>
                                 <div className="pl-lg-4">
                                     <Row>
-                                        <GlucoseComponent readOnly={true}/>
+                                        {/* <GlucoseComponent readOnly={true}/> */}
                                     </Row>
                                 </div>
                                 <hr className="my-4" />
@@ -98,7 +98,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                 </span>
                                 <div className="pl-lg-4">
                                     <Row>
-                                        <OxygenSaturationComponent readOnly={true}/>
+                                        {/* <OxygenSaturationComponent readOnly={true}/> */}
                                     </Row>
                                 </div>
                                 <hr className="my-4" />
