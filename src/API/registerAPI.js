@@ -1,4 +1,5 @@
 import { USERS } from '../constants';
+import { v4 as uuidv4 } from 'uuid';
 export function postRegister(postData, onSuccessCallBack, onFailureCallBack) {
     let userArrayJSON = localStorage.getItem(USERS);
 
@@ -8,6 +9,12 @@ export function postRegister(postData, onSuccessCallBack, onFailureCallBack) {
 
     const userArray = JSON.parse(userArrayJSON);
     if(postData !== null || postData !== undefined) {
+        const user_id = uuidv4();
+        postData.uuid = user_id;
+
+        // For debugging purpose only
+        console.log(postData)
+
         userArray.push(postData)
         localStorage.setItem(USERS,JSON.stringify(userArray));
         const responseData ={

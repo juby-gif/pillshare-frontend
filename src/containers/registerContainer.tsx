@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
 
 import { postRegister } from "../API/registerAPI";
 import '../App.css'
@@ -79,9 +78,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     */
     onRegisterAPIProcessCall = (firstName:string,middleName:string,LastName:string,username:string,email:string,password:string,checkedStatus:boolean):void => {
         const { onSuccessCallBack,onFailureCallBack } = this;
-        const user_id:string = uuidv4();
         const postData = {
-            user_id:user_id,
             firstName: firstName,
             middleName: middleName,
             lastName: LastName,
@@ -189,6 +186,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onSuccessCallBack = (responseData: ResponseProps): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
+        alert(responseData.message)
         this.props.history.push("/login");
 
     }
