@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
+import { BODYTEMPERATURE } from '../../constants';
 
 interface IProps {
   
 }
 interface BodyTemperatureProps {
-  readOnly: boolean;
   reading: number;
   date: string;
   time: string;
@@ -14,10 +14,14 @@ interface BodyTemperatureProps {
 }
 
 export default class BodyTemperatureContainer extends Component<IProps,BodyTemperatureProps> {
+    
+    /*  *
+        *  Initializer
+        *------------------------------------------------------------
+    */
     constructor(props:IProps) {
       super(props);
       this.state = {
-        readOnly:false,
         reading:0,
         date:"",
         time:"",
@@ -28,7 +32,36 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onSaveClick = this.onSaveClick.bind(this);
     }
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
 
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+   componentDidMount(){
+    if(localStorage.getItem(BODYTEMPERATURE) !== null || localStorage.getItem(BODYTEMPERATURE) !== undefined){
+      const bodyTemperatureReadingData: BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+      this.setState({
+        reading:bodyTemperatureReadingData.reading,
+        date: bodyTemperatureReadingData.date,
+        time:bodyTemperatureReadingData.time,
+      })
+      }
+    }
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
     onBodyTemperatureReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
         reading:event.currentTarget.valueAsNumber,
@@ -48,16 +81,25 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      alert("Saved")
+      const { reading,date,time } = this.state;
+      const bodyTemperatureData = {
+        reading:reading,
+        date:date,
+        time:time,
+      }
+      localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
     }
 
+    /*  *
+        *  Main render function
+        *------------------------------------------------------------
+    */
     render() {
-      const { readOnly,reading,date,time } = this.state;
+      const { reading,date,time } = this.state;
       const { onBodyTemperatureReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
       
       return (
         <BodyTemperatureComponent 
-          readOnly={readOnly}
           reading={reading}
           date={date}
           time={time}

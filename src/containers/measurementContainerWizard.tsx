@@ -17,6 +17,7 @@ import BodyTemperatureContainer from './measurementContainers/bodyTemperatureCon
 import GlucoseContainer from './measurementContainers/glucoseContainer';
 import OxygenSaturationContainer from './measurementContainers/oxygenSaturationContainer';
 import ReviewContainer from './measurementContainers/reviewContainer'
+import { HEARTRATEDATA } from '../constants';
 
 
 const ColorlibConnector = withStyles({
@@ -136,6 +137,9 @@ export default function CustomizedSteppers() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if(activeStep === steps.length){
+      localStorage.removeItem(HEARTRATEDATA);
+    }
   };
 
   const handleBack = () => {

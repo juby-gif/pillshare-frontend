@@ -6,4 +6,37 @@ export const BLOODPRESSUREDATA = "user-blood-pressure-data";
 export const BODYTEMPERATURE = "user-body-temperature-data";
 export const GLUCOSE = "user-glucose-data";
 export const OXYGENSATURATION = "user-oxygen-saturation-data";
+export const SYMPTOMS_DROPDOWN_LIST = [{
+    id:1,
+    value:"Acid Reflux"
+  },
+  {
+    id:2,
+    value:"Joint pain"
+  },
+  {
+    id:3,
+    value:"Acid Reflux"
+  },
+  {
+    id:4,
+    value:"Acid Reflux"
+  },
+    
+    // "Joint pain in the morning",
+    // "Joint pain, knee",
+    // "lump under the jaw",
+    // "Joint pain, hip",
+    // "Joint stiffness",
+    // "Creaking of joint during movement",
+    // "Joint pain, wrist",
+    // "Joint swelling",
+    // "joint pain in foot",
+    // "Jacksonian seizure",
+    // "Joint pain, aggravated during cold, damp weather",
+    // "Edema, knee joint",
+    // "Morning stiffness of hand joints",
+    // "Spine or joint stiffness subsiding after exercise",
+    // "Edema, ankle joint"
+  ];
 

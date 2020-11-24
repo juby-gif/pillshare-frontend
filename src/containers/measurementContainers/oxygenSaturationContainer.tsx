@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
+import { OXYGENSATURATION } from '../../constants';
 
 interface IProps {
 }
 interface OxygenSaturationProps {
-  readOnly: boolean;
   reading: number;
   date: string;
   time: string;
@@ -13,20 +13,55 @@ interface OxygenSaturationProps {
 }
 
 export default class OxygenSaturationContainer extends Component<IProps,OxygenSaturationProps> {
+    
+    /*  *
+        *  Initializer
+        *------------------------------------------------------------
+    */
     constructor(props:IProps) {
       super(props);
       this.state = {
-        readOnly:false,
-        reading:0,
-        date:"",
-        time:"",
-        
+          reading:0,
+          date:"",
+          time:"",
       };
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onSaveClick = this.onSaveClick.bind(this);
     }
+
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+   componentDidMount(){
+    if(localStorage.getItem(OXYGENSATURATION) !== null || localStorage.getItem(OXYGENSATURATION) !== undefined){
+      const oxygenSaturationReadingData: OxygenSaturationProps = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+      this.setState({
+        reading:oxygenSaturationReadingData.reading,
+        date: oxygenSaturationReadingData.date,
+        time:oxygenSaturationReadingData.time,
+      })
+      }
+    }
+
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
 
     onOxygenSaturationReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
@@ -47,16 +82,25 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      alert("Saved")
+      const { reading,date,time } = this.state;
+      const oxygenSaturationData = {
+        reading:reading,
+        date:date,
+        time:time,
+      }
+      localStorage.setItem(OXYGENSATURATION,JSON.stringify(oxygenSaturationData));
     }
 
+    /* *
+        *  Main render function
+        *------------------------------------------------------------
+    */
     render() {
-      const { readOnly,reading,date,time } = this.state;
+      const { reading,date,time } = this.state;
       const { onOxygenSaturationReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
       
       return (
         <OxygenSaturationComponent 
-          readOnly={readOnly}
           reading={reading}
           date={date}
           time={time}

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
+import { HEARTRATEDATA } from '../../constants';
 
 interface IProps {
   
 }
 interface HeartRateProps {
-  readOnly: boolean;
   reading: number;
   date: string;
   time: string;
@@ -14,10 +14,14 @@ interface HeartRateProps {
 }
 
 export default class HeartRateContainer extends Component<IProps,HeartRateProps> {
+  
+    /*   *
+        *  Initializer
+        *------------------------------------------------------------
+    */
     constructor(props:IProps) {
       super(props);
       this.state = {
-        readOnly:false,
         reading:0,
         date:"",
         time:"",
@@ -28,7 +32,37 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onSaveClick = this.onSaveClick.bind(this);
     }
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
 
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+      componentDidMount(){
+    if(localStorage.getItem(HEARTRATEDATA) !== null || localStorage.getItem(HEARTRATEDATA) !== undefined){
+      const heartRateReadingData: HeartRateProps = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
+      this.setState({
+        reading:heartRateReadingData.reading,
+        date: heartRateReadingData.date,
+        time:heartRateReadingData.time,
+      })
+      }
+    }
+    
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
     onHeartRateReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
         reading:event.currentTarget.valueAsNumber,
@@ -48,16 +82,25 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      alert("Saved")
+      const { reading,date,time } = this.state;
+      const heartRateData = {
+        reading:reading,
+        date:date,
+        time:time,
+      }
+      localStorage.setItem(HEARTRATEDATA,JSON.stringify(heartRateData));
     }
 
-    render() {
-      const { readOnly,reading,date,time } = this.state;
+    /* *
+        *  Main render function
+        *------------------------------------------------------------
+    */
+       render() {
+      const { reading,date,time } = this.state;
       const { onHeartRateReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
       
       return (
         <HeartRateComponent 
-          readOnly={readOnly}
           reading={reading}
           date={date}
           time={time}

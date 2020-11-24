@@ -1,7 +1,7 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faQuestionCircle, faUserAlt,faPlus, faStar, faRuler } from '@fortawesome/free-solid-svg-icons';
+import { faThLarge,faUser,faBalanceScale,faHistory,faShareAlt,faSignOutAlt,faQuestionCircle, faUserAlt,faStar, faRuler } from '@fortawesome/free-solid-svg-icons';
 import { Row,Col,Container,Image,InputGroup, FormControl,Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import {
@@ -14,17 +14,24 @@ import {
   Media,
 } from "reactstrap";
 import Rating from 'react-rating';
+import MultiSearchSelect from "react-search-multi-select";
 
 import '../App.css';
 import logo from '../img/logo.png';
 import pro from '../img/pro-pic.jpg';
 
-
 interface IProps {
     showSettings: (event: React.SyntheticEvent) => void;
+    handleChange: (arr: string[]) => void;
+    values:valueProps[];
 }
+interface valueProps {
+    id:number;
+    value:string;
+  }
 
 const HealthCheckComponent = (props: IProps) : JSX.Element => {
+    const { values,handleChange } = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
@@ -109,10 +116,22 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                 <ol className="ml-5 mt-5">
                                     <li>How are you feeling today?</li>
                                     <Row className="p-3">
-                                        <Link to="/">
-                                            <FontAwesomeIcon icon={faPlus} />
-                                            <span style={{display:"inline-block",lineHeight: "0.97",fontSize:"1.1rem",fontWeight:"bold"}} className="ml-2">Add Symptoms</span> 
-                                        </Link>
+
+                                        {/* The Dropdown had a bug which needs to be fixed */}
+                                        {/* <MultiSearchSelect 
+                                            searchable={true}
+                                            searchPlaceholder = "Select your symptoms" 
+                                            className=""
+                                            showTags={true} 
+                                            multiSelect={true} 
+                                            width="30rem" 
+                                            primaryColor= "#ffffff"
+                                            secondaryColor= "#046fc0"
+                                            textColor= "#000000"
+                                            textSecondaryColor= "#f1e9e9"
+                                            onSelect={handleChange} 
+                                            options={values}
+                                        /> */}
                                     </Row>
                                     <Row>
                                         <Col className="ml-2 mr-4 mb-3">
@@ -152,8 +171,9 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                             <InputGroup.Prepend>
                                             <InputGroup.Checkbox aria-label="mood" />
                                             </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
+                                            <FormControl 
                                                 value="Anxiety"
+                                                // checked={true}
                                             />
                                         </InputGroup>
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">

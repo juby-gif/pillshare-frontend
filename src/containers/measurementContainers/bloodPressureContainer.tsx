@@ -1,39 +1,84 @@
 import React, { Component } from 'react';
 
 import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
+import { BLOODPRESSUREDATA } from '../../constants';
 
 interface IProps {
   
 }
 interface BloodPressureProps {
-  readOnly: boolean;
-  reading: number;
+  diastoleReading: number;
+  systoleReading: number;
   date: string;
   time: string;
 
 }
 
 export default class BloodPressureContainer extends Component<IProps,BloodPressureProps> {
+    
+    /*   *
+        *  Initializer
+        *------------------------------------------------------------
+    */
     constructor(props:IProps) {
       super(props);
       this.state = {
-        readOnly:false,
-        reading:0,
+        diastoleReading:0,
+        systoleReading:0,
         date:"",
         time:"",
         
       };
-      this.onBloodPressureReadingChange = this.onBloodPressureReadingChange.bind(this);
+      this.onBloodPressureSystoleReadingChange = this.onBloodPressureSystoleReadingChange.bind(this);
+      this.onBloodPressureDiastoleReadingChange = this.onBloodPressureDiastoleReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onSaveClick = this.onSaveClick.bind(this);
     }
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
 
-    onBloodPressureReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-        reading:event.currentTarget.valueAsNumber,
-    })
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+   componentDidMount(){
+    if(localStorage.getItem(BLOODPRESSUREDATA) !== null || localStorage.getItem(BLOODPRESSUREDATA) !== undefined){
+      const bloodPressureReadingData: BloodPressureProps = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+      this.setState({
+        systoleReading: bloodPressureReadingData.systoleReading,
+        diastoleReading: bloodPressureReadingData.diastoleReading,
+        date: bloodPressureReadingData.date,
+        time: bloodPressureReadingData.time,
+      })
+      }
     }
+    
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
+
+    onBloodPressureSystoleReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+        systoleReading:event.currentTarget.valueAsNumber,
+      })
+      }
+
+    onBloodPressureDiastoleReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+          diastoleReading:event.currentTarget.valueAsNumber,
+      })
+      }
 
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
@@ -48,20 +93,32 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      alert("Saved")
+      const { systoleReading,diastoleReading,date,time } = this.state;
+      const bloodPressureData = {
+        systoleReading:systoleReading,
+        diastoleReading:diastoleReading,
+        date:date,
+        time:time,
+      }
+      localStorage.setItem(BLOODPRESSUREDATA,JSON.stringify(bloodPressureData));
     }
 
+    /* *
+      *  Main render function
+      *------------------------------------------------------------
+    */
     render() {
-      const { readOnly,reading,date,time } = this.state;
-      const { onBloodPressureReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { diastoleReading,systoleReading,date,time } = this.state;
+      const { onBloodPressureSystoleReadingChange,onBloodPressureDiastoleReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
       
       return (
         <BloodPressureComponent 
-          readOnly={readOnly}
-          reading={reading}
+          diastoleReading={diastoleReading}
+          systoleReading={systoleReading}
           date={date}
           time={time}
-          onBloodPressureReadingChange={onBloodPressureReadingChange}
+          onBloodPressureSystoleReadingChange={onBloodPressureSystoleReadingChange}
+          onBloodPressureDiastoleReadingChange={onBloodPressureDiastoleReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
           onSaveClick={onSaveClick}

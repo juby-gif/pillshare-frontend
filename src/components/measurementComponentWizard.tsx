@@ -27,7 +27,6 @@ import pro from '../img/pro-pic.jpg';
 import MeasurementModalContainer from '../containers/modalContainers/measurementModalContainer';
 
   
-
 interface IProps {
     classes : Record<"button" | "root" | "instructions", string>
     activeStep : number;
