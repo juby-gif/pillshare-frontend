@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
-import { BODYTEMPERATURE } from '../../constants';
+import { BODYTEMPERATURE, BODY_TEMPERATURE_INSTRUMENT } from '../../constants';
 
 interface IProps {
   
@@ -10,6 +10,7 @@ interface BodyTemperatureProps {
   reading: number;
   date: string;
   time: string;
+  instrumentID: number;
 
 }
 
@@ -25,6 +26,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         reading:0,
         date:"",
         time:"",
+        instrumentID:0,
         
       };
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
@@ -82,7 +84,9 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
 
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { reading,date,time } = this.state;
+
       const bodyTemperatureData = {
+        instrumentID:BODY_TEMPERATURE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,

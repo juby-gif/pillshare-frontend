@@ -14,7 +14,7 @@ import {
   Media,
 } from "reactstrap";
 import Rating from 'react-rating';
-import MultiSearchSelect from "react-search-multi-select";
+// import MultiSearchSelect from "react-search-multi-select";
 
 import '../App.css';
 import logo from '../img/logo.png';
@@ -118,6 +118,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                     <Row className="p-3">
 
                                         {/* The Dropdown had a bug which needs to be fixed */}
+                                        
                                         {/* <MultiSearchSelect 
                                             searchable={true}
                                             searchPlaceholder = "Select your symptoms" 

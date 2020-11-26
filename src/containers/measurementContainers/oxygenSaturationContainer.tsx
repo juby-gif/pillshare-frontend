@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
-import { OXYGENSATURATION } from '../../constants';
+import { OXYGENSATURATION, OXYGEN_SATURATION_INSTRUMENT } from '../../constants';
 
 interface IProps {
 }
@@ -9,6 +9,7 @@ interface OxygenSaturationProps {
   reading: number;
   date: string;
   time: string;
+  instrumentID: number;
 
 }
 
@@ -24,6 +25,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
           reading:0,
           date:"",
           time:"",
+          instrumentID:0,
       };
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -84,6 +86,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { reading,date,time } = this.state;
       const oxygenSaturationData = {
+        instrumentID:OXYGEN_SATURATION_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,

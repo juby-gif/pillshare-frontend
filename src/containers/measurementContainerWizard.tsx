@@ -17,8 +17,49 @@ import BodyTemperatureContainer from './measurementContainers/bodyTemperatureCon
 import GlucoseContainer from './measurementContainers/glucoseContainer';
 import OxygenSaturationContainer from './measurementContainers/oxygenSaturationContainer';
 import ReviewContainer from './measurementContainers/reviewContainer'
-import { HEARTRATEDATA } from '../constants';
+import { BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
+import { postTimeSeriesDatum } from '../API/timeSeriesDatumAPI';
 
+
+interface BodyTemperatureProps {
+  reading: number;
+  date: string;
+  time: string;
+  instrumentID: number;
+
+}
+interface BloodPressureProps {
+  diastoleReading: number;
+  systoleReading: number;
+  date: string;
+  time: string;
+  instrumentID: number;
+
+}
+interface ResponseProps {
+  message : string;
+}
+interface GlucoseProps {
+  reading: number;
+  date: string;
+  time: string;
+  instrumentID: number;
+
+}
+interface HeartRateProps {
+  reading: number;
+  date: string;
+  time: string;
+  instrumentID: number;
+
+}
+interface OxygenSaturationProps {
+  reading: number;
+  date: string;
+  time: string;
+  instrumentID: number;
+
+}
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -130,23 +171,69 @@ function getStepContent(step: number) {
   }
 }
 
+
+const onTimesSeriesDataProcessAPI = ( 
+                                      token:string | null,
+                                      user_id:string | null,
+                                      heartRateData:HeartRateProps | null,
+                                      bloodPressureData:BloodPressureProps | null,
+                                      bodyTemperatureData:BodyTemperatureProps | null,
+                                      glucoseData:GlucoseProps | null,
+                                      oxygenSaturationData:OxygenSaturationProps | null,
+                                      ) : void =>{
+  
+  let postData = {
+    token:token,
+    user_id:user_id,
+    heartRateData:heartRateData,
+    bloodPressureData:bloodPressureData,
+    bodyTemperatureData:bodyTemperatureData,
+    glucoseData:glucoseData,
+    oxygenSaturationData:oxygenSaturationData,
+  }
+  
+  postTimeSeriesDatum(postData,onSuccessCallBack,onFailureCallBack)
+  }
+
+const onSuccessCallBack = (responseData: ResponseProps): void => {
+  // For debugging purpose only
+  console.log("Message => ",responseData.message);
+  }
+
+  const onFailureCallBack = (responseData: ResponseProps): void => {
+      // For debugging purpose only
+  console.log("Message => ",responseData.message);
+  }
+
 export default function CustomizedSteppers() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if(activeStep === steps.length){
+    if(activeStep === steps.length - 1 ){
+      let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
+      let user_id: string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}').user_id;
+      let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
+      let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+      let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+      let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
+      let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+      onTimesSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
       localStorage.removeItem(HEARTRATEDATA);
+      localStorage.removeItem(BLOODPRESSUREDATA);
+      localStorage.removeItem(BODYTEMPERATURE);
+      localStorage.removeItem(GLUCOSE);
+      localStorage.removeItem(OXYGENSATURATION);
     }
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+  
   return (
     <MeasurementComponentWizard 
       classes = {classes}
@@ -159,6 +246,5 @@ export default function CustomizedSteppers() {
       ColorlibStepIcon = {ColorlibStepIcon}
 
     />
-  );}
-
-  
+  );
+}

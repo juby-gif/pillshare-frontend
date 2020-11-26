@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
-import { BLOODPRESSUREDATA } from '../../constants';
+import { BLOODPRESSUREDATA, BLOOD_PRESSURE_INSTRUMENT } from '../../constants';
 
 interface IProps {
   
@@ -11,6 +11,7 @@ interface BloodPressureProps {
   systoleReading: number;
   date: string;
   time: string;
+  instrumentID: number;
 
 }
 
@@ -27,6 +28,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
         systoleReading:0,
         date:"",
         time:"",
+        instrumentID:0,
         
       };
       this.onBloodPressureSystoleReadingChange = this.onBloodPressureSystoleReadingChange.bind(this);
@@ -95,6 +97,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { systoleReading,diastoleReading,date,time } = this.state;
       const bloodPressureData = {
+        instrumentID:BLOOD_PRESSURE_INSTRUMENT,
         systoleReading:systoleReading,
         diastoleReading:diastoleReading,
         date:date,

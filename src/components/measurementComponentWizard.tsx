@@ -122,7 +122,7 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                         {/* --- Wizard ---*/}
                             <Container fluid>
                                 <Row>
-                                    <Col className="m-auto">
+                                    <Col className="mr-5">
                                         <div className={classes.root}>
                                             <Stepper className="menu1_hor" alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
                                                 {steps.map((label) => (

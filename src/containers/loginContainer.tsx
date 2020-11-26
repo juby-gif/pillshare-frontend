@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
 
 import LoginComponent from '../components/loginComponent';
-import { PILLSHARE_USER_TOKEN } from '../constants';
-import { postLogin } from "../API/loginAPI";
+import { LOGGED_IN_USER, PILLSHARE_USER_TOKEN, USER_TOKEN } from '../constants';
 import '../App.css';
 
 
@@ -20,7 +19,16 @@ validated : boolean;
 
 interface ResponseProps {
     message : string;
-    token : string;
+    token ?: string;
+}
+
+interface ServerResponse {
+  data: ServerData[];
+}
+
+interface ServerData {
+  username: string;
+  password: string;
 }
 export default class LoginContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
@@ -63,11 +71,49 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     */
     onLoginAPIProcessCall = (username:string,password:string):void => {
         const { onSuccessCallBack,onFailureCallBack } = this;
-        const postData = {
-            username: username,
-            password: password,
-        };
-    postLogin(postData, onSuccessCallBack, onFailureCallBack);
+        
+        const axios = require('axios').default;
+        axios({
+            method: 'get',
+            url: 'http://localhost:3001/users',
+            
+          })
+          .then(function (response:ServerResponse) {
+
+            //For Debugging purpose only
+            // console.log(response.data)
+            
+            let userArray: ServerData[] = response.data;
+            if (userArray !== null || userArray !== undefined || userArray !== []){
+        
+            for (let userObj of userArray){
+                if(userObj.username === username){
+                    if(userObj.password === password){
+                        sessionStorage.setItem(LOGGED_IN_USER,JSON.stringify(userObj));
+                        const responseData = {
+                            message : "Successfully logged-in",
+                            token : USER_TOKEN,
+                        }
+                        onSuccessCallBack(responseData);
+                        return;
+                    } else {
+                        const responseData = {
+                            message : "Incorrect Password",
+                        }
+                        onFailureCallBack(responseData);
+                        return;
+                    }
+                }
+            }
+            const responseData = {
+                message : "You are not a registered User",
+            }
+            onFailureCallBack(responseData);
+            }
+          })
+          .catch(function (error:ServerResponse) {
+            console.log(error);
+          });
     }
 
     /* *
@@ -106,7 +152,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     onSuccessCallBack = (responseData: ResponseProps): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
-        sessionStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token)
+        localStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token || '{}')
         this.props.history.push("/dashboard");
 
     }

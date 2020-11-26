@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import GlucoseComponent from '../../components/measurementComponents/glucoseComponent';
-import { GLUCOSE } from '../../constants';
+import { GLUCOSE,GLUCOSE_INSTRUMENT } from '../../constants';
 
 interface IProps {
   
@@ -10,6 +10,7 @@ interface GlucoseProps {
   reading: number;
   date: string;
   time: string;
+  instrumentID: number;
 
 }
 
@@ -25,6 +26,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
         reading:0,
         date:"",
         time:"",
+        instrumentID:0,
         
       };
       this.onGlucoseReadingChange = this.onGlucoseReadingChange.bind(this);
@@ -86,6 +88,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { reading,date,time } = this.state;
       const glucoseData = {
+        instrumentID:GLUCOSE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,

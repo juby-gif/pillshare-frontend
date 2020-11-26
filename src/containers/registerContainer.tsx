@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
 
-import { postRegister } from "../API/registerAPI";
 import '../App.css'
 import RegisterComponent from '../components/registerComponent';
 
@@ -21,6 +21,22 @@ checkedStatus : boolean;
 response : string;
 message : string;
 validated : boolean;
+}
+
+interface ServerResponse {
+    data: ServerData[];
+  }
+  
+interface ServerData {
+    firstName : string;
+    middleName : string;
+    lastName : string;
+    username : string;
+    email : string;
+    password : string;
+    retypePassword : string;
+    checkedStatus : boolean;
+    uuid:string;
 }
 
 interface ResponseProps {
@@ -76,7 +92,16 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         *  API callback functions
         *------------------------------------------------------------
     */
-    onRegisterAPIProcessCall = (firstName:string,middleName:string,LastName:string,username:string,email:string,password:string,checkedStatus:boolean):void => {
+    onRegisterAPIProcessCall = async (
+                    firstName:string,
+                    middleName:string,
+                    LastName:string,
+                    username:string,
+                    email:string,
+                    password:string,
+                    checkedStatus:boolean,
+                    uuid:string
+                    ):Promise<void> => {
         const { onSuccessCallBack,onFailureCallBack } = this;
         const postData = {
             firstName: firstName,
@@ -86,9 +111,34 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             email: email,
             password: password,
             checkedStatus: checkedStatus,
-        };
-        postRegister(postData, onSuccessCallBack, onFailureCallBack);
-    }
+            user_id : uuid, 
+            };
+        
+        const axios = require('axios').default;
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3001/users',
+            data: postData,
+            headers: {'Content-Type':'application/json'}
+            
+          })
+          .then(function (response:ServerResponse) {
+              if(response.data !== [] || response.data !== undefined || response.data !== null){
+                const responseData : ResponseProps = {
+                    message:"You are successfully registered"
+                }
+                onSuccessCallBack(responseData);
+              } else {
+                const responseData : ResponseProps = {
+                    message:"Registration Failed"
+                }
+                onFailureCallBack(responseData);
+              }
+          })
+          .catch(function (error:ServerResponse) {
+            console.log(error);
+          });
+        }
 
     /* *
         *  Event handling functions
@@ -171,11 +221,18 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onRegisterClick = (event: React.SyntheticEvent): void => {
         event.preventDefault();
         const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus} = this.state;
-        if( password === retypePassword ){
-            this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus);
+        if(firstName !== "" && lastName !== "" && username !== "" && password !==""){
+
+            if( password === retypePassword ){
+                const uuid:string = uuidv4();
+                this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,uuid);
+            } else {
+                console.error("Your Password does not match");
+            }
         } else {
-            console.error("Your Password does not match");
+            alert (" Please enter all the required fields")
         }
+        
     }
 
     onSignInClick = (event: React.SyntheticEvent): void => {

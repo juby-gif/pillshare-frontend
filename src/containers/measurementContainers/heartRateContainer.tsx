@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
-import { HEARTRATEDATA } from '../../constants';
+import { HEARTRATEDATA, HEART_RATE_INSTRUMENT } from '../../constants';
 
 interface IProps {
   
@@ -10,6 +10,7 @@ interface HeartRateProps {
   reading: number;
   date: string;
   time: string;
+  instrumentID: number;
 
 }
 
@@ -25,6 +26,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         reading:0,
         date:"",
         time:"",
+        instrumentID:0,
         
       };
       this.onHeartRateReadingChange = this.onHeartRateReadingChange.bind(this);
@@ -84,6 +86,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { reading,date,time } = this.state;
       const heartRateData = {
+        instrumentID:HEART_RATE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,
