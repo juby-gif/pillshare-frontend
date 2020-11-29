@@ -12,6 +12,7 @@ export const BLOOD_PRESSURE_INSTRUMENT = 2;
 export const BODY_TEMPERATURE_INSTRUMENT = 3;
 export const GLUCOSE_INSTRUMENT = 4;
 export const OXYGEN_SATURATION_INSTRUMENT = 5;
+export const URL = 'http://localhost:3001/';
 export const SYMPTOMS_DROPDOWN_LIST = [{
     id:1,
     value:"Acid Reflux"

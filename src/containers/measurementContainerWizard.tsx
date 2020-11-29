@@ -17,48 +17,64 @@ import BodyTemperatureContainer from './measurementContainers/bodyTemperatureCon
 import GlucoseContainer from './measurementContainers/glucoseContainer';
 import OxygenSaturationContainer from './measurementContainers/oxygenSaturationContainer';
 import ReviewContainer from './measurementContainers/reviewContainer'
-import { BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
-import { postTimeSeriesDatum } from '../API/timeSeriesDatumAPI';
-
+import { URL, BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
 
 interface BodyTemperatureProps {
-  reading: number;
-  date: string;
-  time: string;
+  reading ?: number;
+  date ?: string;
+  time ?: string;
   instrumentID: number;
+  user_id: string | null;
 
 }
+
 interface BloodPressureProps {
-  diastoleReading: number;
-  systoleReading: number;
-  date: string;
-  time: string;
+  diastoleReading ?: number;
+  systoleReading ?: number;
+  date ?: string;
+  time ?: string;
   instrumentID: number;
+  user_id: string | null;
 
 }
-interface ResponseProps {
-  message : string;
-}
+
 interface GlucoseProps {
-  reading: number;
-  date: string;
-  time: string;
+  reading ?: number;
+  date ?: string;
+  time ?: string;
   instrumentID: number;
+  user_id: string | null;
 
 }
 interface HeartRateProps {
-  reading: number;
-  date: string;
-  time: string;
+  reading ?: number;
+  date ?: string;
+  time ?: string;
   instrumentID: number;
+  user_id: string | null;
 
 }
 interface OxygenSaturationProps {
-  reading: number;
-  date: string;
-  time: string;
+  reading ?: number;
+  date ?: string;
+  time ?: string;
   instrumentID: number;
+  user_id: string | null;
 
+}
+
+interface ServerResponse {
+  data: ServerData[];
+}
+
+interface ServerData {
+  token : string;
+  user_id : string;
+  heartRateData ?: HeartRateProps | null;
+  bloodPressureData ?: BloodPressureProps | null;
+  bodyTemperatureData ?: BodyTemperatureProps | null;
+  glucoseData ?: GlucoseProps | null;
+  oxygenSaturationData ?: OxygenSaturationProps | null;
 }
 
 const ColorlibConnector = withStyles({
@@ -171,80 +187,148 @@ function getStepContent(step: number) {
   }
 }
 
+    /* *
+        *  Get length of the object
+        *------------------------------------------------------------
+    */
+const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null) => {
+  let count:number = 0;
+  for (let datum in data){
+    if (data.hasOwnProperty(datum)) count++;
+  }
+  if(count === 0) { return 0; }
+}
 
-const onTimesSeriesDataProcessAPI = ( 
-                                      token:string | null,
-                                      user_id:string | null,
-                                      heartRateData:HeartRateProps | null,
-                                      bloodPressureData:BloodPressureProps | null,
-                                      bodyTemperatureData:BodyTemperatureProps | null,
-                                      glucoseData:GlucoseProps | null,
-                                      oxygenSaturationData:OxygenSaturationProps | null,
-                                      ) : void =>{
+
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) =>{
+  const axios = require('axios').default;
+  await axios( {
+        method: 'post',
+        url: URL + name,
+        data: data,
+        headers: {'Content-Type':'application/json'}})
+        .then(function (responseData:ServerResponse) {
+              onSuccessCallBack(responseData);
+            }) 
+
+        .catch(function (error:ServerResponse) {
+          onFailureCallBack(error);
+          });
+}
+
+    /* *
+        *  Process API Calls
+        *------------------------------------------------------------
+    */
+  const onTimeSeriesDataProcessAPI = async ( 
+    token:string | null,
+    user_id:string | null,
+    heartRateData:HeartRateProps | null,
+    bloodPressureData:BloodPressureProps | null,
+    bodyTemperatureData:BodyTemperatureProps | null,
+    glucoseData:GlucoseProps | null,
+    oxygenSaturationData:OxygenSaturationProps | null,
+    ) :Promise<void> => {
+
+  if (lengthChecker(heartRateData) !== 0) {
+    onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
+  }
+  if (lengthChecker(bloodPressureData) !== 0) {
+    onTimeSeriesAPICall(bloodPressureData,"blood_pressure_measurements");
+  }
+  if (lengthChecker(bodyTemperatureData) !== 0) {
+    onTimeSeriesAPICall(bodyTemperatureData,"body_temperature_measurements");
+  }
+  if (lengthChecker(glucoseData) !== 0) {
+    onTimeSeriesAPICall(glucoseData,"glucose_measurements");
+  }
+  if (lengthChecker(oxygenSaturationData) !== 0) {
+    onTimeSeriesAPICall(oxygenSaturationData,"oxygen_saturation_measurements");
+  }
+  }
   
-  let postData = {
-    token:token,
-    user_id:user_id,
-    heartRateData:heartRateData,
-    bloodPressureData:bloodPressureData,
-    bodyTemperatureData:bodyTemperatureData,
-    glucoseData:glucoseData,
-    oxygenSaturationData:oxygenSaturationData,
+    /* *
+        *  Server Response Process Calls
+        *------------------------------------------------------------
+    */
+
+  const onSuccessCallBack = (responseData : ServerResponse) => {
+    console.log(responseData)
   }
-  
-  postTimeSeriesDatum(postData,onSuccessCallBack,onFailureCallBack)
+  const onFailureCallBack = (responseData:ServerResponse) => {
+    console.log(responseData)
   }
 
-const onSuccessCallBack = (responseData: ResponseProps): void => {
-  // For debugging purpose only
-  console.log("Message => ",responseData.message);
-  }
 
-  const onFailureCallBack = (responseData: ResponseProps): void => {
-      // For debugging purpose only
-  console.log("Message => ",responseData.message);
-  }
 
 export default function CustomizedSteppers() {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
 
+    /*   *
+        *  Initializer
+        *------------------------------------------------------------
+    */
+    const classes = useStyles();
+    const [activeStep, setActiveStep] = React.useState(0);
+    const steps = getSteps();
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if(activeStep === steps.length - 1 ){
-      let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-      let user_id: string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}').user_id;
-      let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
-      let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
-      let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-      let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-      let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
-      onTimesSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
-      localStorage.removeItem(HEARTRATEDATA);
-      localStorage.removeItem(BLOODPRESSUREDATA);
-      localStorage.removeItem(BODYTEMPERATURE);
-      localStorage.removeItem(GLUCOSE);
-      localStorage.removeItem(OXYGENSATURATION);
-    }
-  };
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
 
-  const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
+    const handleNext = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if(activeStep === steps.length - 1 ){
+        let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
+        let user_id: string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+        let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
+        let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+        let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+        let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
+        let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+        onTimeSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
+        localStorage.removeItem(HEARTRATEDATA);
+        localStorage.removeItem(BLOODPRESSUREDATA);
+        localStorage.removeItem(BODYTEMPERATURE);
+        localStorage.removeItem(GLUCOSE);
+        localStorage.removeItem(OXYGENSATURATION);
+      }
     };
-  
-  return (
-    <MeasurementComponentWizard 
-      classes = {classes}
-      activeStep = {activeStep}
-      steps = {steps}
-      handleNext = {handleNext}
-      handleBack = {handleBack}
-      getStepContent = {getStepContent}
-      ColorlibConnector = {ColorlibConnector}
-      ColorlibStepIcon = {ColorlibStepIcon}
 
-    />
-  );
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    /* *
+        *  Main render function
+        *------------------------------------------------------------
+    */  
+    return (
+      <MeasurementComponentWizard 
+        classes = {classes}
+        activeStep = {activeStep}
+        steps = {steps}
+        handleNext = {handleNext}
+        handleBack = {handleBack}
+        getStepContent = {getStepContent}
+        ColorlibConnector = {ColorlibConnector}
+        ColorlibStepIcon = {ColorlibStepIcon}
+
+      />
+    );
 }

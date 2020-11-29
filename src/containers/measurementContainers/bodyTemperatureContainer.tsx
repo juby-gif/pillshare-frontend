@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
-import { BODYTEMPERATURE, BODY_TEMPERATURE_INSTRUMENT } from '../../constants';
+import { BODYTEMPERATURE, BODY_TEMPERATURE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
   
@@ -11,6 +11,7 @@ interface BodyTemperatureProps {
   date: string;
   time: string;
   instrumentID: number;
+  user_id: string;
 
 }
 
@@ -27,7 +28,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         date:"",
         time:"",
         instrumentID:0,
-        
+        user_id: "",        
       };
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -47,10 +48,12 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
    componentDidMount(){
     if(localStorage.getItem(BODYTEMPERATURE) !== null || localStorage.getItem(BODYTEMPERATURE) !== undefined){
       const bodyTemperatureReadingData: BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
       this.setState({
         reading:bodyTemperatureReadingData.reading,
         date: bodyTemperatureReadingData.date,
         time:bodyTemperatureReadingData.time,
+        user_id: user_id,
       })
       }
     }
@@ -83,13 +86,14 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      const { reading,date,time } = this.state;
+      const { reading,date,time,user_id } = this.state;
 
       const bodyTemperatureData = {
         instrumentID:BODY_TEMPERATURE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,
+        user_id:user_id,
       }
       localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
     }

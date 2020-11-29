@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
-import { HEARTRATEDATA, HEART_RATE_INSTRUMENT } from '../../constants';
+import { HEARTRATEDATA, HEART_RATE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
   
@@ -11,6 +11,7 @@ interface HeartRateProps {
   date: string;
   time: string;
   instrumentID: number;
+  user_id?: string | null;
 
 }
 
@@ -20,6 +21,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *  Initializer
         *------------------------------------------------------------
     */
+    user_id:string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
     constructor(props:IProps) {
       super(props);
       this.state = {
@@ -27,6 +29,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         date:"",
         time:"",
         instrumentID:0,
+        user_id:this.user_id,
         
       };
       this.onHeartRateReadingChange = this.onHeartRateReadingChange.bind(this);
@@ -84,12 +87,13 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      const { reading,date,time } = this.state;
+      const { reading,date,time,user_id } = this.state;
       const heartRateData = {
         instrumentID:HEART_RATE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,
+        user_id:user_id,
       }
       localStorage.setItem(HEARTRATEDATA,JSON.stringify(heartRateData));
     }

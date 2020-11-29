@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
-import { BLOODPRESSUREDATA, BLOOD_PRESSURE_INSTRUMENT } from '../../constants';
+import { BLOODPRESSUREDATA, BLOOD_PRESSURE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
   
@@ -12,6 +12,7 @@ interface BloodPressureProps {
   date: string;
   time: string;
   instrumentID: number;
+  user_id:string;
 
 }
 
@@ -29,6 +30,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
         date:"",
         time:"",
         instrumentID:0,
+        user_id:"",
         
       };
       this.onBloodPressureSystoleReadingChange = this.onBloodPressureSystoleReadingChange.bind(this);
@@ -50,11 +52,13 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
    componentDidMount(){
     if(localStorage.getItem(BLOODPRESSUREDATA) !== null || localStorage.getItem(BLOODPRESSUREDATA) !== undefined){
       const bloodPressureReadingData: BloodPressureProps = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
       this.setState({
         systoleReading: bloodPressureReadingData.systoleReading,
         diastoleReading: bloodPressureReadingData.diastoleReading,
         date: bloodPressureReadingData.date,
         time: bloodPressureReadingData.time,
+        user_id:user_id,
       })
       }
     }
@@ -95,13 +99,14 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      const { systoleReading,diastoleReading,date,time } = this.state;
+      const { systoleReading,diastoleReading,date,time,user_id } = this.state;
       const bloodPressureData = {
         instrumentID:BLOOD_PRESSURE_INSTRUMENT,
         systoleReading:systoleReading,
         diastoleReading:diastoleReading,
         date:date,
         time:time,
+        user_id:user_id,
       }
       localStorage.setItem(BLOODPRESSUREDATA,JSON.stringify(bloodPressureData));
     }

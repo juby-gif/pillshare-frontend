@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
-import { OXYGENSATURATION, OXYGEN_SATURATION_INSTRUMENT } from '../../constants';
+import { LOGGED_IN_USER, OXYGENSATURATION, OXYGEN_SATURATION_INSTRUMENT } from '../../constants';
 
 interface IProps {
 }
@@ -10,6 +10,7 @@ interface OxygenSaturationProps {
   date: string;
   time: string;
   instrumentID: number;
+  user_id: string;
 
 }
 
@@ -26,6 +27,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
           date:"",
           time:"",
           instrumentID:0,
+          user_id:"",
       };
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -46,10 +48,12 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
    componentDidMount(){
     if(localStorage.getItem(OXYGENSATURATION) !== null || localStorage.getItem(OXYGENSATURATION) !== undefined){
       const oxygenSaturationReadingData: OxygenSaturationProps = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
       this.setState({
         reading:oxygenSaturationReadingData.reading,
         date: oxygenSaturationReadingData.date,
         time:oxygenSaturationReadingData.time,
+        user_id:user_id,
       })
       }
     }
@@ -84,12 +88,13 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      const { reading,date,time } = this.state;
+      const { reading,date,time,user_id } = this.state;
       const oxygenSaturationData = {
         instrumentID:OXYGEN_SATURATION_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,
+        user_id:user_id,
       }
       localStorage.setItem(OXYGENSATURATION,JSON.stringify(oxygenSaturationData));
     }

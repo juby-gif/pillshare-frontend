@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import GlucoseComponent from '../../components/measurementComponents/glucoseComponent';
-import { GLUCOSE,GLUCOSE_INSTRUMENT } from '../../constants';
+import { GLUCOSE,GLUCOSE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
   
@@ -11,6 +11,7 @@ interface GlucoseProps {
   date: string;
   time: string;
   instrumentID: number;
+  user_id: string;
 
 }
 
@@ -27,6 +28,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
         date:"",
         time:"",
         instrumentID:0,
+        user_id:"",
         
       };
       this.onGlucoseReadingChange = this.onGlucoseReadingChange.bind(this);
@@ -48,10 +50,12 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
    componentDidMount(){
     if(localStorage.getItem(GLUCOSE) !== null || localStorage.getItem(GLUCOSE) !== undefined){
       const glucoseReadingData: GlucoseProps = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
+      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
       this.setState({
         reading:glucoseReadingData.reading,
         date: glucoseReadingData.date,
         time:glucoseReadingData.time,
+        user_id:user_id,
       })
       }
     }
@@ -86,12 +90,13 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
       }
 
     onSaveClick = (event: React.SyntheticEvent): void => {
-      const { reading,date,time } = this.state;
+      const { reading,date,time,user_id } = this.state;
       const glucoseData = {
         instrumentID:GLUCOSE_INSTRUMENT,
         reading:reading,
         date:date,
         time:time,
+        user_id:user_id,
       }
       localStorage.setItem(GLUCOSE,JSON.stringify(glucoseData));
     }
