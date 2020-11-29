@@ -204,7 +204,7 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
         *  API callback functions
         *------------------------------------------------------------
     */
-const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) =>{
+const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
   const axios = require('axios').default;
   await axios( {
         method: 'post',
@@ -224,15 +224,15 @@ const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | Bo
         *  Process API Calls
         *------------------------------------------------------------
     */
-  const onTimeSeriesDataProcessAPI = async ( 
-    token:string | null,
-    user_id:string | null,
-    heartRateData:HeartRateProps | null,
-    bloodPressureData:BloodPressureProps | null,
-    bodyTemperatureData:BodyTemperatureProps | null,
-    glucoseData:GlucoseProps | null,
-    oxygenSaturationData:OxygenSaturationProps | null,
-    ) :Promise<void> => {
+  const onTimeSeriesDataProcessAPI =( 
+                                      token:string | null,
+                                      user_id:string | null,
+                                      heartRateData:HeartRateProps | null,
+                                      bloodPressureData:BloodPressureProps | null,
+                                      bodyTemperatureData:BodyTemperatureProps | null,
+                                      glucoseData:GlucoseProps | null,
+                                      oxygenSaturationData:OxygenSaturationProps | null,
+                                    ) => {
 
   if (lengthChecker(heartRateData) !== 0) {
     onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
