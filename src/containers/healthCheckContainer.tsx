@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns'
 
 import HealthCheckComponent from '../components/healthCheckComponent';
 import { SYMPTOMS_DROPDOWN_LIST } from '../constants';
@@ -19,6 +20,7 @@ happyCheck ?: string;
 othersCheck ?: boolean;
 othersValue ?: string;
 healthCheck ?: string;
+values ?: string[];
 }
 
 export default class HealthCheckContainer extends Component<IProps,StateProps> {
@@ -41,6 +43,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
           othersCheck:false,
           othersValue:"",
           healthCheck:"",
+          values:[],
         }
       this.showSettings = this.showSettings.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -56,6 +59,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
       this.onSameCheck = this.onSameCheck.bind(this);
       this.onBadCheck = this.onBadCheck.bind(this);
       this.onWorseCheck = this.onWorseCheck.bind(this);
+      this.onValuesChange = this.onValuesChange.bind(this);
     }
 
   /* *
@@ -169,9 +173,14 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
         healthCheck:event.currentTarget.value,
       })
     } 
+
+    onValuesChange = (value: MultiSelectChangeEventArgs | undefined): void => {
+     console.log(value? value.value:null);
+    } 
     
     private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
     private fieldsObj: object = { text: 'value', value: 'id' };
+    
  
 
   /* *
@@ -194,6 +203,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
               onWorseCheck,
               dropdownArray,
               fieldsObj,
+              onValuesChange,
             } = this;
       const { intensity,
               anxietyCheck,
@@ -203,7 +213,8 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
               happyCheck,
               othersCheck,
               othersValue,
-              healthCheck 
+              healthCheck,
+              values
             } = this.state;
       return (
         <HealthCheckComponent
@@ -218,6 +229,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
         healthCheck={healthCheck}
         fieldsObj={fieldsObj}
         dropdownArray={dropdownArray}
+        values={values}
         showSettings={showSettings}
         onIntensityClick={onIntensityClick}
         onAnxietyCheck={onAnxietyCheck}
@@ -231,6 +243,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
         onSameCheck={onSameCheck}
         onBadCheck={onBadCheck}
         onWorseCheck={onWorseCheck}
+        onValuesChange={onValuesChange}
         />
         );
     }

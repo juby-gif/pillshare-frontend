@@ -14,7 +14,7 @@ import {
   Media,
 } from "reactstrap";
 import Rating from 'react-rating';
-import { MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
+import { MultiSelectComponent,MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns';
 
 import '../App.css';
 import logo from '../img/logo.png';
@@ -45,6 +45,8 @@ interface IProps {
     healthCheck ?: string;
     fieldsObj ?: object;
     dropdownArray ?: {[key: string]: Object }[];
+    values ?: string[];
+    onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
 }
 
 const HealthCheckComponent = (props: IProps) : JSX.Element => {
@@ -61,6 +63,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
             onHappyCheck,
             onOthersCheck,
             onOthersValueChange,
+            onValuesChange,
             intensity,
             anxietyCheck,
             depressionCheck,
@@ -71,7 +74,8 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
             othersCheck,
             othersValue,
             dropdownArray,
-            fieldsObj
+            fieldsObj,
+            values
         } = props;
     return(
         <React.Fragment>
@@ -157,7 +161,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                 <ol className="ml-5 mt-5">
                                     <li>How are you feeling today?</li>
                                     <Row className="p-3">
-                                        <MultiSelectComponent dataSource={dropdownArray} fields={fieldsObj}  popupHeight="250px" popupWidth="290px"  placeholder="Select your symptoms from the list" />
+                                        <MultiSelectComponent change={onValuesChange} value={values} dataSource={dropdownArray} fields={fieldsObj}  popupHeight="250px" popupWidth="290px"  placeholder="Select your symptoms from the list" />
                                     </Row>
                                     <Row>
                                         <Col className="ml-2 mr-4 mb-3">
