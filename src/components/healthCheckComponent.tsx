@@ -34,6 +34,7 @@ interface IProps {
     onSameCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBadCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onWorseCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
     intensity ?:number;
     anxietyCheck ?: string;
     depressionCheck ?: string;
@@ -46,7 +47,6 @@ interface IProps {
     fieldsObj ?: object;
     dropdownArray ?: {[key: string]: Object }[];
     values ?: string[];
-    onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
 }
 
 const HealthCheckComponent = (props: IProps) : JSX.Element => {
