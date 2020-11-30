@@ -23,27 +23,63 @@ export const SYMPTOMS_DROPDOWN_LIST = [{
   },
   {
     id:3,
-    value:"Acid Reflux"
+    value:"Joint pain in the morning"
   },
   {
     id:4,
-    value:"Acid Reflux"
+    value:"Joint pain, knee"
   },
-    
-    // "Joint pain in the morning",
-    // "Joint pain, knee",
-    // "lump under the jaw",
-    // "Joint pain, hip",
-    // "Joint stiffness",
-    // "Creaking of joint during movement",
-    // "Joint pain, wrist",
-    // "Joint swelling",
-    // "joint pain in foot",
-    // "Jacksonian seizure",
-    // "Joint pain, aggravated during cold, damp weather",
-    // "Edema, knee joint",
-    // "Morning stiffness of hand joints",
-    // "Spine or joint stiffness subsiding after exercise",
-    // "Edema, ankle joint"
+  {
+    id:5,
+    value:"lump under the jaw"
+  },
+  {
+    id:6,
+    value:"Joint pain, hip"
+  },
+  {
+    id:7,
+    value:"Joint stiffness"
+  },
+  {
+    id:8,
+    value:"Creaking of joint during movement"
+  },
+  {
+    id:9,
+    value:"Joint pain, wrist"
+  },
+  {
+    id:10,
+    value: "Joint swelling"
+  },
+  {
+    id:11,
+    value:"joint pain in foot"
+  },
+  {
+    id:12,
+    value:"Jacksonian seizure"
+  },
+  {
+    id:13,
+    value:"Joint pain, aggravated during cold, damp weather"
+  },
+  {
+    id:14,
+    value:"Edema, knee joint"
+  },
+  {
+    id:15,
+    value:"Morning stiffness of hand joints"
+  },
+  {
+    id:16,
+    value:"Spine or joint stiffness subsiding after exercise"
+  },
+  {
+    id:17,
+    value:"Edema, ankle joint"
+  }
   ];
 
