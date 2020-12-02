@@ -293,6 +293,8 @@ export default function CustomizedSteppers() {
     */
     const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // TODO ADD SAVE FUNCTIONALITY
+      // TODO ADD VALIDATION
       if(activeStep === steps.length - 1 ){
         let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
         let user_id: string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;

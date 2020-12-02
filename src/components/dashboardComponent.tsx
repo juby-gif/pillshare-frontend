@@ -20,14 +20,94 @@ import pro from '../img/pro-pic.jpg';
 
 
 interface IProps {
-    showSettings: (event: React.SyntheticEvent) => void;
-}
+    alertsResponded : number;
+    alertsSent : number;
+    bloodPressure ?: BloodPressureProps;
+    bodyTemperature ?: BodyTemperatureProps;
+    glucose ?: GlucoseProps;
+    healthCheck ?: HealthCheckProps;
+    heartRate ?: HeartRateProps;
+    medicalInformation ?: MedicalProps[];
+    oxygenSaturation ?: OxygenSaturationProps;
 
-interface TableProps {
-
 }
+ 
+  interface BloodPressureProps {
+    diastole_reading:number;
+    systole_reading:number;
+    percentage:number;
+    instrument_id:number;
+    time:string;
+  }
+  interface BodyTemperatureProps {
+    reading :number;
+    percentage :number;
+    instrument_id :number;
+    time :string;
+  }
+  
+  interface GlucoseProps {
+    reading:number;
+    percentage:number;
+    instrument_id:number;
+    time:string;
+  }
+  
+  interface HealthCheckProps {
+    health_status:string;
+    time:string;
+  }
+  
+  interface HeartRateProps {
+    reading:number;
+    percentage:number;
+    instrument_id:number;
+    time:string;
+  }
+  
+  interface OxygenSaturationProps {
+    reading:number;
+    percentage:number;
+    instrument_id:number;
+    time:string;
+  }
+  
+  
+  interface MedicalProps {
+    before_or_after : string;
+    dosage : string;
+    dose : number;
+    duration : number;
+    end_date : string;
+    start_date : string;
+    intervals : IntervalProps;
+    missed : string[];
+    measure : string;
+    name : string;
+    reason : string;
+    taken: string[];
+    id:number;
+  }
+  
+  interface IntervalProps {
+    part: string[];
+    time: string[];
+  }
+  
+
 
 const DashboardComponent = (props: IProps) : JSX.Element => {
+    const { 
+        alertsResponded,
+        alertsSent,
+        bloodPressure,
+        bodyTemperature,
+        glucose,
+        healthCheck,
+        heartRate,
+        medicalInformation,
+        oxygenSaturation,
+    } = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
@@ -113,7 +193,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <Row>
                                             <Col xs={7}>
                                                 <Card.Subtitle className="mb-1 text-muted"><b>HEART RATE</b></Card.Subtitle>
-                                                <Card.Title className="mb-2">84 beats/min</Card.Title>
+                                                <Card.Title className="mb-2">{heartRate?heartRate.reading:0} beats/min</Card.Title>
                                             </Col>
                                             <Col>
                                                 <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -126,10 +206,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <p className="mt-3 mb-0 text-sm">
                                                 <span className="text-danger mr-2">
                                                     <FontAwesomeIcon icon={faArrowUp} />
-                                                    3.48%
+                                                    {heartRate?heartRate.percentage:0}%
                                                 </span>
                                                 <span className="text-nowrap">
-                                                    Since last month
+                                                {heartRate?heartRate.time:""}
                                                 </span>
                                             </p>
                                         </Row>
@@ -149,7 +229,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <Row>
                                             <Col xs={7}>
                                                 <Card.Subtitle className="mb-1 text-muted"><b>BLOOD PRESSURE</b></Card.Subtitle>
-                                                <Card.Title className="mb-2">120/80 mmHg</Card.Title>
+                                                <Card.Title className="mb-2">{bloodPressure?bloodPressure.systole_reading:0} / {bloodPressure?bloodPressure.diastole_reading:0} mmHg</Card.Title>
                                             </Col>
                                             <Col>
                                                 <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -162,10 +242,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <p className="mt-3 mb-0 text-sm">
                                                 <span className="text-success mr-2">
                                                     <FontAwesomeIcon icon={faArrowDown} />
-                                                    2.01%
+                                                    {bloodPressure?bloodPressure.percentage:0}%
                                                 </span>
                                                 <span className="text-nowrap">
-                                                    Since 9am today
+                                                {bloodPressure?bloodPressure.time:""}
                                                 </span>
                                             </p>
                                         </Row>
@@ -185,7 +265,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <Row>
                                             <Col xs={7}>
                                                 <Card.Subtitle className="mb-1 text-muted"><b>BODY TEMPERATURE</b></Card.Subtitle>
-                                                <Card.Title className="mb-2">102.2°F (39°C)</Card.Title>
+                                                <Card.Title className="mb-2">{bodyTemperature?bodyTemperature.reading:0}°C</Card.Title>
                                             </Col>
                                             <Col>
                                                 <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -198,10 +278,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <p className="mt-3 mb-0 text-sm">
                                                 <span className="text-warning mr-2">
                                                     <FontAwesomeIcon icon={faArrowUp} />
-                                                    2.45%
+                                                    {bodyTemperature?bodyTemperature.percentage:0}%
                                                 </span>
                                                 <span className="text-nowrap">
-                                                    Since yesterday
+                                                    {bodyTemperature?bodyTemperature.time:""}
                                                 </span>
                                             </p>
                                         </Row>
@@ -221,7 +301,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <Row>
                                                 <Col xs={7}>
                                                     <Card.Subtitle className="mb-1 text-muted"><b>GLUCOSE</b></Card.Subtitle>
-                                                    <Card.Title className="mb-2">140 mg/dL</Card.Title>
+                                                    <Card.Title className="mb-2">{glucose?glucose.reading:0} mg/dL</Card.Title>
                                                 </Col>
                                                 <Col>
                                                     <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -234,10 +314,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 <p className="mt-3 mb-0 text-sm">
                                                     <span className="text-warning mr-2">
                                                         <FontAwesomeIcon icon={faArrowUp} />
-                                                        0.02%
+                                                        {glucose?glucose.percentage:0}%
                                                     </span>
                                                     <span className="text-nowrap">
-                                                        Since friday
+                                                    {glucose?glucose.time:""}
                                                     </span>
                                                 </p>
                                             </Row>
@@ -257,7 +337,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <Row>
                                                 <Col xs={7}>
                                                     <Card.Subtitle className="mb-1 text-muted"><b>OXYGEN SATURATION</b></Card.Subtitle>
-                                                    <Card.Title className="mb-2">89%</Card.Title>
+                                                    <Card.Title className="mb-2">{oxygenSaturation?oxygenSaturation.reading:0}%</Card.Title>
                                                 </Col>
                                                 <Col>
                                                     <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -270,10 +350,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 <p className="mt-3 mb-0 text-sm">
                                                     <span className="text-danger mr-2">
                                                         <FontAwesomeIcon icon={faArrowUp} />
-                                                        1.50%
+                                                        {oxygenSaturation?oxygenSaturation.percentage:0}%
                                                     </span>
                                                     <span className="text-nowrap">
-                                                        Since yesterday
+                                                    {oxygenSaturation?oxygenSaturation.time:""}
                                                     </span>
                                                 </p>
                                             </Row>
@@ -293,7 +373,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <Row>
                                                 <Col xs={7}>
                                                     <Card.Subtitle className="mb-1 text-muted"><b>HEALTH CHECK</b></Card.Subtitle>
-                                                    <Card.Title className="text-success">Improving</Card.Title>
+                                                    <Card.Title className="text-success">{healthCheck?healthCheck.health_status:""}</Card.Title>
                                                 </Col>
                                                 <Col>
                                                     <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -304,12 +384,8 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <Row className="ml-1">
                                                 <p className="mt-3 mb-0 text-sm"></p>
                                                 <p className="mt-3 mb-0 text-sm">
-                                                    <span className="text-success mr-2">
-                                                        <FontAwesomeIcon icon={faArrowUp} />
-                                                        1.50%
-                                                    </span>
                                                     <span className="text-nowrap">
-                                                        Since monday
+                                                    {healthCheck?healthCheck.time:""}
                                                     </span>
                                                 </p>
                                             </Row>
@@ -328,8 +404,8 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                         <h2 className="mt-4">Pills Tracking Information:</h2>
-                        <Table className="mt-3" responsive="xl" striped bordered hover>
-                            <thead>
+                        <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="xl" bordered hover={false}>
+                            <thead style={{backgroundColor:"#fff"}}>
                                 <tr>
                                     <th>SL.No</th>
                                     <th>Pill Name</th>
@@ -344,7 +420,77 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <th>Taken / Missed</th>
                                 </tr>
                             </thead>
-                            <TableBodyComponent />
+                            <tbody style={{backgroundColor:"#fff"}}>
+                            {medicalInformation!.map((info) => (
+                                    <tr>
+                                        <td>
+                                            {info.id}
+                                        </td>
+                                        <td>
+                                            {info.name}
+                                        </td>
+                                        <td>
+                                            {info.dose}
+                                        </td>
+                                        <td>
+                                            {info.dosage}
+                                        </td>
+                                        <td>
+                                            {info.before_or_after}
+                                        </td>
+                                        <td>
+                                            {info.duration}
+                                        </td>
+                                        <td>
+                                            {info.start_date}
+                                        </td>
+                                        <td>
+                                            {info.end_date}
+                                        </td>
+                                        <td>
+                                            <Table borderless={true} hover={false} variant="light" responsive="xl">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            <th>
+                                                                Part
+                                                            </th>
+                                                        </td>
+                                                        <td>
+                                                            <th>
+                                                                Time
+                                                            </th>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            {info.intervals.part.map((part)=>
+                                                                <tr>
+                                                                    {part}
+                                                                </tr>)}
+                                                        </td>
+                                                        <td>
+                                                            {info.intervals.time.map((time)=>
+                                                                <tr>
+                                                                    {time}
+                                                                </tr>)}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </Table>
+                                        </td>
+                                        <td>
+                                            {info.reason} 
+                                        </td>
+                                        <td>
+                                            {info.reason} 
+                                        </td>
+                                    </tr>
+                            ))}
+                            
+                            </tbody>
                         </Table>
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
@@ -353,7 +499,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <Row>
                                         <Col xs={7}>
                                             <Card.Subtitle className="mb-1 text-muted"><b>ALERTS SENT</b></Card.Subtitle>
-                                            <Card.Title className="text-success">23</Card.Title>
+                                            <Card.Title className="text-success">{alertsSent}</Card.Title>
                                         </Col>
                                         <Col>
                                             <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -368,7 +514,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <Row>
                                         <Col xs={7}>
                                             <Card.Subtitle className="mb-1 text-muted"><b>ALERTS RESPONDED</b></Card.Subtitle>
-                                            <Card.Title className="text-danger">22</Card.Title>
+                                        <Card.Title className="text-danger">{alertsResponded}</Card.Title>
                                         </Col>
                                         <Col>
                                             <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -388,38 +534,3 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
     );
 }
 export default DashboardComponent;
-
-
-const TableBodyComponent = (props:TableProps):JSX.Element => {
-
-    return (
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Hydrocodone</td>
-                <td>2 tablets</td>
-                <td>EOD</td>
-                <td>Before</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Morning - 9:30am,Night - 8:45pm</td>
-                <td>pain medication</td>
-                <td>Morning-Taken,Night-Missed</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Simvastatin</td>
-                <td>1 tablet</td>
-                <td>SID</td>
-                <td>After</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Night - 8:45pm</td>
-                <td>to lower the number of triglycerides and LDL</td>
-                <td>Night-Taken</td>
-            </tr>
-        </tbody>
-    );
-}
