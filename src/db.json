@@ -130,7 +130,7 @@
               },
             "reason" : "Pain Medication",
             "taken" : ["Morning"],
-            "missed" : ["Evening"]
+            "missed" : []
           }
         ],
       "alerts_sent" : 23,

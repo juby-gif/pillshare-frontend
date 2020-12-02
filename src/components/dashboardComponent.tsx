@@ -441,10 +441,10 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <td>
                                             {info.duration}
                                         </td>
-                                        <td>
+                                        <td style={{width: '6rem', textAlign: 'center'}}>
                                             {info.start_date}
                                         </td>
-                                        <td>
+                                        <td style={{width: '6rem', textAlign: 'center'}}>
                                             {info.end_date}
                                         </td>
                                         <td>
@@ -468,7 +468,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                         <td>
                                                             {info.intervals.part.map((part)=>
                                                                 <tr>
-                                                                    {part}
+                                                                    <b>{part}:</b>
                                                                 </tr>)}
                                                         </td>
                                                         <td>
@@ -485,7 +485,25 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             {info.reason} 
                                         </td>
                                         <td>
-                                            {info.reason} 
+                                            <Table borderless={true} hover={false} variant="light" responsive="xl">
+                                                    
+                                                <tbody>
+                                                    <tr>
+                                                        <tr>
+                                                            {info.taken.map((part)=>
+                                                                <tr>
+                                                                    <b>Taken:</b>&nbsp;&nbsp;{part}
+                                                                </tr>)}
+                                                        </tr>
+                                                        <tr>
+                                                            {info.missed.map((part)=>
+                                                                <tr>
+                                                                    <b>Missed:</b>&nbsp;&nbsp;{part}
+                                                                </tr>)}
+                                                        </tr>
+                                                    </tr>
+                                                </tbody>
+                                            </Table>
                                         </td>
                                     </tr>
                             ))}
