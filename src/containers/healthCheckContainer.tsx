@@ -78,9 +78,6 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
       *  API callback functions
       *------------------------------------------------------------
   */
-
-
-  
   /* *
       *  Event handling functions
       *------------------------------------------------------------

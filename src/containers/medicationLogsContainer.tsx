@@ -95,7 +95,7 @@ export default class MedicationLogsContainer extends Component<IProps,StateProps
     */
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      console.log(responseData.data);
+      // console.log(responseData.data);
         this.setState({
           medical_information : responseData.data,
         })

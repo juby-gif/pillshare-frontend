@@ -176,10 +176,12 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
   */
   render () {
     const { alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
-    console.log(
-      alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation
-    )
-    // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
+    
+    //For Debugging purpose only
+    // console.log(
+    //   alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation
+    // )
+
     return (
         <DashboardComponent 
           alertsResponded = {alerts_responded}

@@ -156,7 +156,7 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
                                             <td>{datum.reason}</td>
                                             <td>{datum.taken}{''}{datum.missed}</td>
                                         </tr>
-                                    )):<tr><span className="d-flex justify-content-center">No Data Available</span></tr>}
+                                    )):<div>{" "}</div>}
                                 </tbody>
                         </Table>
                         </Container>
