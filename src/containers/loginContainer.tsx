@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
 
 import LoginComponent from '../components/loginComponent';
-import { LOGGED_IN_USER, PILLSHARE_USER_TOKEN, USER_TOKEN } from '../constants';
+import { PILLSHARE_USER_TOKEN } from '../constants';
+import { postLoginAPI } from '../API/loginAPI';
 import '../App.css';
 
 
@@ -22,14 +23,6 @@ interface ResponseProps {
     token ?: string;
 }
 
-interface ServerResponse {
-  data: ServerData[];
-}
-
-interface ServerData {
-  username: string;
-  password: string;
-}
 export default class LoginContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
     /*   *
@@ -71,49 +64,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     */
     onLoginAPIProcessCall = (username:string,password:string):void => {
         const { onSuccessCallBack,onFailureCallBack } = this;
-        
-        const axios = require('axios').default;
-        axios({
-            method: 'get',
-            url: 'http://localhost:3001/users',
-            
-          })
-          .then(function (response:ServerResponse) {
-
-            //For Debugging purpose only
-            // console.log(response.data)
-            
-            let userArray: ServerData[] = response.data;
-            if (userArray !== null || userArray !== undefined || userArray !== []){
-        
-            for (let userObj of userArray){
-                if(userObj.username === username){
-                    if(userObj.password === password){
-                        sessionStorage.setItem(LOGGED_IN_USER,JSON.stringify(userObj));
-                        const responseData = {
-                            message : "Successfully logged-in",
-                            token : USER_TOKEN,
-                        }
-                        onSuccessCallBack(responseData);
-                        return;
-                    } else {
-                        const responseData = {
-                            message : "Incorrect Password",
-                        }
-                        onFailureCallBack(responseData);
-                        return;
-                    }
-                }
-            }
-            const responseData = {
-                message : "You are not a registered User",
-            }
-            onFailureCallBack(responseData);
-            }
-          })
-          .catch(function (error:ServerResponse) {
-            console.log(error);
-          });
+        postLoginAPI(username,password,onSuccessCallBack,onFailureCallBack);        
     }
 
     /* *

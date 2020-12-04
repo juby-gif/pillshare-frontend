@@ -17,7 +17,8 @@ import BodyTemperatureContainer from './measurementContainers/bodyTemperatureCon
 import GlucoseContainer from './measurementContainers/glucoseContainer';
 import OxygenSaturationContainer from './measurementContainers/oxygenSaturationContainer';
 import ReviewContainer from './measurementContainers/reviewContainer'
-import { URL, BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
+import { BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
+import { postTimeSeriesData } from '../API/measurementAPI'
 
 interface BodyTemperatureProps {
   reading ?: number;
@@ -204,21 +205,9 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
         *  API callback functions
         *------------------------------------------------------------
     */
-const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
-  const axios = require('axios').default;
-  await axios( {
-        method: 'post',
-        url: URL + name,
-        data: data,
-        headers: {'Content-Type':'application/json'}})
-        .then(function (responseData:ServerResponse) {
-              onSuccessCallBack(responseData);
-            }) 
-
-        .catch(function (error:ServerResponse) {
-          onFailureCallBack(error);
-          });
-}
+  const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
+    postTimeSeriesData(data,name,onSuccessCallBack,onFailureCallBack)
+  }
 
     /* *
         *  Process API Calls

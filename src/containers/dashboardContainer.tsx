@@ -98,6 +98,11 @@ interface ServerData {
   oxygen_saturation : OxygenSaturationProps,
 }
 export default class DashboardContainer extends Component<IProps,StateProps> {
+
+  /*  *
+      *  Initializer
+      *------------------------------------------------------------
+  */
     constructor(props:IProps){
         super(props);
         this.state = {
@@ -114,41 +119,61 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
         this.onFailureCallBack = this.onFailureCallBack.bind(this);
     }
-    
+
+    /*  *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
       const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+
+    /*  *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
       getDashboard(user_id,onSuccessCallBack,onFailureCallBack);
-     
+     }
+
+    /* *
+      *  Utility
+      *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
+    onSuccessCallBack = (responseData: ServerResponse): void => {
+      // For debugging purpose only
+      //console.log(responseData);
+
+      for(let datum of responseData.data){
+        this.setState({
+          alerts_responded : datum.alerts_responded,
+          alerts_sent : datum.alerts_sent,
+          blood_pressure : datum.blood_pressure,
+          body_temperature : datum.body_temperature,
+          glucose : datum.glucose,
+          health_check : datum.health_check,
+          heart_rate : datum.heart_rate,
+          medical_information : datum.medical_information,
+          oxygen_saturation : datum.oxygen_saturation,
+
+        })
+        return;
       }
-  
-
-
-      onSuccessCallBack = (responseData: ServerResponse): void => {
-        // For debugging purpose only
-        //console.log(responseData);
-
-        for(let datum of responseData.data){
-          this.setState({
-            alerts_responded : datum.alerts_responded,
-            alerts_sent : datum.alerts_sent,
-            blood_pressure : datum.blood_pressure,
-            body_temperature : datum.body_temperature,
-            glucose : datum.glucose,
-            health_check : datum.health_check,
-            heart_rate : datum.heart_rate,
-            medical_information : datum.medical_information,
-            oxygen_saturation : datum.oxygen_saturation,
-
-          })
-          return;
-        }
-      }
+    }
       
-      onFailureCallBack = (responseData: ServerResponse): void => {
-          alert(responseData);
-      }
- 
+    onFailureCallBack = (responseData: ServerResponse): void => {
+        alert(responseData);
+    }
+    
+  /*  *
+      *  Main render function
+      *------------------------------------------------------------
+  */
   render () {
     const { alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
     console.log(

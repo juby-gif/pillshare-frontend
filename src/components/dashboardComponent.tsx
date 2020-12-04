@@ -373,7 +373,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             <Row>
                                                 <Col xs={7}>
                                                     <Card.Subtitle className="mb-1 text-muted"><b>HEALTH CHECK</b></Card.Subtitle>
-                                                    <Card.Title className="text-success">{healthCheck?healthCheck.health_status:""}</Card.Title>
+                                                    <Card.Title className="text-success">{healthCheck?healthCheck.health_status:<span style={{color:"#000",fontSize:"1rem"}}>No data Available</span>}</Card.Title>
                                                 </Col>
                                                 <Col>
                                                     <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -421,7 +421,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                 </tr>
                             </thead>
                             <tbody style={{backgroundColor:"#fff"}}>
-                            {medicalInformation!.map((info) => (
+                            {medicalInformation?medicalInformation.map((info) => (
                                     <tr>
                                         <td>
                                             {info.id}
@@ -430,7 +430,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             {info.name}
                                         </td>
                                         <td>
-                                            {info.dose}
+                                            {info.dose} {' '}{info.measure}
                                         </td>
                                         <td>
                                             {info.dosage}
@@ -506,7 +506,8 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             </Table>
                                         </td>
                                     </tr>
-                            ))}
+                            )):<tr>No data available</tr>
+                        }
                             
                             </tbody>
                         </Table>

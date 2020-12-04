@@ -136,6 +136,108 @@
       "alerts_sent" : 23,
       "alerts_responded" : 20,
       "id": 1
+    },
+    {
+      "user_id":"2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "heart_rate":{
+        "instrument_id": 1,
+        "reading": 75,
+        "percentage" : 3.48,
+        "time": "Since last month"
+            },
+      "blood_pressure":{
+        "instrument_id": 2,
+        "systole_reading": 125,
+        "diastole_reading" : 80,
+        "percentage" : 2.01,
+        "time": "Since 9am today"
+            },
+      "body_temperature":{
+        "instrument_id": 3,
+        "reading": 34,
+        "percentage" : 2.45,
+        "time": "Since yesterday"
+            },
+      "glucose":{
+        "instrument_id": 4,
+        "reading": 117,
+        "percentage" : 0.02,
+        "time": "Since friday"
+            },
+      "oxygen_saturation":{
+        "instrument_id": 5,
+        "reading": 89,
+        "percentage" : 1.50,
+        "time": "Since yesterday"
+            },
+      "health_check":{
+        "health_status": "improving",
+        "time": "Since monday"
+            },
+
+      "medical_information":[
+          {
+            "id":1,
+            "name": "Hydrocodone",
+            "dose" : 2,
+            "measure" : "tablet(s)",
+            "dosage" : "EOD",
+            "before_or_after": "before",
+            "duration" :30,
+            "start_date" : "21-03-2020",
+            "end_date" : "21-04-2020",
+            "intervals" : {
+                "part" : ["morning","evening"],
+                "time" : ["10:37","20.45"]
+              },
+            "reason" : "Pain Medication",
+            "taken" : ["Morning"],
+            "missed" : []
+          }
+        ],
+      "alerts_sent" : 23,
+      "alerts_responded" : 20,
+      "id": 2
+    }
+  ],
+  "medication_logs" : [
+    {
+      "id":1,
+      "name": "Hydrocodone",
+      "dose" : 2,
+      "measure" : "tablet(s)",
+      "dosage" : "EOD",
+      "before_or_after": "before",
+      "duration" :30,
+      "start_date" : "21-03-2020",
+      "end_date" : "21-04-2020",
+      "time_taken" : {
+          "part" : "Morning",
+          "time" : "9:30"
+        },
+      "reason" : "Pain Medication",
+      "taken" : "Taken",
+      "missed" : "",
+      "user_id" : "1fc257ec-5449-4491-a3fe-d961ed685270"
+    },
+    {
+      "id":2,
+      "name": "Simvastatin",
+      "dose" : 2,
+      "measure" : "tablet(s)",
+      "dosage" : "EOD",
+      "before_or_after": "before",
+      "duration" :30,
+      "start_date" : "21-03-2020",
+      "end_date" : "21-04-2020",
+      "time_taken" : {
+          "part" : "",
+          "time" : ""
+        },
+      "reason" : "to lower the number of triglycerides and LDL",
+      "taken" : "",
+      "missed" : "Missed",
+      "user_id" : "1fc257ec-5449-4491-a3fe-d961ed685270"
     }
   ]
 }

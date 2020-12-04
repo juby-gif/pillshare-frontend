@@ -20,13 +20,31 @@ import pro from '../img/pro-pic.jpg';
 
 
 interface IProps {
-    showSettings: (event: React.SyntheticEvent) => void;
-}
-interface TableProps {
-
-}
+    medical_information : MedicalProps[];
+  }
+  
+  interface MedicalProps {
+    before_or_after ?: string;
+    dosage ?: string;
+    dose ?: number;
+    duration ?: number;
+    end_date ?: string;
+    start_date ?: string;
+    time_taken ?: TakenProps;
+    missed ?: string;
+    measure ?: string;
+    name ?: string;
+    reason ?: string;
+    taken ?: string;
+    id : number;
+  }
+  interface TakenProps{
+    part ?: string;
+    time ?: string;
+  }
 
 const MedicationLogsComponent = (props: IProps) : JSX.Element => {
+    const { medical_information } = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
@@ -123,7 +141,23 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
                                         <th>Taken / Missed</th>
                                     </tr>
                                 </thead>
-                            <TableBodyComponent />
+                                <tbody>
+                                    {medical_information.length!==0?medical_information.map((datum) =>(
+                                        <tr key={datum.id}>
+                                            <td>{datum.id}</td>
+                                            <td>{datum.name}</td>
+                                            <td>{datum.dose}{' '}{datum.measure}</td>
+                                            <td>{datum.dosage}</td>
+                                            <td>{datum.before_or_after}</td>
+                                            <td>{datum.duration}</td>
+                                            <td>{datum.start_date}</td>
+                                            <td>{datum.end_date}</td>
+                                            <td>{datum.time_taken?datum.time_taken.part + " ":""}{datum.time_taken?datum.time_taken.time:""}</td>
+                                            <td>{datum.reason}</td>
+                                            <td>{datum.taken}{''}{datum.missed}</td>
+                                        </tr>
+                                    )):<tr><span className="d-flex justify-content-center">No Data Available</span></tr>}
+                                </tbody>
                         </Table>
                         </Container>
                         {/* ----------------------The page content ends here---------------------- */}
@@ -134,53 +168,3 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
     );
 }
 export default MedicationLogsComponent;
-
-
-
-
-const TableBodyComponent = (props:TableProps):JSX.Element => {
-
-    return (
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Hydrocodone</td>
-                <td>2 tablets</td>
-                <td>EOD</td>
-                <td>Before</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Morning - 9:30am</td>
-                <td>pain medication</td>
-                <td>Morning-Taken</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Hydrocodone</td>
-                <td>2 tablets</td>
-                <td>EOD</td>
-                <td>Before</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Night - 8:45pm</td>
-                <td>pain medication</td>
-                <td>Night-Missed</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Simvastatin</td>
-                <td>1 tablet</td>
-                <td>SID</td>
-                <td>After</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Night - 8:45pm</td>
-                <td>to lower the number of triglycerides and LDL</td>
-                <td>Night-Taken</td>
-            </tr>
-        </tbody>
-    );
-}
