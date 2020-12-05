@@ -45,7 +45,6 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
           healthCheck:"",
           values:[],
         }
-      this.showSettings = this.showSettings.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this); 
       this.onIntensityClick = this.onIntensityClick.bind(this);
@@ -82,11 +81,6 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
       *  Event handling functions
       *------------------------------------------------------------
   */
-    showSettings = (event: React.SyntheticEvent): void => {
-      event.preventDefault();
-      alert("hii")  
-    }
-
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
           date:event.currentTarget.value,
@@ -185,8 +179,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
       *------------------------------------------------------------
   */
   render () {
-      const { showSettings,
-              onIntensityClick,
+      const { onIntensityClick,
               onAnxietyCheck,
               onIrritabilityCheck,
               onDepressionCheck,
@@ -227,7 +220,6 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
         fieldsObj={fieldsObj}
         dropdownArray={dropdownArray}
         values={values}
-        showSettings={showSettings}
         onIntensityClick={onIntensityClick}
         onAnxietyCheck={onAnxietyCheck}
         onIrritabilityCheck={onIrritabilityCheck}
