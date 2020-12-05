@@ -1,4 +1,3 @@
-
 interface BloodPressureProps {
   diastole_reading:number;
   systole_reading:number;

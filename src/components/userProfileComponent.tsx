@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row,Col,Card,Container,Table,Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt,faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
 
@@ -18,9 +18,52 @@ interface TableProps {
 }
 
 interface IProps {
-    showSettings: (event: React.SyntheticEvent) => void;
+    onWeightChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onHeightChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBodyMassIndexCalculation : (event:React.SyntheticEvent) => void;
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    username: string,
+    email: string,
+    weight: string;
+    height: string;
+    age:number,
+    gender:string,
+    dob:string,
+    address:string,
+    city:string,
+    province:string,
+    country:string,
+    zip:string,
+    phone:string,
+    bmi:string,
+    bloodGroup:string,
+    underlyingHealthIssues:string[],
+    otherHealthIssues:string[],
 }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
+    const { firstName,
+            middleName,
+            lastName,
+            username,
+            email,
+            weight,
+            height,
+            age,
+            gender,
+            dob,
+            address,
+            city,
+            province,
+            country,
+            zip,
+            phone,
+            bmi,
+            bloodGroup,
+            underlyingHealthIssues,
+            otherHealthIssues,
+        } =  props;
     return(
         <React.Fragment>
             {/* --- Sidebar ---*/}
@@ -44,7 +87,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                     >
                         <Row>
                             <Col lg="12" md="12">
-                                <h1 className="display-2 text-white">Hello Frank!</h1>
+                                <h1 className="display-2 text-white">Hello {firstName}!</h1>
                                 <p className="text-white mt-0 mb-5">
                                 <h4>Welcome to the Pillshare Daily Medication Tracker app.</h4>
                                 Please fill out this profile and then the app will unlock the other features for you.
@@ -79,16 +122,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 <Card.Body className="pt-0 pt-md-4">
                                     <div className="text-center mt-4">
                                         <h3>
-                                            Frank Herbert
-                                            <span className="font-weight-light">, 25</span>
+                                            {firstName} {lastName}
+                                            <span className="font-weight-light">, {age}</span>
                                         </h3>
                                         <div className="h5 font-weight-300">
                                             <FontAwesomeIcon className="ni mr-2" icon={faMapMarkerAlt} />
-                                            London, Ontario, Canada
-                                        </div>
-                                        <div className="h5 mt-4">
-                                            <FontAwesomeIcon className="ni mr-2" icon={faBriefcase} />
-                                            Customer Service Manager - Walmart
+                                            {city}, {province}, {country}
                                         </div>
                                     </div>
                                 </Card.Body>
@@ -113,13 +152,13 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                     </h6>
                                                 </Col>
                                                 <Col className="text-right" xs="4">
-                                                    {/* <Button
+                                                    <Button
                                                         color="primary"
                                                         onClick={e => e.preventDefault()}
                                                         size="sm"
                                                     >
                                                         Update
-                                                    </Button> */}
+                                                    </Button>
 
                                                     {/* Modal For updating User Information */}
 
@@ -141,7 +180,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Username"
-                                                        defaultValue="frank123"
+                                                        value={username}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
@@ -156,7 +195,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="email"
                                                         placeholder="Email Address"
-                                                        defaultValue="frank@gmail.com"
+                                                        value={email}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -168,7 +207,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="First Name"
-                                                        defaultValue="Frank"
+                                                        value={firstName}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
@@ -178,7 +217,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Middle Name"
-                                                        defaultValue=""
+                                                        value={middleName}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
@@ -187,8 +226,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             readOnly
                                                             required
                                                             type="text"
-                                                            placeholder="Middle Name"
-                                                            defaultValue="Herbert"
+                                                            placeholder="Last Name"
+                                                            value={lastName}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -200,7 +239,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="number"
                                                         placeholder="Age"
-                                                        defaultValue="25"
+                                                        value={age}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
@@ -210,7 +249,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Gender"
-                                                        defaultValue="Male"
+                                                        value={gender}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
@@ -220,7 +259,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             required
                                                             type="date"
                                                             placeholder="Date of Birth"
-                                                            defaultValue="1995-04-01"
+                                                            value={dob}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -255,7 +294,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Address"
-                                                        defaultValue="720 Wellington Road South"
+                                                        value={address}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -267,7 +306,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="City"
-                                                        defaultValue="London"
+                                                        value={city}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridState">
@@ -277,7 +316,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Province/State"
-                                                        defaultValue="Ontario"
+                                                        value={province}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridCountry">
@@ -287,7 +326,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Country"
-                                                        defaultValue="Canada"
+                                                        value={country}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -299,7 +338,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Zip"
-                                                        defaultValue="N6G 3P8"
+                                                        value={zip}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridPhoneNumber">
@@ -310,7 +349,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         type="tel"
                                                         placeholder="Province/State"
                                                         pattern="[+]{} [0-9]{3}-[0-9]{3}-[0-9]{3}"
-                                                        defaultValue="+1123-456-345"
+                                                        value={phone}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -339,36 +378,43 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         <div className="pl-lg-4">
                                             <Form.Row>
                                                 <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridWeight">
-                                                    <Form.Label>Weight</Form.Label>
+                                                    <Form.Label>Weight(Kg)</Form.Label>
                                                     <Form.Control
-                                                        readOnly
+                                                        readOnly    
                                                         required
                                                         type="text"
                                                         placeholder="Weight"
-                                                        defaultValue="160 pounds"
+                                                        value={weight}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridHeight">
-                                                    <Form.Label>Height</Form.Label>
+                                                    <Form.Label>Height(m)</Form.Label>
                                                     <Form.Control
                                                         readOnly
                                                         required
                                                         type="text"
                                                         placeholder="Height"
-                                                        defaultValue="173 cm"
+                                                        value={height}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridBMI">
-                                                    <Form.Label>Body Mass Index</Form.Label>
+                                                    <Form.Label>BMI Status</Form.Label>
                                                     <Form.Control
                                                         disabled
                                                         required
                                                         type="text"
-                                                        placeholder="BMI"
-                                                        defaultValue="24.5"
+                                                        placeholder="BMI Value"
+                                                        value={bmi}
                                                     />
+                                                    {/* {parseInt(bodyMassIndexValue)<18.5 ? <Alert className="mt-2" variant="warning">Underweight</Alert>:""}
+                                                    {parseInt(bodyMassIndexValue)>=18.5 && parseInt(bodyMassIndexValue)<=24.9 ? <Alert className="mt-2" variant="success">Normal</Alert>:""}
+                                                    {parseInt(bodyMassIndexValue)>=25.0 && parseInt(bodyMassIndexValue)<=29.9 ? <Alert className="mt-2" variant="warning">Overweight</Alert>:""}
+                                                    {parseInt(bodyMassIndexValue)>=30.0 ? <Alert className="mt-2" variant="danger">Obesity</Alert>:""} */}
                                                 </Form.Group>
+                                                {/* <Form.Group className="mt-4"><Button size="lg" onClick ={onBodyMassIndexCalculation}>Calculate BMI?</Button></Form.Group> */}
                                             </Form.Row>
+                                            
+                                            
                                             <Form.Row>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridBG">
                                                     <Form.Label>Blood Group</Form.Label>
@@ -377,7 +423,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="text"
                                                         placeholder="Blood Group"
-                                                        defaultValue="O+"
+                                                        value={bloodGroup}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridHealthIssues">
@@ -385,9 +431,9 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                     <Form.Control
                                                         readOnly
                                                         required
-                                                        type="select"
+                                                        type="text-area"
                                                         placeholder="Underlying Health Issues"
-                                                        defaultValue="Obesity,Diabetics,Cardiovascular disease"
+                                                        value={underlyingHealthIssues}
                                                     />
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridOtherHealthIssues">
@@ -397,7 +443,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         required
                                                         type="select"
                                                         placeholder="Other Health Issues"
-                                                        defaultValue="Fever,Allergy,Fractures"
+                                                        value={otherHealthIssues}
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
@@ -443,10 +489,10 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <TableBodyComponent />
                                             </Table>  
                                         </div>
-                                        <hr className="my-4" />
 
-                                        {/* Profile Information */}
-                                        <span className="bg-light border-0">
+                                        {/* UUID Information */}
+
+                                        {/*<span className="bg-light border-0">
                                             <Row className="align-items-center">
                                                 <Col xs="8">
                                                     <h6 className="heading-small text-muted mb-4">
@@ -457,28 +503,19 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                         <div className="pl-lg-4" style={{margin: "auto"}}>
                                             <Form.Row>
-                                                <Form.Group as={Col} xs="4" md="3" lg="3" controlId="formGridWeight">
-                                                    <Form.Label>Username</Form.Label>
-                                                    <Form.Control
-                                                        disabled
-                                                        type="text"
-                                                        placeholder="Username"
-                                                        defaultValue="Frank"
-                                                    />
-                                                </Form.Group>
-                                            </Form.Row>
-                                            <Form.Row>
                                                 <Form.Group as={Col} xs="10" md="5" lg="5" controlId="formGridWeight">
                                                     <Form.Label>UUID</Form.Label>
                                                     <Form.Control
                                                         disabled
                                                         type="text"
                                                         placeholder="UUID"
-                                                        defaultValue="308ef15c-6c35-4bef-b5b1-ac8196dab813"
+                                                        value="308ef15c-6c35-4bef-b5b1-ac8196dab813"
                                                     />
                                                 </Form.Group>
                                             </Form.Row>
-                                        </div>
+                                        </div> */}
+
+                                        {/* UUID Information */}
                                     </Form>
                                 </Card.Body>
                             </Card>

@@ -1,5 +1,3 @@
-
-
 interface TakenProps{
   part ?: string;
   time ?: string;
