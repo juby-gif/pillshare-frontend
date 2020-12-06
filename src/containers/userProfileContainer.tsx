@@ -244,6 +244,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onUserInfoBackClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
+        event.preventDefault();
         this.setState({
             userShow:false,
         })
@@ -251,6 +252,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     // Contact Information Update
     onContactInfoClick = (event: React.SyntheticEvent):void => {
+      event.preventDefault();
       this.setState({
         contactShow:true,
       })
@@ -287,13 +289,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onContactInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      const { username,firstName,lastName,middleName,email,age,dob } = this.state;
-      console.log(username,firstName,lastName,middleName,email,age,dob)
+      const { address,city,province,country,zip,phone } = this.state;
+      console.log(address,city,province,country,zip,phone )
       this.setState({
         contactShow:false,
       })
     }
     onContactInfoBackClick = (event : React.SyntheticEvent) : void => {
+      event.preventDefault();
       event.preventDefault();
       this.setState({
         contactShow:false,
@@ -302,6 +305,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     // Health Information Update
     onHealthInfoClick = (event: React.SyntheticEvent):void => {
+      event.preventDefault();
       this.setState({
         healthShow:true,
       })
@@ -328,7 +332,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onHealthInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      const { username,firstName,lastName,middleName,email,age,dob,bodyMassIndexValue } = this.state;
+      const { weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue } = this.state;
       let bmi_value = "";
       if( parseInt(bodyMassIndexValue)<18.5){
         bmi_value = "Underweight";
@@ -340,7 +344,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       }else if( parseInt(bodyMassIndexValue)>=30.0 ){
         bmi_value = "Obesity";
       }
-      console.log(username,firstName,lastName,middleName,email,age,dob)
+      console.log(weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue)
       this.setState({
         healthShow:false,
         bmi:bmi_value,
@@ -354,6 +358,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     // Medical Information Update
     onMedicalInfoClick = (event: React.SyntheticEvent):void => {
+      event.preventDefault();
       this.setState({
         medicalShow:true,
       })

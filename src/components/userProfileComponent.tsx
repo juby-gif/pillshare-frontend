@@ -715,7 +715,11 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                             {parseInt(bodyMassIndexValue)>=25.0 && parseInt(bodyMassIndexValue)<=29.9 ? <Alert className="mt-2" variant="warning">Overweight</Alert>:""}
                                                                             {parseInt(bodyMassIndexValue)>=30.0 ? <Alert className="mt-2" variant="danger">Obesity</Alert>:""}
                                                                         </Form.Group>
-                                                                        <Form.Group className="mt-3 ml-5"><Button size="lg" onClick ={onBodyMassIndexCalculation}>Calculate BMI?</Button></Form.Group>
+                                                                        <Form.Group>
+                                                                            <Form.Label>Check BMI?</Form.Label>
+                                                                            <br />
+                                                                            <Button size="sm" onClick ={onBodyMassIndexCalculation}>Calculate</Button>
+                                                                        </Form.Group>
                                                                     </Form.Row>
                                                                     <Form.Row>
                                                                         <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridBG">
@@ -812,6 +816,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         value={bloodGroup}
                                                     />
                                                 </Form.Group>
+
+                                                {/* Will Add a dropdown list for phase 2 */}
                                                 <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridHealthIssues">
                                                     <Form.Label>Underlying Health Issues</Form.Label>
                                                     <Form.Control
@@ -832,6 +838,9 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         value={otherHealthIssues}
                                                     />
                                                 </Form.Group>
+                                                 {/* Will Add a dropdown list for phase 2 */}
+
+                                                 
                                             </Form.Row>
                                         </div>
                                         <hr className="my-4" />
