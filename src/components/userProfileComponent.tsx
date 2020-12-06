@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row,Col,Card,Container,Table,Form, Button } from 'react-bootstrap';
+import { Row,Col,Card,Container,Table,Form, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,7 +10,6 @@ import bg from '../img/bg-image.jpg';
 import pro from '../img/pro-pic.jpg';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
-// import UserInformationModalContainer from '../containers/modalContainers/userInformationModalConatiner';
 
 
 interface TableProps {
@@ -21,6 +20,38 @@ interface IProps {
     onWeightChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onHeightChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBodyMassIndexCalculation : (event:React.SyntheticEvent) => void;
+    
+    // User Information Update 
+    onUserInfoClick : (event: React.SyntheticEvent) => void;
+    onFirstNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onMiddleNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onLastNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onUsernameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onEmailChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onAgeChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onDOBChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onUserInfoSaveClick : (event: React.SyntheticEvent) => void;
+    onUserInfoBackClick : (event: React.SyntheticEvent) => void;
+
+    // Contact Information Update
+    onContactInfoClick : (event: React.SyntheticEvent) => void;
+    onContactInfoSaveClick : (event: React.SyntheticEvent) => void;
+    onContactInfoBackClick : (event: React.SyntheticEvent) => void;
+
+    // Health Information Update
+    onHealthInfoClick : (event: React.SyntheticEvent) => void;
+    onHealthInfoSaveClick : (event: React.SyntheticEvent) => void;
+    onHealthInfoBackClick : (event: React.SyntheticEvent) => void;
+
+    // Medical Information Update
+    onMedicalInfoClick : (event: React.SyntheticEvent) => void;
+    onMedicalInfoSaveClick : (event: React.SyntheticEvent) => void;
+    onMedicalInfoBackClick : (event: React.SyntheticEvent) => void;
+
+    userShow: boolean;
+    contactShow: boolean;
+    healthShow: boolean;
+    medicalShow: boolean;
     firstName: string,
     middleName: string,
     lastName: string,
@@ -41,6 +72,7 @@ interface IProps {
     bloodGroup:string,
     underlyingHealthIssues:string[],
     otherHealthIssues:string[],
+    userUpdate:boolean;
 }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
     const { firstName,
@@ -63,6 +95,37 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             bloodGroup,
             underlyingHealthIssues,
             otherHealthIssues,
+            userShow,
+            contactShow,
+            healthShow,
+            medicalShow,
+
+            // User Information Update
+            onUserInfoClick,
+            onUsernameChange,
+            onFirstNameChange,
+            onMiddleNameChange,
+            onLastNameChange,
+            onEmailChange,
+            onDOBChange,
+            onAgeChange,
+            onUserInfoSaveClick,
+            onUserInfoBackClick,
+
+            // Contact Information Update
+            onContactInfoClick,
+            onContactInfoSaveClick,
+            onContactInfoBackClick,
+
+            // Health Information Update
+            onHealthInfoClick,
+            onHealthInfoSaveClick,
+            onHealthInfoBackClick,
+
+            // Medical Information Update
+            onMedicalInfoClick,
+            onMedicalInfoSaveClick,
+            onMedicalInfoBackClick
         } =  props;
     return(
         <React.Fragment>
@@ -154,15 +217,139 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        onClick={e => e.preventDefault()}
+                                                        onClick={onUserInfoClick}
                                                         size="sm"
                                                     >
                                                         Update
                                                     </Button>
 
-                                                    {/* Modal For updating User Information */}
 
-                                                    {/* <UserInformationModalContainer modalShow={true}/> */}
+                                                    {/* User Information Update Modal */}
+
+                                                    <Modal backdrop="static" keyboard={false} size="lg" show={userShow} aria-labelledby="contained-modal-title-vcenter">
+                                                        <Modal.Header>
+                                                            <Modal.Title className="d-flex justify-content-center" id="contained-modal-title-vcenter">
+                                                            <span>User Information</span>
+                                                            </Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body className="show-grid">
+                                                            <Container>
+                                                                <div className="pl-lg-4">
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-username"
+                                                                            >
+                                                                            Username
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Username"
+                                                                                value={username}
+                                                                                onChange={onUsernameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-email"
+                                                                            >
+                                                                            Email address
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="email"
+                                                                                placeholder="Email Address"
+                                                                                value={email}
+                                                                                onChange={onEmailChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridFName">
+                                                                            <Form.Label>First Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="First Name"
+                                                                                value={firstName}
+                                                                                onChange={onFirstNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
+                                                                            <Form.Label>Middle Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Middle Name"
+                                                                                value={middleName}
+                                                                                onChange={onMiddleNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
+                                                                            <Form.Label>Last Name</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="text"
+                                                                                    placeholder="Last Name"
+                                                                                    value={lastName}
+                                                                                    onChange={onLastNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
+                                                                            <Form.Label>Age</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="number"
+                                                                                placeholder="Age"
+                                                                                value={age}
+                                                                                onChange={onAgeChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
+                                                                            <Form.Label>Gender</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="radio"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
+                                                                            <Form.Label>Date of Birth</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="date"
+                                                                                    placeholder="Date of Birth"
+                                                                                    value={dob}
+                                                                                    onChange={onDOBChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </div>
+                                                            </Container>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button onClick={onUserInfoSaveClick}>Save</Button>
+                                                            <Button onClick={onUserInfoBackClick}>Back</Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
+
+                                                    {/* User Information Update Modal */}
+
+
                                                 </Col>
                                             </Row>
                                         </span>
@@ -277,11 +464,139 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        onClick={e => e.preventDefault()}
+                                                        onClick={onContactInfoClick}
                                                         size="sm"
                                                     >
                                                         Update
                                                     </Button>
+
+
+                                                    {/* Contact Information Update Modal */}
+
+                                                    <Modal backdrop="static" keyboard={false} size="lg" show={contactShow} aria-labelledby="contained-modal-title-vcenter">
+                                                        <Modal.Header>
+                                                            <Modal.Title className="d-flex justify-content-center" id="contained-modal-title-vcenter">
+                                                            <span>Contact Information</span>
+                                                            </Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body className="show-grid">
+                                                            <Container>
+                                                                <div className="pl-lg-4">
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-username"
+                                                                            >
+                                                                            Username
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Username"
+                                                                                value={username}
+                                                                                onChange={onUsernameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-email"
+                                                                            >
+                                                                            Email address
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="email"
+                                                                                placeholder="Email Address"
+                                                                                value={email}
+                                                                                onChange={onEmailChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridFName">
+                                                                            <Form.Label>First Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="First Name"
+                                                                                value={firstName}
+                                                                                onChange={onFirstNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
+                                                                            <Form.Label>Middle Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Middle Name"
+                                                                                value={middleName}
+                                                                                onChange={onMiddleNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
+                                                                            <Form.Label>Last Name</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="text"
+                                                                                    placeholder="Last Name"
+                                                                                    value={lastName}
+                                                                                    onChange={onLastNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
+                                                                            <Form.Label>Age</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="number"
+                                                                                placeholder="Age"
+                                                                                value={age}
+                                                                                onChange={onAgeChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
+                                                                            <Form.Label>Gender</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="radio"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
+                                                                            <Form.Label>Date of Birth</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="date"
+                                                                                    placeholder="Date of Birth"
+                                                                                    value={dob}
+                                                                                    onChange={onDOBChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </div>
+                                                            </Container>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button onClick={onContactInfoSaveClick}>Save</Button>
+                                                            <Button onClick={onContactInfoBackClick}>Back</Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
+
+                                                    {/* Contact Information Update Modal */}
+
+
                                                 </Col>
                                             </Row>
                                         </span>
@@ -367,11 +682,138 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        onClick={e => e.preventDefault()}
+                                                        onClick={onHealthInfoClick}
                                                         size="sm"
                                                     >
                                                         Update
                                                     </Button>
+
+
+                                                    {/* Health Information Update Modal */}
+                                                    <Modal backdrop="static" keyboard={false} size="lg" show={healthShow} aria-labelledby="contained-modal-title-vcenter">
+                                                        <Modal.Header>
+                                                            <Modal.Title className="d-flex justify-content-center" id="contained-modal-title-vcenter">
+                                                            <span>Health Information</span>
+                                                            </Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body className="show-grid">
+                                                            <Container>
+                                                                <div className="pl-lg-4">
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-username"
+                                                                            >
+                                                                            Username
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Username"
+                                                                                value={username}
+                                                                                onChange={onUsernameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-email"
+                                                                            >
+                                                                            Email address
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="email"
+                                                                                placeholder="Email Address"
+                                                                                value={email}
+                                                                                onChange={onEmailChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridFName">
+                                                                            <Form.Label>First Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="First Name"
+                                                                                value={firstName}
+                                                                                onChange={onFirstNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
+                                                                            <Form.Label>Middle Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Middle Name"
+                                                                                value={middleName}
+                                                                                onChange={onMiddleNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
+                                                                            <Form.Label>Last Name</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="text"
+                                                                                    placeholder="Last Name"
+                                                                                    value={lastName}
+                                                                                    onChange={onLastNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
+                                                                            <Form.Label>Age</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="number"
+                                                                                placeholder="Age"
+                                                                                value={age}
+                                                                                onChange={onAgeChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
+                                                                            <Form.Label>Gender</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="radio"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
+                                                                            <Form.Label>Date of Birth</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="date"
+                                                                                    placeholder="Date of Birth"
+                                                                                    value={dob}
+                                                                                    onChange={onDOBChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </div>
+                                                            </Container>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button onClick={onHealthInfoSaveClick}>Save</Button>
+                                                            <Button onClick={onHealthInfoBackClick}>Back</Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
+
+                                                    {/* Health Information Update Modal */}
+
+
                                                 </Col>
                                             </Row>
                                         </span>
@@ -461,11 +903,137 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 <Col className="text-right" xs="4">
                                                     <Button
                                                         color="primary"
-                                                        onClick={e => e.preventDefault()}
+                                                        onClick={onMedicalInfoClick}
                                                         size="sm"
                                                     >
                                                         Update
                                                     </Button>
+
+                                                    {/* Medical Information Update modal */}
+                                                    <Modal backdrop="static" keyboard={false} size="lg" show={medicalShow} aria-labelledby="contained-modal-title-vcenter">
+                                                        <Modal.Header>
+                                                            <Modal.Title className="d-flex justify-content-center" id="contained-modal-title-vcenter">
+                                                            <span>Medical Information</span>
+                                                            </Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body className="show-grid">
+                                                            <Container>
+                                                                <div className="pl-lg-4">
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-username"
+                                                                            >
+                                                                            Username
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Username"
+                                                                                value={username}
+                                                                                onChange={onUsernameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
+                                                                            <label
+                                                                            className="form-control-label"
+                                                                            htmlFor="input-email"
+                                                                            >
+                                                                            Email address
+                                                                            </label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="email"
+                                                                                placeholder="Email Address"
+                                                                                value={email}
+                                                                                onChange={onEmailChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridFName">
+                                                                            <Form.Label>First Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="First Name"
+                                                                                value={firstName}
+                                                                                onChange={onFirstNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
+                                                                            <Form.Label>Middle Name</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Middle Name"
+                                                                                value={middleName}
+                                                                                onChange={onMiddleNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
+                                                                            <Form.Label>Last Name</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="text"
+                                                                                    placeholder="Last Name"
+                                                                                    value={lastName}
+                                                                                    onChange={onLastNameChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
+                                                                            <Form.Label>Age</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="number"
+                                                                                placeholder="Age"
+                                                                                value={age}
+                                                                                onChange={onAgeChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
+                                                                            <Form.Label>Gender</Form.Label>
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="radio"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                            <Form.Control
+                                                                                required
+                                                                                type="text"
+                                                                                name="gender"
+                                                                                placeholder="Gender"
+                                                                                value={gender}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
+                                                                            <Form.Label>Date of Birth</Form.Label>
+                                                                            <Form.Control
+                                                                                    required
+                                                                                    type="date"
+                                                                                    placeholder="Date of Birth"
+                                                                                    value={dob}
+                                                                                    onChange={onDOBChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </div>
+                                                            </Container>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button onClick={onMedicalInfoSaveClick}>Save</Button>
+                                                            <Button onClick={onMedicalInfoBackClick}>Back</Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
+
+                                                    {/* Medical Information Update Modal */}
+
+
                                                 </Col>
                                             </Row>
                                         </span>
