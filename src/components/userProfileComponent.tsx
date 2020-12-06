@@ -34,6 +34,12 @@ interface IProps {
     onUserInfoBackClick : (event: React.SyntheticEvent) => void;
 
     // Contact Information Update
+    onAddressChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onCityChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onProvinceChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onCountryChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onZipChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onPhoneChange : (event: React.ChangeEvent<HTMLInputElement>) => void; 
     onContactInfoClick : (event: React.SyntheticEvent) => void;
     onContactInfoSaveClick : (event: React.SyntheticEvent) => void;
     onContactInfoBackClick : (event: React.SyntheticEvent) => void;
@@ -72,7 +78,6 @@ interface IProps {
     bloodGroup:string,
     underlyingHealthIssues:string[],
     otherHealthIssues:string[],
-    userUpdate:boolean;
 }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
     const { firstName,
@@ -113,6 +118,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             onUserInfoBackClick,
 
             // Contact Information Update
+            onAddressChange,
+            onCityChange,
+            onProvinceChange,
+            onCountryChange,
+            onZipChange,
+            onPhoneChange,
             onContactInfoClick,
             onContactInfoSaveClick,
             onContactInfoBackClick,
@@ -483,105 +494,69 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             <Container>
                                                                 <div className="pl-lg-4">
                                                                     <Form.Row>
-                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridUsername">
-                                                                            <label
-                                                                            className="form-control-label"
-                                                                            htmlFor="input-username"
-                                                                            >
-                                                                            Username
-                                                                            </label>
+                                                                        <Form.Group as={Col} xs="10" md="6" lg="7" controlId="formGridAddress">
+                                                                            <Form.Label>Address</Form.Label>
                                                                             <Form.Control
                                                                                 required
                                                                                 type="text"
-                                                                                placeholder="Username"
-                                                                                value={username}
-                                                                                onChange={onUsernameChange}
-                                                                            />
-                                                                        </Form.Group>
-                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridEmail">
-                                                                            <label
-                                                                            className="form-control-label"
-                                                                            htmlFor="input-email"
-                                                                            >
-                                                                            Email address
-                                                                            </label>
-                                                                            <Form.Control
-                                                                                required
-                                                                                type="email"
-                                                                                placeholder="Email Address"
-                                                                                value={email}
-                                                                                onChange={onEmailChange}
+                                                                                placeholder="Address"
+                                                                                value={address}
+                                                                                onChange={onAddressChange}
                                                                             />
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                     <Form.Row>
-                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridFName">
-                                                                            <Form.Label>First Name</Form.Label>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridCity">
+                                                                            <Form.Label>City</Form.Label>
                                                                             <Form.Control
                                                                                 required
                                                                                 type="text"
-                                                                                placeholder="First Name"
-                                                                                value={firstName}
-                                                                                onChange={onFirstNameChange}
+                                                                                placeholder="City"
+                                                                                value={city}
+                                                                                onChange={onCityChange}
                                                                             />
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridMName">
-                                                                            <Form.Label>Middle Name</Form.Label>
+                                                                        <Form.Group as={Col} xs="6" md="4" lg="3" controlId="formGridState">
+                                                                            <Form.Label>Province/State</Form.Label>
                                                                             <Form.Control
                                                                                 required
                                                                                 type="text"
-                                                                                placeholder="Middle Name"
-                                                                                value={middleName}
-                                                                                onChange={onMiddleNameChange}
+                                                                                placeholder="Province/State"
+                                                                                value={province}
+                                                                                onChange={onProvinceChange}
                                                                             />
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridLName">
-                                                                            <Form.Label>Last Name</Form.Label>
+                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridCountry">
+                                                                            <Form.Label>Country</Form.Label>
                                                                             <Form.Control
-                                                                                    required
-                                                                                    type="text"
-                                                                                    placeholder="Last Name"
-                                                                                    value={lastName}
-                                                                                    onChange={onLastNameChange}
+                                                                                required
+                                                                                type="text"
+                                                                                placeholder="Country"
+                                                                                value={country}
+                                                                                onChange={onCountryChange}
                                                                             />
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                     <Form.Row>
-                                                                        <Form.Group as={Col} xs="3" md="3" lg="3" controlId="formGridAge">
-                                                                            <Form.Label>Age</Form.Label>
-                                                                            <Form.Control
-                                                                                required
-                                                                                type="number"
-                                                                                placeholder="Age"
-                                                                                value={age}
-                                                                                onChange={onAgeChange}
-                                                                            />
-                                                                        </Form.Group>
-                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
-                                                                            <Form.Label>Gender</Form.Label>
-                                                                            <Form.Control
-                                                                                required
-                                                                                type="radio"
-                                                                                name="gender"
-                                                                                placeholder="Gender"
-                                                                                value={gender}
-                                                                            />
+                                                                        <Form.Group as={Col} xs="5" md="4" lg="3" controlId="formGridZip">
+                                                                            <Form.Label>Zip</Form.Label>
                                                                             <Form.Control
                                                                                 required
                                                                                 type="text"
-                                                                                name="gender"
-                                                                                placeholder="Gender"
-                                                                                value={gender}
+                                                                                placeholder="Zip"
+                                                                                value={zip}
+                                                                                onChange={onZipChange}
                                                                             />
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
-                                                                            <Form.Label>Date of Birth</Form.Label>
+                                                                        <Form.Group as={Col} xs="7" md="4" lg="3" controlId="formGridPhoneNumber">
+                                                                            <Form.Label>Phone Number</Form.Label>
                                                                             <Form.Control
-                                                                                    required
-                                                                                    type="date"
-                                                                                    placeholder="Date of Birth"
-                                                                                    value={dob}
-                                                                                    onChange={onDOBChange}
+                                                                                required
+                                                                                type="tel"
+                                                                                placeholder="Province/State"
+                                                                                pattern="[+]{} [0-9]{3}-[0-9]{3}-[0-9]{3}"
+                                                                                value={phone}
+                                                                                onChange={onPhoneChange}
                                                                             />
                                                                         </Form.Group>
                                                                     </Form.Row>

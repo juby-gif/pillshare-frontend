@@ -284,6 +284,36 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         contactShow:true,
       })
     }
+    onAddressChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          address:event.currentTarget.value,
+      })
+    }
+    onCityChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          city:event.currentTarget.value,
+      })
+    }
+    onProvinceChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          province:event.currentTarget.value,
+      })
+    }
+    onCountryChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          country:event.currentTarget.value,
+      })
+    }
+    onZipChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          zip:event.currentTarget.value,
+      })
+    }
+    onPhoneChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      this.setState({
+          phone:event.currentTarget.value,
+      })
+    }
     onContactInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
       const { username,firstName,lastName,middleName,email,age,dob } = this.state;
@@ -358,6 +388,12 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
               // Contact Information Update
               onContactInfoClick,
+              onAddressChange,
+              onCityChange,
+              onProvinceChange,
+              onCountryChange,
+              onZipChange,
+              onPhoneChange,
               onContactInfoSaveClick,
               onContactInfoBackClick,
 
@@ -393,7 +429,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               bloodGroup,
               underlyingHealthIssues,
               otherHealthIssues,
-              userUpdate,
               userShow,
               contactShow,
               healthShow,
@@ -405,17 +440,20 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             contactShow = {contactShow}
             healthShow = {healthShow}
             medicalShow = {medicalShow}
-            firstName = {firstName}
-            middleName = {middleName}
-            lastName = {lastName}
-            username = {username}
-            email = {email}
+            
             onWeightChange = {onWeightChange}
             onHeightChange = {onHeightChange}
             onBodyMassIndexCalculation = {onBodyMassIndexCalculation}
             
             // User Information Update
-            
+            firstName = {firstName}
+            middleName = {middleName}
+            lastName = {lastName}
+            username = {username}
+            email = {email}
+            age = {age}
+            gender = {gender}
+            dob = {dob}
             onUserInfoClick={onUserInfoClick}
             onUsernameChange = {onUsernameChange}
             onFirstNameChange ={onFirstNameChange}
@@ -428,11 +466,29 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onUserInfoBackClick = {onUserInfoBackClick}
 
             // Contact Information Update
-            onContactInfoClick={onContactInfoClick}
+            address = {address}
+            city = {city}
+            province = {province}
+            country = {country}
+            zip = {zip}
+            phone = {phone}
+            onAddressChange = {onAddressChange}
+            onCityChange = {onCityChange}
+            onProvinceChange = {onProvinceChange}
+            onCountryChange = {onCountryChange}
+            onZipChange = {onZipChange}
+            onPhoneChange = {onPhoneChange} 
+            onContactInfoClick = {onContactInfoClick}
             onContactInfoSaveClick = {onContactInfoSaveClick}
             onContactInfoBackClick = {onContactInfoBackClick}
 
             // Health Information Update
+            weight = {weight}
+            height = {height}
+            bmi = {bmi}
+            bloodGroup = {bloodGroup}
+            underlyingHealthIssues = {underlyingHealthIssues}
+            otherHealthIssues = {otherHealthIssues}
             onHealthInfoClick={onHealthInfoClick}
             onHealthInfoSaveClick = {onHealthInfoSaveClick}
             onHealthInfoBackClick = {onHealthInfoBackClick}
@@ -441,23 +497,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onMedicalInfoClick={onMedicalInfoClick}
             onMedicalInfoSaveClick = {onMedicalInfoSaveClick}
             onMedicalInfoBackClick = {onMedicalInfoBackClick}
-
-            weight = {weight}
-            height = {height}
-            age = {age}
-            gender = {gender}
-            dob = {dob}
-            address = {address}
-            city = {city}
-            province = {province}
-            country = {country}
-            zip = {zip}
-            phone = {phone}
-            bmi = {bmi}
-            bloodGroup = {bloodGroup}
-            underlyingHealthIssues = {underlyingHealthIssues}
-            otherHealthIssues = {otherHealthIssues}
-            userUpdate={userUpdate}
             />
         );
     }
