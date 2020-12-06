@@ -115,12 +115,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
         // Contact Information Update
         this.onContactInfoClick = this.onContactInfoClick.bind(this);
-        // this.onFirstNameChange = this.onFirstNameChange.bind(this);
-        // this.onMiddleNameChange = this.onMiddleNameChange.bind(this);
-        // this.onLastNameChange = this.onLastNameChange.bind(this);
-        // this.onUsernameChange = this.onUsernameChange.bind(this);
-        // this.onEmailChange = this.onEmailChange.bind(this);
-        // this.onDOBChange = this.onDOBChange.bind(this);
         this.onContactInfoSaveClick = this.onContactInfoSaveClick.bind(this);
         this.onContactInfoBackClick = this.onContactInfoBackClick.bind(this);
 
@@ -159,30 +153,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       getUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack);
     }
 
-    onWeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        weight:event.currentTarget.value,
-      })
-    }
-
-    onHeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        height:event.currentTarget.value,
-      })
-    }
-
     
-
-
-    onBodyMassIndexCalculation = (event:React.SyntheticEvent):void => {
-      const { weight,height } = this.state;
-      if(parseInt(height)!==0||isNaN(parseInt(height))!){
-        const bodyMassIndexValue = ((parseInt(weight) / parseInt(height) / parseInt(height)) * 10000).toFixed(2);
-        this.setState({
-          bodyMassIndexValue:bodyMassIndexValue
-        })
-      }
-    }
 
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
@@ -335,12 +306,44 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         healthShow:true,
       })
     }
+    onWeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        weight:event.currentTarget.value,
+      })
+    }
+
+    onHeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        height:event.currentTarget.value,
+      })
+    }
+    onBodyMassIndexCalculation = (event:React.SyntheticEvent):void => {
+      const { weight,height } = this.state;
+      if(parseInt(height)!==0||isNaN(parseInt(height))!){
+        const bodyMassIndexValue = ((parseInt(weight) / parseInt(height) / parseInt(height)) * 10000).toFixed(2);
+        this.setState({
+          bodyMassIndexValue:bodyMassIndexValue
+        })
+      }
+    }
     onHealthInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      const { username,firstName,lastName,middleName,email,age,dob } = this.state;
+      const { username,firstName,lastName,middleName,email,age,dob,bodyMassIndexValue } = this.state;
+      let bmi_value = "";
+      if( parseInt(bodyMassIndexValue)<18.5){
+        bmi_value = "Underweight";
+
+      }else if ( parseInt(bodyMassIndexValue)>=18.5 && parseInt(bodyMassIndexValue)<=24.9 ){
+        bmi_value = "Normal";
+      }else if( parseInt(bodyMassIndexValue)>=25.0 && parseInt(bodyMassIndexValue)<=29.9 ){
+        bmi_value = "Overweight";
+      }else if( parseInt(bodyMassIndexValue)>=30.0 ){
+        bmi_value = "Obesity";
+      }
       console.log(username,firstName,lastName,middleName,email,age,dob)
       this.setState({
         healthShow:false,
+        bmi:bmi_value,
       })
     }
     onHealthInfoBackClick = (event : React.SyntheticEvent) : void => {
@@ -433,6 +436,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               contactShow,
               healthShow,
               medicalShow,
+              bodyMassIndexValue,
              } = this.state;
         return(
             <UserProfileComponent 
@@ -489,6 +493,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             bloodGroup = {bloodGroup}
             underlyingHealthIssues = {underlyingHealthIssues}
             otherHealthIssues = {otherHealthIssues}
+            bodyMassIndexValue = {bodyMassIndexValue}
             onHealthInfoClick={onHealthInfoClick}
             onHealthInfoSaveClick = {onHealthInfoSaveClick}
             onHealthInfoBackClick = {onHealthInfoBackClick}
