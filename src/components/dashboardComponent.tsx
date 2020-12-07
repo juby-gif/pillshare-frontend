@@ -2,11 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Row,Col,Card,Container,CardDeck,Table} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faExclamationCircle,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faExclamationCircle,faCheckCircle,faPrint } from '@fortawesome/free-solid-svg-icons';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 import '../App.css';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
+import HealthReportPDFComponent from './healthReportPDFComponent';
 
 
 interface IProps {
@@ -471,6 +473,19 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     </Row>
                                 </Card.Body>
                             </Card> 
+
+                            {/* Thanks to the following:
+                                https://github.com/London-Language-Institute/markingcloud-front/blob/8b5255414fbdd5e63e3062142f0494596d031794/src/components/testSubmission/completeComponent.js#L162
+                            */}
+                            <PDFDownloadLink
+                                  document={
+                                      <HealthReportPDFComponent />
+                                  }
+                                  fileName="pillshare-health-report.pdf">
+                              {({ blob, url, loading, error }) =>
+                                loading ? "-" : <FontAwesomeIcon className="m-1 text-danger" style={{fontSize:"1.9rem",float:"right"}} icon={faPrint} />
+                              }
+                              </PDFDownloadLink>
                         </Container>
                         
                         {/* ----------------------The page content ends here---------------------- */}
