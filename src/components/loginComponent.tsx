@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
  
 interface FuncProps {
@@ -81,9 +82,9 @@ return (
                             </Button>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-center">
-                            <Button type="button" className="mb-2" onClick={onRegisterClick}>
-                                Register
-                            </Button>
+                            <Link to="/register" className="mb-2" >
+                                Register Now
+                            </Link>
                         </Form.Row>
                     </Form>
                 </Row>

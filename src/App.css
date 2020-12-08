@@ -51,7 +51,7 @@
  
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #fb4040;
+  background: 	#fb8c0d;
 }
 
 .more-details {
@@ -65,7 +65,8 @@ html {
 /* Alignment for alert cards */
 #alert-issued, #alert-responded {
   display: block;
-  float: left;    
+  float: left;
+  background-color: #036599;    
 }
 /* hover effects for view-more section */
 .more-details:hover {
@@ -106,11 +107,14 @@ html {
 }
 a.menu:hover {
   text-decoration: none;
-  background: #9c27b0;
+  background: #036599;
   color:#fff;
 }
 Link.topMenu:hover{
   pointer-events: none;
+}
+#title:hover{
+  text-decoration: none;
 }
 
 /* Position and sizing of clickable cross button */
@@ -748,7 +752,7 @@ h3.display-2{
 .d-md-inline-flex {
   display: inline-flex !important; } 
 #navigation {
-  background-color: rgba(104, 50, 117, 0.993);
+  background-color: #036599;
   box-sizing: border-box;
 }
 

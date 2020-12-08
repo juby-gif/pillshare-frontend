@@ -3,9 +3,9 @@ import { Button, Col,Form } from 'react-bootstrap';
 
 
 interface IProps {
-    reading:number;
-    date:string;
-    time:string;
+    reading?:number;
+    date?:string;
+    time?:string;
     onHeartRateReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

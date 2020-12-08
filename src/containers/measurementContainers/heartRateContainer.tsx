@@ -4,13 +4,13 @@ import HeartRateComponent from '../../components/measurementComponents/heartRate
 import { HEARTRATEDATA, HEART_RATE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
-  
+  onSaveData:(reading?:number,date?:string,time?:string,systoleReading?:number,diastoleReading?:number,instrumentID?:number,user_id?:string|null)=>void;
 }
 interface HeartRateProps {
-  reading: number;
-  date: string;
-  time: string;
-  instrumentID: number;
+  reading?: number;
+  date?: string;
+  time?: string;
+  instrumentID?: number;
   user_id?: string | null;
 
 }
@@ -88,6 +88,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
 
     onSaveClick = (event: React.SyntheticEvent): void => {
       const { reading,date,time,user_id } = this.state;
+      this.props.onSaveData(reading,date,time,HEART_RATE_INSTRUMENT)
       const heartRateData = {
         instrumentID:HEART_RATE_INSTRUMENT,
         reading:reading,

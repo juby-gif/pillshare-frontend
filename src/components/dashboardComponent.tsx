@@ -9,6 +9,7 @@ import '../App.css';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
 import HealthReportPDFComponent from './healthReportPDFComponent';
+import TableComponent from './tableComponent';
 
 
 interface IProps {
@@ -109,14 +110,14 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                     <SidebarComponent />
                     {/* --- Sidebar ---*/}
 
-                    <div className="" id="page-wrap" style={{height: "100%",overflow:"auto"}}>
+                    <div id="page-wrap" style={{height: "100%",overflow:"auto"}}>
                         {/* ----------------------The page content starts here---------------------- */}
 
                         {/* --- Navigation ---*/}
                         <NavigationComponent />
                         {/* --- Navigation ---*/}
 
-                        <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
+                        <Container  className="p-4" style={{margin: "auto",width: "70%",border: "3px solid white"}} fluid>
                             <CardDeck>
                                 <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
@@ -443,12 +444,12 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                         </Table>
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
-                            <Card id="alert-issued" className="mb-4 mr-4" style={{ minWidth: '16rem',maxWidth:'16rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
+                            <Card id="alert-issued" className="mb-4 mr-4" style={{ minWidth: '22rem',maxWidth:'22rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
                                 <Card.Body>
                                     <Row>
                                         <Col xs={7}>
-                                            <Card.Subtitle className="mb-1 text-muted"><b>ALERTS SENT</b></Card.Subtitle>
-                                            <Card.Title className="text-success">{alertsSent}</Card.Title>
+                                            <Card.Subtitle className="mb-1 text-muted"><b style={{color:"#fff"}}>ALERTS SENT</b></Card.Subtitle>
+                                            <Card.Title style={{color:"#fff"}}>{alertsSent}</Card.Title>
                                         </Col>
                                         <Col>
                                             <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -458,21 +459,32 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     </Row>
                                 </Card.Body>
                             </Card>
-                            <Card id="alert-responded" className="mb-4 mr-4" style={{display: "block", minWidth: '16rem',maxWidth:'16rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
+                            <Card id="alert-responded" className="mb-4 mr-4" style={{display: "block", minWidth: '22rem',maxWidth:'22rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
                                 <Card.Body>
                                     <Row>
                                         <Col xs={7}>
-                                            <Card.Subtitle className="mb-1 text-muted"><b>ALERTS RESPONDED</b></Card.Subtitle>
-                                        <Card.Title className="text-danger">{alertsResponded}</Card.Title>
+                                            <Card.Subtitle className="mb-1 text-muted"><b style={{color:"#fff"}}>ALERTS RESPONDED</b></Card.Subtitle>
+                                        <Card.Title style={{color:"#fff"}}>{alertsResponded}</Card.Title>
                                         </Col>
                                         <Col>
                                             <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
                                                 <FontAwesomeIcon style={{fontSize:"1.9rem"}} icon={faCheckCircle} />
                                             </div>
                                         </Col>
+                                        
                                     </Row>
+
                                 </Card.Body>
-                            </Card> 
+                                
+                            </Card>
+
+
+                            {/* Table Component */}
+
+                            {/* <TableComponent /> */}
+
+                            {/* Table Component */}
+
 
                             {/* Thanks to the following:
                                 https://github.com/London-Language-Institute/markingcloud-front/blob/8b5255414fbdd5e63e3062142f0494596d031794/src/components/testSubmission/completeComponent.js#L162
@@ -483,9 +495,9 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                   }
                                   fileName="pillshare-health-report.pdf">
                               {({ blob, url, loading, error }) =>
-                                loading ? "-" : <FontAwesomeIcon className="m-1 text-danger" style={{fontSize:"1.9rem",float:"right"}} icon={faPrint} />
+                                loading ? "-" : <FontAwesomeIcon className="m-1 text-danger mt-5 mb-5" style={{fontSize:"1.9rem",float:"right"}} icon={faPrint} />
                               }
-                              </PDFDownloadLink>
+                            </PDFDownloadLink>
                         </Container>
                         
                         {/* ----------------------The page content ends here---------------------- */}

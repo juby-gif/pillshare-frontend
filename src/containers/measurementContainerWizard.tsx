@@ -169,10 +169,16 @@ function getSteps() {
   return ['Heart Rate Measure', 'Blood Pressure Measure', 'Body Temperature Measure', 'Glucose Measure', 'Oxygen Saturation Measure', 'Review and Submit'];
 }
 
+const onSaveData = (reading?:number,date?:string,time?:string,instrumentID?:number,systoleReading?:number,diastoleReading?:number):void =>{
+  console.log("Reading=> ",reading," Date=> ",date," Time=> ",time," Systole Reading=> ",systoleReading," Diastole Reading=> ",diastoleReading," Instrument ID=> ",instrumentID);
+  console.log("lslslls")
+}
+
 function getStepContent(step: number) {
+  // console.log()
   switch (step) {
     case 0:
-      return <HeartRateContainer />;
+      return <HeartRateContainer onSaveData={onSaveData} />;
     case 1:
       return <BloodPressureContainer />;
     case 2:
@@ -252,6 +258,7 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
     console.log(responseData)
   }
 
+  
 
 
 export default function CustomizedSteppers() {
@@ -280,8 +287,11 @@ export default function CustomizedSteppers() {
         *  Event handling functions
         *------------------------------------------------------------
     */
-    const handleNext = () => {
+      
+      const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      onSaveData();
+
       // TODO ADD SAVE FUNCTIONALITY
       // TODO ADD VALIDATION
       if(activeStep === steps.length - 1 ){

@@ -26,9 +26,10 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
         <Navbar className="navbar-top navbar-dark" expand="md" id="navigation" >
             <Container fluid>
                 <Link
+                id="title"
                 className="ml-5 h4 mb-0 text-white text-uppercase d-lg-inline-block"
-                to="none"
-                style={{textShadow: "0 0 10px rgba(0,0,0,1.5)"}}
+                to="/"
+                style={{textShadow: "0 0 10px rgba(0,0,0,1.5)",fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}}
                 >
                     Pillshare
                 </Link>
@@ -43,7 +44,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                                     />
                                 </span>
                                 <Media className="ml-2 d-lg-block">
-                                    <span className="mb-0 text-sm font-weight-bold">
+                                    <span style={{fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}} className="mb-0 text-sm font-weight-bold">
                                         Frank Herbert
                                     </span>
                                 </Media>
