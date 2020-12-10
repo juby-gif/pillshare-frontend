@@ -11,7 +11,6 @@ interface IProps {
     onBloodPressureDiastoleReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onSaveClick: (event:React.SyntheticEvent) => void;
 }  
  
 
@@ -25,7 +24,6 @@ const BloodPressureComponent = (props:IProps) : JSX.Element => {
         onBloodPressureDiastoleReadingChange,
         onDateChange,
         onTimeChange,
-        onSaveClick,
      } = props;
     return(
         <React.Fragment>
@@ -48,7 +46,6 @@ const BloodPressureComponent = (props:IProps) : JSX.Element => {
                     <Form.Control type="time" placeholder="Time" value={time} onChange={onTimeChange}/>
                     </Form.Group>
                 </Form.Row>
-                <Button style={{width:"5rem",height:"2.2rem"}} className="p-2 mt-3 ml-5 d-flex justify-content-center" as={Col} onClick={onSaveClick}>Save</Button>
             </Form>
         </React.Fragment>
     )

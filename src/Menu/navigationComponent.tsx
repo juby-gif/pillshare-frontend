@@ -27,13 +27,13 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
             <Container fluid>
                 <Link
                 id="title"
-                className="ml-5 h4 mb-0 text-white text-uppercase d-lg-inline-block"
+                className="ml-5 h4 mb-0 text-white text-uppercase d-lg-inline-block display-5"
                 to="/"
                 style={{textShadow: "0 0 10px rgba(0,0,0,1.5)",fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}}
                 >
                     Pillshare
                 </Link>
-                <Nav className="align-items-center d-md-flex" navbar>
+                <Nav style={{float:"right"}} className="align-items-center d-md-flex" navbar>
                     <UncontrolledDropdown nav>
                         <DropdownToggle nav>
                             <Media className="align-items-center">

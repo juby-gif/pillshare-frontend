@@ -37,7 +37,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
       this.onBloodPressureDiastoleReadingChange = this.onBloodPressureDiastoleReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
-      this.onSaveClick = this.onSaveClick.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
     /* *
         *  Utility
@@ -61,6 +61,10 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
         user_id:user_id,
       })
       }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
     }
     
     /* *
@@ -98,7 +102,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
       })
       }
 
-    onSaveClick = (event: React.SyntheticEvent): void => {
+      onUpdate = (): void => {
       const { systoleReading,diastoleReading,date,time,user_id } = this.state;
       const bloodPressureData = {
         instrumentID:BLOOD_PRESSURE_INSTRUMENT,
@@ -117,7 +121,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
     */
     render() {
       const { diastoleReading,systoleReading,date,time } = this.state;
-      const { onBloodPressureSystoleReadingChange,onBloodPressureDiastoleReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { onBloodPressureSystoleReadingChange,onBloodPressureDiastoleReadingChange,onDateChange,onTimeChange, } = this;
       
       return (
         <BloodPressureComponent 
@@ -129,7 +133,6 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
           onBloodPressureDiastoleReadingChange={onBloodPressureDiastoleReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
-          onSaveClick={onSaveClick}
         />
       );
     }

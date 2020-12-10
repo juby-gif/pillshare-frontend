@@ -4,7 +4,7 @@ import HeartRateComponent from '../../components/measurementComponents/heartRate
 import { HEARTRATEDATA, HEART_RATE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
 
 interface IProps {
-  onSaveData:(reading?:number,date?:string,time?:string,systoleReading?:number,diastoleReading?:number,instrumentID?:number,user_id?:string|null)=>void;
+
 }
 interface HeartRateProps {
   reading?: number;
@@ -35,7 +35,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       this.onHeartRateReadingChange = this.onHeartRateReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
-      this.onSaveClick = this.onSaveClick.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
     /* *
         *  Utility
@@ -56,6 +56,10 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         time:heartRateReadingData.time,
       })
       }
+    }
+    
+    componentDidUpdate(){
+      this.onUpdate();
     }
     
     /* *
@@ -86,9 +90,8 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       })
       }
 
-    onSaveClick = (event: React.SyntheticEvent): void => {
+    onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
-      this.props.onSaveData(reading,date,time,HEART_RATE_INSTRUMENT)
       const heartRateData = {
         instrumentID:HEART_RATE_INSTRUMENT,
         reading:reading,
@@ -105,7 +108,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
     */
        render() {
       const { reading,date,time } = this.state;
-      const { onHeartRateReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { onHeartRateReadingChange,onDateChange,onTimeChange, } = this;
       
       return (
         <HeartRateComponent 
@@ -115,7 +118,6 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
           onHeartRateReadingChange={onHeartRateReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
-          onSaveClick={onSaveClick}
         />
       );
     }

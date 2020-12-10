@@ -9,7 +9,7 @@ import '../App.css';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
 import HealthReportPDFComponent from './healthReportPDFComponent';
-import TableComponent from './tableComponent';
+// import TableComponent from './tableComponent';
 
 
 interface IProps {

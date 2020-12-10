@@ -21,7 +21,7 @@ interface IProps {
     steps : string[];
     handleNext : (event: React.SyntheticEvent) => void;
     handleBack : (event: React.SyntheticEvent) => void;
-    getStepContent : (step: number) => JSX.Element | "404";
+    getStepContent : (step: number) => JSX.Element | string;
     ColorlibStepIcon:(props: StepIconProps)=> JSX.Element;
     ColorlibConnector :React.ComponentType<StepConnectorProps>
 

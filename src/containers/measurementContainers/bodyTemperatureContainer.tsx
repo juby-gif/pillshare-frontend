@@ -33,7 +33,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
-      this.onSaveClick = this.onSaveClick.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
     /* *
         *  Utility
@@ -56,6 +56,10 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         user_id: user_id,
       })
       }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
     }
     /* *
         *  API callback functions
@@ -85,7 +89,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       })
       }
 
-    onSaveClick = (event: React.SyntheticEvent): void => {
+      onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
 
       const bodyTemperatureData = {
@@ -104,7 +108,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
     */
     render() {
       const { reading,date,time } = this.state;
-      const { onBodyTemperatureReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { onBodyTemperatureReadingChange,onDateChange,onTimeChange, } = this;
       
       return (
         <BodyTemperatureComponent 
@@ -114,7 +118,6 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
           onBodyTemperatureReadingChange={onBodyTemperatureReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
-          onSaveClick={onSaveClick}
         />
       );
     }

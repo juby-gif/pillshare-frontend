@@ -125,7 +125,7 @@ const useColorlibStepIconStyles = makeStyles({
   },
 });
 
-function ColorlibStepIcon(props: StepIconProps) {
+const ColorlibStepIcon = (props: StepIconProps) => {
   const classes = useColorlibStepIconStyles();
   const { active, completed } = props;
 
@@ -169,30 +169,7 @@ function getSteps() {
   return ['Heart Rate Measure', 'Blood Pressure Measure', 'Body Temperature Measure', 'Glucose Measure', 'Oxygen Saturation Measure', 'Review and Submit'];
 }
 
-const onSaveData = (reading?:number,date?:string,time?:string,instrumentID?:number,systoleReading?:number,diastoleReading?:number):void =>{
-  console.log("Reading=> ",reading," Date=> ",date," Time=> ",time," Systole Reading=> ",systoleReading," Diastole Reading=> ",diastoleReading," Instrument ID=> ",instrumentID);
-  console.log("lslslls")
-}
 
-function getStepContent(step: number) {
-  // console.log()
-  switch (step) {
-    case 0:
-      return <HeartRateContainer onSaveData={onSaveData} />;
-    case 1:
-      return <BloodPressureContainer />;
-    case 2:
-      return <BodyTemperatureContainer />;
-    case 3:
-      return <GlucoseContainer />;
-    case 4:
-      return <OxygenSaturationContainer />;
-    case 5:
-      return <ReviewContainer />;
-    default:
-      return '404'; // To be redirected to 404-Page
-  }
-}
 
     /* *
         *  Get length of the object
@@ -287,12 +264,29 @@ export default function CustomizedSteppers() {
         *  Event handling functions
         *------------------------------------------------------------
     */
-      
+  
+  const getStepContent = (step: number):JSX.Element|string => {
+    // console.log()
+    switch (step) {
+      case 0:
+        return <HeartRateContainer />;
+      case 1:
+        return <BloodPressureContainer />;
+      case 2:
+        return <BodyTemperatureContainer />;
+      case 3:
+        return <GlucoseContainer />;
+      case 4:
+        return <OxygenSaturationContainer />;
+      case 5:
+        return <ReviewContainer />;
+      default:
+        return '404'; // To be redirected to 404-Page
+    }
+  }
       const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      onSaveData();
-
-      // TODO ADD SAVE FUNCTIONALITY
+     console.log(localStorage.getItem(HEARTRATEDATA) )
       // TODO ADD VALIDATION
       if(activeStep === steps.length - 1 ){
         let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';

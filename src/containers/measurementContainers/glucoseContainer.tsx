@@ -34,7 +34,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
       this.onGlucoseReadingChange = this.onGlucoseReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
-      this.onSaveClick = this.onSaveClick.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
 
     /* *
@@ -58,6 +58,10 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
         user_id:user_id,
       })
       }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
     }
 
     /* *
@@ -89,7 +93,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
       })
       }
 
-    onSaveClick = (event: React.SyntheticEvent): void => {
+      onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
       const glucoseData = {
         instrumentID:GLUCOSE_INSTRUMENT,
@@ -107,7 +111,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
     */
     render() {
       const { reading,date,time } = this.state;
-      const { onGlucoseReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { onGlucoseReadingChange,onDateChange,onTimeChange, } = this;
       
       return (
         <GlucoseComponent 
@@ -117,7 +121,6 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
           onGlucoseReadingChange={onGlucoseReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
-          onSaveClick={onSaveClick}
         />
       );
     }

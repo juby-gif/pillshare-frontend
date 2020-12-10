@@ -24,7 +24,6 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
             onLoginClick,
             onUsernameChange,
             onPasswordChange,
-            onRegisterClick,
     } = props;
 return (
 <React.Fragment>

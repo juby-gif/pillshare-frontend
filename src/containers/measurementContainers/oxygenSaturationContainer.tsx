@@ -32,7 +32,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
-      this.onSaveClick = this.onSaveClick.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
 
     /* *
@@ -56,6 +56,10 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
         user_id:user_id,
       })
       }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
     }
 
     /* *
@@ -87,7 +91,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       })
       }
 
-    onSaveClick = (event: React.SyntheticEvent): void => {
+      onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
       const oxygenSaturationData = {
         instrumentID:OXYGEN_SATURATION_INSTRUMENT,
@@ -105,7 +109,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
     */
     render() {
       const { reading,date,time } = this.state;
-      const { onOxygenSaturationReadingChange,onDateChange,onTimeChange,onSaveClick } = this;
+      const { onOxygenSaturationReadingChange,onDateChange,onTimeChange, } = this;
       
       return (
         <OxygenSaturationComponent 
@@ -115,7 +119,6 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
           onOxygenSaturationReadingChange={onOxygenSaturationReadingChange}
           onDateChange={onDateChange}
           onTimeChange={onTimeChange}
-          onSaveClick={onSaveClick}
         />
       );
     }
