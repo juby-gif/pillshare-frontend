@@ -9,7 +9,6 @@ interface IProps {
     onHeartRateReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    // onSaveClick: (event:React.SyntheticEvent) => void;
 }
 const HeartRateComponent = (props:IProps) : JSX.Element => {
     const { 

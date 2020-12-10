@@ -12,11 +12,11 @@ interface StateProps {
 date : string;
 time : string;
 intensity ?: number;
-anxietyCheck ?: string;
-depressionCheck ?: string;
-irritabilityCheck ?: string;
-peacefulCheck ?: string;
-happyCheck ?: string;
+anxietyCheck ?: boolean;
+depressionCheck ?: boolean;
+irritabilityCheck ?: boolean;
+peacefulCheck ?: boolean;
+happyCheck ?: boolean;
 othersCheck ?: boolean;
 othersValue ?: string;
 healthCheck ?: string;
@@ -35,11 +35,11 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
           date:"",
           time:"",
           intensity:0,
-          anxietyCheck:"",
-          depressionCheck: "",
-          irritabilityCheck: "",
-          peacefulCheck: "",
-          happyCheck:"",
+          anxietyCheck:false,
+          depressionCheck: false,
+          irritabilityCheck: false,
+          peacefulCheck: false,
+          happyCheck:false,
           othersCheck:false,
           othersValue:"",
           healthCheck:"",
@@ -59,6 +59,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
       this.onBadCheck = this.onBadCheck.bind(this);
       this.onWorseCheck = this.onWorseCheck.bind(this);
       this.onValuesChange = this.onValuesChange.bind(this);
+      this.onSubmitClick = this.onSubmitClick.bind(this);
     }
 
   /* *
@@ -101,31 +102,31 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
     
     onAnxietyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        anxietyCheck:event.currentTarget.value,
+        anxietyCheck:event.currentTarget.checked,
       })
     } 
     
     onIrritabilityCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        irritabilityCheck:event.currentTarget.value,
+        irritabilityCheck:event.currentTarget.checked,
       })
     } 
 
     onDepressionCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        depressionCheck:event.currentTarget.value,
+        depressionCheck:event.currentTarget.checked,
       })
     } 
 
     onPeacefulCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        peacefulCheck:event.currentTarget.value,
+        peacefulCheck:event.currentTarget.checked,
       })
     } 
 
     onHappyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        happyCheck:event.currentTarget.value,
+        happyCheck:event.currentTarget.checked,
       })
     } 
 
@@ -168,6 +169,11 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
     onValuesChange = (value: MultiSelectChangeEventArgs | undefined): void => {
      console.log(value? value.value:null);
     } 
+
+    onSubmitClick = (event:React.SyntheticEvent):void => {
+      event.preventDefault();
+      alert("Good!")
+    }
     
     private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
     private fieldsObj: object = { text: 'value', value: 'id' };
@@ -194,6 +200,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
               dropdownArray,
               fieldsObj,
               onValuesChange,
+              onSubmitClick,
             } = this;
       const { intensity,
               anxietyCheck,
@@ -233,6 +240,7 @@ export default class HealthCheckContainer extends Component<IProps,StateProps> {
         onBadCheck={onBadCheck}
         onWorseCheck={onWorseCheck}
         onValuesChange={onValuesChange}
+        onSubmitClick={onSubmitClick}
         />
         );
     }

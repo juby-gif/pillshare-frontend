@@ -23,12 +23,13 @@ interface IProps {
     onBadCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onWorseCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
+    onSubmitClick : (event: React.SyntheticEvent) => void;
     intensity ?:number;
-    anxietyCheck ?: string;
-    depressionCheck ?: string;
-    irritabilityCheck ?: string;
-    peacefulCheck ?: string;
-    happyCheck ?: string;
+    anxietyCheck ?: boolean;
+    depressionCheck ?: boolean;
+    irritabilityCheck ?: boolean;
+    peacefulCheck ?: boolean;
+    happyCheck ?: boolean;
     othersCheck ?: boolean;
     othersValue ?: string;
     healthCheck ?: string;
@@ -52,6 +53,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
             onOthersCheck,
             onOthersValueChange,
             onValuesChange,
+            onSubmitClick,
             intensity,
             anxietyCheck,
             depressionCheck,
@@ -126,7 +128,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                     <Row className="mt-3 p-2">
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
                                             <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Anxiety" onChange={onAnxietyCheck} checked={anxietyCheck === "Anxiety"} />
+                                            <InputGroup.Checkbox aria-label="mood" value="Anxiety" onChange={onAnxietyCheck} checked={anxietyCheck} />
                                             </InputGroup.Prepend>
                                             <FormControl 
                                                 value="Anxiety"
@@ -134,7 +136,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                         </InputGroup>
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
                                             <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Irritability" onChange={onIrritabilityCheck} checked={irritabilityCheck === "Irritability"} />
+                                            <InputGroup.Checkbox aria-label="mood" value="Irritability" onChange={onIrritabilityCheck} checked={irritabilityCheck} />
                                             </InputGroup.Prepend>
                                             <FormControl aria-label="Text input with checkbox"
                                                 value="Irritability"
@@ -142,7 +144,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                         </InputGroup>
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
                                             <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Depression" onChange={onDepressionCheck} checked={depressionCheck === "Depression"} />
+                                            <InputGroup.Checkbox aria-label="mood" value="Depression" onChange={onDepressionCheck} checked={depressionCheck} />
                                             </InputGroup.Prepend>
                                             <FormControl aria-label="Text input with checkbox"
                                                 value="Depression"
@@ -150,7 +152,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                         </InputGroup>
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
                                             <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Peaceful" onChange={onPeacefulCheck} checked={peacefulCheck === "Peaceful"} />
+                                            <InputGroup.Checkbox aria-label="mood" value="Peaceful" onChange={onPeacefulCheck} checked={peacefulCheck} />
                                             </InputGroup.Prepend>
                                             <FormControl aria-label="Text input with checkbox"
                                                 value="Peaceful"
@@ -158,7 +160,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                         </InputGroup>
                                         <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
                                             <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Happy" onChange={onHappyCheck} checked={happyCheck === "Happy"} />
+                                            <InputGroup.Checkbox aria-label="mood" value="Happy" onChange={onHappyCheck} checked={happyCheck} />
                                             </InputGroup.Prepend>
                                             <FormControl aria-label="Text input with checkbox"
                                                 value="Happy"
@@ -223,7 +225,7 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                                     </Row>
                                 </ol>
                             </Row>
-                            <Button className="ml-5">
+                            <Button className="ml-5" onClick={onSubmitClick}>
                                 Submit
                             </Button>
                         </Container>
