@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col,Form } from 'react-bootstrap';
+import { Col,Form } from 'react-bootstrap';
 
 
 interface IProps {
@@ -37,8 +37,7 @@ const HeartRateComponent = (props:IProps) : JSX.Element => {
                     <Form.Label>Time</Form.Label>
                     <Form.Control type="time" placeholder="Time" value={time} onChange={onTimeChange}/>
                     </Form.Group>
-                </Form.Row>
-                <Button style={{width:"5rem",height:"2.2rem"}} className="p-2 mt-3 ml-5 d-flex justify-content-center" as={Col} >Save</Button>    
+                </Form.Row>  
             </Form>
         </React.Fragment>
     )
