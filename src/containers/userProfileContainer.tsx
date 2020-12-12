@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ImageListType } from "react-images-uploading";
 
 import UserProfileComponent from '../components/userProfileComponent';
 import { getUserProfileAPI } from '../API/userProfileAPI';
@@ -63,6 +64,7 @@ interface StateProps {
     contactShow:boolean;
     healthShow:boolean;
     medicalShow:boolean;
+    images:ImageListType;
 }
 export default class UserProfileContainer extends Component<IProps,StateProps> {
     constructor(props:IProps){
@@ -94,6 +96,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           underlyingHealthIssues:[],
           otherHealthIssues:[],
           userUpdate: true,
+          images: [],
 
         }
         this.onWeightChange = this.onWeightChange.bind(this);
@@ -112,6 +115,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         this.onDOBChange = this.onDOBChange.bind(this);
         this.onUserInfoSaveClick = this.onUserInfoSaveClick.bind(this);
         this.onUserInfoBackClick = this.onUserInfoBackClick.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
 
         // Contact Information Update
         this.onContactInfoClick = this.onContactInfoClick.bind(this);
@@ -249,6 +253,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             userShow:false,
         })
     }
+    onImageChange = (imageList: ImageListType,
+      addUpdateIndex: number[] | undefined) => {
+        console.log(imageList, addUpdateIndex);
+        this.setState({
+          images:imageList as ImageListType,
+        })
+      }
 
     // Contact Information Update
     onContactInfoClick = (event: React.SyntheticEvent):void => {
@@ -393,6 +404,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               onAgeChange,
               onUserInfoSaveClick,
               onUserInfoBackClick,
+              onImageChange,
 
               // Contact Information Update
               onContactInfoClick,
@@ -442,6 +454,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               healthShow,
               medicalShow,
               bodyMassIndexValue,
+              images,
              } = this.state;
         return(
             <UserProfileComponent 
@@ -463,6 +476,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             age = {age}
             gender = {gender}
             dob = {dob}
+            images = {images}
             onUserInfoClick={onUserInfoClick}
             onUsernameChange = {onUsernameChange}
             onFirstNameChange ={onFirstNameChange}
@@ -473,6 +487,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onAgeChange = {onAgeChange}
             onUserInfoSaveClick = {onUserInfoSaveClick}
             onUserInfoBackClick = {onUserInfoBackClick}
+            onImageChange = {onImageChange}
 
             // Contact Information Update
             address = {address}

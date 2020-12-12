@@ -14,6 +14,11 @@ export const GLUCOSE_INSTRUMENT = 4;
 export const OXYGEN_SATURATION_INSTRUMENT = 5;
 export const LOGGED_IN_USER_DETAILS = "user-detail"
 export const URL = 'http://localhost:3001/';
+export const USER_INFORMATION_DATA = "user-information-data";
+export const USER_CONTACT_INFORMATION_DATA = "user-contact-information-data";
+export const USER_HEALTH_INFORMATION_DATA = "user-health-information-data";
+export const USER_MEDICAL_INFORMATION_DATA = "user-medical-information-data";
+
 export const SYMPTOMS_DROPDOWN_LIST = [{
     id:1,
     value:"Acid Reflux"

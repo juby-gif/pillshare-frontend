@@ -1,9 +1,9 @@
 import React from 'react';
 import { Row,Col,Card,Container,Table,Form, Button, Modal, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faMapMarkerAlt,faCamera } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import '../App.css';
 import bg from '../img/bg-image.jpg';
@@ -29,6 +29,7 @@ interface IProps {
     onDOBChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
     onUserInfoSaveClick : (event: React.SyntheticEvent) => void;
     onUserInfoBackClick : (event: React.SyntheticEvent) => void;
+    onImageChange : (imageList: ImageListType, addUpdateIndex: number[] | undefined) => void;
 
     // Contact Information Update
     onAddressChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -79,6 +80,7 @@ interface IProps {
     underlyingHealthIssues:string[],
     otherHealthIssues:string[],
     bodyMassIndexValue: string;
+    images:ImageListType;
 }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
     const { firstName,
@@ -106,6 +108,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             healthShow,
             medicalShow,
             bodyMassIndexValue,
+            images,
 
 
             // User Information Update
@@ -119,6 +122,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             onAgeChange,
             onUserInfoSaveClick,
             onUserInfoBackClick,
+            onImageChange,
 
             // Contact Information Update
             onAddressChange,
@@ -149,6 +153,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             {/* --- Sidebar ---*/}
             <SidebarComponent />
             {/* --- Sidebar ---*/}
+
                     
             <div className="" id="page-wrap" style={{height: "100%",overflow:"auto"}}>
                 {/* ----------------------The page content starts here---------------------- */}
@@ -183,16 +188,52 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                             <Card className="card-profile shadow">
                                 <Row className="justify-content-center">
                                     <Col className="order-lg-2" lg="3">
-                                        <div className="card-profile-image">
-                                            <Link to="/" onClick={e => e.preventDefault()}>
-                                                <img
-                                                alt="..."
-                                                className="rounded-circle"
-                                                src={pro}
-                                                width="100rem"
-                                                height="100rem"
-                                                />
-                                            </Link>
+                                        <div  className="card-profile-image">
+                                            <ImageUploading
+                                                multiple={false}
+                                                value={images}
+                                                onChange={onImageChange}
+                                                maxNumber={2}
+                                            >
+                                                {({
+                                                onImageUpload,
+                                                isDragging,
+                                                dragProps
+                                                }) => (
+                                                    <div>
+                                                        {images.length !== 0 && (images.map((image,index) => (
+                                                            <div key={index}>
+                                                                <Link to="/" onClick={e => e.preventDefault()}>
+                                                                    <img
+                                                                    alt={image.file?image.file.name:""}
+                                                                    className="rounded-circle"
+                                                                    src={image.dataURL}
+                                                                    width="100rem"
+                                                                    height="100rem"
+                                                                    />
+                                                                </Link>
+                                                            </div>)))}
+                                                        {images.length === 0 && (
+                                                            <Link to="/" onClick={e => e.preventDefault()}>
+                                                                <img
+                                                                    alt="default_picture"
+                                                                    className="rounded-circle"
+                                                                    src={pro}
+                                                                    width="100rem"
+                                                                    height="100rem"
+                                                                />
+                                                            </Link>
+                                                        )}
+                                                        <a
+                                                        style={isDragging ? { color: "red" } : undefined}
+                                                        onClick={onImageUpload}
+                                                        {...dragProps}
+                                                        >
+                                                            <FontAwesomeIcon className="ni mr-2 faCamera" icon={faCamera} />
+                                                        </a>
+                                                    </div>
+                                                )}
+                                            </ImageUploading>
                                         </div>
                                     </Col>
                                 </Row>
