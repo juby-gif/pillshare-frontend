@@ -15,13 +15,75 @@ import { faQuestionCircle, faSignOutAlt, faUserAlt } from '@fortawesome/free-sol
 
 
 import pro from '../img/pro-pic.jpg';
+import { LOGGED_IN_USER_DETAILS } from '../constants';
 
 
 interface IProps {
 
 }
 
+interface ImageType{
+    dataURL?: string;
+    file?: File;
+    [key: string]: any;
+    }
+interface UserProps{
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    username: string,
+    email: string,
+    weight: string;
+    height: string;
+    age:number,
+    gender:string,
+    dob:string,
+    address:string,
+    city:string,
+    province:string,
+    country:string,
+    zip:string,
+    phone:string,
+    bodyMassIndexValue:string;
+    BMI:string,
+    bloodGroup:string,
+    underlyingHealthIssues:string[],
+    otherHealthIssues:string[],
+    images:ImageType[];
+} 
+
+interface UserNameProps{
+    firstName:string;
+    lastName:string;
+}
+
 const NavigationComponent = (props: IProps) : JSX.Element => {
+    const userData:UserProps[] = JSON.parse(localStorage.getItem(LOGGED_IN_USER_DETAILS)  || '{}')
+    
+    const getUserImageArr = (userData:UserProps[]): ImageType[]|undefined => {
+        if(userData !== null){
+            for ( let datum of userData ){
+                return datum.images;
+            }
+        }
+    }
+
+    const getUserName = (userData:UserProps[]): UserNameProps|undefined => {
+        if(userData !== null){
+            for ( let datum of userData ){
+                return {
+                    firstName: datum.firstName,
+                    lastName:datum.lastName
+                };
+            }
+        }
+    }
+    const userImage:ImageType[]|undefined = getUserImageArr(userData);
+    
+    const username:UserNameProps|undefined = getUserName(userData);
+    console.log(username?(username.firstName,username.lastName):"")
+     
+    
     return(
         <Navbar className="navbar-top navbar-dark" expand="md" id="navigation" >
             <Container fluid>
@@ -38,14 +100,17 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                         <DropdownToggle nav>
                             <Media className="align-items-center">
                                 <span className="avatar avatar-sm rounded-circle">
-                                    <img
+                                    {userImage?userImage.map((image) => (<img
                                         alt="..."
+                                        src={image.dataURL}
+                                    />)):(<img
+                                        alt="default_image"
                                         src={pro}
-                                    />
+                                    />)}
                                 </span>
                                 <Media className="ml-2 d-lg-block">
                                     <span style={{fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}} className="mb-0 text-sm font-weight-bold">
-                                        Frank Herbert
+                                    {username?(username.firstName+ "  " + username.lastName):""}
                                     </span>
                                 </Media>
                             </Media>

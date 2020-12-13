@@ -21,9 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/src/containers/sideBarContainer.tsx
-/src/components/sideBarComponent.tsx
 /src/containers/modalContainers
 /src/components/modalComponents
-/src/db.json
-/src/.~db.json
+*.json
+/src/components/tableComponent.js
