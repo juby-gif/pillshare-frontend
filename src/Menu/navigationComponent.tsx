@@ -85,7 +85,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
      
     
     return(
-        <Navbar className="navbar-top navbar-dark" expand="md" id="navigation" >
+        <Navbar className="mb-5" expand="md" id="navigation" >
             <Container fluid>
                 <Link
                 id="title"
@@ -100,16 +100,20 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                         <DropdownToggle nav>
                             <Media className="align-items-center">
                                 <span className="avatar avatar-sm rounded-circle">
-                                    {userImage?userImage.map((image) => (<img
+                                    {userImage?userImage.map((image,index) => (
+                                    <div key={index}>
+                                        <img
                                         alt="..."
                                         src={image.dataURL}
-                                    />)):(<img
+                                        />
+                                    </div>
+                                    )):(<img
                                         alt="default_image"
                                         src={pro}
                                     />)}
                                 </span>
                                 <Media className="ml-2 d-lg-block">
-                                    <span style={{fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}} className="mb-0 text-sm font-weight-bold">
+                                    <span style={{fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold",color:"#fff"}} className="mb-0 text-sm font-weight-bold">
                                     {username?(username.firstName+ "  " + username.lastName):""}
                                     </span>
                                 </Media>

@@ -42,7 +42,7 @@
 
 /* Position and sizing of burger button */
 .bm-burger-button {
-  position: absolute;
+  position: fixed;
   width: 26px;
   height: 20px;
   left: 20px;
@@ -738,7 +738,7 @@ a.btn-icon-only {
     transition: none; } }
 
  /* Mast Head font sizing settings  */
-@media (min-width: 860px){
+@media (min-width: 861px){
     .display-2 {
     font-size: calc(1.4rem + 1.8vw);
       } }
@@ -775,7 +775,6 @@ h3.display-2{
 #navigation {
   background-color: #036599;
   box-sizing: border-box;
-  position: relative;
 }
 
 

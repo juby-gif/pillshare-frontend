@@ -352,8 +352,8 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                 </tr>
                             </thead>
                             <tbody style={{backgroundColor:"#fff"}}>
-                            {medicalInformation?medicalInformation.map((info) => (
-                                    <tr>
+                            {medicalInformation?medicalInformation.map((info,index) => (
+                                    <tr key={index}>
                                         <td>
                                             {info.id}
                                         </td>
@@ -397,14 +397,14 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            {info.intervals.part.map((part)=>
-                                                                <tr>
+                                                            {info.intervals.part.map((part,index)=>
+                                                                <tr key={index}>
                                                                     <b>{part}:</b>
                                                                 </tr>)}
                                                         </td>
                                                         <td>
-                                                            {info.intervals.time.map((time)=>
-                                                                <tr>
+                                                            {info.intervals.time.map((time,index)=>
+                                                                <tr key={index}>
                                                                     {time}
                                                                 </tr>)}
                                                         </td>
@@ -421,14 +421,14 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 <tbody>
                                                     <tr>
                                                         <tr>
-                                                            {info.taken.map((part)=>
-                                                                <tr>
+                                                            {info.taken.map((part,index)=>
+                                                                <tr key={index}>
                                                                     <b>Taken:</b>&nbsp;&nbsp;{part}
                                                                 </tr>)}
                                                         </tr>
                                                         <tr>
-                                                            {info.missed.map((part)=>
-                                                                <tr>
+                                                            {info.missed.map((part,index)=>
+                                                                <tr key={index}>
                                                                     <b>Missed:</b>&nbsp;&nbsp;{part}
                                                                 </tr>)}
                                                         </tr>
@@ -489,7 +489,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                             {/* Thanks to the following:
                                 https://github.com/London-Language-Institute/markingcloud-front/blob/8b5255414fbdd5e63e3062142f0494596d031794/src/components/testSubmission/completeComponent.js#L162
                             */}
-                            <PDFDownloadLink
+                            {/* <PDFDownloadLink
                                   document={
                                       <HealthReportPDFComponent />
                                   }
@@ -497,7 +497,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                               {({ blob, url, loading, error }) =>
                                 loading ? "-" : <FontAwesomeIcon className="m-1 text-danger mt-5 mb-5" style={{fontSize:"1.9rem",float:"right"}} icon={faPrint} />
                               }
-                            </PDFDownloadLink>
+                            </PDFDownloadLink> */}
                         </Container>
                         
                         {/* ----------------------The page content ends here---------------------- */}
