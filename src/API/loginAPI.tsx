@@ -13,9 +13,9 @@ interface ServerResponse {
     token ?: string;
   }
 
-export function postLoginAPI(username:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void){
+export const postLoginAPI = async (username:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void) :Promise<void> =>{
     const axios = require('axios').default;
-    axios({
+    await axios({
         method: 'get',
         url: 'http://localhost:3001/users',
         

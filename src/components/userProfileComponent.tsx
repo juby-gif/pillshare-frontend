@@ -3,7 +3,7 @@ import { Row,Col,Card,Container,Table,Form, Button, Modal, Alert } from 'react-b
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt,faCamera } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import ImageUploading, { ImageListType } from "react-images-uploading";
+import ImageUploading  from "react-images-uploading";
 
 import '../App.css';
 import bg from '../img/bg-image.jpg';
@@ -29,7 +29,7 @@ interface IProps {
     onDOBChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
     onUserInfoSaveClick : (event: React.SyntheticEvent) => void;
     onUserInfoBackClick : (event: React.SyntheticEvent) => void;
-    onImageChange : (imageList: ImageListType, addUpdateIndex: number[] | undefined) => void;
+    onImageChange : (imageList?: ImageType[]) => void;
 
     // Contact Information Update
     onAddressChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -54,6 +54,9 @@ interface IProps {
     onMedicalInfoClick : (event: React.SyntheticEvent) => void;
     onMedicalInfoSaveClick : (event: React.SyntheticEvent) => void;
     onMedicalInfoBackClick : (event: React.SyntheticEvent) => void;
+
+    //Save
+    onSaveClick : (event : React.SyntheticEvent) => void;
 
     userShow: boolean;
     contactShow: boolean;
@@ -80,8 +83,14 @@ interface IProps {
     underlyingHealthIssues:string[],
     otherHealthIssues:string[],
     bodyMassIndexValue: string;
-    images:ImageListType;
+    images:ImageType[];
 }
+
+interface ImageType{
+    dataURL?: string;
+    file?: File;
+    [key: string]: any;
+    }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
     const { firstName,
             middleName,
@@ -146,7 +155,10 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             // Medical Information Update
             onMedicalInfoClick,
             onMedicalInfoSaveClick,
-            onMedicalInfoBackClick
+            onMedicalInfoBackClick,
+
+            //Save function
+            onSaveClick,
         } =  props;
     return(
         <React.Fragment>
@@ -201,7 +213,18 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 dragProps
                                                 }) => (
                                                     <div>
-                                                        {images.length !== 0 && (images.map((image,index) => (
+                                                        {(images === undefined)&& (
+                                                            <Link to="/" onClick={e => e.preventDefault()}>
+                                                                <img
+                                                                    alt="default_picture"
+                                                                    className="rounded-circle"
+                                                                    src={pro}
+                                                                    width="100rem"
+                                                                    height="100rem"
+                                                                />
+                                                            </Link>
+                                                        )}
+                                                        {(images !== undefined && images.length !== 0 ) && (images.map((image,index) => (
                                                             <div key={index}>
                                                                 <Link to="/" onClick={e => e.preventDefault()}>
                                                                     <img
@@ -213,17 +236,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                     />
                                                                 </Link>
                                                             </div>)))}
-                                                        {images.length === 0 && (
-                                                            <Link to="/" onClick={e => e.preventDefault()}>
-                                                                <img
-                                                                    alt="default_picture"
-                                                                    className="rounded-circle"
-                                                                    src={pro}
-                                                                    width="100rem"
-                                                                    height="100rem"
-                                                                />
-                                                            </Link>
-                                                        )}
+                                                        
                                                         <a
                                                         style={isDragging ? { color: "red" } : undefined}
                                                         onClick={onImageUpload}
@@ -837,15 +850,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         placeholder="BMI Value"
                                                         value={bmi}
                                                     />
-                                                    {/* {parseInt(bodyMassIndexValue)<18.5 ? <Alert className="mt-2" variant="warning">Underweight</Alert>:""}
-                                                    {parseInt(bodyMassIndexValue)>=18.5 && parseInt(bodyMassIndexValue)<=24.9 ? <Alert className="mt-2" variant="success">Normal</Alert>:""}
-                                                    {parseInt(bodyMassIndexValue)>=25.0 && parseInt(bodyMassIndexValue)<=29.9 ? <Alert className="mt-2" variant="warning">Overweight</Alert>:""}
-                                                    {parseInt(bodyMassIndexValue)>=30.0 ? <Alert className="mt-2" variant="danger">Obesity</Alert>:""} */}
                                                 </Form.Group>
-                                                {/* <Form.Group className="mt-4"><Button size="lg" onClick ={onBodyMassIndexCalculation}>Calculate BMI?</Button></Form.Group> */}
                                             </Form.Row>
-                                            
-                                            
                                             <Form.Row>
                                                 <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridBG">
                                                     <Form.Label>Blood Group</Form.Label>
@@ -1079,6 +1085,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
                                         {/* UUID Information */}
                                     </Form>
+                                    <Button onClick={onSaveClick} className="mt-5">Save</Button>
                                 </Card.Body>
                             </Card>
                         </Col>

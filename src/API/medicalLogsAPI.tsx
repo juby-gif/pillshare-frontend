@@ -23,9 +23,9 @@ interface ServerData {
   id :  number;
 }
 
-export function getMedicalLogs(user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void){
+export const getMedicalLogs = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
-    axios({
+    await axios({
         method: 'get',
         url: 'http://localhost:3001/medication_logs?user_id=' + user_id,
       })

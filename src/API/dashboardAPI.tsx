@@ -76,9 +76,9 @@ interface ServerData {
   oxygen_saturation : OxygenSaturationProps,
 }
 
-export function getDashboard(user_id:string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void){
+export const getDashboard = async (user_id:string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
-    axios({
+    await axios({
         method: 'get',
         url: 'http://localhost:3001/dashboard_dataset?user_id=' + user_id,
       })

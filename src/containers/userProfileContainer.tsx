@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import { ImageListType } from "react-images-uploading";
 
 import UserProfileComponent from '../components/userProfileComponent';
-import { getUserProfileAPI } from '../API/userProfileAPI';
-import { LOGGED_IN_USER, LOGGED_IN_USER_DETAILS } from '../constants';
+import { getUserProfileAPI, updateUserProfileAPI } from '../API/userProfileAPI';
+import { 
+        LOGGED_IN_USER, 
+        LOGGED_IN_USER_DETAILS, 
+        USER_INFORMATION_DATA, 
+        USER_CONTACT_INFORMATION_DATA, 
+        USER_HEALTH_INFORMATION_DATA,
+        USER_IMAGE,
+       } from '../constants';
 
 
 interface IProps {
-
+imageList:ImageType[];
 }
 
 interface ServerData {
@@ -32,6 +38,7 @@ interface ServerData {
   bloodGroup:string,
   underlyingHealthIssues:string[],
   otherHealthIssues:string[],
+  images:ImageType[];
 }
 
 interface ServerResponse {
@@ -64,8 +71,39 @@ interface StateProps {
     contactShow:boolean;
     healthShow:boolean;
     medicalShow:boolean;
-    images:ImageListType;
+    images:ImageType[];
 }
+interface ImageType{
+dataURL?: string;
+file?: File;
+[key: string]: any;
+}
+
+interface SaveDataProps {
+  firstName: string,
+  middleName: string,
+  lastName: string,
+  username: string,
+  email: string,
+  weight: string;
+  height: string;
+  age:number,
+  gender:string,
+  dob:string,
+  address:string,
+  city:string,
+  province:string,
+  country:string,
+  zip:string,
+  phone:string,
+  bodyMassIndexValue:string;
+  BMI:string,
+  bloodGroup:string,
+  underlyingHealthIssues:string[],
+  otherHealthIssues:string[],
+  images:ImageType[];
+}
+
 export default class UserProfileContainer extends Component<IProps,StateProps> {
     constructor(props:IProps){
         super(props);
@@ -124,25 +162,16 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
         // Health Information Update
         this.onHealthInfoClick = this.onHealthInfoClick.bind(this);
-        // this.onFirstNameChange = this.onFirstNameChange.bind(this);
-        // this.onMiddleNameChange = this.onMiddleNameChange.bind(this);
-        // this.onLastNameChange = this.onLastNameChange.bind(this);
-        // this.onUsernameChange = this.onUsernameChange.bind(this);
-        // this.onEmailChange = this.onEmailChange.bind(this);
-        // this.onDOBChange = this.onDOBChange.bind(this);
         this.onHealthInfoSaveClick = this.onHealthInfoSaveClick.bind(this);
         this.onHealthInfoBackClick = this.onHealthInfoBackClick.bind(this);
 
         // Medical Information Update
         this.onMedicalInfoClick = this.onMedicalInfoClick.bind(this);
-        // this.onFirstNameChange = this.onFirstNameChange.bind(this);
-        // this.onMiddleNameChange = this.onMiddleNameChange.bind(this);
-        // this.onLastNameChange = this.onLastNameChange.bind(this);
-        // this.onUsernameChange = this.onUsernameChange.bind(this);
-        // this.onEmailChange = this.onEmailChange.bind(this);
-        // this.onDOBChange = this.onDOBChange.bind(this);
         this.onMedicalInfoSaveClick = this.onMedicalInfoSaveClick.bind(this);
         this.onMedicalInfoBackClick = this.onMedicalInfoBackClick.bind(this);
+
+        // Preparing data for API call
+        this.onSaveClick = this.onSaveClick.bind(this);
     }
 
 
@@ -157,11 +186,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       getUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack);
     }
 
-    
 
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      // console.log(responseData.data);
+      console.log(responseData.data);
       if(responseData.data !== null || responseData.data !== undefined){
         localStorage.setItem(LOGGED_IN_USER_DETAILS,JSON.stringify(responseData.data));
         for (let datum of responseData.data){
@@ -180,12 +208,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             city:datum.city,
             province:datum.province,
             country:datum.country,
+            bodyMassIndexValue:datum.bodyMassIndexValue,
             zip:datum.zip,
             phone:datum.phone,
             bmi:datum.BMI,
             bloodGroup:datum.bloodGroup,
             underlyingHealthIssues:datum.underlyingHealthIssues,
             otherHealthIssues:datum.otherHealthIssues,
+            images:datum.images,
           })
           return;
         }
@@ -194,7 +224,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
       
     onFailureCallBack = (error: ServerResponse): void => {
-        alert(error);
+        console.error(error);
     }
 
     // User Information Update
@@ -240,7 +270,16 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onUserInfoSaveClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
-        const { username,firstName,lastName,middleName,email,age,dob } = this.state;
+        const { username,firstName,lastName,middleName,email,age,dob} = this.state;
+        localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify({
+          username:username,
+          firstName:firstName,
+          lastName:lastName,
+          middleName:middleName,
+          email:email,
+          age:age,
+          dob:dob,
+        }))
         console.log(username,firstName,lastName,middleName,email,age,dob)
         this.setState({
             userShow:false,
@@ -253,12 +292,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             userShow:false,
         })
     }
-    onImageChange = (imageList: ImageListType,
-      addUpdateIndex: number[] | undefined) => {
-        console.log(imageList, addUpdateIndex);
-        this.setState({
-          images:imageList as ImageListType,
-        })
+    onImageChange = (imageList?: ImageType[]) => {
+        console.log(imageList);
+        localStorage.setItem(USER_IMAGE,JSON.stringify(imageList));
+          this.setState({
+            images:imageList as ImageType[],
+          })
+        
       }
 
     // Contact Information Update
@@ -302,6 +342,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       event.preventDefault();
       const { address,city,province,country,zip,phone } = this.state;
       console.log(address,city,province,country,zip,phone )
+      localStorage.setItem(USER_CONTACT_INFORMATION_DATA,JSON.stringify({
+        address:address,
+        city:city,
+        province:province,
+        country:country,
+        zip:zip,
+        phone:phone,
+      }))
       this.setState({
         contactShow:false,
       })
@@ -356,6 +404,15 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         bmi_value = "Obesity";
       }
       console.log(weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue)
+      localStorage.setItem(USER_HEALTH_INFORMATION_DATA,JSON.stringify({
+        weight:weight,
+        height:height,
+        bmi:bmi,
+        bloodGroup:bloodGroup,
+        underlyingHealthIssues:underlyingHealthIssues,
+        otherHealthIssues:otherHealthIssues,
+        bodyMassIndexValue:bodyMassIndexValue,
+      }))
       this.setState({
         healthShow:false,
         bmi:bmi_value,
@@ -388,6 +445,44 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         medicalShow:false,
       })
     }
+    onSaveClick = (event : React.SyntheticEvent) : void =>{
+      const { bodyMassIndexValue } = this.state
+      const { onSuccessCallBack,onFailureCallBack } = this;
+      const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+      const userInformation = JSON.parse(localStorage.getItem(USER_INFORMATION_DATA) || '{}');
+      const userContactInformation = JSON.parse(localStorage.getItem(USER_CONTACT_INFORMATION_DATA) || '{}');
+      const userHealthInformation = JSON.parse(localStorage.getItem(USER_HEALTH_INFORMATION_DATA) || '{}');
+      const images = JSON.parse(localStorage.getItem(USER_IMAGE) || '{}');
+      const data:SaveDataProps = {
+        firstName: userInformation.firstName,
+        middleName: userInformation.middleName,
+        lastName: userInformation.lastName,
+        username: userInformation.username,
+        email: userInformation.email,
+        weight: userInformation.weight,
+        height: userInformation.height,
+        age:userInformation.age,
+        gender:userInformation.gender,
+        dob:userInformation.dob,
+        address:userContactInformation.address,
+        city:userContactInformation.city,
+        province:userContactInformation.province,
+        country:userContactInformation.country,
+        zip:userContactInformation.zip,
+        phone:userContactInformation.phone,
+        bodyMassIndexValue:bodyMassIndexValue,
+        BMI:userHealthInformation.bmi,
+        bloodGroup:userHealthInformation.bloodGroup,
+        underlyingHealthIssues:userHealthInformation.underlyingHealthIssues,
+        otherHealthIssues:userHealthInformation.otherHealthIssues,
+        images:images,
+      }
+      console.log(this.state.bodyMassIndexValue)
+      
+      updateUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack,data);
+
+    } 
+    
   render () {
       const { onWeightChange,
               onHeightChange,
@@ -426,6 +521,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               onMedicalInfoClick,
               onMedicalInfoSaveClick,
               onMedicalInfoBackClick,
+
+              // Save 
+              onSaveClick,
 
 
             } = this;
@@ -522,6 +620,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onMedicalInfoClick={onMedicalInfoClick}
             onMedicalInfoSaveClick = {onMedicalInfoSaveClick}
             onMedicalInfoBackClick = {onMedicalInfoBackClick}
+
+            //Save function
+            onSaveClick = {onSaveClick}
             />
         );
     }
