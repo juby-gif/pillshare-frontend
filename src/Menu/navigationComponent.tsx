@@ -85,7 +85,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
      
     
     return(
-        <Navbar className="mb-5" expand="md" id="navigation" >
+        <Navbar expand="md" id="navigation" >
             <Container fluid>
                 <Link
                 id="title"

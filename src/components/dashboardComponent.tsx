@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Row,Col,Card,Container,CardDeck,Table} from 'react-bootstrap';
+import { Row,Col,Card,Container,CardDeck} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faExclamationCircle,faCheckCircle,faPrint } from '@fortawesome/free-solid-svg-icons';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+// import { PDFDownloadLink } from '@react-pdf/renderer';
 
 import '../App.css';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
-import HealthReportPDFComponent from './healthReportPDFComponent';
-// import TableComponent from './tableComponent';
+// import HealthReportPDFComponent from './healthReportPDFComponent';
+import TableContainer from '../containers/tableContainer';
 
 
 interface IProps {
@@ -98,7 +98,6 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
         glucose,
         healthCheck,
         heartRate,
-        medicalInformation,
         oxygenSaturation,
     } = props;
     return(
@@ -335,113 +334,15 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                         <h2 className="mt-4">Pills Tracking Information:</h2>
-                        <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="xl" bordered hover={false}>
-                            <thead style={{backgroundColor:"#fff"}}>
-                                <tr>
-                                    <th>SL.No</th>
-                                    <th>Pill Name</th>
-                                    <th>Dose</th>
-                                    <th>Dosage</th>
-                                    <th>Before / After Food</th>
-                                    <th>Duration</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Prescribed Intervals</th>
-                                    <th>Reason for taking this medication</th>
-                                    <th>Taken / Missed</th>
-                                </tr>
-                            </thead>
-                            <tbody style={{backgroundColor:"#fff"}}>
-                            {medicalInformation?medicalInformation.map((info,index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            {info.id}
-                                        </td>
-                                        <td>
-                                            {info.name}
-                                        </td>
-                                        <td>
-                                            {info.dose} {' '}{info.measure}
-                                        </td>
-                                        <td>
-                                            {info.dosage}
-                                        </td>
-                                        <td>
-                                            {info.before_or_after}
-                                        </td>
-                                        <td>
-                                            {info.duration}
-                                        </td>
-                                        <td style={{width: '6rem', textAlign: 'center'}}>
-                                            {info.start_date}
-                                        </td>
-                                        <td style={{width: '6rem', textAlign: 'center'}}>
-                                            {info.end_date}
-                                        </td>
-                                        <td>
-                                            <Table borderless={true} hover={false} variant="light" responsive="xl">
-                                                <thead>
-                                                    <tr>
-                                                        <td>
-                                                            <th>
-                                                                Part
-                                                            </th>
-                                                        </td>
-                                                        <td>
-                                                            <th>
-                                                                Time
-                                                            </th>
-                                                        </td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            {info.intervals.part.map((part,index)=>
-                                                                <tr key={index}>
-                                                                    <b>{part}:</b>
-                                                                </tr>)}
-                                                        </td>
-                                                        <td>
-                                                            {info.intervals.time.map((time,index)=>
-                                                                <tr key={index}>
-                                                                    {time}
-                                                                </tr>)}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </Table>
-                                        </td>
-                                        <td>
-                                            {info.reason} 
-                                        </td>
-                                        <td>
-                                            <Table borderless={true} hover={false} variant="light" responsive="xl">
-                                                    
-                                                <tbody>
-                                                    <tr>
-                                                        <tr>
-                                                            {info.taken.map((part,index)=>
-                                                                <tr key={index}>
-                                                                    <b>Taken:</b>&nbsp;&nbsp;{part}
-                                                                </tr>)}
-                                                        </tr>
-                                                        <tr>
-                                                            {info.missed.map((part,index)=>
-                                                                <tr key={index}>
-                                                                    <b>Missed:</b>&nbsp;&nbsp;{part}
-                                                                </tr>)}
-                                                        </tr>
-                                                    </tr>
-                                                </tbody>
-                                            </Table>
-                                        </td>
-                                    </tr>
-                            )):<tr>No data available</tr>
-                        }
-                            
-                            </tbody>
-                        </Table>
+
+
+        {/* --------------------Table-------------------- */}
+
+                        <TableContainer />
+
+        {/* --------------------Table-------------------- */}
+
+
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                             <Card id="alert-issued" className="mb-4 mr-4" style={{ minWidth: '22rem',maxWidth:'22rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
@@ -471,21 +372,9 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 <FontAwesomeIcon style={{fontSize:"1.9rem"}} icon={faCheckCircle} />
                                             </div>
                                         </Col>
-                                        
                                     </Row>
-
                                 </Card.Body>
-                                
                             </Card>
-
-
-                            {/* Table Component */}
-
-                            {/* <TableComponent /> */}
-
-                            {/* Table Component */}
-
-
                             {/* Thanks to the following:
                                 https://github.com/London-Language-Institute/markingcloud-front/blob/8b5255414fbdd5e63e3062142f0494596d031794/src/components/testSubmission/completeComponent.js#L162
                             */}
