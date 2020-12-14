@@ -81,7 +81,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
     const userImage:ImageType[]|undefined = getUserImageArr(userData);
     
     const username:UserNameProps|undefined = getUserName(userData);
-    console.log(username?(username.firstName,username.lastName):"")
+    // console.log(username?(username.firstName,username.lastName):"")
      
     
     return(

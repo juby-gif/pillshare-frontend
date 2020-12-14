@@ -1,36 +1,66 @@
-import React from 'react';import { Container,Table } from 'react-bootstrap';
-
-import '../App.css';
-import SidebarComponent from '../Menu/sideBarComponent';
+import React from 'react';
+import DataTable from 'react-data-table-component';
+import { createTheme } from 'react-data-table-component';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import NavigationComponent from '../Menu/navigationComponent';
+import SidebarComponent from '../Menu/sideBarComponent';
+import { Container } from 'react-bootstrap';
 
 
 interface IProps {
-    medical_information : MedicalProps[];
-  }
+  theme : string;
+  column : ({ name: string; selector: string; sortable: boolean; } | { name: string; selector: string; sortable: boolean; right: boolean; })[];
+  data : DataProps[];
+  handleChange : (event: React.SyntheticEvent) => void;
+}
+
+interface TakenProps{
+  part ?: string;
+  time ?: string;
+}
+
+interface DataProps{
+  before_or_after ?: string;
+  dosage ?: string;
+  dose ?: number;
+  duration ?: number;
+  end_date ?: string;
+  start_date ?: string;
+  time_taken ?: TakenProps;
+  missed ?: string;
+  measure ?: string;
+  name ?: string;
+  reason ?: string;
+  taken ?: string;
+}
+
+createTheme('solarized', {
+  text: {
+    primary: '#268bd2',
+    secondary: '#2aa198',
+  },
+  background: {
+    default: '#002b36',
+  },
+  context: {
+    background: '#cb4b16',
+    text: '#FFFFFF',
+  },
+  divider: {
+    default: '#073642',
+  },
+  action: {
+    button: 'rgba(0,0,0,.54)',
+    hover: 'rgba(0,0,0,.08)',
+    disabled: 'rgba(0,0,0,.12)',
+  },
+});
   
-  interface MedicalProps {
-    before_or_after ?: string;
-    dosage ?: string;
-    dose ?: number;
-    duration ?: number;
-    end_date ?: string;
-    start_date ?: string;
-    time_taken ?: TakenProps;
-    missed ?: string;
-    measure ?: string;
-    name ?: string;
-    reason ?: string;
-    taken ?: string;
-    id : number;
-  }
-  interface TakenProps{
-    part ?: string;
-    time ?: string;
-  }
 
 const MedicationLogsComponent = (props: IProps) : JSX.Element => {
-    const { medical_information } = props;
+    const { theme, column,data,handleChange } = props;
+    console.log(column)
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
@@ -49,40 +79,25 @@ const MedicationLogsComponent = (props: IProps) : JSX.Element => {
 
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                             <h3 className="display-3 d-flex justify-content-center">Medication Logs</h3>
-                            <Table className="mt-3" responsive="xl" striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>SL.No</th>
-                                        <th>Pill Name</th>
-                                        <th>Dose</th>
-                                        <th>Dosage</th>
-                                        <th>Before / After Food</th>
-                                        <th>Duration</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Time Taken</th>
-                                        <th>Reason for taking this medication</th>
-                                        <th>Taken / Missed</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {medical_information.length!==0?medical_information.map((datum) =>(
-                                        <tr key={datum.id}>
-                                            <td>{datum.id}</td>
-                                            <td>{datum.name}</td>
-                                            <td>{datum.dose}{' '}{datum.measure}</td>
-                                            <td>{datum.dosage}</td>
-                                            <td>{datum.before_or_after}</td>
-                                            <td>{datum.duration}</td>
-                                            <td>{datum.start_date}</td>
-                                            <td>{datum.end_date}</td>
-                                            <td>{datum.time_taken?datum.time_taken.part + " ":""}{datum.time_taken?datum.time_taken.time:""}</td>
-                                            <td>{datum.reason}</td>
-                                            <td>{datum.taken}{''}{datum.missed}</td>
-                                        </tr>
-                                    )):<div>{" "}</div>}
-                                </tbody>
-                        </Table>
+                            <FormControlLabel
+                                label="Dark Mode"
+                                control={(
+                                <Switch
+                                    checked={theme === 'dark'}
+                                    onChange={handleChange}
+                                />
+                                )}
+                            />
+                            <DataTable
+                                title="Here's the history of your medications"
+                                columns={column}
+                                data={data}
+                                // selectableRows
+                                highlightOnHover
+                                pointerOnHover
+                                pagination
+                                theme={theme}
+                            />
                         </Container>
                         {/* ----------------------The page content ends here---------------------- */}
                     </div>

@@ -30,7 +30,7 @@ interface DataProps{
  
 const TableComponent = (props:IProps):JSX.Element => {
   const {data } = props;
-  console.log(data)
+  // console.log(data)
     return (
       <React.Fragment>
         <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="xl" bordered hover={false}>
