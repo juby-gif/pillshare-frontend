@@ -60,7 +60,6 @@ createTheme('solarized', {
 
 const MedicationLogsComponent = (props: IProps) : JSX.Element => {
     const { theme, column,data,handleChange } = props;
-    console.log(column)
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>

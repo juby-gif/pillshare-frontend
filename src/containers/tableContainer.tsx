@@ -6,11 +6,12 @@ import { LOGGED_IN_USER } from '../constants';
 
 
 interface IProps {
-
+  debuggMode:boolean,
 }
 
 interface StateProps {
 data:DataProps[];
+debuggMode:boolean;
 }
 
 interface DataProps{
@@ -112,6 +113,7 @@ export default class TableContainer extends Component<IProps,StateProps> {
         super(props);
     this.state={
         data:[],
+        debuggMode:props.debuggMode,
     }
   }
 
@@ -137,10 +139,11 @@ export default class TableContainer extends Component<IProps,StateProps> {
     
 
     render(){
-        const { data } = this.state;
+        const { data,debuggMode } = this.state;
         return(
             <TableComponent 
                 data={data}
+                debuggMode={debuggMode}
             />
         );
     }

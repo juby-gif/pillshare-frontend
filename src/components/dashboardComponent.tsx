@@ -338,7 +338,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
 
         {/* --------------------Table-------------------- */}
 
-                        <TableContainer />
+                        <TableContainer debuggMode={false} />
 
         {/* --------------------Table-------------------- */}
 

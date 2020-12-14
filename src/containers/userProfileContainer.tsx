@@ -72,6 +72,7 @@ interface StateProps {
     healthShow:boolean;
     medicalShow:boolean;
     images:ImageType[];
+    debuggMode:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -112,6 +113,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           contactShow: false,
           healthShow: false,
           medicalShow: false,
+          debuggMode:false,
           firstName: "",
           middleName: "",
           lastName: "",
@@ -191,7 +193,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      console.log(responseData.data);
+      // console.log(responseData.data);
       if(responseData.data !== null || responseData.data !== undefined){
         localStorage.setItem(LOGGED_IN_USER_DETAILS,JSON.stringify(responseData.data));
         for (let datum of responseData.data){
@@ -218,6 +220,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             underlyingHealthIssues:datum.underlyingHealthIssues,
             otherHealthIssues:datum.otherHealthIssues,
             images:datum.images,
+            debuggMode:false,
           })
           return;
         }
@@ -442,6 +445,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       event.preventDefault();
       this.setState({
         medicalShow:true,
+        debuggMode:true,
       })
     }
     onMedicalInfoSaveClick = (event : React.SyntheticEvent) : void => {
@@ -450,12 +454,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       console.log(username,firstName,lastName,middleName,email,age,dob)
       this.setState({
         medicalShow:false,
+        debuggMode:false,
       })
     }
     onMedicalInfoBackClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
       this.setState({
         medicalShow:false,
+        debuggMode:false,
       })
     }
     onSaveClick = (event : React.SyntheticEvent) : void =>{
@@ -568,6 +574,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               medicalShow,
               bodyMassIndexValue,
               images,
+              debuggMode,
              } = this.state;
         return(
             <UserProfileComponent 
@@ -633,7 +640,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onHealthInfoSaveClick = {onHealthInfoSaveClick}
             onHealthInfoBackClick = {onHealthInfoBackClick}
 
-            // Medical Information Update 
+            // Medical Information Update
+            debuggMode={debuggMode} 
             onMedicalInfoClick={onMedicalInfoClick}
             onMedicalInfoSaveClick = {onMedicalInfoSaveClick}
             onMedicalInfoBackClick = {onMedicalInfoBackClick}

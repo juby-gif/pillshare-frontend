@@ -1,9 +1,10 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
   data : DataProps[];
+  debuggMode : boolean;
 }
 
 interface IntervalProps {
@@ -29,11 +30,11 @@ interface DataProps{
 
  
 const TableComponent = (props:IProps):JSX.Element => {
-  const {data } = props;
+  const {data,debuggMode } = props;
   // console.log(data)
     return (
       <React.Fragment>
-        <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="xl" bordered hover={false}>
+        <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="lg" bordered hover={false}>
           <thead style={{backgroundColor:"#fff"}}>
               <tr>
                   <th>SL.No</th>
@@ -47,6 +48,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>Prescribed Intervals</th>
                   <th>Reason for taking this medication</th>
                   <th><tr>Status: <div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
+                  {debuggMode && <th>Settings</th>}
               </tr>
           </thead>
           <tbody style={{backgroundColor:"#fff"}}>
@@ -133,6 +135,16 @@ const TableComponent = (props:IProps):JSX.Element => {
                     </tbody>
                   </Table>
                 </td>
+                {debuggMode && (
+                          <tr>
+                            <td>
+                              <Button>Edit</Button>
+                            </td>
+                            <td>
+                              <Button>Delete</Button>
+                            </td>
+                          </tr>
+                )}
               </tr>
             )):<tr>No data available</tr>
           }               
