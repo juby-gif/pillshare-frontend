@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row,Col,Card,Container,Table,Form, Button, Modal, Alert } from 'react-bootstrap';
+import { Row,Col,Card,Container,Form, Button, Modal, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt,faCamera } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -10,11 +10,8 @@ import bg from '../img/bg-image.jpg';
 import pro from '../img/pro-pic.jpg';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
+import TableContainer from '../containers/tableContainer';
 
-
-interface TableProps {
-
-}
 
 interface IProps {
     
@@ -1038,24 +1035,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             </Row>
                                         </span>
                                         <div className="pl-lg-4" style={{margin: "auto"}}>
-                                            <Table className="mt-3" responsive striped bordered hover>
-                                                <thead>
-                                                    <tr>
-                                                        <th>SL.No</th>
-                                                        <th>Pill Name</th>
-                                                        <th>Dose</th>
-                                                        <th>Dosage</th>
-                                                        <th>Before / After Food</th>
-                                                        <th>Duration</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
-                                                        <th>Prescribed Intervals</th>
-                                                        <th>Reason for taking this medication</th>
-                                                        <th>Taken / Missed</th>
-                                                    </tr>
-                                                </thead>
-                                                <TableBodyComponent />
-                                            </Table>  
+                                            <TableContainer />  
                                         </div>
 
                                         {/* UUID Information */}
@@ -1098,39 +1078,3 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
     );
 }
 export default UserProfileComponent;
-
-
-
-const TableBodyComponent = (props:TableProps):JSX.Element => {
-
-    return (
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Hydrocodone</td>
-                <td>2 tablets</td>
-                <td>EOD</td>
-                <td>Before</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Morning - 9:30am,Night - 8:45pm</td>
-                <td>pain medication</td>
-                <td>Morning-Taken,Night-Missed</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Simvastatin</td>
-                <td>1 tablet</td>
-                <td>SID</td>
-                <td>After</td>
-                <td>30</td>
-                <td>21-03-2020</td>
-                <td>21-04-2020</td>
-                <td>Night - 8:45pm</td>
-                <td>to lower the number of triglycerides and LDL</td>
-                <td>Night-Taken</td>
-            </tr>
-        </tbody>
-    );
-}

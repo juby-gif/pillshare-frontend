@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
   data : DataProps[];
 }
@@ -45,7 +46,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>End Date</th>
                   <th>Prescribed Intervals</th>
                   <th>Reason for taking this medication</th>
-                  <th>Taken / Missed</th>
+                  <th><tr>Status: <div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
               </tr>
           </thead>
           <tbody style={{backgroundColor:"#fff"}}>
@@ -78,34 +79,34 @@ const TableComponent = (props:IProps):JSX.Element => {
                 <td>
                   <Table borderless={true} hover={false} variant="light" responsive="xl">
                     <thead>
-                        <tr>
-                            <td>
-                                <th>
-                                    Part
-                                </th>
-                            </td>
-                            <td>
-                                <th>
-                                    Time
-                                </th>
-                            </td>
-                        </tr>
+                      <tr>
+                        <td>
+                          <th>
+                            Part
+                          </th>
+                        </td>
+                        <td>
+                          <th>
+                            Time
+                          </th>
+                        </td>
+                      </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                          <td>
-                            {info.intervals?info.intervals.part.map((part,index)=>
-                                <tr key={index}>
-                                    <b>{part}:</b>
-                                </tr>):"-"}
-                          </td>
-                          <td>
-                            {info.intervals?info.intervals.time.map((time,index)=>
-                                <tr key={index}>
-                                    {time}
-                                </tr>):"-"}
-                          </td>
-                        </tr>
+                      <tr>
+                        <td>
+                          {info.intervals?info.intervals.part.map((part,index)=>
+                              <tr key={index}>
+                                  <b>{part}:</b>
+                              </tr>):"-"}
+                        </td>
+                        <td>
+                          {info.intervals?info.intervals.time.map((time,index)=>
+                              <tr key={index}>
+                                  {time}
+                              </tr>):"-"}
+                        </td>
+                      </tr>
                     </tbody>
                   </Table>
                 </td>
