@@ -151,6 +151,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         this.onUsernameChange = this.onUsernameChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onDOBChange = this.onDOBChange.bind(this);
+        this.onMaleChange = this.onMaleChange.bind(this);
+        this.onFemaleChange = this.onFemaleChange.bind(this);
         this.onUserInfoSaveClick = this.onUserInfoSaveClick.bind(this);
         this.onUserInfoBackClick = this.onUserInfoBackClick.bind(this);
         this.onImageChange = this.onImageChange.bind(this);
@@ -268,9 +270,19 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             age:parseInt(event.currentTarget.value),
         })
     }
+    onMaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        gender:event.currentTarget.value,
+      })
+    } 
+    onFemaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        gender:event.currentTarget.value,
+      })
+    } 
     onUserInfoSaveClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
-        const { username,firstName,lastName,middleName,email,age,dob} = this.state;
+        const { username,firstName,lastName,middleName,email,age,dob,gender} = this.state;
         localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify({
           username:username,
           firstName:firstName,
@@ -279,6 +291,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           email:email,
           age:age,
           dob:dob,
+          gender:gender,
         }))
         console.log(username,firstName,lastName,middleName,email,age,dob)
         this.setState({
@@ -500,6 +513,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               onUserInfoSaveClick,
               onUserInfoBackClick,
               onImageChange,
+              onMaleChange,
+              onFemaleChange,
 
               // Contact Information Update
               onContactInfoClick,
@@ -586,6 +601,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onUserInfoSaveClick = {onUserInfoSaveClick}
             onUserInfoBackClick = {onUserInfoBackClick}
             onImageChange = {onImageChange}
+            onMaleChange = {onMaleChange}
+            onFemaleChange = {onFemaleChange}
 
             // Contact Information Update
             address = {address}

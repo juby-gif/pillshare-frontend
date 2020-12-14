@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row,Col,Card,Container,Form, Button, Modal, Alert } from 'react-bootstrap';
+import { Row,Col,Card,Container,Form, Button, Modal, Alert, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt,faCamera } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,8 @@ interface IProps {
     onUserInfoSaveClick : (event: React.SyntheticEvent) => void;
     onUserInfoBackClick : (event: React.SyntheticEvent) => void;
     onImageChange : (imageList?: ImageType[]) => void;
+    onMaleChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onFemaleChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
     // Contact Information Update
     onAddressChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -129,6 +131,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             onUserInfoSaveClick,
             onUserInfoBackClick,
             onImageChange,
+            onMaleChange,
+            onFemaleChange,
 
             // Contact Information Update
             onAddressChange,
@@ -378,24 +382,20 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                                 onChange={onAgeChange}
                                                                             />
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xs="4" md="4" lg="3" controlId="formGridGender">
+                                                                        <Form.Group as={Col} xs="9" md="8" lg="7" controlId="formGridAge">
                                                                             <Form.Label>Gender</Form.Label>
-                                                                            <Form.Control
-                                                                                required
-                                                                                type="radio"
-                                                                                name="gender"
-                                                                                placeholder="Gender"
-                                                                                value={gender}
-                                                                            />
-                                                                            <Form.Control
-                                                                                required
-                                                                                type="text"
-                                                                                name="gender"
-                                                                                placeholder="Gender"
-                                                                                value={gender}
-                                                                            />
+                                                                            <InputGroup>
+                                                                                <InputGroup.Prepend>
+                                                                                    <InputGroup.Radio name="gender" onChange={onMaleChange} value="male" checked={gender === "male"} />
+                                                                                </InputGroup.Prepend>
+                                                                                <Form.Control  className="mr-3" id="male" value="male" />
+                                                                                <InputGroup.Prepend>
+                                                                                <InputGroup.Radio name="gender" onChange={onFemaleChange} value="female" checked={gender === "female"} />
+                                                                                </InputGroup.Prepend>
+                                                                                <Form.Control id="female" value="female" />
+                                                                            </InputGroup>
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xs="7" md="3" lg="4" controlId="formGridDOB">
+                                                                        <Form.Group controlId="formGridDOB">
                                                                             <Form.Label>Date of Birth</Form.Label>
                                                                             <Form.Control
                                                                                     required
