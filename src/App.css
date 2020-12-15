@@ -61,12 +61,6 @@ animation: live 1.4s infinite ease-in-out;
 animation-fill-mode: both;
 }
 
-.yaggrw:nth-child(1) {
-  -webkit-animation-delay: 0.42s;
-  animation-delay: 0.42s;
-  border:3px solid rgba(250, 1, 1, 0.534);
-}
-
 @-webkit-keyframes live {
   0%, 80%, 100% { -webkit-transform: scale(0.6) }
   40% { -webkit-transform: scale(1.0) }

@@ -47,7 +47,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>End Date</th>
                   <th>Prescribed Intervals</th>
                   <th>Reason for taking this medication</th>
-                  <th><tr>Status: <div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
+                  <th><tr>Status: <div></div><div></div><div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
                   {debuggMode && <th>Settings</th>}
               </tr>
           </thead>
