@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import GlucoseComponent from '../../components/measurementComponents/glucoseComponent';
-import { GLUCOSE,GLUCOSE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
+import { GLUCOSE,GLUCOSE_INSTRUMENT, LOGGED_IN_USER_ID } from '../../constants';
 
 interface IProps {
   
@@ -50,7 +50,7 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
    componentDidMount(){
     if(localStorage.getItem(GLUCOSE) !== null || localStorage.getItem(GLUCOSE) !== undefined){
       const glucoseReadingData: GlucoseProps = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
+      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:glucoseReadingData.reading,
         date: glucoseReadingData.date,

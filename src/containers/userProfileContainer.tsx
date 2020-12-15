@@ -4,7 +4,8 @@ import UserProfileComponent from '../components/userProfileComponent';
 import { getUserProfileAPI, updateUserProfileAPI } from '../API/userProfileAPI';
 import { 
         LOGGED_IN_USER, 
-        LOGGED_IN_USER_DETAILS, 
+        LOGGED_IN_USER_ID,
+        LOGGED_IN_USER_NAME,
         USER_INFORMATION_DATA, 
         USER_CONTACT_INFORMATION_DATA, 
         USER_HEALTH_INFORMATION_DATA,
@@ -181,7 +182,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
+      console.log(user_id)
 
     /* *
         *  API callback functions
@@ -194,9 +196,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
       // console.log(responseData.data);
-      if(responseData.data !== null || responseData.data !== undefined){
-        localStorage.setItem(LOGGED_IN_USER_DETAILS,JSON.stringify(responseData.data));
+      if(responseData.data.length > 0 || responseData.data !== null || responseData.data !== undefined){
+        localStorage.setItem(LOGGED_IN_USER,JSON.stringify(responseData.data));
         for (let datum of responseData.data){
+          localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:datum.firstName,lastName:datum.lastName}));
           this.setState({
             firstName: datum.firstName,
             middleName: datum.middleName,
@@ -499,6 +502,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       console.log(this.state.bodyMassIndexValue)
       
       updateUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack,data);
+      localStorage.removeItem(USER_INFORMATION_DATA);
+      localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
+      localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);
 
     } 
     

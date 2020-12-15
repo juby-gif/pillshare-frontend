@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HeartRateComponent from '../../components/measurementComponents/heartRateComponent';
-import { HEARTRATEDATA, HEART_RATE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
+import { HEARTRATEDATA, HEART_RATE_INSTRUMENT, LOGGED_IN_USER_ID } from '../../constants';
 
 interface IProps {
 
@@ -21,7 +21,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *  Initializer
         *------------------------------------------------------------
     */
-    user_id:string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
+    user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
     constructor(props:IProps) {
       super(props);
       this.state = {

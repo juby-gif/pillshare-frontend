@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BodyTemperatureComponent from '../../components/measurementComponents/bodyTemperatureComponent';
-import { BODYTEMPERATURE, BODY_TEMPERATURE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
+import { BODYTEMPERATURE, BODY_TEMPERATURE_INSTRUMENT, LOGGED_IN_USER_ID } from '../../constants';
 
 interface IProps {
   
@@ -48,7 +48,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
    componentDidMount(){
     if(localStorage.getItem(BODYTEMPERATURE) !== null || localStorage.getItem(BODYTEMPERATURE) !== undefined){
       const bodyTemperatureReadingData: BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
+      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:bodyTemperatureReadingData.reading,
         date: bodyTemperatureReadingData.date,

@@ -1,3 +1,5 @@
+import { LOGGED_IN_USER } from "../constants";
+
 interface Props{
     firstName: string;
     middleName: string;
@@ -21,6 +23,7 @@ interface Props{
     underlyingHealthIssues:string[];
     otherHealthIssues:string[];
     images:ImageType[];
+    id?:number
 }
 
 interface ImageType{
@@ -36,12 +39,14 @@ interface ServerResponse {
 
 export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
+    console.log(user_id)
     await axios({
         method: 'get',
         url: 'http://localhost:3001/users?user_id=' + user_id,
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
+          console.log(response.data)
       }
 
         )
@@ -51,10 +56,17 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
 }
 
 export const updateUserProfileAPI = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void, data:Props) :Promise<void> =>{
+    let userObjArr = JSON.parse(localStorage.getItem(LOGGED_IN_USER)|| '[]')
+    const getUserID = (userObjArr:Props[]):number|undefined => {
+    for (let userObj of userObjArr){
+        return userObj.id;
+        }
+    }   
+    alert(getUserID(userObjArr))
     const axios = require('axios').default;
     await axios({
-            method: 'put',
-            url: 'http://localhost:3001/users?user_id=' + user_id,
+            method: 'patch',
+            url: 'http://localhost:3001/users/' + getUserID(userObjArr) +'/',
             data: data,
             headers: {'Content-Type':'application/json'}
         })

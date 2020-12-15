@@ -1,6 +1,6 @@
 {
   "/api/*": "/$1",
-  "/:resource/:id/show": "/:resource/:id",
+  "/:resource/:id/show": "/:resource/:user_id",
   "/posts/:category": "/posts?category=:category",
   "/articles\\?id=:id": "/posts/:id"
 }

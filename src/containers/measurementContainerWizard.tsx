@@ -17,7 +17,7 @@ import BodyTemperatureContainer from './measurementContainers/bodyTemperatureCon
 import GlucoseContainer from './measurementContainers/glucoseContainer';
 import OxygenSaturationContainer from './measurementContainers/oxygenSaturationContainer';
 import ReviewContainer from './measurementContainers/reviewContainer'
-import { BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER } from '../constants';
+import { BODYTEMPERATURE, HEARTRATEDATA, OXYGENSATURATION, GLUCOSE, BLOODPRESSUREDATA, PILLSHARE_USER_TOKEN, LOGGED_IN_USER_ID } from '../constants';
 import { postTimeSeriesData } from '../API/measurementAPI'
 
 interface BodyTemperatureProps {
@@ -180,7 +180,8 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
   for (let datum in data){
     if (data.hasOwnProperty(datum)) count++;
   }
-  if(count === 0) { return 0; }
+  if(count !== 0) { return count; }
+  else {return 0};
 }
 
 
@@ -206,19 +207,23 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
                                       oxygenSaturationData:OxygenSaturationProps | null,
                                     ) => {
 
-  if (lengthChecker(heartRateData) !== 0) {
+  if (lengthChecker(heartRateData) > 2) {
     onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
   }
-  if (lengthChecker(bloodPressureData) !== 0) {
+  
+  if (lengthChecker(bloodPressureData) > 2) {
     onTimeSeriesAPICall(bloodPressureData,"blood_pressure_measurements");
   }
-  if (lengthChecker(bodyTemperatureData) !== 0) {
+
+  if (lengthChecker(bodyTemperatureData) > 2) {
     onTimeSeriesAPICall(bodyTemperatureData,"body_temperature_measurements");
   }
-  if (lengthChecker(glucoseData) !== 0) {
+
+  if (lengthChecker(glucoseData) > 2) {
     onTimeSeriesAPICall(glucoseData,"glucose_measurements");
   }
-  if (lengthChecker(oxygenSaturationData) !== 0) {
+
+  if (lengthChecker(oxygenSaturationData) > 2) {
     onTimeSeriesAPICall(oxygenSaturationData,"oxygen_saturation_measurements");
   }
   }
@@ -286,11 +291,11 @@ export default function CustomizedSteppers() {
   }
       const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-     console.log(localStorage.getItem(HEARTRATEDATA) )
+      // console.log(localStorage.getItem(HEARTRATEDATA) )
       // TODO ADD VALIDATION
       if(activeStep === steps.length - 1 ){
         let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        let user_id: string | null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+        let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
         let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
         let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
         let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');

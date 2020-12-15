@@ -216,18 +216,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 dragProps
                                                 }) => (
                                                     <div>
-                                                        {(images === undefined)&& (
-                                                            <Link to="/" onClick={e => e.preventDefault()}>
-                                                                <img
-                                                                    alt="default_picture"
-                                                                    className="rounded-circle"
-                                                                    src={pro}
-                                                                    width="100rem"
-                                                                    height="100rem"
-                                                                />
-                                                            </Link>
-                                                        )}
-                                                        {(images !== undefined && images.length !== 0 ) && (images.map((image,index) => (
+                                                        {(images !== undefined && images.length !== 0 ) ? images.map((image,index) => (
                                                             <div key={index}>
                                                                 <Link to="/" onClick={e => e.preventDefault()}>
                                                                     <img
@@ -238,7 +227,17 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                     height="100rem"
                                                                     />
                                                                 </Link>
-                                                            </div>)))}
+                                                            </div>)):(
+                                                            <Link to="/" onClick={e => e.preventDefault()}>
+                                                                <img
+                                                                    alt="default_picture"
+                                                                    className="rounded-circle"
+                                                                    src={pro}
+                                                                    width="100rem"
+                                                                    height="100rem"
+                                                                />
+                                                            </Link>
+                                                        )}
                                                         
                                                         <a
                                                         style={isDragging ? { color: "red" } : undefined}

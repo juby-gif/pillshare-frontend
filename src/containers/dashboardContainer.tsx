@@ -3,7 +3,7 @@ import DashboardComponent from '../components/dashboardComponent';
 
 // import SideBarComponent from '../components/sideBarComponent';
 import { getDashboard } from '../API/dashboardAPI';
-import { LOGGED_IN_USER } from '../constants';
+import { LOGGED_IN_USER_ID } from '../constants';
  
 interface IProps {
 
@@ -126,7 +126,7 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
 
     /*  *
         *  API callback functions

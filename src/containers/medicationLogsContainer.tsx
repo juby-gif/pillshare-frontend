@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import MedicationLogsComponent from '../components/medicationLogsComponent';
 import { getMedicalLogs } from '../API/medicalLogsAPI';
-import { LOGGED_IN_USER } from '../constants';
+import { LOGGED_IN_USER_ID } from '../constants';
 
 
 interface IProps {
@@ -97,7 +97,7 @@ export default class MedicationLogsContainer extends Component<IProps,StateProps
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
 
     /* *
         *  API callback functions

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import OxygenSaturationComponent from '../../components/measurementComponents/oxygenSaturationComponent';
-import { LOGGED_IN_USER, OXYGENSATURATION, OXYGEN_SATURATION_INSTRUMENT } from '../../constants';
+import { LOGGED_IN_USER_ID, OXYGENSATURATION, OXYGEN_SATURATION_INSTRUMENT } from '../../constants';
 
 interface IProps {
 }
@@ -48,7 +48,7 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
    componentDidMount(){
     if(localStorage.getItem(OXYGENSATURATION) !== null || localStorage.getItem(OXYGENSATURATION) !== undefined){
       const oxygenSaturationReadingData: OxygenSaturationProps = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
-      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
+      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:oxygenSaturationReadingData.reading,
         date: oxygenSaturationReadingData.date,

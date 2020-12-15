@@ -1,17 +1,28 @@
-import { USER_TOKEN, LOGGED_IN_USER } from '../constants';
+import { USER_TOKEN, LOGGED_IN_USER_ID, LOGGED_IN_USER_NAME, USER_IMAGE } from '../constants';
 
 interface ServerResponse {
     data: ServerData[];
   }
-  
-  interface ServerData {
-    username: string;
-    password: string;
+
+interface ImageType{
+  dataURL?: string;
+  file?: File;
+  [key: string]: any;
   }
-  interface ResponseProps {
-    message : string;
-    token ?: string;
-  }
+
+interface ServerData {
+  username: string;
+  password: string;
+  user_id:string;
+  firstName:string;
+  lastName:string;
+  images:ImageType[];
+}
+
+interface ResponseProps {
+  message : string;
+  token ?: string;
+}
 
 export const postLoginAPI = async (username:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void) :Promise<void> =>{
     const axios = require('axios').default;
@@ -31,7 +42,10 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
         for (let userObj of userArray){
             if(userObj.username === username){
                 if(userObj.password === password){
-                    sessionStorage.setItem(LOGGED_IN_USER,JSON.stringify(userObj));
+                    localStorage.setItem(LOGGED_IN_USER_ID,JSON.stringify(userObj.user_id));
+                    localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:userObj.firstName,lastName:userObj.lastName}));
+                    localStorage.setItem(USER_IMAGE,JSON.stringify(userObj.images));
+
                     const responseData = {
                         message : "Successfully logged-in",
                         token : USER_TOKEN,

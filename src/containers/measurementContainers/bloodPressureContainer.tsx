@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BloodPressureComponent from '../../components/measurementComponents/bloodPressureComponent';
-import { BLOODPRESSUREDATA, BLOOD_PRESSURE_INSTRUMENT, LOGGED_IN_USER } from '../../constants';
+import { BLOODPRESSUREDATA, BLOOD_PRESSURE_INSTRUMENT, LOGGED_IN_USER_ID } from '../../constants';
 
 interface IProps {
   
@@ -52,7 +52,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
    componentDidMount(){
     if(localStorage.getItem(BLOODPRESSUREDATA) !== null || localStorage.getItem(BLOODPRESSUREDATA) !== undefined){
       const bloodPressureReadingData: BloodPressureProps = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
-      const user_id = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER)|| '{}' ).user_id;
+      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         systoleReading: bloodPressureReadingData.systoleReading,
         diastoleReading: bloodPressureReadingData.diastoleReading,

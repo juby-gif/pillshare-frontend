@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import TableComponent from '../components/tableComponent';
 import { getMedicalTableInfo } from '../API/tableDataAPI';
-import { LOGGED_IN_USER } from '../constants';
+import { LOGGED_IN_USER_ID } from '../constants';
 
 
 interface IProps {
@@ -119,7 +119,7 @@ export default class TableContainer extends Component<IProps,StateProps> {
 
   componentDidMount(){
     const { onSuccessCallBack,onFailureCallBack } = this;
-    const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+    const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
 
     getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
   }
