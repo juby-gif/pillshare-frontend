@@ -306,7 +306,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onUserInfoBackClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
-        event.preventDefault();
         this.setState({
             userShow:false,
         })

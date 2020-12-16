@@ -809,6 +809,12 @@ h6.display-2{
   box-sizing: border-box;
 }
 
+h3.display-5{
+  font-weight: 700;
+  line-height: 1.5; 
+  font-size: calc(0.4rem + 1.8vw);
+}
+
 
 @media only screen and (max-device-width: 360px) and (min-device-width: 331px){
 .menu1_hor {

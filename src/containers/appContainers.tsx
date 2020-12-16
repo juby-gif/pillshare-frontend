@@ -11,7 +11,7 @@ import MedicationLogsContainer from './medicationLogsContainer';
 import MeasurementContainerWizard from './measurementContainerWizard';
 import RemoteDashboardContainer from '../remote/remoteDashboardContainer';
 import RemoteMedicationLogsContainer from '../remote/remoteMedicationLogsContainer';
-// import ContactContainer from './contactContainer';
+import ShareContainer from './shareContainer';
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -27,7 +27,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/measurement" exact component={MeasurementContainerWizard} />
                <Route path="/remote" exact component={RemoteDashboardContainer} />
                <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
-               {/* <Route path="/new" exact component={ModalContainer} /> */}
+               <Route path="/share" exact component={ShareContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>
        </Router>
