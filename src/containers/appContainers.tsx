@@ -25,7 +25,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/health-check" exact component={HealthCheckContainer} />
                <Route path="/medication-logs" exact component={MedicationLogsContainer} />
                <Route path="/measurement" exact component={MeasurementContainerWizard} />
-               <Route path="/remote" exact component={RemoteDashboardContainer} />
+               <Route path="/remote/:payload" exact component={RemoteDashboardContainer} />
                <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
                <Route path="/share" exact component={ShareContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}

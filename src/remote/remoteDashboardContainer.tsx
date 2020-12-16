@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import { RouteComponentProps  } from 'react-router';
 
 import RemoteDashboardComponent from './remoteDashboardComponent';
-import { getDashboard } from '../API/dashboardAPI';
-import { LOGGED_IN_USER_ID } from '../constants';
+import { getRemoteDashboard } from './remoteAPI';
  
 
 interface IProps {
-
+  payload?:string;
 }
 
 interface StateProps {
@@ -19,6 +19,7 @@ interface StateProps {
   heart_rate ?: HeartRateProps;
   medical_information ?: MedicalProps[];
   oxygen_saturation ?: OxygenSaturationProps;
+  payload?:string;
 }
 
 interface BloodPressureProps {
@@ -98,13 +99,13 @@ interface ServerData {
   medical_information : MedicalProps[],
   oxygen_saturation : OxygenSaturationProps,
 }
-export default class RemoteDashboardContainer extends Component<IProps,StateProps> {
+export default class RemoteDashboardContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
   /*  *
       *  Initializer
       *------------------------------------------------------------
   */
-    constructor(props:IProps){
+    constructor(props:IProps & RouteComponentProps){
         super(props);
         this.state = {
           alerts_responded : 0,
@@ -116,6 +117,7 @@ export default class RemoteDashboardContainer extends Component<IProps,StateProp
           heart_rate : undefined,
           medical_information : [],
           oxygen_saturation : undefined,
+          payload : this.props.payload,
         }
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
         this.onFailureCallBack = this.onFailureCallBack.bind(this);
@@ -127,13 +129,12 @@ export default class RemoteDashboardContainer extends Component<IProps,StateProp
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-
+console.log(this.state.payload)
     /*  *
         *  API callback functions
         *------------------------------------------------------------
     */
-      getDashboard(user_id,onSuccessCallBack,onFailureCallBack);
+      // getRemoteDashboard(user_id,onSuccessCallBack,onFailureCallBack);
      }
 
     /* *
@@ -152,15 +153,15 @@ export default class RemoteDashboardContainer extends Component<IProps,StateProp
 
       for(let datum of responseData.data){
         this.setState({
-          alerts_responded : datum.alerts_responded,
-          alerts_sent : datum.alerts_sent,
-          blood_pressure : datum.blood_pressure,
-          body_temperature : datum.body_temperature,
-          glucose : datum.glucose,
-          health_check : datum.health_check,
-          heart_rate : datum.heart_rate,
-          medical_information : datum.medical_information,
-          oxygen_saturation : datum.oxygen_saturation,
+          // alerts_responded : datum.alerts_responded,
+          // alerts_sent : datum.alerts_sent,
+          // blood_pressure : datum.blood_pressure,
+          // body_temperature : datum.body_temperature,
+          // glucose : datum.glucose,
+          // health_check : datum.health_check,
+          // heart_rate : datum.heart_rate,
+          // medical_information : datum.medical_information,
+          // oxygen_saturation : datum.oxygen_saturation,
 
         })
         return;

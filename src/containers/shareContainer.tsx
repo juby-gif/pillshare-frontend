@@ -159,6 +159,10 @@ export default class ShareContainer extends Component<IProps,StateProps> {
     render(){
         const {validated,modalShow,payload} = this.state;
         const {onAgreementChange,onModalClickShow,onBackClick} = this;
+        console.log(process.env.REACT_APP_API_DOMAIN)
+        console.log("REACT_APP_WWW_PROTOCOL:", process.env.REACT_APP_WWW_PROTOCOL);
+        console.log("REACT_APP_WWW_DOMAIN:", process.env.REACT_APP_WWW_DOMAIN);
+        console.log("REACT_APP_API_PROTOCOL:", process.env.REACT_APP_API_PROTOCOL);
         return(
             <div>
                 <ShareComponent

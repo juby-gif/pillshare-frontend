@@ -52,43 +52,43 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                                 <Card.Text>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Heart Rate Stats" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Blood Pressure Stats" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Body Temperature Stats" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Glucose Stats" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Oxygen Saturation Stats" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
-                                            <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                            <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                         </InputGroup.Prepend>
                                         <FormControl readOnly disabled value="Pill Tracking Information" />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
                                     <InputGroup.Prepend>
-                                        <InputGroup.Checkbox readOnly checked={true} aria-label="Checkbox for following text input" />
+                                        <InputGroup.Checkbox readOnly disabled checked={true} aria-label="Checkbox for following text input" />
                                     </InputGroup.Prepend>
                                     <FormControl readOnly disabled value="Medical History Logs" />
                                 </InputGroup>
@@ -132,12 +132,12 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                         <Modal.Body className="show-grid">
                             <div className="">
                                 <span style={{wordWrap:"break-word"}}>
-                                    http://users?/{payload}
+                                {process.env.REACT_APP_WWW_DOMAIN}/{payload}
                                 </span>
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <CopyToClipboard text={'http://users?/' + payload + ''}>
+                            <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/' + payload}>
                                 <Button>Copy to clipboard</Button>
                             </CopyToClipboard>
                             <Link to="#" onClick={onBackClick}><Button>Back</Button></Link>
