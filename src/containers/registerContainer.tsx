@@ -3,6 +3,7 @@ import { RouteComponentProps  } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 
 import '../App.css'
+import { postRegisterAPI } from '../API/registerAPI';
 import RegisterComponent from '../components/registerComponent';
 
 
@@ -21,22 +22,6 @@ checkedStatus : boolean;
 response : string;
 message : string;
 validated : boolean;
-}
-
-interface ServerResponse {
-    data: ServerData[];
-  }
-  
-interface ServerData {
-    firstName : string;
-    middleName : string;
-    lastName : string;
-    username : string;
-    email : string;
-    password : string;
-    retypePassword : string;
-    checkedStatus : boolean;
-    uuid:string;
 }
 
 interface ResponseProps {
@@ -100,7 +85,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
                     email:string,
                     password:string,
                     checkedStatus:boolean,
-                    uuid:string
+                    authCode:string,
+                    user_id:string,
                     ):Promise<void> => {
         const { onSuccessCallBack,onFailureCallBack } = this;
         const postData = {
@@ -111,34 +97,12 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             email: email,
             password: password,
             checkedStatus: checkedStatus,
-            user_id : uuid, 
+            authCode:authCode,
+            user_id:user_id,
             };
-        
-        const axios = require('axios').default;
-        await axios({
-            method: 'post',
-            url: 'http://localhost:3001/users',
-            data: postData,
-            headers: {'Content-Type':'application/json'}
-            
-          })
-          .then(function (response:ServerResponse) {
-              if(response.data !== [] || response.data !== undefined || response.data !== null){
-                const responseData : ResponseProps = {
-                    message:"You are successfully registered"
-                }
-                onSuccessCallBack(responseData);
-              } else {
-                const responseData : ResponseProps = {
-                    message:"Registration Failed"
-                }
-                onFailureCallBack(responseData);
-              }
-          })
-          .catch(function (error:ServerResponse) {
-            console.log(error);
-          });
+            postRegisterAPI(postData,onSuccessCallBack,onFailureCallBack);
         }
+        
 
     /* *
         *  Event handling functions
@@ -224,8 +188,9 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         if(firstName !== "" && lastName !== "" && username !== "" && password !==""){
 
             if( password === retypePassword ){
-                const uuid:string = uuidv4();
-                this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,uuid);
+                const authCode:string = uuidv4();
+                const user_id:string = uuidv4();
+                this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,authCode,user_id);
             } else {
                 console.error("Your Password does not match");
             }

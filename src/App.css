@@ -784,9 +784,15 @@ a.btn-icon-only {
     } }
 
 h3.display-2{
-  font-family: "arial";
+  font-family: "Raleway";
   font-weight: 700;
   line-height: 1.5; 
+}
+h6.display-2{
+  font-family: "Raleway";
+  font-weight: 600;
+  line-height: 1.5; 
+  font-size: calc(0.5rem + 1.8vw);
 }
 .display-3 {
   font-size: calc(1.5rem + 1.8vw);

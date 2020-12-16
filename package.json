@@ -25,6 +25,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "cra-template": "1.1.0",
+    "js-base64": "^3.6.0",
     "react-bootstrap": "^1.4.0",
     "react-burger-menu": "^2.9.0",
     "react-data-table-component": "^6.11.6",

@@ -9,7 +9,8 @@ import UserProfileContainer from './userProfileContainer';
 import HealthCheckContainer from './healthCheckContainer';
 import MedicationLogsContainer from './medicationLogsContainer';
 import MeasurementContainerWizard from './measurementContainerWizard';
-// import ModalContainer from './modalContainer';
+import RemoteDashboardContainer from '../remote/remoteDashboardContainer';
+import RemoteMedicationLogsContainer from '../remote/remoteMedicationLogsContainer';
 // import ContactContainer from './contactContainer';
 
 class AppContainers extends Component<RouteComponentProps> {
@@ -24,6 +25,8 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/health-check" exact component={HealthCheckContainer} />
                <Route path="/medication-logs" exact component={MedicationLogsContainer} />
                <Route path="/measurement" exact component={MeasurementContainerWizard} />
+               <Route path="/remote" exact component={RemoteDashboardContainer} />
+               <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
                {/* <Route path="/new" exact component={ModalContainer} /> */}
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>

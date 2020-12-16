@@ -62,7 +62,7 @@ export const updateUserProfileAPI = async (user_id: string|null, onSuccessCallBa
         return userObj.id;
         }
     }   
-    alert(getUserID(userObjArr))
+    
     const axios = require('axios').default;
     await axios({
             method: 'patch',
