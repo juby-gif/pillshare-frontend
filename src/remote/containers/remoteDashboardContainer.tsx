@@ -19,6 +19,7 @@ interface StateProps {
   medical_information ?: MedicalProps[];
   oxygen_saturation ?: OxygenSaturationProps;
   payload?:ParamProps;
+  firstName?:string;
 }
 
 interface ParamProps {
@@ -88,12 +89,13 @@ interface IntervalProps {
 }
 
 interface ServerResponse {
-data: ServerData[];
+  data: ServerData[];
 }
 
 interface ServerData {
   alerts_responded : number,
   alerts_sent : number,
+  firstName :string;
   blood_pressure : BloodPressureProps,
   body_temperature : BodyTemperatureProps,
   glucose : GlucoseProps,
@@ -122,6 +124,7 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
           medical_information : [],
           oxygen_saturation : undefined,
           payload:undefined,
+          firstName:"",
         }
         console.log();
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
@@ -135,6 +138,7 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
       const payload:ParamProps = this.props.match.params;
+
     /*  *
         *  API callback functions
         *------------------------------------------------------------
@@ -168,6 +172,7 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
           heart_rate : datum.heart_rate,
           medical_information : datum.medical_information,
           oxygen_saturation : datum.oxygen_saturation,
+          firstName : datum.firstName,
 
         })
         return;
@@ -183,7 +188,7 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
       *------------------------------------------------------------
   */
   render () {
-    const { alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
+    const { alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation,firstName } = this.state;
     
     //For Debugging purpose only
     // console.log(
@@ -201,6 +206,8 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
           heartRate = {heart_rate}
           medicalInformation = {medical_information}
           oxygenSaturation  ={oxygen_saturation}
+          firstName = {firstName}
+          
 
         />
       

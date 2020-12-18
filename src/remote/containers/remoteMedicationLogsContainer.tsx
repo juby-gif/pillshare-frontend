@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import RemoteMedicationLogsComponent from '../components/remoteMedicationLogsComponent';
 import { getRemoteMedicalLogs } from '../API/remoteMedicalLogsAPI';
-import { LOGGED_IN_USER_ID } from '../../constants';
+import { REMOTE_PAYLOAD } from '../../constants';
 
 
 interface IProps {
@@ -71,6 +71,9 @@ interface ServerData {
   taken ?: string;
   id :  number;
 }
+interface ParamProps{
+  id:string;
+}
 
 export default class RemoteMedicationLogsContainer extends Component<IProps,StateProps> {
   
@@ -97,13 +100,16 @@ export default class RemoteMedicationLogsContainer extends Component<IProps,Stat
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
+      const payload:ParamProps = JSON.parse(localStorage.getItem(REMOTE_PAYLOAD) || "");
+      const {Base64} = require('js-base64');
+      const remoteObjJSON:string = Base64.decode(payload.id);
+      const OBJ = JSON.parse(remoteObjJSON);
 
     /* *
         *  API callback functions
         *------------------------------------------------------------
     */
-   getRemoteMedicalLogs(user_id,onSuccessCallBack,onFailureCallBack);
+    getRemoteMedicalLogs(OBJ.user_id,onSuccessCallBack,onFailureCallBack);
       }
 
     /* *

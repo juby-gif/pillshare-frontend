@@ -137,7 +137,7 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/user/share/' + payload}>
+                            <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/remote/' + payload}>
                                 <Button>Copy to clipboard</Button>
                             </CopyToClipboard>
                             <Link to="#" onClick={onBackClick}><Button>Back</Button></Link>

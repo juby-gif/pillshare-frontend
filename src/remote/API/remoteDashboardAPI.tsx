@@ -76,6 +76,7 @@ interface BloodPressureProps {
     heart_rate : HeartRateProps,
     medical_information : MedicalProps[],
     oxygen_saturation : OxygenSaturationProps,
+    firstName :string;
   }
 
   interface ParamProps {
@@ -91,10 +92,8 @@ interface BloodPressureProps {
     // console.log(payload.id)
 
     const remoteObjJSON:string = Base64.decode(payload.id);
-    
-    localStorage.setItem(REMOTE_PAYLOAD,JSON.stringify(payload.id));
+    localStorage.setItem(REMOTE_PAYLOAD,JSON.stringify(payload));
     const remoteObj:ParamProps = JSON.parse(remoteObjJSON);
-    console.log(remoteObj)
     await axios({
         method: 'get',
         url: 'http://localhost:3001/dashboard_dataset/?user_id=' + remoteObj.user_id,

@@ -30,6 +30,7 @@ interface IProps {
     heartRate ?: HeartRateProps;
     medicalInformation ?: MedicalProps[];
     oxygenSaturation ?: OxygenSaturationProps;
+    firstName ?: string;
 
 }
  
@@ -107,6 +108,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
         healthCheck,
         heartRate,
         oxygenSaturation,
+        firstName,
     } = props;
     return(
         <React.Fragment>
@@ -120,7 +122,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                     <div id="page-wrap" style={{height: "100%",overflow:"auto"}}>
                         {/* ----------------------The page content starts here---------------------- */}
 
-                        <h6 className="mt-3 display-2 d-flex justify-content-center">You're viewing Aaa's Health Stats</h6>
+                        <h6 className="mt-3 display-2 d-flex justify-content-center">You're viewing {firstName}'s Health Stats</h6>
 
                         <Container  className="p-4" style={{margin: "auto",width: "70%",border: "3px solid white"}} fluid>
                             <CardDeck>
