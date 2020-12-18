@@ -42,7 +42,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>Dose</th>
                   <th>Dosage</th>
                   <th>Before / After Food</th>
-                  <th>Duration</th>
+                  <th>Duration(days)</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Prescribed Intervals</th>

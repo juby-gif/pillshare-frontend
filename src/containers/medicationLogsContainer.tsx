@@ -151,7 +151,7 @@ export default class MedicationLogsContainer extends Component<IProps,StateProps
           sortable: true,
         },
         {
-          name: 'Duration',
+          name: 'Duration(days)',
           selector: 'duration',
           sortable: true,
         },

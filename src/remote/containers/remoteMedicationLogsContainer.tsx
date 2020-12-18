@@ -157,7 +157,7 @@ export default class RemoteMedicationLogsContainer extends Component<IProps,Stat
           sortable: true,
         },
         {
-          name: 'Duration',
+          name: 'Duration(days)',
           selector: 'duration',
           sortable: true,
         },
