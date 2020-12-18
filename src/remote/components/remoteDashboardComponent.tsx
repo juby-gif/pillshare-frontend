@@ -2,13 +2,22 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Row,Col,Card,Container,CardDeck} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faPrint } from '@fortawesome/free-solid-svg-icons';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import {faArrowUp,
+        faHeart,
+        faChartLine,
+        faArrowDown,
+        faThermometerThreeQuarters,
+        faChartBar,
+        faHandHoldingMedical,
+        faFileMedical,
+        // faPrint
+     } from '@fortawesome/free-solid-svg-icons';
+// import { PDFDownloadLink } from '@react-pdf/renderer';
 
-import '../App.css';
+import '../../App.css';
 import SidebarComponent from './sideBarComponent';
-import RemoteHealthReportPDFComponent from './remoteHealthReportPDFComponent';
-import TableContainer from '../containers/tableContainer';
+// import RemoteHealthReportPDFComponent from './remoteHealthReportPDFComponent';
+import TableContainer from '../containers/remoteTableContainer';
 
 
 interface IProps {
@@ -345,7 +354,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                             {/* Thanks to the following:
                                 https://github.com/London-Language-Institute/markingcloud-front/blob/8b5255414fbdd5e63e3062142f0494596d031794/src/components/testSubmission/completeComponent.js#L162
                             */}
-                            <PDFDownloadLink
+                            {/* <PDFDownloadLink
                                   document={
                                       <RemoteHealthReportPDFComponent />
                                   }
@@ -353,7 +362,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                               {({ blob, url, loading, error }) =>
                                 loading ? "-" : <FontAwesomeIcon className="m-1 text-danger mt-5 mb-5" style={{fontSize:"1.9rem",float:"right"}} icon={faPrint} />
                               }
-                            </PDFDownloadLink>
+                            </PDFDownloadLink> */}
                         </Container>
                         
                         {/* ----------------------The page content ends here---------------------- */}

@@ -5,18 +5,20 @@ import { faThLarge,faHistory,faQuestion } from '@fortawesome/free-solid-svg-icon
 import { Link } from "react-router-dom";
 import { Image } from 'react-bootstrap';
 
-import logo from '../img/logo.png';
+import logo from '../../img/logo.png';
+import { REMOTE_PAYLOAD } from '../../constants';
 
 
 interface IProps{
 
 }
 const SidebarComponent = (props: IProps) : JSX.Element => {
+    const payload:string|undefined = localStorage.getItem(REMOTE_PAYLOAD) || "";
 
     return(
         <Menu width={ '280px' } >
             <Image className="menu rounded img-fluid mb-5" style={{display: "block",marginLeft: "auto",marginRight: "auto"}} src={logo} width="120rem" height="100rem"/>
-            <Link id="dashboard" className="menu ml-1 p-2" to="/remote"><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</Link>
+            <Link id="dashboard" className="menu ml-1 p-2" to={`/remote/${payload}`} ><FontAwesomeIcon icon={faThLarge} />&nbsp;&nbsp;&nbsp;Dashboard</Link>
             <Link id="medication-history" className="menu ml-1 p-2" to="/remote-medication-logs"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication Logs</Link>
             <a id="help" className="menu ml-1 p-2" href="mailto:juby.varughese@llinstitute.com"><FontAwesomeIcon icon={faQuestion} />&nbsp;&nbsp;Need Help</a>
         </Menu>

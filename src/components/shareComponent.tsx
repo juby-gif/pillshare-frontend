@@ -132,12 +132,12 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                         <Modal.Body className="show-grid">
                             <div className="">
                                 <span style={{wordWrap:"break-word"}}>
-                                {process.env.REACT_APP_WWW_DOMAIN}/{payload}
+                                {process.env.REACT_APP_WWW_PROTOCOL}://{process.env.REACT_APP_WWW_DOMAIN}/remote/{payload}
                                 </span>
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/' + payload}>
+                            <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/user/share/' + payload}>
                                 <Button>Copy to clipboard</Button>
                             </CopyToClipboard>
                             <Link to="#" onClick={onBackClick}><Button>Back</Button></Link>

@@ -1,3 +1,5 @@
+import { REMOTE_PAYLOAD } from '../../constants';
+
 interface BloodPressureProps {
     diastole_reading:number;
     systole_reading:number;
@@ -76,11 +78,26 @@ interface BloodPressureProps {
     oxygen_saturation : OxygenSaturationProps,
   }
 
-  export const getRemoteDashboard = async (user_id:string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+  interface ParamProps {
+    id?:string;
+    user_id?:string;
+  }
+
+  export const getRemoteDashboard = async (payload:ParamProps, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
+    const {Base64} = require('js-base64');
+
+    //For Debugging purpose only
+    // console.log(payload.id)
+
+    const remoteObjJSON:string = Base64.decode(payload.id);
+    
+    localStorage.setItem(REMOTE_PAYLOAD,JSON.stringify(payload.id));
+    const remoteObj:ParamProps = JSON.parse(remoteObjJSON);
+    console.log(remoteObj)
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/dashboard_dataset?user_id=' + user_id,
+        url: 'http://localhost:3001/dashboard_dataset/?user_id=' + remoteObj.user_id,
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)

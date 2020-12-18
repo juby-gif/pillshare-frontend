@@ -148,6 +148,7 @@
   ],
   "dashboard_dataset": [
     {
+      "firstName": "Juby",
       "user_id": "1fc257ec-5449-4491-a3fe-d961ed685270",
       "heart_rate": {
         "instrument_id": 1,
@@ -217,6 +218,7 @@
       "id": 1
     },
     {
+      "firstName": "zz",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "heart_rate": {
         "instrument_id": 1,

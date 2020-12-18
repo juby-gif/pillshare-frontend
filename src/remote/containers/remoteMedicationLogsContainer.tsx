@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import RemoteMedicationLogsComponent from './remoteMedicationLogsComponent';
-import { getMedicalLogs } from '../API/medicalLogsAPI';
-import { LOGGED_IN_USER_ID } from '../constants';
+import RemoteMedicationLogsComponent from '../components/remoteMedicationLogsComponent';
+import { getRemoteMedicalLogs } from '../API/remoteMedicalLogsAPI';
+import { LOGGED_IN_USER_ID } from '../../constants';
 
 
 interface IProps {
@@ -103,7 +103,7 @@ export default class RemoteMedicationLogsContainer extends Component<IProps,Stat
         *  API callback functions
         *------------------------------------------------------------
     */
-      getMedicalLogs(user_id,onSuccessCallBack,onFailureCallBack);
+   getRemoteMedicalLogs(user_id,onSuccessCallBack,onFailureCallBack);
       }
 
     /* *

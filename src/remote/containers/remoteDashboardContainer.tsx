@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
 
-import RemoteDashboardComponent from './remoteDashboardComponent';
-import { getRemoteDashboard } from './remoteAPI';
+import RemoteDashboardComponent from '../components/remoteDashboardComponent';
+import { getRemoteDashboard } from '../API/remoteDashboardAPI';
  
 
 interface IProps {
-  payload?:string;
 }
 
 interface StateProps {
@@ -19,7 +18,11 @@ interface StateProps {
   heart_rate ?: HeartRateProps;
   medical_information ?: MedicalProps[];
   oxygen_saturation ?: OxygenSaturationProps;
-  payload?:string;
+  payload?:ParamProps;
+}
+
+interface ParamProps {
+  id?:string;
 }
 
 interface BloodPressureProps {
@@ -99,6 +102,7 @@ interface ServerData {
   medical_information : MedicalProps[],
   oxygen_saturation : OxygenSaturationProps,
 }
+
 export default class RemoteDashboardContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
   /*  *
@@ -117,8 +121,9 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
           heart_rate : undefined,
           medical_information : [],
           oxygen_saturation : undefined,
-          payload : this.props.payload,
+          payload:undefined,
         }
+        console.log();
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
         this.onFailureCallBack = this.onFailureCallBack.bind(this);
     }
@@ -129,12 +134,12 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-console.log(this.state.payload)
+      const payload:ParamProps = this.props.match.params;
     /*  *
         *  API callback functions
         *------------------------------------------------------------
     */
-      // getRemoteDashboard(user_id,onSuccessCallBack,onFailureCallBack);
+      getRemoteDashboard(payload,onSuccessCallBack,onFailureCallBack);
      }
 
     /* *
@@ -149,19 +154,20 @@ console.log(this.state.payload)
     */
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      //console.log(responseData);
+      console.log(responseData);
 
       for(let datum of responseData.data){
+        
         this.setState({
-          // alerts_responded : datum.alerts_responded,
-          // alerts_sent : datum.alerts_sent,
-          // blood_pressure : datum.blood_pressure,
-          // body_temperature : datum.body_temperature,
-          // glucose : datum.glucose,
-          // health_check : datum.health_check,
-          // heart_rate : datum.heart_rate,
-          // medical_information : datum.medical_information,
-          // oxygen_saturation : datum.oxygen_saturation,
+          alerts_responded : datum.alerts_responded,
+          alerts_sent : datum.alerts_sent,
+          blood_pressure : datum.blood_pressure,
+          body_temperature : datum.body_temperature,
+          glucose : datum.glucose,
+          health_check : datum.health_check,
+          heart_rate : datum.heart_rate,
+          medical_information : datum.medical_information,
+          oxygen_saturation : datum.oxygen_saturation,
 
         })
         return;
