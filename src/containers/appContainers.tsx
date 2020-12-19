@@ -12,6 +12,12 @@ import MeasurementContainerWizard from './measurementContainerWizard';
 import RemoteDashboardContainer from '../remote/containers/remoteDashboardContainer';
 import RemoteMedicationLogsContainer from '../remote/containers/remoteMedicationLogsContainer';
 import ShareContainer from './shareContainer';
+import HeartRateViewMoreContainer from './viewMoreContainers/heartRateContainer';
+import BloodPressureViewMoreContainer from './viewMoreContainers/bloodPressureContainer';
+import BodyTemperatureViewMoreContainer from './viewMoreContainers/bodyTemperatureContainer';
+import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
+import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
+import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -28,6 +34,12 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/remote/:id" exact component={RemoteDashboardContainer} />
                <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
                <Route path="/share" exact component={ShareContainer} />
+               <Route path="/heart-rate" exact component={HeartRateViewMoreContainer} />
+               <Route path="/blood-pressure" exact component={BloodPressureViewMoreContainer} />
+               <Route path="/body-temperature" exact component={BodyTemperatureViewMoreContainer} />
+               <Route path="/glucose" exact component={GlucoseViewMoreContainer} />
+               <Route path="/health-check-status" exact component={HealthCheckViewMoreContainer} />
+               <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>
        </Router>

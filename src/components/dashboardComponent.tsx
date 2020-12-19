@@ -147,7 +147,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                         <span className="ml-5">
                                             <span className="ml-5">
-                                                <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                <Link to="/heart-rate" className="more-details ml-5" style={{position:"sticky"}}>
                                                     view more
                                                 </Link>
                                             </span>
@@ -183,7 +183,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/blood-pressure" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -219,7 +219,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/body-temperature" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -255,7 +255,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/glucose" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -291,7 +291,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/oxygen-saturation" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -323,7 +323,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/health-check-status" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
