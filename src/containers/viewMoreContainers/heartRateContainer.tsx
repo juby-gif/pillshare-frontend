@@ -15,7 +15,9 @@ interface IProps{
 }
 
 interface StateProps{
-
+    min:number;
+    max:number;
+    avg?:number;
 }
 
 interface ServerData{
@@ -23,7 +25,6 @@ interface ServerData{
     date:string;
     time:string;
 }
-
 interface ServerResponse{
     data:ServerData[];
 }
@@ -38,6 +39,9 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
     constructor(props:IProps){
         super(props);
         this.state={
+            min:0,
+            max:0,
+            avg:0,
 
         }
     }
@@ -54,26 +58,25 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
           this.chart.dispose();
         }
       }
-      onSuccessCallBack = (responseData: ServerResponse): void => {
+    onSuccessCallBack = (responseData: ServerResponse): void => {
         let graphData: DataProps[] = [];
         let readingData: Array<number> = [];
         for(let datum of responseData.data){
-            
+        
             // Need to add time for plotting (Phase 2)
             let timestamp:number = moment.utc(`${datum.date} ${datum.time}`).unix()
-           
+            
             // Getting reading for calculating average,min and max
             readingData.push(parseInt(datum.reading))
 
             // Added date component only for plotting
             graphData.push({date:moment.unix(timestamp).utcOffset('-0000').format("YYYY-MM-DD HH:mm"),value:datum.reading})
         }
-        // console.log()
+    
         let chart = am4core.create("chartdiv", am4charts.XYChart);
         if(graphData.length !== 0){
         chart.data = graphData;
         }
-        
 
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -93,7 +96,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         range.value = Math.min(...readingData);
         range.grid.stroke = am4core.color("#3f00d1");
         range.grid.strokeWidth = 2;
-        range.grid.strokeOpacity = 0.4;
+        range.grid.strokeOpacity = 0.6;
         range.label.inside = true;
         range.label.text = "Low: " + Math.min(...readingData) + "bpm";
         range.label.fill = range.grid.stroke;
@@ -104,7 +107,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         range1.value = this.getAverage(readingData) || 0;
         range1.grid.stroke = am4core.color("#6b6d0b");
         range1.grid.strokeWidth = 2;
-        range1.grid.strokeOpacity = 0.4;
+        range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
         range1.label.text = "Average: " + JSON.stringify(this.getAverage(readingData) || 0) + "bpm";
         range1.label.fill = range1.grid.stroke;
@@ -115,24 +118,29 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         range2.value = Math.max(...readingData);
         range2.grid.stroke = am4core.color("rgb(102,0,0)");
         range2.grid.strokeWidth = 2;
-        range2.grid.strokeOpacity = 0.4;
+        range2.grid.strokeOpacity = 0.6;
         range2.label.inside = true;
         range2.label.paddingTop = 4;
         range2.label.text = "High: " + Math.max(...readingData) + "bpm"
         range2.label.fill = range2.grid.stroke;
         range2.label.align = "left";
         range2.label.verticalCenter = "bottom";
-        
-        
-        
+
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.snapToSeries = series;
         chart.cursor.xAxis = dateAxis;
         
         //chart.scrollbarY = new am4core.Scrollbar();
         chart.scrollbarX = new am4core.Scrollbar();
-      }
-      onFailureCallBack = (responseData: ServerResponse): void => {
+        
+        this.setState({
+            min:Math.min(...readingData),
+            max:Math.max(...readingData),
+            avg:this.getAverage(readingData),
+        })
+    }
+
+    onFailureCallBack = (responseData: ServerResponse): void => {
         console.log(responseData);
     }
 
@@ -148,10 +156,13 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
 
 
     render(){
+        const { min,max,avg } = this.state;
         return(
-            <div>
-                <HeartRateViewMoreComponent />
-            </div>
+            <HeartRateViewMoreComponent 
+                min={min}
+                max={max}
+                avg={avg}
+            />
         );
     }
 }
