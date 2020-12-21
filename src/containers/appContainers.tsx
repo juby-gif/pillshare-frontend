@@ -29,21 +29,21 @@ class AppContainers extends Component<RouteComponentProps> {
     return (
         <Router>
            <Switch>
+              {/* *************************** Gateway *************************** */}
+              
                <Route path="/register" exact component={RegisterContainer} />
                <Route path="/login" exact component={LoginContainer} />
+
+              {/* *************************** Gateway *************************** */}
+
+
+              {/* *************************** Client Side *************************** */}
+
                <Route path="/dashboard" exact component={DashboardContainer} />
                <Route path="/user-profile" exact component={UserProfileContainer} />
                <Route path="/health-check" exact component={HealthCheckContainer} />
                <Route path="/medication-logs" exact component={MedicationLogsContainer} />
                <Route path="/measurement" exact component={MeasurementContainerWizard} />
-               <Route path="/remote/:id" exact component={RemoteDashboardContainer} />
-               <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
-               <Route path="/remote-heart-rate" exact component={RemoteHeartRateContainer} />
-               <Route path="/remote-blood-pressure" exact component={RemoteBloodPressureContainer} />
-               <Route path="/remote-body-temperature" exact component={RemoteBodyTemperatureContainer} />
-               <Route path="/remote-glucose" exact component={RemoteGlucoseContainer} />
-               <Route path="/remote-oxygen-saturation" exact component={RemoteOxygenSaturationContainer} />
-               <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
                <Route path="/share" exact component={ShareContainer} />
                <Route path="/heart-rate" exact component={HeartRateViewMoreContainer} />
                <Route path="/blood-pressure" exact component={BloodPressureViewMoreContainer} />
@@ -52,6 +52,23 @@ class AppContainers extends Component<RouteComponentProps> {
                {/* <Route path="/health-check-status" exact component={HealthCheckViewMoreContainer} /> */}
                <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
+
+               {/* *************************** Client Side *************************** */}
+
+
+               {/* *************************** Remote Side *************************** */}
+
+               <Route path="/remote/:id" exact component={RemoteDashboardContainer} />
+               <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
+               <Route path="/remote-heart-rate" exact component={RemoteHeartRateContainer} />
+               <Route path="/remote-blood-pressure" exact component={RemoteBloodPressureContainer} />
+               <Route path="/remote-body-temperature" exact component={RemoteBodyTemperatureContainer} />
+               <Route path="/remote-glucose" exact component={RemoteGlucoseContainer} />
+               <Route path="/remote-oxygen-saturation" exact component={RemoteOxygenSaturationContainer} />
+               <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
+
+               {/* *************************** Remote Side *************************** */}
+
            </Switch>
        </Router>
     );

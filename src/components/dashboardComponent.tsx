@@ -96,7 +96,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
         bloodPressure,
         bodyTemperature,
         glucose,
-        healthCheck,
+        // healthCheck,
         heartRate,
         oxygenSaturation,
     } = props;
