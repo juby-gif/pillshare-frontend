@@ -18,7 +18,7 @@ interface IProps{
 interface StateProps{
     min:number;
     max:number;
-    avg?:number;
+    avg?:number|string;
 }
 
 interface ServerData{
@@ -149,35 +149,35 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         valueAxis.paddingTop = 35;
 
         var range = valueAxis.axisRanges.create();
-        range.value = Math.min(...readingData);
+        range.value = Math.min(...readingData).valueOf();
         range.grid.stroke = am4core.color("#3f00d1");
         range.grid.strokeWidth = 2;
         range.grid.strokeOpacity = 0.6;
         range.label.inside = true;
-        range.label.text = "Low: " + Math.min(...readingData) + "bpm";
+        range.label.text = "Low: " + Math.min(...readingData).valueOf() + "bpm";
         range.label.fill = range.grid.stroke;
         range.label.align = "left";
         range.label.verticalCenter = "bottom";
 
         var range1 = valueAxis.axisRanges.create();
-        range1.value = this.getAverage(readingData) || 0;
+        range1.value = this.getAverage(readingData)?.toPrecision(2);
         range1.grid.stroke = am4core.color("#6b6d0b");
         range1.grid.strokeWidth = 2;
         range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
-        range1.label.text = "Average: " + JSON.stringify(this.getAverage(readingData) || 0) + "bpm";
+        range1.label.text = "Average: " + this.getAverage(readingData)?.toPrecision(2) + "bpm";
         range1.label.fill = range1.grid.stroke;
         range1.label.align = "left";
         range1.label.verticalCenter = "bottom";
         
         var range2 = valueAxis.axisRanges.create();
-        range2.value = Math.max(...readingData);
+        range2.value = Math.max(...readingData).valueOf();
         range2.grid.stroke = am4core.color("rgb(102,0,0)");
         range2.grid.strokeWidth = 2;
         range2.grid.strokeOpacity = 0.6;
         range2.label.inside = true;
         range2.label.paddingTop = 4;
-        range2.label.text = "High: " + Math.max(...readingData) + "bpm"
+        range2.label.text = "High: " + Math.max(...readingData).valueOf() + "bpm"
         range2.label.fill = range2.grid.stroke;
         range2.label.align = "left";
         range2.label.verticalCenter = "bottom";
@@ -190,9 +190,9 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         chart.scrollbarX = new am4core.Scrollbar();
         
         this.setState({
-            min:Math.min(...readingData),
-            max:Math.max(...readingData),
-            avg:this.getAverage(readingData),
+            min:Math.min(...readingData).valueOf(),
+            max:Math.max(...readingData).valueOf(),
+            avg:this.getAverage(readingData)?.toPrecision(2),
         })
     }
 

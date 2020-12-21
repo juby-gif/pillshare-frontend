@@ -7,7 +7,7 @@ import { Card, CardDeck, Col, Container, Row } from 'react-bootstrap';
 interface IProps{
 min:number;
 max:number;
-avg?:number
+avg?:number|string;
 }
 
 const HeartRateViewMoreComponent = (props:IProps):JSX.Element =>{

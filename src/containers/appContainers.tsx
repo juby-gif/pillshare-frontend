@@ -16,7 +16,7 @@ import HeartRateViewMoreContainer from './viewMoreContainers/heartRateContainer'
 import BloodPressureViewMoreContainer from './viewMoreContainers/bloodPressureContainer';
 import BodyTemperatureViewMoreContainer from './viewMoreContainers/bodyTemperatureContainer';
 import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
-import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
+// import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
 import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
 
 class AppContainers extends Component<RouteComponentProps> {
@@ -38,7 +38,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/blood-pressure" exact component={BloodPressureViewMoreContainer} />
                <Route path="/body-temperature" exact component={BodyTemperatureViewMoreContainer} />
                <Route path="/glucose" exact component={GlucoseViewMoreContainer} />
-               <Route path="/health-check-status" exact component={HealthCheckViewMoreContainer} />
+               {/* <Route path="/health-check-status" exact component={HealthCheckViewMoreContainer} /> */}
                <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
            </Switch>

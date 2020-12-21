@@ -20,8 +20,8 @@ interface StateProps{
     diaMin:number;
     sysMax:number;
     diaMax:number;
-    sysAvg?:number;
-    diaAvg?:number;
+    sysAvg?:number|string;
+    diaAvg?:number|string;
 }
 
 interface ServerData{
@@ -181,12 +181,12 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         chart.scrollbarX = new am4core.Scrollbar();
         // chart.scrollbarY = new am4core.Scrollbar();
         this.setState({
-            sysMin:Math.min(...systoleReadingData),
-            diaMin:Math.min(...diastoleReadingData),
-            sysMax:Math.max(...systoleReadingData),
-            diaMax:Math.max(...diastoleReadingData),
-            sysAvg:this.getAverage(systoleReadingData),
-            diaAvg:this.getAverage(diastoleReadingData)
+            sysMin:Math.min(...systoleReadingData).valueOf(),
+            diaMin:Math.min(...diastoleReadingData).valueOf(),
+            sysMax:Math.max(...systoleReadingData).valueOf(),
+            diaMax:Math.max(...diastoleReadingData).valueOf(),
+            sysAvg:this.getAverage(systoleReadingData)?.toFixed(2),
+            diaAvg:this.getAverage(diastoleReadingData)?.toFixed(2),
         })
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Row,Col,Card,Container,CardDeck} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faFileMedical,faExclamationCircle,faCheckCircle,faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp,faHeart,faChartLine,faArrowDown,faThermometerThreeQuarters,faChartBar,faHandHoldingMedical,faExclamationCircle,faCheckCircle,faPrint } from '@fortawesome/free-solid-svg-icons';
 // import { PDFDownloadLink } from '@react-pdf/renderer';
 
 import '../App.css';
@@ -298,7 +298,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                     </Card>
-                                    <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem', borderRadius:"18px 18px 18px 18px" }} >
+                                    {/* <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem', borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -329,7 +329,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                                 </span>
                                             </span>
                                         </span>
-                                    </Card>
+                                    </Card> */}
                             </CardDeck>    
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>

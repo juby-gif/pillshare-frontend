@@ -9,8 +9,8 @@ interface IProps{
     diaMin:number;
     sysMax:number;
     diaMax:number;
-    sysAvg?:number;
-    diaAvg?:number;
+    sysAvg?:number|string;
+    diaAvg?:number|string;
 }
 
 const BloodPressureViewMoreComponent = (props:IProps):JSX.Element =>{
