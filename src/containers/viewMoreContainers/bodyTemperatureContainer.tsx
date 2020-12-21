@@ -186,7 +186,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         range1.grid.strokeWidth = 2;
         range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
-        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(2) + "C";
+        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(1) + "C";
         range1.label.fill = range1.grid.stroke;
         range1.label.align = "left";
         range1.label.verticalCenter = "bottom";
@@ -198,7 +198,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         range2.grid.strokeOpacity = 0.6;
         range2.label.inside = true;
         range2.label.paddingTop = 4;
-        range2.label.text = "High: " + Math.max(...readingData).valueOf() + "C"
+        range2.label.text = "High: " + Math.max(...readingData).valueOf().toPrecision(3) + "C"
         range2.label.fill = range2.grid.stroke;
         range2.label.align = "left";
         range2.label.verticalCenter = "bottom";
@@ -213,7 +213,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         this.setState({
             min:(Math.min(...readingData).valueOf()) === 1/0?0:Math.min(...readingData).valueOf(),
             max:(Math.max(...readingData).valueOf()) === -1/0?0:Math.max(...readingData).valueOf(),
-            avg:(this.getAverage(readingData)?.toPrecision(2)) === undefined?0:this.getAverage(readingData)?.toPrecision(2),
+            avg:(this.getAverage(readingData)?.valueOf().toPrecision(3)) === undefined?0:this.getAverage(readingData)?.valueOf().toPrecision(3),
         })
     }
 

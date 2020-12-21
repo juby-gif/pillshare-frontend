@@ -185,7 +185,7 @@ export default class GlucoseViewMoreContainer extends Component<IProps,StateProp
         range1.grid.strokeWidth = 2;
         range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
-        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(2) + "mg/dL";
+        range1.label.text = "Average: " + this.getAverage(readingData)?.valueOf().toPrecision(5) + "mg/dL";
         range1.label.fill = range1.grid.stroke;
         range1.label.align = "left";
         range1.label.verticalCenter = "bottom";
@@ -212,7 +212,7 @@ export default class GlucoseViewMoreContainer extends Component<IProps,StateProp
         this.setState({
             min:(Math.min(...readingData).valueOf()) === 1/0?0:Math.min(...readingData).valueOf(),
             max:(Math.max(...readingData).valueOf()) === -1/0?0:Math.max(...readingData).valueOf(),
-            avg:(this.getAverage(readingData)?.toPrecision(2)) === undefined?0:this.getAverage(readingData)?.toPrecision(2),
+            avg:(this.getAverage(readingData)?.valueOf().toPrecision(5)) === undefined?0:this.getAverage(readingData)?.valueOf().toPrecision(5),
         })
     }
 

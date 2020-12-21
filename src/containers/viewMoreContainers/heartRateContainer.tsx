@@ -213,7 +213,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         this.setState({
             min:(Math.min(...readingData).valueOf()) === 1/0?0:Math.min(...readingData).valueOf(),
             max:(Math.max(...readingData).valueOf()) === -1/0?0:Math.max(...readingData).valueOf(),
-            avg:(this.getAverage(readingData)?.toPrecision(2)) === undefined?0:this.getAverage(readingData)?.toPrecision(2),
+            avg:(this.getAverage(readingData)?.valueOf().toPrecision(2)) === undefined?0:this.getAverage(readingData)?.valueOf().toPrecision(2),
         })
     }
 

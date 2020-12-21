@@ -87,15 +87,24 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
         chart.events.on('ready', () => {
             hideIndicator();
           });
+        chart.events.on("beforedatavalidated", function(ev:any) {
+        // check if there's data
+        if (ev.target.data.length === 0) {
+            showIndicator();
+        }
+        else if (indicator) {
+            hideIndicator();
+        }
+        });
         if(graphData.length !== 0){
         chart.data = graphData;
         }
-        
+
         let indicator:any;
         let indicatorInterval:any;
         const showIndicator = ():void => {
-  
-            if (!indicator) {
+
+            if (indicator) {
                 indicator = chart.tooltipContainer.createChild(am4core.Container);
                 indicator.background.fill = am4core.color("#fff");
                 indicator.background.fillOpacity = 0.8;
@@ -125,6 +134,18 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
                     property: "rotation"
                 }], 2000);
                 }, 3000);
+            }  else {
+                indicator = chart.tooltipContainer.createChild(am4core.Container);
+                indicator.background.fill = am4core.color("#fff");
+                indicator.background.fillOpacity = 0.8;
+                indicator.width = am4core.percent(100);
+                indicator.height = am4core.percent(100);
+            
+                var indicatorLabel = indicator.createChild(am4core.Label);
+                indicatorLabel.text = "No data...";
+                indicatorLabel.align = "center";
+                indicatorLabel.valign = "middle";
+                indicatorLabel.fontSize = 20;
             }  
         indicator.hide(0);
         indicator.show();
@@ -172,7 +193,7 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
         range1.grid.strokeWidth = 2;
         range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
-        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(2) + "%";
+        range1.label.text = "Average: " + this.getAverage(readingData)?.valueOf().toPrecision(4) + "%";
         range1.label.fill = range1.grid.stroke;
         range1.label.align = "left";
         range1.label.verticalCenter = "bottom";
@@ -196,9 +217,9 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
         // chart.scrollbarY = new am4core.Scrollbar();
         chart.scrollbarX = new am4core.Scrollbar();
         this.setState({
-            min:Math.min(...readingData).valueOf(),
-            max:Math.max(...readingData).valueOf(),
-            avg:this.getAverage(readingData)?.toFixed(2),
+            min:(Math.min(...readingData).valueOf()) === 1/0?0:Math.min(...readingData).valueOf(),
+            max:(Math.max(...readingData).valueOf()) === -1/0?0:Math.max(...readingData).valueOf(),
+            avg:(this.getAverage(readingData)?.valueOf().toPrecision(4)) === undefined?0:this.getAverage(readingData)?.valueOf().toPrecision(4),
         })
     }
 

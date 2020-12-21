@@ -206,8 +206,8 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
             diaMin:(Math.min(...diastoleReadingData).valueOf()) === 1/0?0:Math.min(...diastoleReadingData).valueOf(),
             sysMax:(Math.max(...systoleReadingData).valueOf()) === -1/0?0:Math.max(...systoleReadingData).valueOf(),
             diaMax:(Math.max(...diastoleReadingData).valueOf()) === -1/0?0:Math.max(...diastoleReadingData).valueOf(),
-            sysAvg:(this.getAverage(systoleReadingData)?.toPrecision(2)) === undefined?0:this.getAverage(systoleReadingData)?.toPrecision(2),
-            diaAvg:(this.getAverage(diastoleReadingData)?.toPrecision(2)) === undefined?0:this.getAverage(diastoleReadingData)?.toPrecision(2),
+            sysAvg:(this.getAverage(systoleReadingData)?.valueOf().toPrecision(4)) === undefined?0:this.getAverage(systoleReadingData)?.valueOf().toPrecision(4),
+            diaAvg:(this.getAverage(diastoleReadingData)?.valueOf().toPrecision(4)) === undefined?0:this.getAverage(diastoleReadingData)?.valueOf().toPrecision(4),
         })
     }
 

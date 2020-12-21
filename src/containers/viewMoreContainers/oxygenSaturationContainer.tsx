@@ -212,7 +212,7 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
         this.setState({
             min:(Math.min(...readingData).valueOf()) === 1/0?0:Math.min(...readingData).valueOf(),
             max:(Math.max(...readingData).valueOf()) === -1/0?0:Math.max(...readingData).valueOf(),
-            avg:(this.getAverage(readingData)?.toPrecision(2)) === undefined?0:this.getAverage(readingData)?.toPrecision(2),
+            avg:(this.getAverage(readingData)?.valueOf().toPrecision(4)) === undefined?0:this.getAverage(readingData)?.valueOf().toPrecision(4),
         })
     }
 
