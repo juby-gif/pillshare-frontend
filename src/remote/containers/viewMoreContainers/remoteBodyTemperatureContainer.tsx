@@ -4,10 +4,10 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import moment from 'moment';
 
-import BodyTemperatureViewMoreComponent from '../../components/viewMoreComponents/bodyTemperatureComponent';
-import { LOGGED_IN_USER_ID } from '../../constants';
-import { getBodyTemperatureData } from '../../API/bodyTemperatureDataAPI';
-import spinner from '../../img/spinner-solid.svg';
+import BodyTemperatureViewMoreComponent from '../../components/viewMoreComponents/remoteBodyTemperatureComponent';
+import { REMOTE_PAYLOAD } from '../../../constants';
+import { getRemoteBodyTemperatureData } from '../../API/remoteBodyTemperatureDataAPI';
+import spinner from '../../../img/spinner-solid.svg';
 
 am4core.useTheme(am4themes_animated);
 
@@ -35,6 +35,10 @@ interface DataProps{
     value:string;
 }
 
+interface ParamProps{
+    id:string;
+}
+
 export default class BodyTemperatureViewMoreContainer extends Component<IProps,StateProps>{
     chart?:am4charts.XYChart;
     constructor(props:IProps){
@@ -48,9 +52,12 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
     }
     componentDidMount(){
         const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      if(user_id !== null){
-        getBodyTemperatureData(user_id,onSuccessCallBack,onFailureCallBack);
+        const payload:ParamProps = JSON.parse(localStorage.getItem(REMOTE_PAYLOAD) || "");
+        const {Base64} = require('js-base64');
+        const remoteObjJSON:string = Base64.decode(payload.id);
+        const OBJ = JSON.parse(remoteObjJSON);
+      if(OBJ.user_id !== null){
+        getRemoteBodyTemperatureData(OBJ.user_id,onSuccessCallBack,onFailureCallBack);
       }
     }
 

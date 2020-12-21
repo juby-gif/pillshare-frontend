@@ -9,7 +9,6 @@ import {faArrowUp,
         faThermometerThreeQuarters,
         faChartBar,
         faHandHoldingMedical,
-        faFileMedical,
         // faPrint
      } from '@fortawesome/free-solid-svg-icons';
 // import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -105,7 +104,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
         bloodPressure,
         bodyTemperature,
         glucose,
-        healthCheck,
+        // healthCheck,
         heartRate,
         oxygenSaturation,
         firstName,
@@ -155,7 +154,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                         <span className="ml-5">
                                             <span className="ml-5">
-                                                <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                <Link to="/remote-heart-rate" className="more-details ml-5" style={{position:"sticky"}}>
                                                     view more
                                                 </Link>
                                             </span>
@@ -191,7 +190,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/remote-blood-pressure" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -227,7 +226,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/remote-body-temperature" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -263,7 +262,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/remote-glucose" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
@@ -299,14 +298,14 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/remote-oxygen-saturation" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>
                                             </span>
                                         </span>
                                     </Card>
-                                    <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem', borderRadius:"18px 18px 18px 18px" }} >
+                                    {/* <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem', borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -337,7 +336,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                                 </span>
                                             </span>
                                         </span>
-                                    </Card>
+                                    </Card> */}
                             </CardDeck>    
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>

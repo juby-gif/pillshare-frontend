@@ -4,10 +4,10 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import moment from 'moment';
 
-import BodyTemperatureViewMoreComponent from '../../components/viewMoreComponents/bodyTemperatureComponent';
-import { LOGGED_IN_USER_ID } from '../../constants';
-import { getBodyTemperatureData } from '../../API/bodyTemperatureDataAPI';
-import spinner from '../../img/spinner-solid.svg';
+import GlucoseViewMoreComponent from '../../components/viewMoreComponents/remoteGlucoseComponent';
+import { REMOTE_PAYLOAD } from '../../../constants';
+import { getRemoteGlucoseData } from '../../API/remoteGlucoseDataAPI';
+import spinner from '../../../img/spinner-solid.svg';
 
 am4core.useTheme(am4themes_animated);
 
@@ -35,7 +35,11 @@ interface DataProps{
     value:string;
 }
 
-export default class BodyTemperatureViewMoreContainer extends Component<IProps,StateProps>{
+interface ParamProps{
+    id:string;
+}
+
+export default class GlucoseViewMoreContainer extends Component<IProps,StateProps>{
     chart?:am4charts.XYChart;
     constructor(props:IProps){
         super(props);
@@ -48,9 +52,12 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
     }
     componentDidMount(){
         const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      if(user_id !== null){
-        getBodyTemperatureData(user_id,onSuccessCallBack,onFailureCallBack);
+        const payload:ParamProps = JSON.parse(localStorage.getItem(REMOTE_PAYLOAD) || "");
+        const {Base64} = require('js-base64');
+        const remoteObjJSON:string = Base64.decode(payload.id);
+        const OBJ = JSON.parse(remoteObjJSON);
+      if(OBJ.user_id !== null){
+        getRemoteGlucoseData(OBJ.user_id,onSuccessCallBack,onFailureCallBack);
       }
     }
 
@@ -73,7 +80,6 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
             // Added date component only for plotting
             graphData.push({date:moment.unix(timestamp).utcOffset('-0000').format("YYYY-MM-DD HH:mm"),value:datum.reading})
         }
-    
         let chart:any = am4core.create("chartdiv", am4charts.XYChart);
         chart.preloader.disabled = true;
         chart.responsive.enabled = true;
@@ -136,7 +142,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         dateAxis.title.text = "Day";
         dateAxis.title.fontWeight = "bold";
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.title.text = "Body Temperature (C)";
+        valueAxis.title.text = "Glucose (mg/dL)";
         valueAxis.title.fontWeight = "bold";
         
         // Create series
@@ -154,7 +160,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         range.grid.strokeWidth = 2;
         range.grid.strokeOpacity = 0.6;
         range.label.inside = true;
-        range.label.text = "Low: " + Math.min(...readingData).valueOf() + "C";
+        range.label.text = "Low: " + Math.min(...readingData).valueOf() + "mg/dL";
         range.label.fill = range.grid.stroke;
         range.label.align = "left";
         range.label.verticalCenter = "bottom";
@@ -165,7 +171,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         range1.grid.strokeWidth = 2;
         range1.grid.strokeOpacity = 0.6;
         range1.label.inside = true;
-        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(2) + "C";
+        range1.label.text = "Average: " + this.getAverage(readingData)?.toFixed(2) + "mg/dL";
         range1.label.fill = range1.grid.stroke;
         range1.label.align = "left";
         range1.label.verticalCenter = "bottom";
@@ -177,7 +183,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
         range2.grid.strokeOpacity = 0.6;
         range2.label.inside = true;
         range2.label.paddingTop = 4;
-        range2.label.text = "High: " + Math.max(...readingData).valueOf() + "C"
+        range2.label.text = "High: " + Math.max(...readingData).valueOf() + "mg/dL"
         range2.label.fill = range2.grid.stroke;
         range2.label.align = "left";
         range2.label.verticalCenter = "bottom";
@@ -214,7 +220,7 @@ export default class BodyTemperatureViewMoreContainer extends Component<IProps,S
     render(){
         const { min,max,avg } = this.state;
         return(
-            <BodyTemperatureViewMoreComponent 
+            <GlucoseViewMoreComponent 
                 min={min}
                 max={max}
                 avg={avg}
