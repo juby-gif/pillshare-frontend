@@ -99,7 +99,7 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
                 indicator.height = am4core.percent(100);
 
                 let indicatorLabel = indicator.createChild(am4core.Label);
-                indicatorLabel.text = "Graph is loading...";
+                indicatorLabel.text = "Loading Graph...";
                 indicatorLabel.align = "center";
                 indicatorLabel.valign = "middle";
                 indicatorLabel.fontSize = 20;
@@ -136,6 +136,9 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.renderer.grid.template.location = 0;
         categoryAxis.dataFields.category = "date";
+        categoryAxis.title.text = "Day";
+        categoryAxis.title.fontWeight = "bold";
+
         categoryAxis.renderer.minGridDistance = 15;
         categoryAxis.renderer.grid.template.location = 0.5;
         categoryAxis.renderer.grid.template.strokeDasharray = "1,3";
@@ -149,6 +152,8 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
 
         let valueAxis:any = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.tooltip.disabled = true;
+        valueAxis.title.text = "Blood Pressure (mmHg)";
+        valueAxis.title.fontWeight = "bold";
         valueAxis.renderer.ticks.template.disabled = true;
         valueAxis.renderer.axisFills.template.disabled = true;
 
@@ -172,7 +177,7 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
 
         chart.cursor = new am4charts.XYCursor();
         chart.scrollbarX = new am4core.Scrollbar();
-        chart.scrollbarY = new am4core.Scrollbar();
+        // chart.scrollbarY = new am4core.Scrollbar();
         this.setState({
             sysMin:Math.min(...systoleReadingData),
             diaMin:Math.min(...diastoleReadingData),

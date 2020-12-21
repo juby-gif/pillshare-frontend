@@ -95,7 +95,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
                 indicator.height = am4core.percent(100);
 
                 let indicatorLabel = indicator.createChild(am4core.Label);
-                indicatorLabel.text = "Graph is loading...";
+                indicatorLabel.text = "Loading Graph...";
                 indicatorLabel.align = "center";
                 indicatorLabel.valign = "middle";
                 indicatorLabel.fontSize = 20;
@@ -132,7 +132,11 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.minGridDistance = 60;
+        dateAxis.title.text = "Day";
+        dateAxis.title.fontWeight = "bold";
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text = "Heart Rate (bpm)";
+        valueAxis.title.fontWeight = "bold";
         
         // Create series
         let series = chart.series.push(new am4charts.LineSeries());
