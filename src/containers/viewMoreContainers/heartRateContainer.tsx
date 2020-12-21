@@ -210,7 +210,6 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         }
     }
 
-
     render(){
         const { min,max,avg } = this.state;
         return(
