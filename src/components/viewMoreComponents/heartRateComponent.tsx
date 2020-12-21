@@ -45,7 +45,7 @@ return(
                                     </Row>
                                     <Row>
                                         <Col>
-                                        <h4>{max} bpm</h4>
+                                        <h4>{max}</h4>
                                         </Col>
                                     </Row>
                                 </Card.Body>
@@ -59,7 +59,7 @@ return(
                                     </Row>
                                     <Row>
                                         <Col>
-                                        <h4>{avg} bpm</h4>
+                                        <h4>{avg}</h4>
                                         </Col>
                                     </Row>
                                 </Card.Body>
@@ -73,7 +73,7 @@ return(
                                     </Row>
                                     <Row>
                                         <Col>
-                                        <h4>{min} bpm</h4>
+                                        <h4>{min}</h4>
                                         </Col>
                                     </Row>
                                 </Card.Body>

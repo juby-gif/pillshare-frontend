@@ -7,6 +7,7 @@ import moment from 'moment';
 import HeartRateViewMoreComponent from '../../components/viewMoreComponents/heartRateComponent';
 import { LOGGED_IN_USER_ID } from '../../constants';
 import { getHeartRateData } from '../../API/heartRateDataAPI';
+import spinner from '../../img/spinner-solid.svg';
 
 am4core.useTheme(am4themes_animated);
 
@@ -73,10 +74,60 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
             graphData.push({date:moment.unix(timestamp).utcOffset('-0000').format("YYYY-MM-DD HH:mm"),value:datum.reading})
         }
     
-        let chart = am4core.create("chartdiv", am4charts.XYChart);
+        let chart:any = am4core.create("chartdiv", am4charts.XYChart);
+        chart.preloader.disabled = true;
+        chart.events.on('ready', () => {
+            hideIndicator();
+          });
         if(graphData.length !== 0){
         chart.data = graphData;
         }
+        
+        let indicator:any;
+        let indicatorInterval:any;
+        const showIndicator = ():void => {
+  
+            if (!indicator) {
+                indicator = chart.tooltipContainer.createChild(am4core.Container);
+                indicator.background.fill = am4core.color("#fff");
+                indicator.background.fillOpacity = 0.8;
+                indicator.width = am4core.percent(100);
+                indicator.height = am4core.percent(100);
+
+                let indicatorLabel = indicator.createChild(am4core.Label);
+                indicatorLabel.text = "Graph is loading...";
+                indicatorLabel.align = "center";
+                indicatorLabel.valign = "middle";
+                indicatorLabel.fontSize = 20;
+                indicatorLabel.dy = 50;
+                
+                let hourglass = indicator.createChild(am4core.Image);
+                hourglass.href = spinner;
+                hourglass.align = "center";
+                hourglass.valign = "middle";
+                hourglass.horizontalCenter = "middle";
+                hourglass.verticalCenter = "middle";
+                hourglass.scale = 0.7;
+
+                clearInterval(indicatorInterval);
+                indicatorInterval = setInterval(function() {
+                hourglass.animate([{
+                    from: 0,
+                    to: 360,
+                    property: "rotation"
+                }], 2000);
+                }, 3000);
+            }  
+        indicator.hide(0);
+        indicator.show();
+        }
+
+        const hideIndicator = ():void => {
+        indicator.hide();
+        clearInterval(indicatorInterval);
+        }
+        showIndicator();
+
 
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -130,7 +181,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         chart.cursor.snapToSeries = series;
         chart.cursor.xAxis = dateAxis;
         
-        //chart.scrollbarY = new am4core.Scrollbar();
+        // chart.scrollbarY = new am4core.Scrollbar();
         chart.scrollbarX = new am4core.Scrollbar();
         
         this.setState({
