@@ -85,6 +85,15 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         chart.events.on('ready', () => {
             hideIndicator();
           });
+        chart.events.on("beforedatavalidated", function(ev:any) {
+        // check if there's data
+        if (ev.target.data.length === 0) {
+            showIndicator();
+        }
+        else if (indicator) {
+            hideIndicator();
+        }
+        });
         if(graphData.length !== 0){
         chart.data = graphData;
         }
@@ -93,7 +102,7 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         let indicatorInterval:any;
         const showIndicator = ():void => {
 
-            if (!indicator) {
+            if (indicator) {
                 indicator = chart.tooltipContainer.createChild(am4core.Container);
                 indicator.background.fill = am4core.color("#fff");
                 indicator.background.fillOpacity = 0.8;
@@ -123,7 +132,19 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
                     property: "rotation"
                 }], 2000);
                 }, 3000);
-            }  
+            }  else {
+                indicator = chart.tooltipContainer.createChild(am4core.Container);
+                indicator.background.fill = am4core.color("#fff");
+                indicator.background.fillOpacity = 0.8;
+                indicator.width = am4core.percent(100);
+                indicator.height = am4core.percent(100);
+            
+                var indicatorLabel = indicator.createChild(am4core.Label);
+                indicatorLabel.text = "No data...";
+                indicatorLabel.align = "center";
+                indicatorLabel.valign = "middle";
+                indicatorLabel.fontSize = 20;
+            }
         indicator.hide(0);
         indicator.show();
         }
@@ -181,12 +202,12 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         chart.scrollbarX = new am4core.Scrollbar();
         // chart.scrollbarY = new am4core.Scrollbar();
         this.setState({
-            sysMin:Math.min(...systoleReadingData).valueOf(),
-            diaMin:Math.min(...diastoleReadingData).valueOf(),
-            sysMax:Math.max(...systoleReadingData).valueOf(),
-            diaMax:Math.max(...diastoleReadingData).valueOf(),
-            sysAvg:this.getAverage(systoleReadingData)?.toFixed(2),
-            diaAvg:this.getAverage(diastoleReadingData)?.toFixed(2),
+            sysMin:(Math.min(...systoleReadingData).valueOf()) === 1/0?0:Math.min(...systoleReadingData).valueOf(),
+            diaMin:(Math.min(...diastoleReadingData).valueOf()) === 1/0?0:Math.min(...diastoleReadingData).valueOf(),
+            sysMax:(Math.max(...systoleReadingData).valueOf()) === -1/0?0:Math.max(...systoleReadingData).valueOf(),
+            diaMax:(Math.max(...diastoleReadingData).valueOf()) === -1/0?0:Math.max(...diastoleReadingData).valueOf(),
+            sysAvg:(this.getAverage(systoleReadingData)?.toPrecision(2)) === undefined?0:this.getAverage(systoleReadingData)?.toPrecision(2),
+            diaAvg:(this.getAverage(diastoleReadingData)?.toPrecision(2)) === undefined?0:this.getAverage(diastoleReadingData)?.toPrecision(2),
         })
     }
 
