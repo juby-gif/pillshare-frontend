@@ -80,6 +80,8 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
             graphData.push({date:moment.unix(timestamp).utcOffset('-0000').format("YYYY-MM-DD HH:mm"),systole:datum.systoleReading,diastole:datum.diastoleReading})
         }
         let chart:any = am4core.create("chartdiv", am4charts.XYChart);
+        chart.preloader.disabled = true;
+        chart.responsive.enabled = true;
         chart.events.on('ready', () => {
             hideIndicator();
           });

@@ -76,6 +76,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
     
         let chart:any = am4core.create("chartdiv", am4charts.XYChart);
         chart.preloader.disabled = true;
+        chart.responsive.enabled = true;
         chart.events.on('ready', () => {
             hideIndicator();
           });
