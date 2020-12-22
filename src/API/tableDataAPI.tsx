@@ -14,6 +14,7 @@ interface DataProps{
   reason ?: string;
   taken ?: string[];
   intervals ?: IntervalProps;
+  isDeleted ?:boolean;
 }
 interface BloodPressureProps {
   diastole_reading:number;
@@ -70,6 +71,7 @@ interface MedicalProps {
   reason : string;
   taken: string[];
   id: number;
+  isDeleted?:boolean;
 }
 
 interface IntervalProps {
@@ -91,6 +93,7 @@ interface ServerData {
   heart_rate : HeartRateProps,
   medical_information : MedicalProps[],
   oxygen_saturation : OxygenSaturationProps,
+  isDeleted ?: boolean;
 }
 export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
     const axios = require('axios').default;
@@ -118,6 +121,7 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
                     reason : datum.medical_information[i].reason,
                     taken : datum.medical_information[i].taken,
                     intervals: datum.medical_information[i].intervals,
+                    isDeleted : datum.medical_information[i].isDeleted,
                 }
                 data.push(medicalData)
             }

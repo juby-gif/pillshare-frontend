@@ -5,6 +5,9 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
   data : DataProps[];
   debuggMode : boolean;
+  isDeleted ?:boolean;
+  onEditClick : (event : React.SyntheticEvent) => void;
+  onDeleteClick : (event : React.SyntheticEvent) => void;
 }
 
 interface IntervalProps {
@@ -26,11 +29,18 @@ interface DataProps{
   reason ?: string;
   taken ?: string[];
   intervals ?: IntervalProps;
+  isDeleted ?:boolean;
 }
 
  
 const TableComponent = (props:IProps):JSX.Element => {
-  const {data,debuggMode } = props;
+  const {
+        data,
+        debuggMode,
+        // isDeleted,
+        onEditClick,
+        onDeleteClick,
+       } = props;
   // console.log(data)
     return (
       <React.Fragment>
@@ -53,7 +63,7 @@ const TableComponent = (props:IProps):JSX.Element => {
           </thead>
           <tbody style={{backgroundColor:"#fff"}}>
             {data?data.map((info,index) => (
-              <tr key={index}>
+              info.isDeleted === false && (<tr key={index}>
                 <td>
                   {info.index}
                 </td>
@@ -138,15 +148,15 @@ const TableComponent = (props:IProps):JSX.Element => {
                 {debuggMode && (
                           <tr>
                             <td>
-                              <Button>Edit</Button>
+                              <Button onClick={onEditClick}>Edit</Button>
                             </td>
                             <td>
-                              <Button>Delete</Button>
+                              <Button onClick={onDeleteClick}>Delete</Button>
                             </td>
                           </tr>
                 )}
               </tr>
-            )):<tr>No data available</tr>
+           ))):<tr>No data available</tr>
           }               
           </tbody>
         </Table>

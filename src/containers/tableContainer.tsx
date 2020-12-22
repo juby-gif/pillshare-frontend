@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import TableComponent from '../components/tableComponent';
 import { getMedicalTableInfo } from '../API/tableDataAPI';
-import { LOGGED_IN_USER_ID } from '../constants';
+import { LOGGED_IN_USER_ID, USER_MEDICAL_TABLE } from '../constants';
 
 
 interface IProps {
@@ -12,6 +12,7 @@ interface IProps {
 interface StateProps {
 data:DataProps[];
 debuggMode:boolean;
+isDeleted ?:boolean;
 }
 
 interface DataProps{
@@ -105,6 +106,7 @@ interface DataProps{
     heart_rate : HeartRateProps,
     medical_information : MedicalProps[],
     oxygen_saturation : OxygenSaturationProps,
+    isDeleted ?:boolean;
   }
 
 
@@ -114,7 +116,12 @@ export default class TableContainer extends Component<IProps,StateProps> {
     this.state={
         data:[],
         debuggMode:props.debuggMode,
+        isDeleted:undefined,
     }
+    this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
+    this.onFailureCallBack = this.onFailureCallBack.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.onDeleteClick =  this.onDeleteClick.bind(this);
   }
 
   componentDidMount(){
@@ -127,23 +134,37 @@ export default class TableContainer extends Component<IProps,StateProps> {
   onSuccessCallBack = (data:DataProps[]): void => {
     // For debugging purpose only
     // console.log(responseData.data);
+    localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(data));
       this.setState({
-          data:data,
+          data:JSON.parse(localStorage.getItem(USER_MEDICAL_TABLE)|| '{}'),
       })
     }
     
     onFailureCallBack = (error: ServerResponse): void => {
-        alert(error);
+      console.log(error);
     }
     
+    onEditClick = (event : React.SyntheticEvent) : void =>{
+      event.preventDefault();
+      alert("Edit");
+    }
+
+    onDeleteClick = (event : React.SyntheticEvent) : void =>{
+      event.preventDefault();
+      alert("Delete");
+    }
     
 
     render(){
-        const { data,debuggMode } = this.state;
+        const { data,debuggMode,isDeleted } = this.state;
+        const { onEditClick,onDeleteClick } = this;
         return(
             <TableComponent 
                 data={data}
+                isDeleted={isDeleted}
                 debuggMode={debuggMode}
+                onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick}
             />
         );
     }
