@@ -70,6 +70,7 @@ interface MedicalProps {
   reason : string;
   taken: string[];
   id: number;
+  isDeleted ?: boolean;
 }
 
 interface IntervalProps {
@@ -91,6 +92,7 @@ interface ServerData {
   heart_rate : HeartRateProps,
   medical_information : MedicalProps[],
   oxygen_saturation : OxygenSaturationProps,
+  isDeleted ?: boolean;
 }
 export const getRemoteMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
     const axios = require('axios').default;
@@ -104,6 +106,7 @@ export const getRemoteMedicalTableInfo = async (user_id: string|null, onSuccessC
         
         for (let datum of response.data){
             for(let i=0;i< datum.medical_information.length;i++){
+              if(datum.medical_information[i].isDeleted === false){
                 let medicalData:DataProps = {
                   index: i+1,
                     before_or_after : datum.medical_information[i].before_or_after,
@@ -120,6 +123,7 @@ export const getRemoteMedicalTableInfo = async (user_id: string|null, onSuccessC
                     intervals: datum.medical_information[i].intervals,
                 }
                 data.push(medicalData)
+              }
             }
         }
         onSuccessCallBack(data);
