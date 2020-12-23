@@ -1,247 +1,274 @@
-import React, { Component } from 'react';
-import { MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns'
+import React from 'react';
+import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import Assessment from '@material-ui/icons/Assessment';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
+import StepConnector from '@material-ui/core/StepConnector';
+import { StepIconProps } from '@material-ui/core/StepIcon';
 
 import HealthCheckComponent from '../components/healthCheckComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../constants';
+import AttitudeChangeContainer from './healthCheckContainers/attitudeChangeContainer';
+import FeelCheckContainer from './healthCheckContainers/feelCheckContainer';
+import SymptomsCheckContainer from './healthCheckContainers/symptomsCheckContainer';
 
 
 interface IProps {
 
 }
-interface StateProps {
-date : string;
-time : string;
-intensity ?: number;
-anxietyCheck ?: boolean;
-depressionCheck ?: boolean;
-irritabilityCheck ?: boolean;
-peacefulCheck ?: boolean;
-happyCheck ?: boolean;
-othersCheck ?: boolean;
-othersValue ?: string;
-healthCheck ?: string;
-values ?: string[];
+// interface ServerResponse {
+//   data: ServerData[];
+// }
+
+// interface ServerData {
+ 
+// }
+
+const ColorlibConnector = withStyles({
+  alternativeLabel: {
+    top: 22,
+  },
+  active: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  completed: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  line: {
+    height: 3,
+    border: 0,
+    backgroundColor: '#eaeaf0',
+    borderRadius: 1,
+  },
+})(StepConnector);
+
+const useColorlibStepIconStyles = makeStyles({
+  root: {
+    backgroundColor: '#ccc',
+    zIndex: 1,
+    color: '#fff',
+    width: 50,
+    height: 50,
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  active: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+  },
+  completed: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+  },
+});
+
+const ColorlibStepIcon = (props: StepIconProps) => {
+  const classes = useColorlibStepIconStyles();
+  const { active, completed } = props;
+
+  const icons: { [index: string]: React.ReactElement } = {
+    1: <LocalHospitalIcon />,
+    2: <HowToRegIcon />,
+    3: <InsertChartIcon />,
+    4: <Assessment />,
+  };
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+        [classes.completed]: completed,
+      })}
+    >
+      {icons[String(props.icon)]}
+    </div>
+  );
 }
 
-export default class HealthCheckContainer extends Component<IProps,StateProps> {
-    
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    button: {
+      marginRight: theme.spacing(1),
+    },
+    instructions: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+  }),
+);
+
+function getSteps() {
+  return ['Symptoms Check', 'Attitude Check', 'Overall Health', 'Review and Submit'];
+}
+
+
+
+    /* *
+        *  Get length of the object
+        *------------------------------------------------------------
+    */
+// const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null) => {
+//   let count:number = 0;
+//   for (let datum in data){
+//     if (data.hasOwnProperty(datum)) count++;
+//   }
+//   if(count !== 0) { return count; }
+//   else {return 0};
+// }
+
+
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+  // const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
+  //   postTimeSeriesData(data,name,onSuccessCallBack,onFailureCallBack)
+  // }
+
+    /* *
+        *  Process API Calls
+        *------------------------------------------------------------
+    */
+  // const onTimeSeriesDataProcessAPI =( 
+  //                                     token:string | null,
+  //                                     user_id:string | null,
+  //                                     heartRateData:HeartRateProps | null,
+  //                                     bloodPressureData:BloodPressureProps | null,
+  //                                     bodyTemperatureData:BodyTemperatureProps | null,
+  //                                     glucoseData:GlucoseProps | null,
+  //                                     oxygenSaturationData:OxygenSaturationProps | null,
+  //                                   ) => {
+
+  // if (lengthChecker(heartRateData) > 2) {
+  //   onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
+  // }
+  
+  // if (lengthChecker(bloodPressureData) > 2) {
+  //   onTimeSeriesAPICall(bloodPressureData,"blood_pressure_measurements");
+  // }
+
+  // if (lengthChecker(bodyTemperatureData) > 2) {
+  //   onTimeSeriesAPICall(bodyTemperatureData,"body_temperature_measurements");
+  // }
+
+  // if (lengthChecker(glucoseData) > 2) {
+  //   onTimeSeriesAPICall(glucoseData,"glucose_measurements");
+  // }
+
+  // if (lengthChecker(oxygenSaturationData) > 2) {
+  //   onTimeSeriesAPICall(oxygenSaturationData,"oxygen_saturation_measurements");
+  // }
+  // }
+  
+  //   /* *
+  //       *  Server Response Process Calls
+  //       *------------------------------------------------------------
+  //   */
+
+  // const onSuccessCallBack = (responseData : ServerResponse) => {
+  //   console.log(responseData)
+  // }
+  // const onFailureCallBack = (responseData:ServerResponse) => {
+  //   console.log(responseData)
+  // }
+
+  
+
+
+const CustomizedSteppers = (props:IProps):JSX.Element => {
+
     /*   *
         *  Initializer
         *------------------------------------------------------------
     */
-    constructor(props:IProps){
-        super(props);
-        this.state = {
-          date:"",
-          time:"",
-          intensity:0,
-          anxietyCheck:false,
-          depressionCheck: false,
-          irritabilityCheck: false,
-          peacefulCheck: false,
-          happyCheck:false,
-          othersCheck:false,
-          othersValue:"",
-          healthCheck:"",
-          values:[],
-        }
-      this.onDateChange = this.onDateChange.bind(this);
-      this.onTimeChange = this.onTimeChange.bind(this); 
-      this.onIntensityClick = this.onIntensityClick.bind(this);
-      this.onAnxietyCheck = this.onAnxietyCheck.bind(this);
-      this.onIrritabilityCheck = this.onIrritabilityCheck.bind(this);
-      this.onDepressionCheck = this.onDepressionCheck.bind(this);
-      this.onPeacefulCheck = this.onPeacefulCheck.bind(this);
-      this.onHappyCheck = this.onHappyCheck.bind(this);
-      this.onOthersCheck = this.onOthersCheck.bind(this);
-      this.onImprovingCheck = this.onImprovingCheck.bind(this);
-      this.onSameCheck = this.onSameCheck.bind(this);
-      this.onBadCheck = this.onBadCheck.bind(this);
-      this.onWorseCheck = this.onWorseCheck.bind(this);
-      this.onValuesChange = this.onValuesChange.bind(this);
-      this.onSubmitClick = this.onSubmitClick.bind(this);
+    const classes = useStyles();
+    const [activeStep, setActiveStep] = React.useState(0);
+    const steps = getSteps();
+
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
+  
+  const getStepContent = (step: number):JSX.Element|string => {
+    // console.log()
+    switch (step) {
+      case 0:
+        return <SymptomsCheckContainer />;
+      case 1:
+        return <AttitudeChangeContainer />;
+      case 2:
+        return <FeelCheckContainer />;
+      default:
+        return '404'; // To be redirected to 404-Page
     }
-
-  /* *
-  *  Utility
-  *------------------------------------------------------------
-  */
-  //Nothing
-
-  /* *
-      *  Component Life-cycle Management
-      *------------------------------------------------------------
-  */
-  //Nothing
-
-  /* *
-      *  API callback functions
-      *------------------------------------------------------------
-  */
-  /* *
-      *  Event handling functions
-      *------------------------------------------------------------
-  */
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-          date:event.currentTarget.value,
-      })
+  }
+      const handleNext = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // console.log(localStorage.getItem(HEARTRATEDATA) )
+      // TODO ADD VALIDATION
+      if(activeStep === steps.length - 1 ){
+        // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
+        // let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        // let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
+        // let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+        // let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+        // let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
+        // let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+        // onTimeSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
+        // localStorage.removeItem(HEARTRATEDATA);
+        // localStorage.removeItem(BLOODPRESSUREDATA);
+        // localStorage.removeItem(BODYTEMPERATURE);
+        // localStorage.removeItem(GLUCOSE);
+        // localStorage.removeItem(OXYGENSATURATION);
       }
+    };
 
-    onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-          time:event.currentTarget.value,
-      })
-      }
-    
-    onIntensityClick = (rating: number): void => {
-      this.setState({
-          intensity:rating,
-      })
-      }
-    
-    onAnxietyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        anxietyCheck:event.currentTarget.checked,
-      })
-    } 
-    
-    onIrritabilityCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        irritabilityCheck:event.currentTarget.checked,
-      })
-    } 
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
 
-    onDepressionCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        depressionCheck:event.currentTarget.checked,
-      })
-    } 
+    /* *
+        *  Main render function
+        *------------------------------------------------------------
+    */  
+    return (
+      <HealthCheckComponent 
+        classes = {classes}
+        activeStep = {activeStep}
+        steps = {steps}
+        handleNext = {handleNext}
+        handleBack = {handleBack}
+        getStepContent = {getStepContent}
+        ColorlibConnector = {ColorlibConnector}
+        ColorlibStepIcon = {ColorlibStepIcon}
 
-    onPeacefulCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        peacefulCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onHappyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        happyCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onOthersCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        othersCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onOthersValueChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        othersValue:event.currentTarget.value,
-      })
-    } 
-
-    onImprovingCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
-
-    onSameCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
-
-    onBadCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-          })
-    } 
-
-    onWorseCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
-
-    onValuesChange = (value: MultiSelectChangeEventArgs | undefined): void => {
-     console.log(value? value.value:null);
-    } 
-
-    onSubmitClick = (event:React.SyntheticEvent):void => {
-      event.preventDefault();
-      alert("Good!")
-    }
-    
-    private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
-    private fieldsObj: object = { text: 'value', value: 'id' };
-    
- 
-
-  /* *
-      *  Main render function
-      *------------------------------------------------------------
-  */
-  render () {
-      const { onIntensityClick,
-              onAnxietyCheck,
-              onIrritabilityCheck,
-              onDepressionCheck,
-              onPeacefulCheck,
-              onHappyCheck,
-              onOthersCheck,
-              onOthersValueChange,
-              onImprovingCheck,
-              onSameCheck,
-              onBadCheck,
-              onWorseCheck,
-              dropdownArray,
-              fieldsObj,
-              onValuesChange,
-              onSubmitClick,
-            } = this;
-      const { intensity,
-              anxietyCheck,
-              depressionCheck,
-              irritabilityCheck,
-              peacefulCheck,
-              happyCheck,
-              othersCheck,
-              othersValue,
-              healthCheck,
-              values
-            } = this.state;
-      return (
-        <HealthCheckComponent
-        intensity={intensity}
-        anxietyCheck={anxietyCheck}
-        depressionCheck= {depressionCheck}
-        irritabilityCheck={irritabilityCheck}
-        peacefulCheck={peacefulCheck}
-        happyCheck={happyCheck}
-        othersCheck={othersCheck}
-        othersValue={othersValue}
-        healthCheck={healthCheck}
-        fieldsObj={fieldsObj}
-        dropdownArray={dropdownArray}
-        values={values}
-        onIntensityClick={onIntensityClick}
-        onAnxietyCheck={onAnxietyCheck}
-        onIrritabilityCheck={onIrritabilityCheck}
-        onDepressionCheck={onDepressionCheck}
-        onPeacefulCheck={onPeacefulCheck}
-        onHappyCheck={onHappyCheck}
-        onOthersCheck={onOthersCheck}
-        onOthersValueChange={onOthersValueChange}
-        onImprovingCheck={onImprovingCheck}
-        onSameCheck={onSameCheck}
-        onBadCheck={onBadCheck}
-        onWorseCheck={onWorseCheck}
-        onValuesChange={onValuesChange}
-        onSubmitClick={onSubmitClick}
-        />
-        );
-    }
+      />
+    );
 }
+export default CustomizedSteppers;

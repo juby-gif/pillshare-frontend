@@ -1,79 +1,41 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { Row,Col,Container,InputGroup, FormControl,Button, } from 'react-bootstrap';
-import Rating from 'react-rating';
-import { MultiSelectComponent,MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { StepIconProps } from '@material-ui/core/StepIcon';
+import { StepConnectorProps } from '@material-ui/core';
+import { Container,Row,Col } from 'react-bootstrap';
 
 import '../App.css';
+import MeasurementModalContainer from '../containers/modalContainers/measurementModalContainer';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
 
+
+  
 interface IProps {
-    onIntensityClick: (rating:number) => void;
-    onAnxietyCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onIrritabilityCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onDepressionCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onPeacefulCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onHappyCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onOthersCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onOthersValueChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onImprovingCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onSameCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBadCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onWorseCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
-    onSubmitClick : (event: React.SyntheticEvent) => void;
-    intensity ?:number;
-    anxietyCheck ?: boolean;
-    depressionCheck ?: boolean;
-    irritabilityCheck ?: boolean;
-    peacefulCheck ?: boolean;
-    happyCheck ?: boolean;
-    othersCheck ?: boolean;
-    othersValue ?: string;
-    healthCheck ?: string;
-    fieldsObj ?: object;
-    dropdownArray ?: {[key: string]: Object }[];
-    values ?: string[];
-}
+    classes : Record<"button" | "root" | "instructions", string>
+    activeStep : number;
+    steps : string[];
+    handleNext : (event: React.SyntheticEvent) => void;
+    handleBack : (event: React.SyntheticEvent) => void;
+    getStepContent : (step: number) => JSX.Element | string;
+    ColorlibStepIcon:(props: StepIconProps)=> JSX.Element;
+    ColorlibConnector :React.ComponentType<StepConnectorProps>
 
-const HealthCheckComponent = (props: IProps) : JSX.Element => {
+    }
 
-    const { onIntensityClick,
-            onAnxietyCheck,
-            onImprovingCheck,
-            onSameCheck,
-            onBadCheck,
-            onWorseCheck,
-            onIrritabilityCheck,
-            onDepressionCheck,
-            onPeacefulCheck,
-            onHappyCheck,
-            onOthersCheck,
-            onOthersValueChange,
-            onValuesChange,
-            onSubmitClick,
-            intensity,
-            anxietyCheck,
-            depressionCheck,
-            irritabilityCheck,
-            peacefulCheck,
-            healthCheck,
-            happyCheck,
-            othersCheck,
-            othersValue,
-            dropdownArray,
-            fieldsObj,
-            values
-        } = props;
+const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
+    const { classes, activeStep, steps, handleNext, handleBack,getStepContent, ColorlibConnector,ColorlibStepIcon} = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
                 <div id="outer-container" style={{height: "100%"}}>
 
                     {/* --- Sidebar ---*/}
-                    <SidebarComponent />
+                        <SidebarComponent />
                     {/* --- Sidebar ---*/}
                     
                     <div className="" id="page-wrap" style={{height: "100%",overflow:"auto"}}>
@@ -82,153 +44,49 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
                         {/* --- Navigation ---*/}
                         <NavigationComponent />
                         {/* --- Navigation ---*/}
+                        
+                        {/* --- Wizard ---*/}
+                            <Container fluid>
+                                <Row>
+                                    <Col className="mr-5">
+                                        <div className={classes.root}>
+                                            <Stepper className="menu1_hor" alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                                                {steps.map((label) => (
+                                                <Step key={label}>
+                                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                                </Step>
+                                                ))}
+                                            </Stepper>
+                                            <div className="ml-1 mb-5">
+                                                {activeStep === steps.length ? (
+                                                    <div>
+                                                        <MeasurementModalContainer modalShow={true}/>
+                                                    </div>
+                                                    ) : (
+                                                    <div>
+                                                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                                                            <div style={{margin:"3rem",float:"right"}}>
+                                                                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                                                    Back
+                                                                </Button>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    color="primary"
+                                                                    onClick={handleNext}
+                                                                    className={classes.button}
+                                                                >
+                                                                    {activeStep === steps.length - 1 ? 'Save and Submit' : 'Save and Next'}
+                                                                </Button>
+                                                            </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Container>
+                            {/* --- Wizard ---*/}
 
-                        <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
-                            <h3 className="display-3 d-flex justify-content-center">Health check profile tracking</h3>
-                            <Row>
-                                <ol className="ml-5 mt-5">
-                                    <li>How are you feeling today?</li>
-                                    <Row className="p-3">
-                                        <MultiSelectComponent change={onValuesChange} value={values} dataSource={dropdownArray} fields={fieldsObj}  popupHeight="250px" popupWidth="290px"  placeholder="Select your symptoms from the list" />
-                                    </Row>
-                                    <Row>
-                                        <Col className="ml-2 mr-4 mb-3">
-                                        <label>Date:</label>
-                                            <InputGroup>
-                                                <FormControl
-                                                    placeholder=""
-                                                    aria-label="Date"
-                                                    type="date"
-                                                />
-                                            </InputGroup>
-                                        </Col>
-                                        <Col className="ml-2 mr-4 mb-3">
-                                        <label>Time:</label>
-                                            <InputGroup>
-                                                <FormControl
-                                                    placeholder=""
-                                                    aria-label="Time"
-                                                    type="time"
-                                                />
-                                            </InputGroup>
-                                        </Col>
-                                        <Col xs="8" md="5" lg="4"  className="ml-2 mr-4 mb-3">
-                                        <label>Intensity:</label><br/>
-                                            <Rating 
-                                                start = {0}
-                                                stop = {5}
-                                                step = {1}
-                                                initialRating={intensity}
-                                                onClick={e=>onIntensityClick(e)}
-                                                fullSymbol= {<FontAwesomeIcon icon={faStar} /> }
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <li className="mt-3">Do you feel any transition in your disposition? If yes, select the ones that suits</li>
-                                    <Row className="mt-3 p-2">
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Anxiety" onChange={onAnxietyCheck} checked={anxietyCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl 
-                                                value="Anxiety"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Irritability" onChange={onIrritabilityCheck} checked={irritabilityCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
-                                                value="Irritability"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Depression" onChange={onDepressionCheck} checked={depressionCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
-                                                value="Depression"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Peaceful" onChange={onPeacefulCheck} checked={peacefulCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
-                                                value="Peaceful"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" value="Happy" onChange={onHappyCheck} checked={happyCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
-                                                value="Happy"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Checkbox aria-label="mood" onChange={onOthersCheck} checked={othersCheck} />
-                                            </InputGroup.Prepend>
-                                            <FormControl aria-label="Text input with checkbox"
-                                                value="Others"
-                                            />
-                                        </InputGroup>
-                                        {othersCheck && (
-                                            <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                                <FormControl aria-label="Text input with checkbox"
-                                                    placeholder="What do you feel?"
-                                                    value={othersValue}
-                                                    onChange={onOthersValueChange}
-                                                />
-                                        </InputGroup>)}
-                                    </Row>
-                                    <li>How do you feel overall?</li>
-                                    <Row className="mt-3 p-2">
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Radio name="feel" onChange={onImprovingCheck} value="Improving" checked={healthCheck === "Improving"} />
-                                            </InputGroup.Prepend>
-                                            <FormControl 
-                                                id="feel4" 
-                                                value="Improving"
-                                                
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Radio name="feel" onChange={onSameCheck} value="Remains the same" checked={healthCheck === "Remains the same"} />
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                id="feel1" 
-                                                value="Remains the same"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Radio name="feel" onChange={onBadCheck} value="Bad" checked={healthCheck === "Bad"} />
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                id="feel2" 
-                                                value="Bad"
-                                            />
-                                        </InputGroup>
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <InputGroup.Prepend>
-                                            <InputGroup.Radio name="feel" onChange={onWorseCheck} value="Getting Worse" checked={healthCheck === "Getting Worse"} />
-                                            </InputGroup.Prepend>
-                                            <FormControl 
-                                                id="feel3" 
-                                                value="Getting Worse"
-                                            />
-                                        </InputGroup>
-                                    </Row>
-                                </ol>
-                            </Row>
-                            <Button className="ml-5" onClick={onSubmitClick}>
-                                Submit
-                            </Button>
-                        </Container>
                         {/* ----------------------The page content ends here---------------------- */}
                     </div>
                 </div>
@@ -236,4 +94,4 @@ const HealthCheckComponent = (props: IProps) : JSX.Element => {
         </React.Fragment>
     );
 }
-export default HealthCheckComponent;
+export default MeasurementComponentWizard;
