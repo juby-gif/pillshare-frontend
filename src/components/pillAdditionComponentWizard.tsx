@@ -27,7 +27,7 @@ interface IProps {
 
     }
 
-const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
+const PillAdditionComponentWizard = (props: IProps) : JSX.Element => {
     const { classes, activeStep, steps, handleNext, handleBack,getStepContent, ColorlibConnector,ColorlibStepIcon} = props;
     return(
         <React.Fragment>
@@ -94,4 +94,4 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
         </React.Fragment>
     );
 }
-export default MeasurementComponentWizard;
+export default PillAdditionComponentWizard;

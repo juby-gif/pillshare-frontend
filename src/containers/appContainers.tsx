@@ -6,7 +6,7 @@ import RegisterContainer from './registerContainer';
 import LoginContainer from './loginContainer';
 import DashboardContainer from './dashboardContainer';
 import UserProfileContainer from './userProfileContainer';
-import HealthCheckContainer from './healthCheckContainer';
+import HealthCheckContainer from './healthCheckContainerWizard';
 import MedicationLogsContainer from './medicationLogsContainer';
 import MeasurementContainerWizard from './measurementContainerWizard';
 import RemoteDashboardContainer from '../remote/containers/remoteDashboardContainer';
@@ -23,6 +23,7 @@ import BodyTemperatureViewMoreContainer from './viewMoreContainers/bodyTemperatu
 import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
 // import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
 import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
+import PillAdditionContainerWizard from './pillAdditionContainerWizard';
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -49,7 +50,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/blood-pressure" exact component={BloodPressureViewMoreContainer} />
                <Route path="/body-temperature" exact component={BodyTemperatureViewMoreContainer} />
                <Route path="/glucose" exact component={GlucoseViewMoreContainer} />
-               {/* <Route path="/health-check-status" exact component={HealthCheckViewMoreContainer} /> */}
+               <Route path="/add-pills" exact component={PillAdditionContainerWizard} />
                <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
 

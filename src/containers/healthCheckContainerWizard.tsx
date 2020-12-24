@@ -8,10 +8,10 @@ import InsertChartIcon from '@material-ui/icons/InsertChart';
 import StepConnector from '@material-ui/core/StepConnector';
 import { StepIconProps } from '@material-ui/core/StepIcon';
 
-import HealthCheckComponent from '../components/healthCheckComponent';
 import AttitudeChangeContainer from './healthCheckContainers/attitudeChangeContainer';
 import FeelCheckContainer from './healthCheckContainers/feelCheckContainer';
 import SymptomsCheckContainer from './healthCheckContainers/symptomsCheckContainer';
+import HealthCheckComponentWizard from '../components/healthCheckComponentWizard';
 
 
 interface IProps {
@@ -258,7 +258,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
         *------------------------------------------------------------
     */  
     return (
-      <HealthCheckComponent 
+      <HealthCheckComponentWizard
         classes = {classes}
         activeStep = {activeStep}
         steps = {steps}

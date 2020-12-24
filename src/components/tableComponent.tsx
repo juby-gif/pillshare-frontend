@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 interface IProps {
   data : DataProps[];
   debuggMode : boolean;
@@ -160,7 +161,7 @@ const TableComponent = (props:IProps):JSX.Element => {
           }               
           </tbody>
         </Table>
-        {debuggMode && <Button className="m-3"><FontAwesomeIcon style={{fontSize:"1rem",color:"#fff"}} icon={faPlus} /> Add new pill</Button>}
+        {debuggMode && <Link to="/add-pills"><Button className="m-3"><FontAwesomeIcon style={{fontSize:"0.8rem",color:"#fff"}} icon={faPlus} /> Add new pill</Button></Link>}
       </React.Fragment>
     )
   }
