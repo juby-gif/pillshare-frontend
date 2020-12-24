@@ -144,14 +144,14 @@ export default class TableContainer extends Component<IProps,StateProps> {
       console.log(error);
     }
     
-    onEditClick = (event : React.SyntheticEvent) : void =>{
+    onEditClick = (event : React.SyntheticEvent,index:number) : void =>{
       event.preventDefault();
-      alert("Edit");
+      alert(index);
     }
 
-    onDeleteClick = (event : React.SyntheticEvent) : void =>{
+    onDeleteClick = (event : React.SyntheticEvent,index:number) : void =>{
       event.preventDefault();
-      alert("Delete");
+      alert(index);
     }
     
 

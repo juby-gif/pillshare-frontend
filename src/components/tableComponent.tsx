@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
   data : DataProps[];
   debuggMode : boolean;
   isDeleted ?:boolean;
-  onEditClick : (event : React.SyntheticEvent) => void;
-  onDeleteClick : (event : React.SyntheticEvent) => void;
+  onEditClick : (event : React.SyntheticEvent,index:number) => void;
+  onDeleteClick : (event : React.SyntheticEvent,index:number) => void;
 }
 
 interface IntervalProps {
@@ -148,10 +148,10 @@ const TableComponent = (props:IProps):JSX.Element => {
                 {debuggMode && (
                           <tr>
                             <td>
-                              <Button onClick={onEditClick}>Edit</Button>
+                              <Button onClick={e => onEditClick(e,info.index)}>Edit</Button>
                             </td>
                             <td>
-                              <Button onClick={onDeleteClick}>Delete</Button>
+                              <Button onClick={e => onDeleteClick(e,info.index)}>Delete</Button>
                             </td>
                           </tr>
                 )}
@@ -160,6 +160,7 @@ const TableComponent = (props:IProps):JSX.Element => {
           }               
           </tbody>
         </Table>
+        {debuggMode && <Button className="m-3"><FontAwesomeIcon style={{fontSize:"1rem",color:"#fff"}} icon={faPlus} /> Add new pill</Button>}
       </React.Fragment>
     )
   }

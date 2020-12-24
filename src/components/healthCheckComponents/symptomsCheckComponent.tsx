@@ -6,8 +6,6 @@ import Rating from 'react-rating';
 import { MultiSelectComponent,MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns';
 
 import '../../App.css';
-import SidebarComponent from '../../Menu/sideBarComponent';
-import NavigationComponent from '../../Menu/navigationComponent';
 
 interface IProps {
     onIntensityClick: (rating:number) => void;
