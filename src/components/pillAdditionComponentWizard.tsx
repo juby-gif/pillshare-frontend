@@ -9,9 +9,9 @@ import { StepConnectorProps } from '@material-ui/core';
 import { Container,Row,Col } from 'react-bootstrap';
 
 import '../App.css';
-import MeasurementModalContainer from '../containers/modalContainers/measurementModalContainer';
 import SidebarComponent from '../Menu/sideBarComponent';
 import NavigationComponent from '../Menu/navigationComponent';
+import PillAdditionModalContainer from '../containers/modalContainers/pillAdditionModalContainer';
 
 
   
@@ -60,7 +60,7 @@ const PillAdditionComponentWizard = (props: IProps) : JSX.Element => {
                                             <div className="ml-1 mb-5">
                                                 {activeStep === steps.length ? (
                                                     <div>
-                                                        <MeasurementModalContainer modalShow={true}/>
+                                                        <PillAdditionModalContainer modalShow={true}/>
                                                     </div>
                                                     ) : (
                                                     <div>

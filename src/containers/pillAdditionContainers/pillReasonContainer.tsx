@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns'
 
 import PillReasonComponent from '../../components/pillAdditionComponents/pillReasonComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../../constants';
+import { PILL_REASON } from '../../constants';
 
 
 interface IProps {
@@ -10,10 +9,7 @@ interface IProps {
 }
 
 interface StateProps {
-date : string;
-time : string;
-intensity ?: number;
-values ?: string[];
+reason ?: string;
 }
 
 export default class PillReasonContainer extends Component<IProps,StateProps> {
@@ -25,15 +21,10 @@ export default class PillReasonContainer extends Component<IProps,StateProps> {
     constructor(props:IProps){
         super(props);
         this.state = {
-          date:"",
-          time:"",
-          intensity:0,
-          values:[],
+          reason:""
         }
-      this.onDateChange = this.onDateChange.bind(this);
-      this.onTimeChange = this.onTimeChange.bind(this); 
-      this.onIntensityClick = this.onIntensityClick.bind(this);
-      this.onValuesChange = this.onValuesChange.bind(this);
+      this.onReasonChange = this.onReasonChange.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
 
   /* *
@@ -46,7 +37,19 @@ export default class PillReasonContainer extends Component<IProps,StateProps> {
       *  Component Life-cycle Management
       *------------------------------------------------------------
   */
-  //Nothing
+  componentDidMount(){
+    if(localStorage.getItem(PILL_REASON) !== null || localStorage.getItem(PILL_REASON) !== undefined){
+      const reasonData: StateProps = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');
+      this.setState({
+        reason: reasonData.reason
+      })
+    }
+  }
+
+  componentDidUpdate(){
+    this.onUpdate();
+  }
+
 
   /* *
       *  API callback functions
@@ -56,30 +59,18 @@ export default class PillReasonContainer extends Component<IProps,StateProps> {
       *  Event handling functions
       *------------------------------------------------------------
   */
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onReasonChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-          date:event.currentTarget.value,
+          reason:event.currentTarget.value,
       })
       }
 
-    onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-          time:event.currentTarget.value,
-      })
+      onUpdate = ():void =>{
+        const { reason } = this.state;
+        localStorage.setItem(PILL_REASON,JSON.stringify({
+          reason : reason,
+        }))
       }
-    
-    onIntensityClick = (rating: number): void => {
-      this.setState({
-          intensity:rating,
-      })
-      }
-
-    onValuesChange = (value: MultiSelectChangeEventArgs | undefined): void => {
-     console.log(value? value.value:null);
-    } 
-    
-    private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
-    private fieldsObj: object = { text: 'value', value: 'id' };
     
  
 
@@ -88,22 +79,15 @@ export default class PillReasonContainer extends Component<IProps,StateProps> {
       *------------------------------------------------------------
   */
   render () {
-      const { onIntensityClick,
-              dropdownArray,
-              fieldsObj,
-              onValuesChange,
+      const { onReasonChange,
             } = this;
-      const { intensity,
-              values
+
+      const { reason
             } = this.state;
       return (
         <PillReasonComponent
-            intensity={intensity}
-            fieldsObj={fieldsObj}
-            dropdownArray={dropdownArray}
-            values={values}
-            onIntensityClick={onIntensityClick}
-            onValuesChange={onValuesChange}
+        reason={reason}
+        onReasonChange={onReasonChange}
         />
         );
     }

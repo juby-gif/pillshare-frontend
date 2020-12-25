@@ -12,18 +12,36 @@ import PillDescriptionContainer from './pillAdditionContainers/pillDescriptionCo
 import PillReasonContainer from './pillAdditionContainers/pillReasonContainer';
 import PillDurationContainer from './pillAdditionContainers/pillDurationContainer';
 import PillAdditionComponentWizard from '../components/pillAdditionComponentWizard';
+import PillAdditionReviewContainer from './pillAdditionContainers/pillAdditionReviewContainer';
+import { PILL_DESCRIPTION, PILL_DURATION, PILL_REASON } from '../constants';
 
+interface DescriptionProps {
+  name ?: string;
+  dose ?: string;
+  dosage ?: string;
+  measure ?: string;
+  beforeOrAfter ?: string;
+}
+
+interface DurationProps {
+  numberOfDays ?: string;
+  startDate ?: string;
+  endDate ?: string;
+  morning ?: string;
+  afternoon ?: string;
+  evening ?: string;
+  night ?: string;
+}
+
+interface ReasonProps {
+  reason ?: string;
+}
 
 interface IProps {
-
+  durationData ?: DurationProps;
+  descriptionData ?: DescriptionProps;
+  reasonData ?: ReasonProps;
 }
-// interface ServerResponse {
-//   data: ServerData[];
-// }
-
-// interface ServerData {
- 
-// }
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -120,14 +138,14 @@ function getSteps() {
         *  Get length of the object
         *------------------------------------------------------------
     */
-// const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null) => {
-//   let count:number = 0;
-//   for (let datum in data){
-//     if (data.hasOwnProperty(datum)) count++;
-//   }
-//   if(count !== 0) { return count; }
-//   else {return 0};
-// }
+const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | null) => {
+  let count:number = 0;
+  for (let datum in data){
+    if (data.hasOwnProperty(datum)) count++;
+  }
+  if(count !== 0) { return count; }
+  else {return 0};
+}
 
 
     /* *
@@ -224,14 +242,39 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
         return <PillDurationContainer />;
       case 2:
         return <PillReasonContainer />;
+      case 3:
+        return <PillAdditionReviewContainer />;
       default:
         return '404'; // To be redirected to 404-Page
     }
   }
       const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // console.log(localStorage.getItem(HEARTRATEDATA) )
-      // TODO ADD VALIDATION
+        if(activeStep === 0 ){
+          let pillDescription: DescriptionProps = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)||'{}');
+          if(lengthChecker(pillDescription) === 5){
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          }
+          else {
+            setActiveStep((prevActiveStep) => prevActiveStep)
+          }
+        } else if(activeStep === 1 ){
+          let pillDuration : DurationProps = JSON.parse(localStorage.getItem(PILL_DURATION)||'{}');
+          if(lengthChecker(pillDuration) >= 4){
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          }
+          else {
+            setActiveStep((prevActiveStep) => prevActiveStep)
+          }
+        }
+        else if(activeStep === 2 ){
+          let pillReason : ReasonProps = JSON.parse(localStorage.getItem(PILL_REASON)||'{}');
+          if(lengthChecker(pillReason) === 1){
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          }
+          else {
+            setActiveStep((prevActiveStep) => prevActiveStep)
+          }
+        }
       if(activeStep === steps.length - 1 ){
         // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
         // let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');

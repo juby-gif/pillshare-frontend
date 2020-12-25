@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 
 import PillDescriptionComponent from '../../components/pillAdditionComponents/pillDescriptionComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../../constants';
+import { PILL_DESCRIPTION } from '../../constants';
 
 
 interface IProps {
 
 }
 interface StateProps {
-anxietyCheck ?: boolean;
-depressionCheck ?: boolean;
-irritabilityCheck ?: boolean;
-peacefulCheck ?: boolean;
-happyCheck ?: boolean;
-othersCheck ?: boolean;
-othersValue ?: string;
+name ?: string;
+dose ?: string;
+dosage ?: string;
+measure ?: string;
+beforeOrAfter ?: string;
 }
 
 export default class PillDescriptionContainer extends Component<IProps,StateProps> {
@@ -26,20 +24,18 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
     constructor(props:IProps){
         super(props);
         this.state = {
-          anxietyCheck:false,
-          depressionCheck: false,
-          irritabilityCheck: false,
-          peacefulCheck: false,
-          happyCheck:false,
-          othersCheck:false,
-          othersValue:"",
+          name:"",
+          dose:"",
+          dosage: "",
+          measure: "",
+          beforeOrAfter: "",
         }
-      this.onAnxietyCheck = this.onAnxietyCheck.bind(this);
-      this.onIrritabilityCheck = this.onIrritabilityCheck.bind(this);
-      this.onDepressionCheck = this.onDepressionCheck.bind(this);
-      this.onPeacefulCheck = this.onPeacefulCheck.bind(this);
-      this.onHappyCheck = this.onHappyCheck.bind(this);
-      this.onOthersCheck = this.onOthersCheck.bind(this);
+      this.onPillNameChange = this.onPillNameChange.bind(this);
+      this.onDosageChange = this.onDosageChange.bind(this);
+      this.onDoseChange = this.onDoseChange.bind(this);
+      this.onMeasureChange = this.onMeasureChange.bind(this);
+      this.onBeforeOrAfterFoodChange = this.onBeforeOrAfterFoodChange.bind(this);
+      this.onUpdate = this.onUpdate.bind(this);
     }
 
   /* *
@@ -52,7 +48,22 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
       *  Component Life-cycle Management
       *------------------------------------------------------------
   */
-  //Nothing
+  componentDidMount(){
+    if(localStorage.getItem(PILL_DESCRIPTION) !== null || localStorage.getItem(PILL_DESCRIPTION) !== undefined){
+      const descriptionData: StateProps = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)|| '{}');
+      this.setState({
+          name:descriptionData.name,
+          dose:descriptionData.dose,
+          dosage: descriptionData.dosage,
+          measure: descriptionData.measure,
+          beforeOrAfter: descriptionData.beforeOrAfter,
+      })
+      }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
+    }
 
   /* *
       *  API callback functions
@@ -63,90 +74,77 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
       *------------------------------------------------------------
   */
     
-    onAnxietyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onPillNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        anxietyCheck:event.currentTarget.checked,
+        name:event.currentTarget.value,
+      })
+    }
+    onDoseChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        dose:event.currentTarget.value,
       })
     } 
     
-    onIrritabilityCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onMeasureChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        irritabilityCheck:event.currentTarget.checked,
+        measure:event.currentTarget.value,
       })
     } 
 
-    onDepressionCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onDosageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        depressionCheck:event.currentTarget.checked,
+        dosage:event.currentTarget.value,
       })
     } 
 
-    onPeacefulCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onBeforeOrAfterFoodChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        peacefulCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onHappyCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        happyCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onOthersCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        othersCheck:event.currentTarget.checked,
-      })
-    } 
-
-    onOthersValueChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        othersValue:event.currentTarget.value,
+        beforeOrAfter:event.currentTarget.value,
       })
     } 
     
-    private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
-    private fieldsObj: object = { text: 'value', value: 'id' };
-    
- 
-
+    onUpdate = ():void => {
+      const { name,dose,dosage,measure,beforeOrAfter } = this.state;
+      localStorage.setItem(PILL_DESCRIPTION,JSON.stringify({
+        name:name,
+        dose:dose,
+        dosage:dosage,
+        measure:measure,
+        beforeOrAfter:beforeOrAfter,
+      }))
+    }
   /* *
       *  Main render function
       *------------------------------------------------------------
   */
   render () {
-      const { onAnxietyCheck,
-              onIrritabilityCheck,
-              onDepressionCheck,
-              onPeacefulCheck,
-              onHappyCheck,
-              onOthersCheck,
-              onOthersValueChange,
+    
+      const { onDoseChange,
+              onDosageChange,
+              onMeasureChange,
+              onBeforeOrAfterFoodChange,
+              onPillNameChange,
             } = this;
-      const { anxietyCheck,
-              depressionCheck,
-              irritabilityCheck,
-              peacefulCheck,
-              happyCheck,
-              othersCheck,
-              othersValue,
+
+      const { dose,
+              dosage,
+              measure,
+              beforeOrAfter,
+              name,
             } = this.state;
+
       return (
         <PillDescriptionComponent
-            anxietyCheck={anxietyCheck}
-            depressionCheck= {depressionCheck}
-            irritabilityCheck={irritabilityCheck}
-            peacefulCheck={peacefulCheck}
-            happyCheck={happyCheck}
-            othersCheck={othersCheck}
-            othersValue={othersValue}
-            onAnxietyCheck={onAnxietyCheck}
-            onIrritabilityCheck={onIrritabilityCheck}
-            onDepressionCheck={onDepressionCheck}
-            onPeacefulCheck={onPeacefulCheck}
-            onHappyCheck={onHappyCheck}
-            onOthersCheck={onOthersCheck}
-            onOthersValueChange={onOthersValueChange}
+            dose={dose}
+            dosage= {dosage}
+            measure={measure}
+            beforeOrAfter={beforeOrAfter}
+            name={name}
+            onPillNameChange={onPillNameChange}
+            onDosageChange={onDosageChange}
+            onDoseChange={onDoseChange}
+            onMeasureChange={onMeasureChange}
+            onBeforeOrAfterFoodChange={onBeforeOrAfterFoodChange}
         />
         );
     }

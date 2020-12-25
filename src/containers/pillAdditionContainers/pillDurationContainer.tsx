@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
 import PillDurationComponent from '../../components/pillAdditionComponents/pillDurationComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../../constants';
+import { PILL_DURATION } from '../../constants';
 
 
 interface IProps {
 
 }
 interface StateProps {
-healthCheck ?: string;
+  numberOfDays ?: string;
+  startDate ?: string;
+  endDate ?: string;
+  morning ?: string;
+  afternoon ?: string;
+  evening ?: string;
+  night ?: string;
 }
-
-
-
-
 
 export default class PillDurationContainer extends Component<IProps,StateProps> {
     
@@ -24,12 +26,22 @@ export default class PillDurationContainer extends Component<IProps,StateProps> 
     constructor(props:IProps){
         super(props);
         this.state = {
-          healthCheck:"",
+          numberOfDays : "",
+          startDate : "",
+          endDate : "",
+          morning : "",
+          afternoon : "",
+          evening : "",
+          night : "",
         }
-      this.onImprovingCheck = this.onImprovingCheck.bind(this);
-      this.onSameCheck = this.onSameCheck.bind(this);
-      this.onBadCheck = this.onBadCheck.bind(this);
-      this.onWorseCheck = this.onWorseCheck.bind(this);
+
+      this.onNumberOfDaysChange = this.onNumberOfDaysChange.bind(this);
+      this.onStartDateChange = this.onStartDateChange.bind(this);
+      this.onEndDateChange = this.onEndDateChange.bind(this);
+      this.onMorningTimeChange = this.onMorningTimeChange.bind(this);
+      this.onAfternoonTimeChange = this.onAfternoonTimeChange.bind(this);
+      this.onEveningTimeChange = this.onEveningTimeChange.bind(this);
+      this.onNightTimeChange = this.onNightTimeChange.bind(this);
     }
 
   /* *
@@ -42,7 +54,24 @@ export default class PillDurationContainer extends Component<IProps,StateProps> 
       *  Component Life-cycle Management
       *------------------------------------------------------------
   */
-  //Nothing
+  componentDidMount(){
+    if(localStorage.getItem(PILL_DURATION) !== null || localStorage.getItem(PILL_DURATION) !== undefined){
+      const durationData: StateProps = JSON.parse(localStorage.getItem(PILL_DURATION)|| '{}');
+      this.setState({
+        numberOfDays : durationData.numberOfDays,
+        startDate : durationData.startDate,
+        endDate : durationData.endDate,
+        morning : durationData.morning,
+        afternoon : durationData.afternoon,
+        evening : durationData.evening,
+        night : durationData.night,
+      })
+      }
+    }
+
+    componentDidUpdate(){
+      this.onUpdate();
+    }
 
   /* *
       *  API callback functions
@@ -52,56 +81,99 @@ export default class PillDurationContainer extends Component<IProps,StateProps> 
       *  Event handling functions
       *------------------------------------------------------------
   */
-    
-    onImprovingCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onNumberOfDaysChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        healthCheck:event.currentTarget.value,
+        numberOfDays:event.currentTarget.value,
       })
-    } 
-
-    onSameCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    }
+    onStartDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
-
-    onBadCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-          })
-    } 
-
-    onWorseCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
+        startDate:event.currentTarget.value,
       })
     } 
     
-    private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
-    private fieldsObj: object = { text: 'value', value: 'id' };
-    
- 
+    onEndDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        endDate:event.currentTarget.value,
+      })
+    } 
 
+    onMorningTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        morning:event.currentTarget.value,
+      })
+    } 
+
+    onAfternoonTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        afternoon:event.currentTarget.value,
+      })
+    } 
+
+    onEveningTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        evening:event.currentTarget.value,
+      })
+    }
+
+    onNightTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      this.setState({
+        night:event.currentTarget.value,
+      })
+    }
+        
+    onUpdate = ():void => {
+      const { numberOfDays,startDate,endDate,morning,afternoon,evening,night } = this.state;
+      localStorage.setItem(PILL_DURATION,JSON.stringify({
+        numberOfDays : numberOfDays,
+        startDate : startDate,
+        endDate : endDate,
+        morning : morning,
+        afternoon : afternoon,
+        evening : evening,
+        night : night,
+      }))
+    }
   /* *
       *  Main render function
       *------------------------------------------------------------
   */
   render () {
-      const { onImprovingCheck,
-              onSameCheck,
-              onBadCheck,
-              onWorseCheck,
+    
+      const { onNumberOfDaysChange,
+              onStartDateChange,
+              onEndDateChange,
+              onMorningTimeChange,
+              onAfternoonTimeChange,
+              onEveningTimeChange,
+              onNightTimeChange,
             } = this;
-      const { 
-              healthCheck
+
+      const { numberOfDays,
+              startDate,
+              endDate,
+              morning,
+              afternoon,
+              evening,
+              night,
             } = this.state;
+
       return (
         <PillDurationComponent
-            healthCheck={healthCheck}
-            onImprovingCheck={onImprovingCheck}
-            onSameCheck={onSameCheck}
-            onBadCheck={onBadCheck}
-            onWorseCheck={onWorseCheck}
+        onNumberOfDaysChange = {onNumberOfDaysChange}
+        onStartDateChange  = {onStartDateChange}
+        onEndDateChange  = {onEndDateChange}
+        onMorningTimeChange = {onMorningTimeChange}
+        onAfternoonTimeChange = {onAfternoonTimeChange} 
+        onEveningTimeChange = {onEveningTimeChange} 
+        onNightTimeChange = {onNightTimeChange} 
+        numberOfDays = {numberOfDays}
+        startDate = {startDate}
+        endDate = {endDate}
+        morning = {morning}
+        afternoon = {afternoon}
+        evening = {evening}
+        night = {night}
         />
         );
     }

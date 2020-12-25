@@ -1,109 +1,104 @@
 import React from 'react';
-import { Row,Col,Container,InputGroup, FormControl } from 'react-bootstrap';
+import { Row,Col,Container,Form } from 'react-bootstrap';
 
 import '../../App.css';
 
 interface IProps {
-    onAnxietyCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onIrritabilityCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onDepressionCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onPeacefulCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onHappyCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onOthersCheck ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onOthersValueChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    anxietyCheck ?: boolean;
-    depressionCheck ?: boolean;
-    irritabilityCheck ?: boolean;
-    peacefulCheck ?: boolean;
-    happyCheck ?: boolean;
-    othersCheck ?: boolean;
-    othersValue ?: string;
+    onDoseChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onMeasureChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onDosageChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBeforeOrAfterFoodChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onPillNameChange ?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    dose ?: string;
+    dosage ?: string;
+    measure ?: string;
+    beforeOrAfter ?: string;
+    name ?: string;
 }
 
 const PillDescriptionComponent = (props: IProps) : JSX.Element => {
-
-    const { onAnxietyCheck,
-            onIrritabilityCheck,
-            onDepressionCheck,
-            onPeacefulCheck,
-            onHappyCheck,
-            onOthersCheck,
-            onOthersValueChange,
-            anxietyCheck,
-            depressionCheck,
-            irritabilityCheck,
-            peacefulCheck,
-            happyCheck,
-            othersCheck,
-            othersValue,
-        } = props;
+    const { 
+            onDosageChange,
+            onMeasureChange,
+            onDoseChange,
+            onBeforeOrAfterFoodChange,
+            onPillNameChange,
+            name,
+            dose,
+            dosage,
+            measure,
+            beforeOrAfter
+          } = props;
     return(
         <React.Fragment>
             <div id="app" style={{height: "100%"}}>
                 <div id="outer-container" style={{height: "100%"}}>
                     <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                         <Row>
-                            <ol className="ml-5 mt-5">
-                                <li className="mt-3">Do you feel any transition in your disposition? If yes, select the ones that suits</li>
-                                <Row className="mt-3 p-2">
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" value="Anxiety" onChange={onAnxietyCheck} checked={anxietyCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl 
-                                            value="Anxiety"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" value="Irritability" onChange={onIrritabilityCheck} checked={irritabilityCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl aria-label="Text input with checkbox"
-                                            value="Irritability"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" value="Depression" onChange={onDepressionCheck} checked={depressionCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl aria-label="Text input with checkbox"
-                                            value="Depression"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" value="Peaceful" onChange={onPeacefulCheck} checked={peacefulCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl aria-label="Text input with checkbox"
-                                            value="Peaceful"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" value="Happy" onChange={onHappyCheck} checked={happyCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl aria-label="Text input with checkbox"
-                                            value="Happy"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                        <InputGroup.Prepend>
-                                        <InputGroup.Checkbox aria-label="mood" onChange={onOthersCheck} checked={othersCheck} />
-                                        </InputGroup.Prepend>
-                                        <FormControl aria-label="Text input with checkbox"
-                                            value="Others"
-                                        />
-                                    </InputGroup>
-                                    {othersCheck && (
-                                        <InputGroup as={Col} xs="10" md="5" lg="4" className="mb-3">
-                                            <FormControl aria-label="Text input with checkbox"
-                                                placeholder="What do you feel?"
-                                                value={othersValue}
-                                                onChange={onOthersValueChange}
-                                            />
-                                    </InputGroup>)}
-                                </Row>
-                            </ol>
+                            <Col xs="9" md="5" lg="3">
+                                <Form.Group controlId="pill-name">
+                                    <Form.Label>Pill Name</Form.Label>
+                                    <Form.Control type="input" placeholder="Pill Name" value={name} onChange={onPillNameChange}/>
+                                </Form.Group>
+                            </Col>
+                            <Col xs="6" md="3" lg="3">
+                                <Form.Group controlId="pill-dose">
+                                    <Form.Label>Dose</Form.Label >
+                                    <Form.Control as="select" value={dose} onChange={onDoseChange}>
+                                    <option value="0.5">0.5</option>
+                                    <option value="1">1</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="2">2</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs="7" md="4" lg="3">
+                                <Form.Group controlId="pill-dose-measure">
+                                    <Form.Label>Measure</Form.Label>
+                                    <Form.Control as="select" value={measure} onChange={onMeasureChange}>
+                                        <option value="Tablet">Tablet</option>
+                                        <option value="Ampule">Ampule</option>
+                                        <option value="Capsule">Capsule</option>
+                                        <option value="Pound(s)">Pound(s)</option>
+                                        <option value="Milligram">Milligram</option>
+                                        <option value="gram">gram</option>
+                                        <option value="Kilogram">Kilogram</option>
+                                        <option value="Milliliter">Milliliter</option>
+                                        <option value="Ounce">Ounce</option>
+                                        <option value="Tablespoon">Tablespoon</option>
+                                        <option value="Teaspoon">Teaspoon</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="10" md="5" lg="4">
+                                <Form.Group controlId="pill-dosage">
+                                    <Form.Label>Dosage</Form.Label>
+                                    <Form.Control as="select" value={dosage} onChange={onDosageChange}>
+                                        <option value="EOD - Every other day">EOD - Every other day</option>
+                                        <option value="SID - Once daily">SID - Once daily</option>
+                                        <option value="BID - Twice daily">BID - Twice daily</option>
+                                        <option value="TID - Three time daily">TID - Three time daily</option>
+                                        <option value="QID - Four time daily">QID - Four time daily</option>
+                                        <option value="PRN - As needed">PRN - As needed</option>
+                                        <option value="qh - Every hour">qh - Every hour</option>
+                                        <option value="q4h - Every 4 hours">q4h - Every 4 hours</option>
+                                        <option value="q30min - Every 30 minutes">q30min - Every 30 minutes</option>
+                                        <option value="Qd - Every day">Qd - Every day</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col xs="9" md="5" lg="3">
+                                <Form.Group controlId="before-or-after-food">
+                                    <Form.Label>Before / After Food</Form.Label>
+                                    <Form.Control as="select" value={beforeOrAfter} onChange={onBeforeOrAfterFoodChange}>
+                                        <option value="Before">Before</option>
+                                        <option value="After">After</option>
+                                        <option value="Both">Both</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
                         </Row>
                     </Container>
                     {/* ----------------------The page content ends here---------------------- */}
