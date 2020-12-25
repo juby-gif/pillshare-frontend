@@ -265,8 +265,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
           else {
             setActiveStep((prevActiveStep) => prevActiveStep)
           }
-        }
-        else if(activeStep === 2 ){
+        } else if(activeStep === 2 ){
           let pillReason : ReasonProps = JSON.parse(localStorage.getItem(PILL_REASON)||'{}');
           if(lengthChecker(pillReason) === 1){
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -274,7 +273,10 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
           else {
             setActiveStep((prevActiveStep) => prevActiveStep)
           }
-        }
+        } else if(activeStep === 3 ){
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          }
+    
       if(activeStep === steps.length - 1 ){
         // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
         // let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');

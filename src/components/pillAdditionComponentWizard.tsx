@@ -58,7 +58,7 @@ const PillAdditionComponentWizard = (props: IProps) : JSX.Element => {
                                                 ))}
                                             </Stepper>
                                             <div className="ml-1 mb-5">
-                                                {activeStep === steps.length ? (
+                                                {activeStep === steps.length  ? (
                                                     <div>
                                                         <PillAdditionModalContainer modalShow={true}/>
                                                     </div>
