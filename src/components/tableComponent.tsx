@@ -33,7 +33,6 @@ interface DataProps{
   isDeleted ?:boolean;
 }
 
- 
 const TableComponent = (props:IProps):JSX.Element => {
   const {
         data,
@@ -45,7 +44,7 @@ const TableComponent = (props:IProps):JSX.Element => {
   // console.log(data)
     return (
       <React.Fragment>
-        <Table style={{backgroundColor:"#fff"}} size="sm" className="mt-3" responsive="lg" bordered hover={false}>
+        <Table className=" table-responsive mt-3" style={{border:"none",backgroundColor:"#fff",overflowX: "scroll",whiteSpace: "nowrap",wordBreak: "break-word", tableLayout: "fixed"}} size="sm"  responsive="lg" bordered hover={false}>
           <thead style={{backgroundColor:"#fff"}}>
               <tr>
                   <th>SL.No</th>

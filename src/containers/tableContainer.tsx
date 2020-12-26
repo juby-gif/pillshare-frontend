@@ -81,7 +81,7 @@ export default class TableContainer extends Component<IProps,StateProps> {
 
   onSuccessCallBack = (data:DataProps[]): void => {
     // For debugging purpose only
-    console.log(data);
+    // console.log(data);
     localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(data));
       this.setState({
           data:JSON.parse(localStorage.getItem(USER_MEDICAL_TABLE)|| '{}'),

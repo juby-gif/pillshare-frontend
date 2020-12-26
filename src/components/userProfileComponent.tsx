@@ -924,14 +924,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                     </Modal>
 
                                                     {/* Medical Information Update Modal */}
-
-
                                                 </Col>
                                             </Row>
+                                            <Row>
+                                            <Col style={{width:"100%"}}><TableContainer debuggMode={false}/></Col>
+                                            </Row>
                                         </span>
-                                        <div style={{margin: "auto"}}>
-                                            <TableContainer debuggMode={false}/>  
-                                        </div>
 
                                         {/* UUID Information */}
 
