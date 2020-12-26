@@ -65,19 +65,19 @@ const PillAdditionComponentWizard = (props: IProps) : JSX.Element => {
                                                     ) : (
                                                     <div>
                                                         <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                                                            <div style={{margin:"3rem",float:"right"}}>
-                                                                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                                                    Back
-                                                                </Button>
-                                                                <Button
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                    onClick={handleNext}
-                                                                    className={classes.button}
-                                                                >
-                                                                    {activeStep === steps.length - 1 ? 'Save and Submit' : 'Save and Next'}
-                                                                </Button>
-                                                            </div>
+                                                        <div style={{margin:"3rem",float:"right"}}>
+                                                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                                                Back
+                                                            </Button>
+                                                            <Button
+                                                                variant="contained"
+                                                                color="primary"
+                                                                onClick={handleNext}
+                                                                className={classes.button}
+                                                            >
+                                                                {activeStep === steps.length - 1 ? 'Save and Submit' : 'Save and Next'}
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>

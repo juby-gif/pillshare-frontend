@@ -17,11 +17,11 @@ interface IntervalProps {
 }
 
 interface DataProps{
-  index:number;
+  index?:number;
   before_or_after ?: string;
   dosage ?: string;
-  dose ?: number;
-  duration ?: number;
+  dose ?: string;
+  duration ?: string;
   end_date ?: string;
   start_date ?: string;
   missed ?: string[];
@@ -149,10 +149,10 @@ const TableComponent = (props:IProps):JSX.Element => {
                 {debuggMode && (
                           <tr>
                             <td>
-                              <Button onClick={e => onEditClick(e,info.index)}>Edit</Button>
+                              <Button onClick={e => onEditClick(e,info.index?info.index:0)}>Edit</Button>
                             </td>
                             <td>
-                              <Button onClick={e => onDeleteClick(e,info.index)}>Delete</Button>
+                              <Button onClick={e => onDeleteClick(e,info.index?info.index:0)}>Delete</Button>
                             </td>
                           </tr>
                 )}

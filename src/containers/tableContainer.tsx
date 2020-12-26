@@ -16,98 +16,46 @@ isDeleted ?:boolean;
 }
 
 interface DataProps{
-    index:number;
-    before_or_after ?: string;
-    dosage ?: string;
-    dose ?: number;
-    duration ?: number;
-    end_date ?: string;
-    start_date ?: string;
-    missed ?: string[];
-    measure ?: string;
-    name ?: string;
-    reason ?: string;
-    taken ?: string[];
-    intervals ?: IntervalProps;
-  }
-  interface BloodPressureProps {
-    diastole_reading:number;
-    systole_reading:number;
-    percentage:number;
-    instrument_id:number;
-    time:string;
-  }
-  interface BodyTemperatureProps {
-    reading :number;
-    percentage :number;
-    instrument_id :number;
-    time :string;
-  }
-  
-  interface GlucoseProps {
-    reading:number;
-    percentage:number;
-    instrument_id:number;
-    time:string;
-  }
-  
-  interface HealthCheckProps {
-    health_status:string;
-    time:string;
-  }
-  
-  interface HeartRateProps {
-    reading:number;
-    percentage:number;
-    instrument_id:number;
-    time:string;
-  }
-  
-  interface OxygenSaturationProps {
-    reading:number;
-    percentage:number;
-    instrument_id:number;
-    time:string;
-  }
-  
-  
-  interface MedicalProps {
-    before_or_after : string;
-    dosage : string;
-    dose : number;
-    duration : number;
-    end_date : string;
-    start_date : string;
-    intervals : IntervalProps;
-    missed : string[];
-    measure : string;
-    name : string;
-    reason : string;
-    taken: string[];
-    id: number;
-  }
-  
-  interface IntervalProps {
-    part: string[];
-    time: string[];
-  }
-  
-  interface ServerResponse {
-  data: ServerData[];
-  }
-  
-  interface ServerData {
-    alerts_responded : number,
-    alerts_sent : number,
-    blood_pressure : BloodPressureProps,
-    body_temperature : BodyTemperatureProps,
-    glucose : GlucoseProps,
-    health_check : HealthCheckProps,
-    heart_rate : HeartRateProps,
-    medical_information : MedicalProps[],
-    oxygen_saturation : OxygenSaturationProps,
-    isDeleted ?:boolean;
-  }
+  index?:number;
+  before_or_after ?: string;
+  dosage ?: string;
+  dose ?: string;
+  duration ?: string;
+  end_date ?: string;
+  start_date ?: string;
+  missed ?: string[];
+  measure ?: string;
+  name ?: string;
+  reason ?: string;
+  taken ?: string[];
+  intervals ?: IntervalProps;
+  isDeleted ?:boolean;
+}
+interface IntervalProps {
+  part: string[];
+  time: string[];
+}
+
+interface ServerResponse {
+data: ServerData[];
+}
+
+interface ServerData {
+  name?:string;
+  dose?:string;
+  measure?:string;
+  isDeleted:boolean;
+  dosage?:string;
+  before_or_after?:string;
+  duration?:string;
+  start_date?:string;
+  end_date?:string;
+  intervals:IntervalProps,
+  reason?:string;
+  taken?:string[];
+  missed?:string[];
+  index?:number;
+}
 
 
 export default class TableContainer extends Component<IProps,StateProps> { 
@@ -133,7 +81,7 @@ export default class TableContainer extends Component<IProps,StateProps> {
 
   onSuccessCallBack = (data:DataProps[]): void => {
     // For debugging purpose only
-    // console.log(responseData.data);
+    console.log(data);
     localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(data));
       this.setState({
           data:JSON.parse(localStorage.getItem(USER_MEDICAL_TABLE)|| '{}'),

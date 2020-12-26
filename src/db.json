@@ -338,35 +338,6 @@
         "health_status": "improving",
         "time": "Since monday"
       },
-      "medical_information": [
-        {
-          "id": 1,
-          "name": "Hydrocodone",
-          "dose": 2,
-          "measure": "tablet(s)",
-          "isDeleted": false,
-          "dosage": "EOD",
-          "before_or_after": "before",
-          "duration": 30,
-          "start_date": "21-03-2020",
-          "end_date": "21-04-2020",
-          "intervals": {
-            "part": [
-              "morning",
-              "evening"
-            ],
-            "time": [
-              "10:37",
-              "20.45"
-            ]
-          },
-          "reason": "Pain Medication",
-          "taken": [
-            "Morning"
-          ],
-          "missed": []
-        }
-      ],
       "alerts_sent": 23,
       "alerts_responded": 20,
       "id": 1
@@ -409,35 +380,6 @@
         "health_status": "improving",
         "time": "Since monday"
       },
-      "medical_information": [
-        {
-          "id": 1,
-          "name": "Hydrocodone",
-          "dose": 2,
-          "measure": "tablet(s)",
-          "dosage": "EOD",
-          "isDeleted": false,
-          "before_or_after": "before",
-          "duration": 30,
-          "start_date": "21-03-2020",
-          "end_date": "21-04-2020",
-          "intervals": {
-            "part": [
-              "morning",
-              "evening"
-            ],
-            "time": [
-              "10:37",
-              "20.45"
-            ]
-          },
-          "reason": "Pain Medication",
-          "taken": [
-            "Morning"
-          ],
-          "missed": []
-        }
-      ],
       "alerts_sent": 23,
       "alerts_responded": 20,
       "id": 2
@@ -481,6 +423,96 @@
       "taken": "",
       "missed": "Missed",
       "user_id": "1fc257ec-5449-4491-a3fe-d961ed685270"
+    }
+  ],
+  "medical_information": [
+    {
+      "id": 1,
+      "user_id": "1fc257ec-5449-4491-a3fe-d961ed685270",
+      "name": "Hydrocodone",
+      "dose": 2,
+      "measure": "tablet(s)",
+      "isDeleted": false,
+      "dosage": "EOD",
+      "before_or_after": "before",
+      "duration": 30,
+      "start_date": "21-03-2020",
+      "end_date": "21-04-2020",
+      "intervals": {
+        "part": [
+          "morning",
+          "evening"
+        ],
+        "time": [
+          "10:37",
+          "20.45"
+        ]
+      },
+      "reason": "Pain Medication",
+      "taken": [
+        "Morning"
+      ],
+      "missed": []
+    },
+    {
+      "id": 2,
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "name": "Hydrocodone",
+      "dose": 2,
+      "measure": "tablet(s)",
+      "dosage": "EOD",
+      "isDeleted": false,
+      "before_or_after": "before",
+      "duration": 30,
+      "start_date": "21-03-2020",
+      "end_date": "21-04-2020",
+      "intervals": {
+        "part": [
+          "morning",
+          "evening"
+        ],
+        "time": [
+          "10:37",
+          "20.45"
+        ]
+      },
+      "reason": "Pain Medication",
+      "taken": [
+        "Morning"
+      ],
+      "missed": []
+    },
+    {
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "name": "Thylanol",
+      "dose": "1",
+      "measure": "gram",
+      "isDeleted": false,
+      "dosage": "TID - Three time daily",
+      "before_or_after": "After",
+      "duration": "35",
+      "start_date": "2020-12-01",
+      "end_date": "2020-11-30",
+      "intervals": {
+        "part": [
+          "Morning",
+          "Afternoon",
+          "Night"
+        ],
+        "time": [
+          "05:06",
+          "12:45",
+          "21:46"
+        ]
+      },
+      "reason": "For body aches, head aches, migrains, etc.",
+      "taken": [
+        "Morning",
+        "Afternoon",
+        "Night"
+      ],
+      "missed": [],
+      "id": 3
     }
   ]
 }

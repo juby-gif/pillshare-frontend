@@ -13,7 +13,8 @@ import PillReasonContainer from './pillAdditionContainers/pillReasonContainer';
 import PillDurationContainer from './pillAdditionContainers/pillDurationContainer';
 import PillAdditionComponentWizard from '../components/pillAdditionComponentWizard';
 import PillAdditionReviewContainer from './pillAdditionContainers/pillAdditionReviewContainer';
-import { PILL_DESCRIPTION, PILL_DURATION, PILL_REASON } from '../constants';
+import { LOGGED_IN_USER_ID, PILL_DESCRIPTION, PILL_DURATION, PILL_REASON } from '../constants';
+import { postPillData } from '../API/tableDataAPI';
 
 interface DescriptionProps {
   name ?: string;
@@ -38,9 +39,30 @@ interface ReasonProps {
 }
 
 interface IProps {
-  durationData ?: DurationProps;
-  descriptionData ?: DescriptionProps;
-  reasonData ?: ReasonProps;
+  durationData : DurationProps;
+  descriptionData : DescriptionProps;
+  reasonData : ReasonProps;
+}
+
+interface ServerResponseProps {
+data:ServerDataProps[];
+}
+
+interface ServerDataProps {
+  user_id:string|null;
+  name?:string;
+  dose?:string;
+  measure?:string;
+  isDeleted:boolean;
+  dosage?:string;
+  before_or_after?:string;
+  duration?:string;
+  start_date?:string;
+  end_date?:string;
+  intervals:{part:string[],time:string[]},
+  reason?:string;
+  taken?:string[];
+  missed?:string[];
 }
 
 const ColorlibConnector = withStyles({
@@ -152,56 +174,85 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
         *  API callback functions
         *------------------------------------------------------------
     */
-  // const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
-  //   postTimeSeriesData(data,name,onSuccessCallBack,onFailureCallBack)
-  // }
+  const postPillAPICall = async (user_id:string|null, data:ServerDataProps) :Promise<void> =>{
+    postPillData(user_id,data,onSuccessCallBack,onFailureCallBack)
+  }
 
     /* *
         *  Process API Calls
         *------------------------------------------------------------
     */
-  // const onTimeSeriesDataProcessAPI =( 
-  //                                     token:string | null,
-  //                                     user_id:string | null,
-  //                                     heartRateData:HeartRateProps | null,
-  //                                     bloodPressureData:BloodPressureProps | null,
-  //                                     bodyTemperatureData:BodyTemperatureProps | null,
-  //                                     glucoseData:GlucoseProps | null,
-  //                                     oxygenSaturationData:OxygenSaturationProps | null,
-  //                                   ) => {
+  const onNewPillAddProcessAPI =( 
+                                    user_id:string | null,
+                                    pillDescription:DescriptionProps | null,
+                                    pillDuration:DurationProps | null,
+                                    pillReason:ReasonProps | null,
+                                  ) => {
+    let time: string[] | undefined = [];
+    if(pillDuration?.morning){
+      time.push(pillDuration.morning)
+    }
+    if(pillDuration?.afternoon){
+      time.push(pillDuration.afternoon)
+    }
+    if(pillDuration?.evening){
+      time.push(pillDuration.evening)
+    }
+    if(pillDuration?.night){
+      time.push(pillDuration.night)
+    }
 
-  // if (lengthChecker(heartRateData) > 2) {
-  //   onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
-  // }
+    let part: string[] = [];
+    if(pillDuration?.morning){
+      part.push("Morning")
+    }
+    if(pillDuration?.afternoon){
+      part.push("Afternoon")
+    }
+    if(pillDuration?.evening){
+      part.push("Evening")
+    }
+    if(pillDuration?.night){
+      part.push("Night")
+    }
+
+    const data:ServerDataProps = {
+      user_id:user_id,
+      name:pillDescription?.name,
+      dose:pillDescription?.dose,
+      measure:pillDescription?.measure,
+      isDeleted: false,
+      dosage:pillDescription?.dosage,
+      before_or_after:pillDescription?.beforeOrAfter,
+      duration:pillDuration?.numberOfDays,
+      start_date:pillDuration?.startDate,
+      end_date:pillDuration?.endDate,
+      intervals:{
+        part:part,
+        time:time,
+      },
+      reason:pillReason?.reason,
+      //The value for taken and missed will be processed on the Golang server.
+      //The values which are assigned is just for demonstration purpose only.
+      taken:part,
+      missed:[],
+
+    }
+    postPillAPICall(user_id,data);
   
-  // if (lengthChecker(bloodPressureData) > 2) {
-  //   onTimeSeriesAPICall(bloodPressureData,"blood_pressure_measurements");
-  // }
-
-  // if (lengthChecker(bodyTemperatureData) > 2) {
-  //   onTimeSeriesAPICall(bodyTemperatureData,"body_temperature_measurements");
-  // }
-
-  // if (lengthChecker(glucoseData) > 2) {
-  //   onTimeSeriesAPICall(glucoseData,"glucose_measurements");
-  // }
-
-  // if (lengthChecker(oxygenSaturationData) > 2) {
-  //   onTimeSeriesAPICall(oxygenSaturationData,"oxygen_saturation_measurements");
-  // }
-  // }
+  }
   
-  //   /* *
-  //       *  Server Response Process Calls
-  //       *------------------------------------------------------------
-  //   */
+  /* *
+      *  Server Response Process Calls
+      *------------------------------------------------------------
+  */
 
-  // const onSuccessCallBack = (responseData : ServerResponse) => {
-  //   console.log(responseData)
-  // }
-  // const onFailureCallBack = (responseData:ServerResponse) => {
-  //   console.log(responseData)
-  // }
+  const onSuccessCallBack = (responseData : ServerResponseProps) => {
+    console.log(responseData)
+  }
+  const onFailureCallBack = (responseData:ServerResponseProps) => {
+    console.log(responseData)
+  }
 
   
 
@@ -249,6 +300,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
     }
   }
       const handleNext = () => {
+        // Forcing the user to enter the informations and doing validations
         if(activeStep === 0 ){
           let pillDescription: DescriptionProps = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)||'{}');
           if(lengthChecker(pillDescription) === 5){
@@ -259,7 +311,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
           }
         } else if(activeStep === 1 ){
           let pillDuration : DurationProps = JSON.parse(localStorage.getItem(PILL_DURATION)||'{}');
-          if(lengthChecker(pillDuration) >= 4){
+          if(lengthChecker(pillDuration) > 3){
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
           }
           else {
@@ -279,18 +331,14 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
     
       if(activeStep === steps.length - 1 ){
         // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        // let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
-        // let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
-        // let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
-        // let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-        // let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-        // let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
-        // onTimeSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
-        // localStorage.removeItem(HEARTRATEDATA);
-        // localStorage.removeItem(BLOODPRESSUREDATA);
-        // localStorage.removeItem(BODYTEMPERATURE);
-        // localStorage.removeItem(GLUCOSE);
-        // localStorage.removeItem(OXYGENSATURATION);
+        let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        let pillDescription: DescriptionProps | null = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)|| '{}');
+        let pillDuration: DurationProps | null = JSON.parse(localStorage.getItem(PILL_DURATION)|| '{}');
+        let pillReason: ReasonProps | null = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');
+        onNewPillAddProcessAPI(user_id,pillDescription,pillDuration,pillReason);
+        localStorage.removeItem(PILL_DESCRIPTION);
+        localStorage.removeItem(PILL_DURATION);
+        localStorage.removeItem(PILL_REASON);
       }
     };
 

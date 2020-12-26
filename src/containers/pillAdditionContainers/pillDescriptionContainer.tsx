@@ -80,28 +80,52 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
       })
     }
     onDoseChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "0") {
+        this.setState({
         dose:event.currentTarget.value,
-      })
-    } 
+        })
+      } else {
+        this.setState({
+          dose:undefined,
+        })
+      } 
+    }
     
     onMeasureChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "0") {
+        this.setState({
         measure:event.currentTarget.value,
-      })
-    } 
+        })
+      } else {
+        this.setState({
+          measure:undefined,
+        })
+      } 
+    }
 
     onDosageChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "0") {
+        this.setState({
         dosage:event.currentTarget.value,
-      })
-    } 
+        })
+      } else {
+        this.setState({
+          dosage:undefined,
+        })
+      } 
+    }
 
     onBeforeOrAfterFoodChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "0") {
+        this.setState({
         beforeOrAfter:event.currentTarget.value,
-      })
-    } 
+        })
+      } else {
+        this.setState({
+          beforeOrAfter:undefined,
+        })
+      } 
+    }
     
     onUpdate = ():void => {
       const { name,dose,dosage,measure,beforeOrAfter } = this.state;

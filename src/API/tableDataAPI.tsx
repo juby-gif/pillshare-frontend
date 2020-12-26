@@ -1,11 +1,11 @@
 
 
 interface DataProps{
-  index:number;
+  index?:number;
   before_or_after ?: string;
   dosage ?: string;
-  dose ?: number;
-  duration ?: number;
+  dose ?: string;
+  duration ?: string;
   end_date ?: string;
   start_date ?: string;
   missed ?: string[];
@@ -16,64 +16,6 @@ interface DataProps{
   intervals ?: IntervalProps;
   isDeleted ?:boolean;
 }
-interface BloodPressureProps {
-  diastole_reading:number;
-  systole_reading:number;
-  percentage:number;
-  instrument_id:number;
-  time:string;
-}
-interface BodyTemperatureProps {
-  reading :number;
-  percentage :number;
-  instrument_id :number;
-  time :string;
-}
-
-interface GlucoseProps {
-  reading:number;
-  percentage:number;
-  instrument_id:number;
-  time:string;
-}
-
-interface HealthCheckProps {
-  health_status:string;
-  time:string;
-}
-
-interface HeartRateProps {
-  reading:number;
-  percentage:number;
-  instrument_id:number;
-  time:string;
-}
-
-interface OxygenSaturationProps {
-  reading:number;
-  percentage:number;
-  instrument_id:number;
-  time:string;
-}
-
-
-interface MedicalProps {
-  before_or_after : string;
-  dosage : string;
-  dose : number;
-  duration : number;
-  end_date : string;
-  start_date : string;
-  intervals : IntervalProps;
-  missed : string[];
-  measure : string;
-  name : string;
-  reason : string;
-  taken: string[];
-  id: number;
-  isDeleted?:boolean;
-}
-
 interface IntervalProps {
   part: string[];
   time: string[];
@@ -84,47 +26,50 @@ data: ServerData[];
 }
 
 interface ServerData {
-  alerts_responded : number,
-  alerts_sent : number,
-  blood_pressure : BloodPressureProps,
-  body_temperature : BodyTemperatureProps,
-  glucose : GlucoseProps,
-  health_check : HealthCheckProps,
-  heart_rate : HeartRateProps,
-  medical_information : MedicalProps[],
-  oxygen_saturation : OxygenSaturationProps,
-  isDeleted ?: boolean;
+  user_id:string|null;
+  name?:string;
+  dose?:string;
+  measure?:string;
+  isDeleted:boolean;
+  dosage?:string;
+  before_or_after?:string;
+  duration?:string;
+  start_date?:string;
+  end_date?:string;
+  intervals:IntervalProps,
+  reason?:string;
+  taken?:string[];
+  missed?:string[];
+  index?:number;
 }
 export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
     const axios = require('axios').default;
     let data:DataProps[]=[];
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/dashboard_dataset?user_id=' + user_id,
+        url: 'http://localhost:3001/medical_information?user_id=' + user_id,
       })
       .then(function (response:ServerResponse){
         
         
-        for (let datum of response.data){
-            for(let i=0;i< datum.medical_information.length;i++){
+        for (let i=0;i<response.data.length;i++){
                 let medicalData:DataProps = {
-                  index: i+1,
-                    before_or_after : datum.medical_information[i].before_or_after,
-                    dosage : datum.medical_information[i].dosage,
-                    dose : datum.medical_information[i].dose,
-                    duration : datum.medical_information[i].duration,
-                    end_date : datum.medical_information[i].end_date,
-                    start_date : datum.medical_information[i].start_date,
-                    missed : datum.medical_information[i].missed,
-                    measure : datum.medical_information[i].measure,
-                    name : datum.medical_information[i].name,
-                    reason : datum.medical_information[i].reason,
-                    taken : datum.medical_information[i].taken,
-                    intervals: datum.medical_information[i].intervals,
-                    isDeleted : datum.medical_information[i].isDeleted,
+                    index: i+1,
+                    before_or_after : response.data[i].before_or_after,
+                    dosage : response.data[i].dosage,
+                    dose : response.data[i].dose,
+                    duration : response.data[i].duration,
+                    end_date : response.data[i].end_date,
+                    start_date : response.data[i].start_date,
+                    missed : response.data[i].missed,
+                    measure : response.data[i].measure,
+                    name : response.data[i].name,
+                    reason : response.data[i].reason,
+                    taken : response.data[i].taken,
+                    intervals: response.data[i].intervals,
+                    isDeleted : response.data[i].isDeleted,
                 }
                 data.push(medicalData)
-            }
         }
         onSuccessCallBack(data);
       })
@@ -132,3 +77,22 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
          onFailureCallBack(error)
       })
 }
+
+export const postPillData = async (user_id:string|null,data:ServerData, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+  const axios = require('axios').default;
+      await axios({
+          method: 'post',
+          url: 'http://localhost:3001/medical_information?user_id=' + user_id,
+          data: data,
+          headers: {'Content-Type':'application/json'}
+          
+        })
+        .then(function (response:ServerResponse) {
+            if(response.data !== [] || response.data !== undefined || response.data !== null){
+              onSuccessCallBack(response);
+            } 
+        })
+        .catch(function (error:ServerResponse) {
+          onFailureCallBack(error);
+        });
+  }

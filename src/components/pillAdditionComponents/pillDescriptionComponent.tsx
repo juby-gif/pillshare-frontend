@@ -45,6 +45,7 @@ const PillDescriptionComponent = (props: IProps) : JSX.Element => {
                                 <Form.Group controlId="pill-dose">
                                     <Form.Label>Dose</Form.Label >
                                     <Form.Control as="select" value={dose} onChange={onDoseChange}>
+                                    <option value="0">Dose...</option>
                                     <option value="0.5">0.5</option>
                                     <option value="1">1</option>
                                     <option value="1.5">1.5</option>
@@ -56,6 +57,7 @@ const PillDescriptionComponent = (props: IProps) : JSX.Element => {
                                 <Form.Group controlId="pill-dose-measure">
                                     <Form.Label>Measure</Form.Label>
                                     <Form.Control as="select" value={measure} onChange={onMeasureChange}>
+                                        <option value="0">Measure...</option>
                                         <option value="Tablet">Tablet</option>
                                         <option value="Ampule">Ampule</option>
                                         <option value="Capsule">Capsule</option>
@@ -76,6 +78,7 @@ const PillDescriptionComponent = (props: IProps) : JSX.Element => {
                                 <Form.Group controlId="pill-dosage">
                                     <Form.Label>Dosage</Form.Label>
                                     <Form.Control as="select" value={dosage} onChange={onDosageChange}>
+                                        <option value="0">Dosage...</option>
                                         <option value="EOD - Every other day">EOD - Every other day</option>
                                         <option value="SID - Once daily">SID - Once daily</option>
                                         <option value="BID - Twice daily">BID - Twice daily</option>
@@ -93,6 +96,7 @@ const PillDescriptionComponent = (props: IProps) : JSX.Element => {
                                 <Form.Group controlId="before-or-after-food">
                                     <Form.Label>Before / After Food</Form.Label>
                                     <Form.Control as="select" value={beforeOrAfter} onChange={onBeforeOrAfterFoodChange}>
+                                        <option value="0">Before / After Food...</option>
                                         <option value="Before">Before</option>
                                         <option value="After">After</option>
                                         <option value="Both">Both</option>
