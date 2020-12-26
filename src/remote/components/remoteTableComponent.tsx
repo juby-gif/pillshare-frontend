@@ -5,6 +5,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
   data : DataProps[];
   debuggMode : boolean;
+  isDeleted ?:boolean;
 }
 
 interface IntervalProps {
@@ -13,11 +14,11 @@ interface IntervalProps {
 }
 
 interface DataProps{
-  index:number;
+  index?:number;
   before_or_after ?: string;
   dosage ?: string;
-  dose ?: number;
-  duration ?: number;
+  dose ?: string;
+  duration ?: string;
   end_date ?: string;
   start_date ?: string;
   missed ?: string[];
@@ -26,6 +27,7 @@ interface DataProps{
   reason ?: string;
   taken ?: string[];
   intervals ?: IntervalProps;
+  isDeleted ?:boolean;
 }
 
  
