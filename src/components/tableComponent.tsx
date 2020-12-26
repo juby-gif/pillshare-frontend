@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faCog, faPencilAlt, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+
+
 interface IProps {
   data : DataProps[];
   debuggMode : boolean;
@@ -44,7 +46,7 @@ const TableComponent = (props:IProps):JSX.Element => {
   // console.log(data)
     return (
       <React.Fragment>
-        <Table className=" table-responsive mt-3" style={{border:"none",backgroundColor:"#fff",overflowX: "scroll",whiteSpace: "nowrap",wordBreak: "break-word", tableLayout: "fixed"}} size="sm"  responsive="lg" bordered hover={false}>
+        <Table className="table-responsive mt-3" style={{backgroundColor:"#fff",overflowX: "scroll",whiteSpace: "nowrap",wordBreak: "break-word", tableLayout: "fixed"}} size="sm"  responsive="lg" bordered hover={false}>
           <thead style={{backgroundColor:"#fff"}}>
               <tr>
                   <th>SL.No</th>
@@ -58,7 +60,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>Prescribed Intervals</th>
                   <th>Reason for taking this medication</th>
                   <th><tr>Status: <div></div><div></div><div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
-                  {debuggMode && <th>Settings</th>}
+                  {debuggMode && <th><FontAwesomeIcon style={{fontSize:"1.1rem",color:" #0b4dad"}} icon={faCog} /></th>}
               </tr>
           </thead>
           <tbody style={{backgroundColor:"#fff"}}>
@@ -147,11 +149,11 @@ const TableComponent = (props:IProps):JSX.Element => {
                 </td>
                 {debuggMode && (
                           <tr>
-                            <td>
-                              <Button onClick={e => onEditClick(e,info.index?info.index:0)}>Edit</Button>
+                            <td style={{border: "none"}}>
+                              <Link to="#" onClick={e => onEditClick(e,info.index?info.index:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faPencilAlt} /></Link>
                             </td>
-                            <td>
-                              <Button onClick={e => onDeleteClick(e,info.index?info.index:0)}>Delete</Button>
+                            <td style={{border: "none"}}>
+                              <Link to="#" onClick={e => onDeleteClick(e,info.index?info.index:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faTrash} /></Link>
                             </td>
                           </tr>
                 )}
