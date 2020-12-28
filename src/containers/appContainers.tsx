@@ -24,6 +24,7 @@ import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
 // import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
 import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
 import PillAdditionContainerWizard from './pillAdditionContainerWizard';
+import PillEditContainerWizard from './pillEditContainerWizard';
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -52,6 +53,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/glucose" exact component={GlucoseViewMoreContainer} />
                <Route path="/add-pills" exact component={PillAdditionContainerWizard} />
                <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
+               <Route path="/edit/:id" exact component={PillEditContainerWizard} />
                {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
 
                {/* *************************** Client Side *************************** */}

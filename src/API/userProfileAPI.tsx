@@ -39,14 +39,14 @@ interface ServerResponse {
 
 export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
-    console.log(user_id)
     await axios({
         method: 'get',
         url: 'http://localhost:3001/users?user_id=' + user_id,
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
-          console.log(response.data)
+        //   For Debugging purpose only
+        //   console.log(response.data)
       }
 
         )

@@ -183,7 +183,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
       const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
-      console.log(user_id)
 
     /* *
         *  API callback functions
@@ -229,6 +228,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         }
       }
       
+    }
+
+    onPatchRequestSuccessCallBack = (responseData: ServerResponse): void => {
+      console.log(responseData);
     }
       
     onFailureCallBack = (error: ServerResponse): void => {
@@ -468,7 +471,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onSaveClick = (event : React.SyntheticEvent) : void =>{
       const { bodyMassIndexValue } = this.state
-      const { onSuccessCallBack,onFailureCallBack } = this;
+      const { onPatchRequestSuccessCallBack,onFailureCallBack } = this;
       const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
       const userInformation = JSON.parse(localStorage.getItem(USER_INFORMATION_DATA) || '{}');
       const userContactInformation = JSON.parse(localStorage.getItem(USER_CONTACT_INFORMATION_DATA) || '{}');
@@ -480,8 +483,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         lastName: userInformation.lastName,
         username: userInformation.username,
         email: userInformation.email,
-        weight: userInformation.weight,
-        height: userInformation.height,
         age:userInformation.age,
         gender:userInformation.gender,
         dob:userInformation.dob,
@@ -492,15 +493,16 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         zip:userContactInformation.zip,
         phone:userContactInformation.phone,
         bodyMassIndexValue:bodyMassIndexValue,
+        weight: userHealthInformation.weight,
+        height: userHealthInformation.height,
         BMI:userHealthInformation.bmi,
         bloodGroup:userHealthInformation.bloodGroup,
         underlyingHealthIssues:userHealthInformation.underlyingHealthIssues,
         otherHealthIssues:userHealthInformation.otherHealthIssues,
         images:images,
       }
-      console.log(this.state.bodyMassIndexValue)
-      
-      updateUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack,data);
+
+      updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
       localStorage.removeItem(USER_INFORMATION_DATA);
       localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
       localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);

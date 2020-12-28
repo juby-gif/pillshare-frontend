@@ -22,6 +22,7 @@ export const USER_MEDICAL_INFORMATION_DATA = "user-medical-information-data";
 export const USER_IMAGE = "user-image";
 export const REMOTE_PAYLOAD = "remote-payload";
 export const USER_MEDICAL_TABLE = "user-medical-table";
+export const USER_MEDICAL_TABLE_EDIT = "user-medical-table-edit";
 export const PILL_DESCRIPTION = "pill-description";
 export const PILL_DURATION =  "pill-duration";
 export const PILL_REASON = "pill-reason";

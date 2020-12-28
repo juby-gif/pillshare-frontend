@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import {RouteComponentProps,withRouter} from 'react-router-dom';
 
 import TableComponent from '../components/tableComponent';
 import { getMedicalTableInfo } from '../API/tableDataAPI';
 import { LOGGED_IN_USER_ID, USER_MEDICAL_TABLE } from '../constants';
 
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   debuggMode:boolean,
 }
 
@@ -30,6 +31,7 @@ interface DataProps{
   taken ?: string[];
   intervals ?: IntervalProps;
   isDeleted ?:boolean;
+  id?:number;
 }
 interface IntervalProps {
   part: string[];
@@ -55,11 +57,12 @@ interface ServerData {
   taken?:string[];
   missed?:string[];
   index?:number;
+  id?:number;
 }
 
 
-export default class TableContainer extends Component<IProps,StateProps> { 
-    constructor(props:IProps){
+class TableContainer extends Component<IProps & RouteComponentProps,StateProps> { 
+    constructor(props:IProps & RouteComponentProps){
         super(props);
     this.state={
         data:[],
@@ -79,7 +82,7 @@ export default class TableContainer extends Component<IProps,StateProps> {
     getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
   }
 
-  onSuccessCallBack = (data:DataProps[]): void => {
+   onSuccessCallBack = (data:DataProps[]): void => {
     // For debugging purpose only
     // console.log(data);
     localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(data));
@@ -92,9 +95,9 @@ export default class TableContainer extends Component<IProps,StateProps> {
       console.log(error);
     }
     
-    onEditClick = (event : React.SyntheticEvent,index:number) : void =>{
+    onEditClick = (event : React.SyntheticEvent,id:number) : void =>{
       event.preventDefault();
-      alert(index);
+      this.props.history.push(`/edit/${id}`);
     }
 
     onDeleteClick = (event : React.SyntheticEvent,index:number) : void =>{
@@ -117,3 +120,5 @@ export default class TableContainer extends Component<IProps,StateProps> {
         );
     }
 }
+
+export default withRouter(TableContainer);

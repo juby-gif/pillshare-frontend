@@ -9,8 +9,8 @@ interface IProps {
   data : DataProps[];
   debuggMode : boolean;
   isDeleted ?:boolean;
-  onEditClick : (event : React.SyntheticEvent,index:number) => void;
-  onDeleteClick : (event : React.SyntheticEvent,index:number) => void;
+  onEditClick : (event : React.SyntheticEvent,id:number) => void;
+  onDeleteClick : (event : React.SyntheticEvent,id:number) => void;
 }
 
 interface IntervalProps {
@@ -33,6 +33,7 @@ interface DataProps{
   taken ?: string[];
   intervals ?: IntervalProps;
   isDeleted ?:boolean;
+  id?:number;
 }
 
 const TableComponent = (props:IProps):JSX.Element => {
@@ -125,7 +126,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                   </Table>
                 </td>
                 <td>
-                  {info.reason} 
+                  {info.reason}
                 </td>
                 <td>
                   <Table borderless={true} hover={false} variant="light" responsive="xl">
@@ -150,10 +151,10 @@ const TableComponent = (props:IProps):JSX.Element => {
                 {debuggMode && (
                           <tr>
                             <td style={{border: "none"}}>
-                              <Link to="#" onClick={e => onEditClick(e,info.index?info.index:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faPencilAlt} /></Link>
+                              <Link to="#" onClick={e => onEditClick(e,info.id?info.id:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faPencilAlt} /></Link>
                             </td>
                             <td style={{border: "none"}}>
-                              <Link to="#" onClick={e => onDeleteClick(e,info.index?info.index:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faTrash} /></Link>
+                              <Link to="#" onClick={e => onDeleteClick(e,info.id?info.id:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faTrash} /></Link>
                             </td>
                           </tr>
                 )}

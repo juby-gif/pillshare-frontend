@@ -1,3 +1,4 @@
+import { USER_MEDICAL_TABLE_EDIT } from "../constants";
 
 
 interface DataProps{
@@ -15,6 +16,7 @@ interface DataProps{
   taken ?: string[];
   intervals ?: IntervalProps;
   isDeleted ?:boolean;
+  id?:number;
 }
 interface IntervalProps {
   part: string[];
@@ -41,7 +43,31 @@ interface ServerData {
   taken?:string[];
   missed?:string[];
   index?:number;
+  id?:number;
 }
+
+interface PatchProps {
+  index?:number;
+  before_or_after ?: string;
+  dosage ?: string;
+  dose ?: string;
+  duration ?: string;
+  end_date ?: string;
+  start_date ?: string;
+  missed ?: string[];
+  measure ?: string;
+  name ?: string;
+  reason ?: string;
+  taken ?: string[];
+  intervals ?: IntervalProps;
+  isDeleted ?:boolean;
+  id?:number;
+}
+
+interface PatchRequestProps{
+data:PatchProps[];
+}
+
 export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
     const axios = require('axios').default;
     let data:DataProps[]=[];
@@ -68,6 +94,7 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
                     taken : response.data[i].taken,
                     intervals: response.data[i].intervals,
                     isDeleted : response.data[i].isDeleted,
+                    id : response.data[i].id,
                 }
                 data.push(medicalData)
         }
@@ -78,8 +105,44 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
       })
 }
 
+export const getMedicalTableInfoById = async (user_id: string|null,id:string, onSuccessCallBack: (responseData:DataProps)=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
+  const axios = require('axios').default;
+  await axios({
+      method: 'get',
+      url: 'http://localhost:3001/medical_information?user_id=' + user_id + '&id=' + id,
+    })
+    .then(function (response:ServerResponse){
+      for(let datum of response.data){
+              let medicalData:DataProps = {
+                  before_or_after : datum.before_or_after,
+                  dosage : datum.dosage,
+                  dose : datum.dose,
+                  duration : datum.duration,
+                  end_date : datum.end_date,
+                  start_date : datum.start_date,
+                  missed : datum.missed,
+                  measure : datum.measure,
+                  name : datum.name,
+                  reason : datum.reason,
+                  taken : datum.taken,
+                  intervals: datum.intervals,
+                  isDeleted : datum.isDeleted,
+                  id : datum.id,
+              }
+        localStorage.setItem(USER_MEDICAL_TABLE_EDIT, JSON.stringify(medicalData));
+        onSuccessCallBack(medicalData);
+        return;
+      }
+      
+    })
+    .catch(function (error:ServerResponse) {
+       onFailureCallBack(error)
+    })
+}
+
 export const postPillData = async (user_id:string|null,data:ServerData, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
   const axios = require('axios').default;
+  console.log(data)
       await axios({
           method: 'post',
           url: 'http://localhost:3001/medical_information?user_id=' + user_id,
@@ -88,6 +151,25 @@ export const postPillData = async (user_id:string|null,data:ServerData, onSucces
           
         })
         .then(function (response:ServerResponse) {
+            if(response.data !== [] || response.data !== undefined || response.data !== null){
+              onSuccessCallBack(response);
+            } 
+        })
+        .catch(function (error:ServerResponse) {
+          onFailureCallBack(error);
+        });
+  }
+
+export const patchPillData = async (user_id:string|null,id:string,data:ServerData, onSuccessCallBack: (responseData: PatchRequestProps) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+  const axios = require('axios').default;
+      await axios({
+          method: 'patch',
+          url: 'http://localhost:3001/medical_information/' + id,
+          data: data,
+          headers: {'Content-Type':'application/json'}
+          
+        })
+        .then(function (response:PatchRequestProps) {
             if(response.data !== [] || response.data !== undefined || response.data !== null){
               onSuccessCallBack(response);
             } 

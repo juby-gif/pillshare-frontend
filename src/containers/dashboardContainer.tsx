@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DashboardComponent from '../components/dashboardComponent';
+import {RouteComponentProps} from 'react-router-dom';
 
 // import SideBarComponent from '../components/sideBarComponent';
 import { getDashboard } from '../API/dashboardAPI';
@@ -9,6 +10,7 @@ interface IProps {
 
 }
 interface StateProps {
+  show:boolean;
   alerts_responded : number;
   alerts_sent : number;
   blood_pressure ?: BloodPressureProps;
@@ -97,13 +99,13 @@ interface ServerData {
   medical_information : MedicalProps[],
   oxygen_saturation : OxygenSaturationProps,
 }
-export default class DashboardContainer extends Component<IProps,StateProps> {
+export default class DashboardContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
   /*  *
       *  Initializer
       *------------------------------------------------------------
   */
-    constructor(props:IProps){
+    constructor(props:IProps & RouteComponentProps){
         super(props);
         this.state = {
           alerts_responded : 0,
@@ -115,6 +117,7 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
           heart_rate : undefined,
           medical_information : [],
           oxygen_saturation : undefined,
+          show: false,
         }
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
         this.onFailureCallBack = this.onFailureCallBack.bind(this);
@@ -175,7 +178,7 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
       *------------------------------------------------------------
   */
   render () {
-    const { alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
+    const { show,alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
     
     //For Debugging purpose only
     // console.log(
@@ -185,6 +188,7 @@ export default class DashboardContainer extends Component<IProps,StateProps> {
     return (
         <DashboardComponent 
           alertsResponded = {alerts_responded}
+          show={show}
           alertsSent = {alerts_sent}
           bloodPressure = {blood_pressure}
           bodyTemperature = {body_temperature}

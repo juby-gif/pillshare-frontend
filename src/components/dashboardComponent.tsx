@@ -13,6 +13,7 @@ import TableContainer from '../containers/tableContainer';
 
 
 interface IProps {
+    show:boolean;
     alertsResponded : number;
     alertsSent : number;
     bloodPressure ?: BloodPressureProps;
@@ -91,6 +92,7 @@ interface IProps {
 
 const DashboardComponent = (props: IProps) : JSX.Element => {
     const { 
+        show,
         alertsResponded,
         alertsSent,
         bloodPressure,
@@ -338,7 +340,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
 
         {/* --------------------Table-------------------- */}
 
-                        <TableContainer debuggMode={false} />
+                        <TableContainer debuggMode={show} />
 
         {/* --------------------Table-------------------- */}
 
