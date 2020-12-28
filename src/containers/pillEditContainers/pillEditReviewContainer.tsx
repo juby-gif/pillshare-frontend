@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ReviewComponent from '../../components/pillAdditionComponents/pillAdditionReviewComponent';
+import PillEditReviewComponent from '../../components/pillEditComponents/pillEditReviewComponent';
 import { PILL_DURATION,PILL_DESCRIPTION,PILL_REASON } from '../../constants';
 
 
@@ -16,9 +16,9 @@ interface DescriptionProps {
 }
 
 interface DurationProps {
-  numberOfDays ?: string;
-  startDate ?: string;
-  endDate ?: string;
+  duration ?: string;
+  start_date ?: string;
+  end_date ?: string;
   morning ?: string;
   afternoon ?: string;
   evening ?: string;
@@ -35,7 +35,7 @@ interface StateProps {
   reasonData ?: ReasonProps;
 }
 
-export default class PillAdditionReviewContainer extends Component<IProps,StateProps> {
+export default class PillEditReviewContainer extends Component<IProps,StateProps> {
     constructor(props:IProps) {
         super(props);
         this.state = {
@@ -46,19 +46,19 @@ export default class PillAdditionReviewContainer extends Component<IProps,StateP
       }
 
       componentDidMount(){
-        if(localStorage.getItem(PILL_DESCRIPTION) !== null || localStorage.getItem(PILL_DESCRIPTION) !== undefined){
+        if(localStorage.getItem(PILL_DESCRIPTION) !== null && localStorage.getItem(PILL_DESCRIPTION) !== undefined && localStorage.getItem(PILL_DESCRIPTION) !== '{}'){
           const descriptionData: DescriptionProps = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)|| '{}');
           this.setState({
             descriptionData:descriptionData,
           })
           }
-        if(localStorage.getItem(PILL_DURATION) !== null || localStorage.getItem(PILL_DURATION) !== undefined){
+        if(localStorage.getItem(PILL_DURATION) !== null && localStorage.getItem(PILL_DURATION) !== undefined && localStorage.getItem(PILL_DESCRIPTION) !== '{}'){
           const durationData: DurationProps = JSON.parse(localStorage.getItem(PILL_DURATION)|| '{}');
           this.setState({
             durationData:durationData,
           })
           }
-        if(localStorage.getItem(PILL_REASON) !== null || localStorage.getItem(PILL_REASON) !== undefined){
+        if(localStorage.getItem(PILL_REASON) !== null && localStorage.getItem(PILL_REASON) !== undefined && localStorage.getItem(PILL_DESCRIPTION) !== '{}'){
           const reasonData: ReasonProps = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');
           this.setState({
             reasonData:reasonData,
@@ -67,8 +67,9 @@ export default class PillAdditionReviewContainer extends Component<IProps,StateP
       }
       render() {
         const { descriptionData,durationData,reasonData } = this.state;
+        console.log(descriptionData,durationData,reasonData)
         return (
-          <ReviewComponent 
+          <PillEditReviewComponent 
               descriptionData={descriptionData}
               durationData={durationData}
               reasonData={reasonData}

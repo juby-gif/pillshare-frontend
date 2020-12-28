@@ -86,7 +86,6 @@ interface DeleteProps{
   isDeleted:boolean;
 }
 
-
 class TableContainer extends Component<IProps & RouteComponentProps,StateProps> { 
     constructor(props:IProps & RouteComponentProps){
       super(props);
@@ -97,59 +96,54 @@ class TableContainer extends Component<IProps & RouteComponentProps,StateProps> 
           deleteShow:false,
           id:0,
         }
-    this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
-    this.onFailureCallBack = this.onFailureCallBack.bind(this);
-    this.onEditClick = this.onEditClick.bind(this);
-    this.onDeleteClick =  this.onDeleteClick.bind(this);
-    this.onDeleteConfirmationClick = this.onDeleteConfirmationClick.bind(this);
-    this.onCancelClick = this.onCancelClick.bind(this);
-    this.onSuccessPatchRequestCallBack = this.onSuccessPatchRequestCallBack.bind(this);
-  }
-
-  componentDidMount(){
-    const { onSuccessCallBack,onFailureCallBack } = this;
-    const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-
-    getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
-  }
-
-  onProcessAPICall(){
-    const { id } = this.state;
-    const { onSuccessPillTableByIdCallBack,onFailureCallBack } = this;
-
-    // Get the data to be deleted
-    getMedicalTableInfoById(JSON.stringify(id),onSuccessPillTableByIdCallBack,onFailureCallBack);
-  }
-
-  onPatchProcessAPICall(data:DeleteProps){
-    const { id } = this.state;
-    const { onSuccessPatchRequestCallBack,onFailureCallBack } = this;
-    patchPillData(JSON.stringify(id),data,onSuccessPatchRequestCallBack,onFailureCallBack)
-}
-   onSuccessCallBack = (data:DataProps[]): void => {
-    // For debugging purpose only
-    // console.log(data);
-    localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(data));
-      this.setState({
-          data:JSON.parse(localStorage.getItem(USER_MEDICAL_TABLE)|| '{}'),
-      })
-    }
-
-    onSuccessPillTableByIdCallBack = (response:DataProps) => {
-      const data:{isDeleted:boolean} = {
-        isDeleted:true,
+        this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
+        this.onFailureCallBack = this.onFailureCallBack.bind(this);
+        this.onEditClick = this.onEditClick.bind(this);
+        this.onDeleteClick =  this.onDeleteClick.bind(this);
+        this.onDeleteConfirmationClick = this.onDeleteConfirmationClick.bind(this);
+        this.onCancelClick = this.onCancelClick.bind(this);
+        this.onSuccessPatchRequestCallBack = this.onSuccessPatchRequestCallBack.bind(this);
       }
-      this.onPatchProcessAPICall(data); 
+    /* *
+        *  Utility
+        *------------------------------------------------------------
+    */
+    //Nothing
+
+    /* *
+        *  Component Life-cycle Management
+        *------------------------------------------------------------
+    */
+    componentDidMount(){
+      const { onSuccessCallBack,onFailureCallBack } = this;
+      const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
+
+      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
     }
 
-    onSuccessPatchRequestCallBack = (response:PatchRequestProps) => {
-      console.log(response)
+    /* *
+        *  API callback functions
+        *------------------------------------------------------------
+    */
+
+    //To get table data that needs to be updated
+    onProcessAPICall(){
+      const { id } = this.state;
+      const { onSuccessPillTableByIdCallBack,onFailureCallBack } = this;
+      getMedicalTableInfoById(JSON.stringify(id),onSuccessPillTableByIdCallBack,onFailureCallBack);
+    }
+
+    // Updated the pill data using PATCH request
+    onPatchProcessAPICall(data:DeleteProps){
+      const { id } = this.state;
+      const { onSuccessPatchRequestCallBack,onFailureCallBack } = this;
+      patchPillData(JSON.stringify(id),data,onSuccessPatchRequestCallBack,onFailureCallBack)
     }
     
-    onFailureCallBack = (error: ServerResponse): void => {
-      console.log(error);
-    }
-    
+    /* *
+        *  Event handling functions
+        *------------------------------------------------------------
+    */
     onEditClick = (event : React.SyntheticEvent,id:number) : void =>{
       event.preventDefault();
       this.props.history.push(`/edit/${id}`);
@@ -176,7 +170,59 @@ class TableContainer extends Component<IProps & RouteComponentProps,StateProps> 
         deleteShow:false,
       })
     }
+
+    /************** Success Call Backs ***************/ 
+
+    onSuccessCallBack = (data:DataProps[]): void => {
+      // For debugging purpose only
+      // console.log(data);
+      let tableData:DataProps[] = [];
+      for(let i=0; i< data.length;i++){
+        if (data[i].isDeleted === false){
+          data[i].index = i+1;
+          tableData.push(data[i])
+        }
+      }
+      localStorage.setItem(USER_MEDICAL_TABLE,JSON.stringify(tableData));
+        this.setState({
+            data:tableData,
+        })
+      }
+  
+    onSuccessPillTableByIdCallBack = (response:DataProps) => {
+      const data:{isDeleted:boolean} = {
+        isDeleted:true,
+      }
+      this.onPatchProcessAPICall(data); 
+    }
+  
+    onSuccessPatchRequestCallBack = (response:PatchRequestProps) => {
+      // console.log(response)
+      const { onSuccessCallBack,onFailureCallBack } = this;
+      const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
+      localStorage.removeItem(USER_MEDICAL_TABLE)
+
+      // Calling Table API with GET Request to reflect the changes and re-render
+      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+    }
+  
+    /************** Success Call Backs ***************/ 
+
+
+    /************** Failure Call Backs ***************/ 
+
+    onFailureCallBack = (error: ServerResponse): void => {
+      console.log(error);
+    }
     
+    /************** Failure Call Backs ***************/ 
+  
+  
+    
+    /* *
+        *  Main render function
+        *------------------------------------------------------------
+    */
 
     render(){
         const { data,debuggMode,isDeleted,deleteShow } = this.state;

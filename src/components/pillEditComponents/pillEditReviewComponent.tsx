@@ -10,9 +10,9 @@ interface DescriptionProps {
   }
   
   interface DurationProps {
-    numberOfDays ?: string;
-    startDate ?: string;
-    endDate ?: string;
+    duration ?: string;
+    start_date ?: string;
+    end_date ?: string;
     morning ?: string;
     afternoon ?: string;
     evening ?: string;
@@ -29,12 +29,13 @@ interface DescriptionProps {
     reasonData ?: ReasonProps;
   }
   
-const PillAdditionReviewComponent = (props:IProps) : JSX.Element => {
+const PillEditReviewComponent = (props:IProps) : JSX.Element => {
     const { 
         durationData,
         descriptionData,
         reasonData,
      } = props;
+     console.log(durationData)
     return(
         <React.Fragment>
             <Container>
@@ -102,15 +103,15 @@ const PillAdditionReviewComponent = (props:IProps) : JSX.Element => {
                                             <Form.Row className="ml-5 mt-5 mr-5">
                                                 <Form.Group as={Col} xs="9" md="7" lg="5" controlId="pill-duration">
                                                     <Form.Label>How long you have to take this pill?</Form.Label>
-                                                    <Form.Control type="text" placeholder="name" value={durationData?.numberOfDays} disabled/>
+                                                    <Form.Control type="text" placeholder="name" value={durationData?.duration} disabled/>
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="10" md="5" lg="3" controlId="pill-start-date">
                                                     <Form.Label>Start Date</Form.Label>
-                                                    <Form.Control type="text" placeholder="dose" value={durationData?.startDate} disabled/>
+                                                    <Form.Control type="text" placeholder="dose" value={durationData?.start_date} disabled/>
                                                 </Form.Group>
                                                 <Form.Group as={Col} xs="10" md="5" lg="3" controlId="pill-end-date">
                                                     <Form.Label>End Date</Form.Label>
-                                                    <Form.Control type="text" placeholder="Measure" value={durationData?.endDate} disabled/>
+                                                    <Form.Control type="text" placeholder="Measure" value={durationData?.end_date} disabled/>
                                                 </Form.Group>
                                             </Form.Row>
                                             <Form.Row className="ml-5 mt-5 mr-5">
@@ -171,4 +172,4 @@ const PillAdditionReviewComponent = (props:IProps) : JSX.Element => {
     )
 }
 
-export default PillAdditionReviewComponent;
+export default PillEditReviewComponent;

@@ -13,8 +13,8 @@ import PillDescriptionContainer from './pillEditContainers/pillDescriptionContai
 import PillReasonContainer from './pillEditContainers/pillReasonContainer';
 import PillDurationContainer from './pillEditContainers/pillDurationContainer';
 import PillEditComponentWizard from '../components/pillEditComponentWizard';
-import PillAdditionReviewContainer from './pillEditContainers/pillEditReviewContainer';
-import { LOGGED_IN_USER_ID, PILL_DESCRIPTION, PILL_DURATION, PILL_REASON } from '../constants';
+import PillEditReviewContainer from './pillEditContainers/pillEditReviewContainer';
+import { LOGGED_IN_USER_ID, PILL_DESCRIPTION, PILL_DURATION, PILL_REASON, USER_MEDICAL_TABLE_EDIT } from '../constants';
 import { patchPillData, getMedicalTableInfoById } from '../API/tableDataAPI';
 
 interface DescriptionProps {
@@ -297,7 +297,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
   }
 
   const onSuccessCallBack = (responseData : PatchRequestProps) => {
-    console.log(responseData)
+    // console.log(responseData)
   }
 
   const onSuccessGetRequestCallBack = (responseData : DataProps):void =>{
@@ -354,7 +354,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
       case 2:
         return <PillReasonContainer />;
       case 3:
-        return <PillAdditionReviewContainer />;
+        return <PillEditReviewContainer />;
       default:
         return '404'; // To be redirected to 404-Page
     }
@@ -397,6 +397,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
         let pillReason: ReasonProps | null = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');
         let id:string = param.id;
         onEditPillProcessAPI(user_id,id,pillDescription,pillDuration,pillReason);
+        localStorage.removeItem(USER_MEDICAL_TABLE_EDIT);
         localStorage.removeItem(PILL_DESCRIPTION);
         localStorage.removeItem(PILL_DURATION);
         localStorage.removeItem(PILL_REASON);

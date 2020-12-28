@@ -231,7 +231,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
 
     onPatchRequestSuccessCallBack = (responseData: ServerResponse): void => {
-      console.log(responseData);
+
+      // For debugging purpose only
+      // console.log(responseData);
     }
       
     onFailureCallBack = (error: ServerResponse): void => {
@@ -457,6 +459,11 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       event.preventDefault();
       const { username,firstName,lastName,middleName,email,age,dob } = this.state;
       console.log(username,firstName,lastName,middleName,email,age,dob)
+
+      // For reloading the page to reflect the lastes changes
+      const reload=()=>window.location.reload();
+      reload();
+
       this.setState({
         medicalShow:false,
         debuggMode:false,

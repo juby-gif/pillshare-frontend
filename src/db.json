@@ -465,7 +465,7 @@
       "id": 2,
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "name": "Hydrocodone",
-      "dose": 2,
+      "dose": "1",
       "measure": "Tablet(s)",
       "dosage": "EOD - Every other day",
       "isDeleted": false,
@@ -476,16 +476,23 @@
       "intervals": {
         "part": [
           "Morning",
-          "Evening"
+          "Afternoon",
+          "Evening",
+          "Night"
         ],
         "time": [
           "10:37",
-          "20:45"
+          "16:27",
+          "20:45",
+          "21:57"
         ]
       },
       "reason": "Pain Medication",
       "taken": [
-        "Morning"
+        "Morning",
+        "Afternoon",
+        "Evening",
+        "Night"
       ],
       "missed": []
     },
@@ -494,7 +501,7 @@
       "name": "Thylanol",
       "dose": "1",
       "measure": "gram",
-      "isDeleted": false,
+      "isDeleted": true,
       "dosage": "TID - Three time daily",
       "before_or_after": "After",
       "duration": "35",
@@ -575,6 +582,32 @@
       ],
       "missed": [],
       "id": 5
+    },
+    {
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "name": "Acetaminophen",
+      "dose": "1",
+      "measure": "Capsule",
+      "isDeleted": true,
+      "dosage": "q30min - Every 30 minutes",
+      "before_or_after": "After",
+      "duration": "45",
+      "start_date": "2020-12-01",
+      "end_date": "2021-01-16",
+      "intervals": {
+        "part": [
+          "Night"
+        ],
+        "time": [
+          "20:29"
+        ]
+      },
+      "reason": "For better sleep and reducing heachaches",
+      "taken": [
+        "Night"
+      ],
+      "missed": [],
+      "id": 6
     }
   ]
 }

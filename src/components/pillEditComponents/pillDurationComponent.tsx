@@ -37,7 +37,6 @@ const PillDurationComponent = (props: IProps) : JSX.Element => {
         evening,
         night
         } = props;
-        console.log(morning,evening)
 
     return(
         <React.Fragment>

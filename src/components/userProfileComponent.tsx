@@ -918,7 +918,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                     <TableContainer debuggMode={debuggMode} />
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <Button onClick={onMedicalInfoSaveClick}>Save</Button>
+                                                            <a href="/user-profile" ><Button onClick={onMedicalInfoSaveClick}>Save</Button></a>
                                                             <Button onClick={onMedicalInfoBackClick}>Back</Button>
                                                         </Modal.Footer>
                                                     </Modal>
