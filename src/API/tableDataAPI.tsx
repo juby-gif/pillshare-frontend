@@ -28,7 +28,7 @@ data: ServerData[];
 }
 
 interface ServerData {
-  user_id:string|null;
+  user_id?:string|undefined;
   name?:string;
   dose?:string;
   measure?:string;
@@ -38,7 +38,7 @@ interface ServerData {
   duration?:string;
   start_date?:string;
   end_date?:string;
-  intervals:IntervalProps,
+  intervals?:IntervalProps,
   reason?:string;
   taken?:string[];
   missed?:string[];
@@ -60,7 +60,7 @@ interface PatchProps {
   reason ?: string;
   taken ?: string[];
   intervals ?: IntervalProps;
-  isDeleted ?:boolean;
+  isDeleted :boolean;
   id?:number;
 }
 
@@ -105,11 +105,11 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
       })
 }
 
-export const getMedicalTableInfoById = async (user_id: string|null,id:string, onSuccessCallBack: (responseData:DataProps)=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
+export const getMedicalTableInfoById = async (id:string, onSuccessCallBack: (responseData:DataProps)=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
   const axios = require('axios').default;
   await axios({
       method: 'get',
-      url: 'http://localhost:3001/medical_information?user_id=' + user_id + '&id=' + id,
+      url: 'http://localhost:3001/medical_information?id=' + id,
     })
     .then(function (response:ServerResponse){
       for(let datum of response.data){
@@ -140,7 +140,7 @@ export const getMedicalTableInfoById = async (user_id: string|null,id:string, on
     })
 }
 
-export const postPillData = async (user_id:string|null,data:ServerData, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+export const postPillData = async (user_id:string|undefined,data:ServerData, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
   const axios = require('axios').default;
   console.log(data)
       await axios({
@@ -160,7 +160,7 @@ export const postPillData = async (user_id:string|null,data:ServerData, onSucces
         });
   }
 
-export const patchPillData = async (user_id:string|null,id:string,data:ServerData, onSuccessCallBack: (responseData: PatchRequestProps) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+export const patchPillData = async (id:string,data:ServerData, onSuccessCallBack: (responseData: PatchRequestProps) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
   const axios = require('axios').default;
       await axios({
           method: 'patch',

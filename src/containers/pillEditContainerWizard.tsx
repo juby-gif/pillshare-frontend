@@ -104,7 +104,7 @@ interface PatchRequestProps{
   
 
 interface ServerDataProps {
-  user_id:string|null;
+  user_id?:string|undefined;
   name?:string;
   dose?:string;
   measure?:string;
@@ -114,7 +114,7 @@ interface ServerDataProps {
   duration?:string;
   start_date?:string;
   end_date?:string;
-  intervals:IntervalProps,
+  intervals?:IntervalProps,
   reason?:string;
   taken?:string[];
   missed?:string[];
@@ -229,8 +229,8 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
     *  API callback functions
     *------------------------------------------------------------
 */
-  const postPillAPICall = async (user_id:string|null,id:string, data:ServerDataProps) :Promise<void> =>{
-    patchPillData(user_id,id,data,onSuccessCallBack,onFailureCallBack)
+  const postPillAPICall = async (id:string, data:ServerDataProps) :Promise<void> =>{
+    patchPillData(id,data,onSuccessCallBack,onFailureCallBack)
     // alert("Call API for PATCH Request");
   }
 
@@ -243,7 +243,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
       *  Server Response Process Calls
       *------------------------------------------------------------
   */
-  const onEditPillProcessAPI = (user_id: string|null,id:string,pillDescription:DescriptionProps|null,pillDuration:DurationProps|null,pillReason:ReasonProps|null) => {
+  const onEditPillProcessAPI = (user_id: string|undefined,id:string,pillDescription:DescriptionProps|null,pillDuration:DurationProps|null,pillReason:ReasonProps|null) => {
     
     let time: string[] | undefined = [];
     if(pillDuration?.morning){
@@ -293,7 +293,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
       taken:part,
       missed:[],
     }
-    postPillAPICall(user_id,id,data);
+    postPillAPICall(id,data);
   }
 
   const onSuccessCallBack = (responseData : PatchRequestProps) => {
@@ -339,8 +339,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
     */
 
    useEffect(() => {
-    let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
-          getMedicalTableInfoById(user_id,param.id,onSuccessGetRequestCallBack,onFailureCallBack)
+          getMedicalTableInfoById(param.id,onSuccessGetRequestCallBack,onFailureCallBack)
         }, [param.id]);
 
         
@@ -392,7 +391,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
     
       if(activeStep === steps.length - 1 ){
         // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        let user_id: string | undefined = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
         let pillDescription: DescriptionProps | null = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)|| '{}');
         let pillDuration: DurationProps | null = JSON.parse(localStorage.getItem(PILL_DURATION)|| '{}');
         let pillReason: ReasonProps | null = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');

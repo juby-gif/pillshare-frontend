@@ -49,7 +49,7 @@ data:ServerDataProps[];
 }
 
 interface ServerDataProps {
-  user_id:string|null;
+  user_id?:string|undefined;
   name?:string;
   dose?:string;
   measure?:string;
@@ -59,7 +59,7 @@ interface ServerDataProps {
   duration?:string;
   start_date?:string;
   end_date?:string;
-  intervals:{part:string[],time:string[]},
+  intervals?:{part:string[],time:string[]},
   reason?:string;
   taken?:string[];
   missed?:string[];
@@ -174,7 +174,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
         *  API callback functions
         *------------------------------------------------------------
     */
-  const postPillAPICall = async (user_id:string|null, data:ServerDataProps) :Promise<void> =>{
+  const postPillAPICall = async (user_id:string|undefined, data:ServerDataProps) :Promise<void> =>{
     postPillData(user_id,data,onSuccessCallBack,onFailureCallBack)
   }
 
@@ -183,7 +183,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
         *------------------------------------------------------------
     */
   const onNewPillAddProcessAPI =( 
-                                    user_id:string | null,
+                                    user_id:string | undefined,
                                     pillDescription:DescriptionProps | null,
                                     pillDuration:DurationProps | null,
                                     pillReason:ReasonProps | null,
@@ -331,7 +331,7 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
     
       if(activeStep === steps.length - 1 ){
         // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        let user_id: string | undefined = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
         let pillDescription: DescriptionProps | null = JSON.parse(localStorage.getItem(PILL_DESCRIPTION)|| '{}');
         let pillDuration: DurationProps | null = JSON.parse(localStorage.getItem(PILL_DURATION)|| '{}');
         let pillReason: ReasonProps | null = JSON.parse(localStorage.getItem(PILL_REASON)|| '{}');

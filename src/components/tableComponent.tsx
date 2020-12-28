@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faCog, faPencilAlt, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faCog, faPencilAlt, faPlus, faTrash, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+
+import PillDeleteModalContainer from '../containers/modalContainers/pillDeleteModalContainer';
 
 
 interface IProps {
@@ -11,6 +13,9 @@ interface IProps {
   isDeleted ?:boolean;
   onEditClick : (event : React.SyntheticEvent,id:number) => void;
   onDeleteClick : (event : React.SyntheticEvent,id:number) => void;
+  onCancelClick : (event : React.SyntheticEvent) => void;
+  onDeleteConfirmationClick : (event : React.SyntheticEvent) => void;
+  deleteShow ?:boolean;
 }
 
 interface IntervalProps {
@@ -41,8 +46,11 @@ const TableComponent = (props:IProps):JSX.Element => {
         data,
         debuggMode,
         // isDeleted,
+        deleteShow,
         onEditClick,
         onDeleteClick,
+        onCancelClick,
+        onDeleteConfirmationClick,
        } = props;
   // console.log(data)
     return (
@@ -164,6 +172,27 @@ const TableComponent = (props:IProps):JSX.Element => {
           </tbody>
         </Table>
         {debuggMode && <Link to="/add-pills"><Button className="m-3"><FontAwesomeIcon style={{fontSize:"0.8rem",color:"#fff"}} icon={faPlus} /> Add new pill</Button></Link>}
+        {deleteShow === true && (
+        <Modal
+        backdrop="static"
+        keyboard={false} 
+        show={deleteShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        
+        <Modal.Body style={{textAlign:"center"}}>
+        <FontAwesomeIcon style={{fontSize:"3.8rem",color:"#ff0d0d",display: "block",height: "100%",width: "15%",margin: "auto"}} icon={faExclamationCircle} />
+          <h1 className="mt-4" style={{color:"rgba(0,0,0,0.7)"}}>
+            Are you sure?
+          </h1>
+          <p className="m-4" style={{fontSize:"20px",color:"grey"}}>
+            Do you really want to delete this pill record? You won't have access to this record once deleted.
+          </p>
+          <Button style={{width:"7rem",fontSize:"1.1rem"}} variant="secondary" className="mt-3 mr-5 p-3" onClick={onCancelClick}>Cancel</Button>
+          <Button style={{width:"7rem",fontSize:"1.1rem"}} variant="danger" className="mt-3 p-3" onClick={onDeleteConfirmationClick}>Delete</Button>
+        </Modal.Body>
+      </Modal>)}
       </React.Fragment>
     )
   }
