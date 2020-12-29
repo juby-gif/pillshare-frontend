@@ -127,6 +127,14 @@
       "time": "12:37",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 4
+    },
+    {
+      "instrumentID": 1,
+      "reading": 74,
+      "date": "2020-12-01",
+      "time": "01:48",
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "id": 5
     }
   ],
   "blood_pressure_measurements": [
@@ -165,6 +173,15 @@
       "time": "15:36",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 4
+    },
+    {
+      "instrumentID": 2,
+      "systoleReading": 125,
+      "diastoleReading": 87,
+      "date": "2020-12-01",
+      "time": "01:48",
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "id": 5
     }
   ],
   "body_temperature_measurements": [
@@ -199,6 +216,14 @@
       "time": "05:39",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 4
+    },
+    {
+      "instrumentID": 3,
+      "reading": 35,
+      "date": "2020-12-01",
+      "time": "01:48",
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "id": 5
     }
   ],
   "glucose_measurements": [
@@ -233,6 +258,14 @@
       "time": "17:37",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 4
+    },
+    {
+      "instrumentID": 4,
+      "reading": 110,
+      "date": "2020-12-01",
+      "time": "01:48",
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "id": 5
     }
   ],
   "oxygen_saturation_measurements": [
@@ -267,6 +300,14 @@
       "time": "18:37",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 4
+    },
+    {
+      "instrumentID": 5,
+      "reading": 91,
+      "date": "2020-12-01",
+      "time": "01:49",
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "id": 5
     }
   ],
   "health_check_data": [

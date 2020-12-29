@@ -7,12 +7,12 @@ interface IProps {
   
 }
 interface BloodPressureProps {
-  diastoleReading: number;
-  systoleReading: number;
-  date: string;
-  time: string;
-  instrumentID: number;
-  user_id:string;
+  diastoleReading?: number;
+  systoleReading?: number;
+  date?: string;
+  time?: string;
+  instrumentID?: number;
+  user_id?:string;
 
 }
 
@@ -27,10 +27,10 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
       this.state = {
         diastoleReading:0,
         systoleReading:0,
-        date:"",
-        time:"",
-        instrumentID:0,
-        user_id:"",
+        date:undefined,
+        time:undefined,
+        instrumentID:undefined,
+        user_id:undefined,
         
       };
       this.onBloodPressureSystoleReadingChange = this.onBloodPressureSystoleReadingChange.bind(this);
@@ -50,7 +50,7 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
         *------------------------------------------------------------
     */
    componentDidMount(){
-    if(localStorage.getItem(BLOODPRESSUREDATA) !== null || localStorage.getItem(BLOODPRESSUREDATA) !== undefined){
+    if(localStorage.getItem(BLOODPRESSUREDATA) !== '{}' || localStorage.getItem(BLOODPRESSUREDATA) !== undefined){
       const bloodPressureReadingData: BloodPressureProps = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
       const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
@@ -79,28 +79,52 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
     */
 
     onBloodPressureSystoleReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-        systoleReading:event.currentTarget.valueAsNumber,
-      })
-      }
+      if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined) {
+        this.setState({
+          systoleReading:event.currentTarget.valueAsNumber,
+        })
+      } else{
+        this.setState({
+          systoleReading:undefined,
+        })
+      } 
+    }
 
     onBloodPressureDiastoleReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined) {
+        this.setState({
           diastoleReading:event.currentTarget.valueAsNumber,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          diastoleReading:undefined,
+        })
+      } 
+    }
 
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           date:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          date:undefined,
+        })
+      } 
+    }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           time:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          time:undefined,
+        })
+      } 
+    }
 
       onUpdate = (): void => {
       const { systoleReading,diastoleReading,date,time,user_id } = this.state;

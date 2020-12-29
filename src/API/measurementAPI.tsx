@@ -1,10 +1,10 @@
-
+import { URL } from '../constants';
 interface BodyTemperatureProps {
     reading ?: number;
     date ?: string;
     time ?: string;
-    instrumentID: number;
-    user_id: string | null;
+    instrumentID?: number;
+    user_id?: string;
   
   }
   
@@ -13,8 +13,8 @@ interface BodyTemperatureProps {
     systoleReading ?: number;
     date ?: string;
     time ?: string;
-    instrumentID: number;
-    user_id: string | null;
+    instrumentID?: number;
+    user_id?: string;
   
   }
   
@@ -22,24 +22,24 @@ interface BodyTemperatureProps {
     reading ?: number;
     date ?: string;
     time ?: string;
-    instrumentID: number;
-    user_id: string | null;
+    instrumentID?: number;
+    user_id?: string;
   
   }
   interface HeartRateProps {
     reading ?: number;
     date ?: string;
     time ?: string;
-    instrumentID: number;
-    user_id: string | null;
+    instrumentID?: number;
+    user_id?: string;
   
   }
   interface OxygenSaturationProps {
     reading ?: number;
     date ?: string;
     time ?: string;
-    instrumentID: number;
-    user_id: string | null;
+    instrumentID?: number;
+    user_id?: string;
   
   }
   
@@ -48,15 +48,15 @@ interface BodyTemperatureProps {
   }
   
   interface ServerData {
-    token : string;
-    user_id : string;
-    heartRateData ?: HeartRateProps | null;
-    bloodPressureData ?: BloodPressureProps | null;
-    bodyTemperatureData ?: BodyTemperatureProps | null;
-    glucoseData ?: GlucoseProps | null;
-    oxygenSaturationData ?: OxygenSaturationProps | null;
+    token ?: string;
+    user_id ?: string;
+    heartRateData ?: HeartRateProps;
+    bloodPressureData ?: BloodPressureProps;
+    bodyTemperatureData ?: BodyTemperatureProps;
+    glucoseData ?: GlucoseProps;
+    oxygenSaturationData ?: OxygenSaturationProps;
   }
-export const postTimeSeriesData = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string,onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+export const postTimeSeriesData = async (data:ServerData | undefined,name:string,onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
     await axios( {
           method: 'post',

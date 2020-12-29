@@ -3,9 +3,9 @@ import { Col,Form } from 'react-bootstrap';
 
 
 interface IProps {
-    reading:number;
-    date:string;
-    time:string;
+    reading?:number;
+    date?:string;
+    time?:string;
     onOxygenSaturationReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

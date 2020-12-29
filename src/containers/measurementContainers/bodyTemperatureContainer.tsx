@@ -7,11 +7,11 @@ interface IProps {
   
 }
 interface BodyTemperatureProps {
-  reading: number;
-  date: string;
-  time: string;
-  instrumentID: number;
-  user_id: string;
+  reading?: number;
+  date?: string;
+  time?: string;
+  instrumentID?: number;
+  user_id?: string;
 
 }
 
@@ -25,10 +25,10 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       super(props);
       this.state = {
         reading:0,
-        date:"",
-        time:"",
+        date:undefined,
+        time:undefined,
         instrumentID:0,
-        user_id: "",        
+        user_id: undefined,        
       };
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -46,7 +46,7 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         *------------------------------------------------------------
     */
    componentDidMount(){
-    if(localStorage.getItem(BODYTEMPERATURE) !== null || localStorage.getItem(BODYTEMPERATURE) !== undefined){
+    if(localStorage.getItem(BODYTEMPERATURE) !== '{}' || localStorage.getItem(BODYTEMPERATURE) !== undefined){
       const bodyTemperatureReadingData: BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
       const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
@@ -72,22 +72,40 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         *------------------------------------------------------------
     */
     onBodyTemperatureReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-        reading:event.currentTarget.valueAsNumber,
-    })
+    if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined) {
+        this.setState({
+          reading:event.currentTarget.valueAsNumber,
+        })
+      } else{
+        this.setState({
+          reading:undefined,
+        })
+      } 
     }
 
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           date:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          date:undefined,
+        })
+      } 
+    }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           time:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          time:undefined,
+        })
+      } 
+    }
 
       onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;

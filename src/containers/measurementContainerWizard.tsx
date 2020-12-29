@@ -24,8 +24,8 @@ interface BodyTemperatureProps {
   reading ?: number;
   date ?: string;
   time ?: string;
-  instrumentID: number;
-  user_id: string | null;
+  instrumentID?: number;
+  user_id?: string;
 
 }
 
@@ -34,8 +34,8 @@ interface BloodPressureProps {
   systoleReading ?: number;
   date ?: string;
   time ?: string;
-  instrumentID: number;
-  user_id: string | null;
+  instrumentID?: number;
+  user_id?: string;
 
 }
 
@@ -43,24 +43,23 @@ interface GlucoseProps {
   reading ?: number;
   date ?: string;
   time ?: string;
-  instrumentID: number;
-  user_id: string | null;
+  instrumentID?: number;
+  user_id?: string;
 
 }
 interface HeartRateProps {
   reading ?: number;
   date ?: string;
   time ?: string;
-  instrumentID: number;
-  user_id: string | null;
-
+  instrumentID?: number;
+  user_id?: string;
 }
 interface OxygenSaturationProps {
   reading ?: number;
   date ?: string;
   time ?: string;
-  instrumentID: number;
-  user_id: string | null;
+  instrumentID?: number;
+  user_id?: string;
 
 }
 
@@ -69,13 +68,13 @@ interface ServerResponse {
 }
 
 interface ServerData {
-  token : string;
-  user_id : string;
-  heartRateData ?: HeartRateProps | null;
-  bloodPressureData ?: BloodPressureProps | null;
-  bodyTemperatureData ?: BodyTemperatureProps | null;
-  glucoseData ?: GlucoseProps | null;
-  oxygenSaturationData ?: OxygenSaturationProps | null;
+  token ?: string;
+  user_id ?: string;
+  heartRateData ?: HeartRateProps;
+  bloodPressureData ?: BloodPressureProps;
+  bodyTemperatureData ?: BodyTemperatureProps;
+  glucoseData ?: GlucoseProps;
+  oxygenSaturationData ?: OxygenSaturationProps;
 }
 
 const ColorlibConnector = withStyles({
@@ -175,7 +174,7 @@ function getSteps() {
         *  Get length of the object
         *------------------------------------------------------------
     */
-const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null) => {
+const lengthChecker = (data:ServerData|undefined) => {
   let count:number = 0;
   for (let datum in data){
     if (data.hasOwnProperty(datum)) count++;
@@ -189,7 +188,7 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
         *  API callback functions
         *------------------------------------------------------------
     */
-  const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
+  const onTimeSeriesAPICall = async (data:ServerData | undefined,name:string) :Promise<void> =>{
     postTimeSeriesData(data,name,onSuccessCallBack,onFailureCallBack)
   }
 
@@ -198,13 +197,13 @@ const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatur
         *------------------------------------------------------------
     */
   const onTimeSeriesDataProcessAPI =( 
-                                      token:string | null,
-                                      user_id:string | null,
-                                      heartRateData:HeartRateProps | null,
-                                      bloodPressureData:BloodPressureProps | null,
-                                      bodyTemperatureData:BodyTemperatureProps | null,
-                                      glucoseData:GlucoseProps | null,
-                                      oxygenSaturationData:OxygenSaturationProps | null,
+                                      token:string | undefined,
+                                      user_id:string | undefined,
+                                      heartRateData:HeartRateProps | undefined,
+                                      bloodPressureData:BloodPressureProps | undefined,
+                                      bodyTemperatureData:BodyTemperatureProps | undefined,
+                                      glucoseData:GlucoseProps | undefined,
+                                      oxygenSaturationData:OxygenSaturationProps | undefined,
                                     ) => {
 
   if (lengthChecker(heartRateData) > 2) {
@@ -290,17 +289,60 @@ export default function CustomizedSteppers() {
     }
   }
       const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
       // console.log(localStorage.getItem(HEARTRATEDATA) )
       // TODO ADD VALIDATION
+
+      if(activeStep === 0 ){
+        let heartData: HeartRateProps = JSON.parse(localStorage.getItem(HEARTRATEDATA)||'{}');
+        if(lengthChecker(heartData) === 5){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 1 ){
+        let bloodPressureData : BloodPressureProps = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)||'{}');
+        if(lengthChecker(bloodPressureData) === 6){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 2 ){
+        let bodyTemperatureData : BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)||'{}');
+        if(lengthChecker(bodyTemperatureData) === 5){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 3 ){
+        let glucoseData : GlucoseProps = JSON.parse(localStorage.getItem(GLUCOSE)||'{}');
+        if(lengthChecker(glucoseData) === 5){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 4 ){
+        let oxygenSaturationData : OxygenSaturationProps = JSON.parse(localStorage.getItem(OXYGENSATURATION)||'{}');
+        if(lengthChecker(oxygenSaturationData) === 5){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 5 ){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
       if(activeStep === steps.length - 1 ){
-        let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
-        let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
-        let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
-        let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-        let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-        let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
+        let token: string | undefined = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
+        let user_id: string | undefined = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        let heartRateData: HeartRateProps | undefined = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
+        let bloodPressureData: BloodPressureProps | undefined = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
+        let bodyTemperatureData: BodyTemperatureProps | undefined = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
+        let glucoseData: GlucoseProps | undefined = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
+        let oxygenSaturationData: OxygenSaturationProps | undefined = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
         onTimeSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
         localStorage.removeItem(HEARTRATEDATA);
         localStorage.removeItem(BLOODPRESSUREDATA);

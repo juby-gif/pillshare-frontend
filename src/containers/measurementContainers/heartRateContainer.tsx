@@ -11,7 +11,7 @@ interface HeartRateProps {
   date?: string;
   time?: string;
   instrumentID?: number;
-  user_id?: string | null;
+  user_id?: string;
 
 }
 
@@ -26,8 +26,8 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       super(props);
       this.state = {
         reading:0,
-        date:"",
-        time:"",
+        date:undefined,
+        time:undefined,
         instrumentID:0,
         user_id:this.user_id,
         
@@ -48,7 +48,7 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *------------------------------------------------------------
     */
       componentDidMount(){
-    if(localStorage.getItem(HEARTRATEDATA) !== null || localStorage.getItem(HEARTRATEDATA) !== undefined){
+    if(localStorage.getItem(HEARTRATEDATA) !== '{}' || localStorage.getItem(HEARTRATEDATA) !== undefined){
       const heartRateReadingData: HeartRateProps = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
       this.setState({
         reading:heartRateReadingData.reading,
@@ -73,22 +73,40 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *------------------------------------------------------------
     */
     onHeartRateReadingChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-        reading:event.currentTarget.valueAsNumber,
-    })
+      if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined) {
+        this.setState({
+          reading:event.currentTarget.valueAsNumber,
+        })
+      } else{
+        this.setState({
+          reading:undefined,
+        })
+      } 
     }
 
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           date:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          date:undefined,
+        })
+      } 
+    }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        this.setState({
           time:event.currentTarget.value,
-      })
-      }
+        })
+      } else{
+        this.setState({
+          time:undefined,
+        })
+      } 
+    }
 
     onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;

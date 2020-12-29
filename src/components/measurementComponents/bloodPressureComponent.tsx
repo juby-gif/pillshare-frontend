@@ -3,10 +3,10 @@ import { Col,Form } from 'react-bootstrap';
 
 
 interface IProps {
-    diastoleReading: number;
-    systoleReading: number;
-    date:string;
-    time:string;
+    diastoleReading?: number;
+    systoleReading?: number;
+    date?:string;
+    time?:string;
     onBloodPressureSystoleReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBloodPressureDiastoleReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
