@@ -12,18 +12,54 @@ import AttitudeChangeContainer from './healthCheckContainers/attitudeChangeConta
 import FeelCheckContainer from './healthCheckContainers/feelCheckContainer';
 import SymptomsCheckContainer from './healthCheckContainers/symptomsCheckContainer';
 import HealthCheckComponentWizard from '../components/healthCheckComponentWizard';
+import  { ATTITUDE_CHECK, SYMPTOMS_CHECK, FEEL_CHECK, LOGGED_IN_USER_ID }  from '../constants';
+import { postHealthCheckData } from '../API/healthCheckAPI';
 
 
 interface IProps {
 
 }
-// interface ServerResponse {
-//   data: ServerData[];
-// }
+interface ServerResponse {
+  data: ServerData[];
+}
 
-// interface ServerData {
- 
-// }
+interface FeelProps {
+  healthCheck ?: string;
+}
+
+interface SymptomsProps{
+  date : string;
+  time : string;
+  intensity ?: number;
+  values ?: string[] | number[] | boolean[];
+}
+
+interface AttitudeProps{
+  anxietyCheck ?: boolean;
+  depressionCheck ?: boolean;
+  irritabilityCheck ?: boolean;
+  peacefulCheck ?: boolean;
+  happyCheck ?: boolean;
+  othersCheck ?: boolean;
+  othersValue ?: string;
+}
+
+interface ServerData {
+  user_id ?: string;
+  date ?: string;
+  time ?: string;
+  intensity ?: number;
+  values ?: string[] | number[] | boolean[];
+  anxietyCheck ?: boolean;
+  depressionCheck ?: boolean;
+  irritabilityCheck ?: boolean;
+  peacefulCheck ?: boolean;
+  happyCheck ?: boolean;
+  othersCheck ?: boolean;
+  othersValue ?: string;
+  healthCheck ?: string;
+}
+
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -120,70 +156,107 @@ function getSteps() {
         *  Get length of the object
         *------------------------------------------------------------
     */
-// const lengthChecker = (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null) => {
-//   let count:number = 0;
-//   for (let datum in data){
-//     if (data.hasOwnProperty(datum)) count++;
-//   }
-//   if(count !== 0) { return count; }
-//   else {return 0};
-// }
+    const lengthChecker = (data:ServerData) => {
+      let count:number = 0;
+      for (let datum in data){
+        if (data.hasOwnProperty(datum)) count++;
+      }
+      if(count !== 0) { return count; }
+      else {return 0};
+    }
 
 
     /* *
         *  API callback functions
         *------------------------------------------------------------
     */
-  // const onTimeSeriesAPICall = async (data:HeartRateProps | BloodPressureProps | BodyTemperatureProps | GlucoseProps | OxygenSaturationProps | null,name:string) :Promise<void> =>{
-  //   postTimeSeriesData(data,name,onSuccessCallBack,onFailureCallBack)
-  // }
+    const onHealthCheckAPICall = async (data:ServerData) :Promise<void> =>{
+    postHealthCheckData(data,onSuccessCallBack,onFailureCallBack)
+console.log(data);
+  }
 
     /* *
         *  Process API Calls
         *------------------------------------------------------------
     */
-  // const onTimeSeriesDataProcessAPI =( 
-  //                                     token:string | null,
-  //                                     user_id:string | null,
-  //                                     heartRateData:HeartRateProps | null,
-  //                                     bloodPressureData:BloodPressureProps | null,
-  //                                     bodyTemperatureData:BodyTemperatureProps | null,
-  //                                     glucoseData:GlucoseProps | null,
-  //                                     oxygenSaturationData:OxygenSaturationProps | null,
-  //                                   ) => {
+    const onHealthCheckProcessAPI =( 
+                                      user_id:string | undefined,
+                                      symptomsData:SymptomsProps | undefined,
+                                      attitudeData:AttitudeProps | undefined,
+                                      feelData:FeelProps | undefined,
+                                    ) => {
+      let anxietyCheck:boolean|undefined;
+      let depressionCheck:boolean|undefined;
+      let irritabilityCheck:boolean|undefined;
+      let peacefulCheck:boolean|undefined;
+      let happyCheck:boolean|undefined;
+      let othersCheck:boolean|undefined;
 
-  // if (lengthChecker(heartRateData) > 2) {
-  //   onTimeSeriesAPICall(heartRateData,"heart_rate_measurements");
-  // }
+      if(attitudeData?.anxietyCheck === undefined || attitudeData?.anxietyCheck === false){
+        anxietyCheck = false;
+      } else{
+        anxietyCheck = true;
+      }
+
+      if(attitudeData?.depressionCheck === undefined || attitudeData?.depressionCheck === false){
+        depressionCheck = false;
+      } else{
+        depressionCheck = true;
+      }
+
+      if(attitudeData?.irritabilityCheck === undefined || attitudeData?.irritabilityCheck === false){
+        irritabilityCheck = false;
+      } else{
+        irritabilityCheck = true;
+      }
+
+      if(attitudeData?.peacefulCheck === undefined || attitudeData?.peacefulCheck === false){
+        peacefulCheck = false;
+      } else{
+        peacefulCheck = true;
+      }
+
+      if(attitudeData?.happyCheck === undefined || attitudeData?.happyCheck === false){
+        happyCheck = false;
+      } else{
+        happyCheck = true;
+      }
+
+      if(attitudeData?.othersCheck === undefined || attitudeData?.othersCheck === false){
+        othersCheck = false;
+      } else{
+        othersCheck = true;
+      }
+
+      let data: ServerData = {
+        user_id: user_id,
+        date : symptomsData?.date,
+        time : symptomsData?.time,
+        values : symptomsData?.values,
+        anxietyCheck : anxietyCheck,
+        depressionCheck : depressionCheck,
+        irritabilityCheck : irritabilityCheck,
+        peacefulCheck : peacefulCheck,
+        happyCheck : happyCheck,
+        othersCheck : othersCheck,
+        othersValue : attitudeData?.othersValue,
+        healthCheck : feelData?.healthCheck,
+
+      }
+      onHealthCheckAPICall(data);
+      }
   
-  // if (lengthChecker(bloodPressureData) > 2) {
-  //   onTimeSeriesAPICall(bloodPressureData,"blood_pressure_measurements");
-  // }
+    /* *
+        *  Server Response Process Calls
+        *------------------------------------------------------------
+    */
 
-  // if (lengthChecker(bodyTemperatureData) > 2) {
-  //   onTimeSeriesAPICall(bodyTemperatureData,"body_temperature_measurements");
-  // }
-
-  // if (lengthChecker(glucoseData) > 2) {
-  //   onTimeSeriesAPICall(glucoseData,"glucose_measurements");
-  // }
-
-  // if (lengthChecker(oxygenSaturationData) > 2) {
-  //   onTimeSeriesAPICall(oxygenSaturationData,"oxygen_saturation_measurements");
-  // }
-  // }
-  
-  //   /* *
-  //       *  Server Response Process Calls
-  //       *------------------------------------------------------------
-  //   */
-
-  // const onSuccessCallBack = (responseData : ServerResponse) => {
-  //   console.log(responseData)
-  // }
-  // const onFailureCallBack = (responseData:ServerResponse) => {
-  //   console.log(responseData)
-  // }
+    const onSuccessCallBack = (responseData : ServerResponse) => {
+      console.log(responseData)
+    }
+    const onFailureCallBack = (responseData:ServerResponse) => {
+      console.log(responseData)
+    }
 
   
 
@@ -215,37 +288,60 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
         *------------------------------------------------------------
     */
   
-  const getStepContent = (step: number):JSX.Element|string => {
-    // console.log()
-    switch (step) {
-      case 0:
-        return <SymptomsCheckContainer />;
-      case 1:
-        return <AttitudeChangeContainer />;
-      case 2:
-        return <FeelCheckContainer />;
-      default:
-        return '404'; // To be redirected to 404-Page
+    const getStepContent = (step: number):JSX.Element|string => {
+      // console.log()
+      switch (step) {
+        case 0:
+          return <SymptomsCheckContainer />;
+        case 1:
+          return <AttitudeChangeContainer />;
+        case 2:
+          return <FeelCheckContainer />;
+        default:
+          return '404'; // To be redirected to 404-Page
+      }
     }
-  }
-      const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleNext = () => {
       // console.log(localStorage.getItem(HEARTRATEDATA) )
       // TODO ADD VALIDATION
+
+      if(activeStep === 0 ){
+        let symptomsData: SymptomsProps = JSON.parse(localStorage.getItem(SYMPTOMS_CHECK)||'{}')
+        if(lengthChecker(symptomsData) === 3){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 1 ){
+        let attitudeCheckData : AttitudeProps = JSON.parse(localStorage.getItem(ATTITUDE_CHECK)||'{}');
+        if(lengthChecker(attitudeCheckData) > 0 ){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 2 ){
+        let feelData : FeelProps = JSON.parse(localStorage.getItem(FEEL_CHECK)||'{}');
+        if(lengthChecker(feelData) === 1){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep)
+        }
+      } else if(activeStep === 3 ){
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
       if(activeStep === steps.length - 1 ){
-        // let token: string | null = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
-        // let user_id: string | null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
-        // let heartRateData: HeartRateProps | null = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
-        // let bloodPressureData: BloodPressureProps | null = JSON.parse(localStorage.getItem(BLOODPRESSUREDATA)|| '{}');
-        // let bodyTemperatureData: BodyTemperatureProps | null = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-        // let glucoseData: GlucoseProps | null = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-        // let oxygenSaturationData: OxygenSaturationProps | null = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
-        // onTimeSeriesDataProcessAPI(token,user_id,heartRateData,bloodPressureData,bodyTemperatureData,glucoseData,oxygenSaturationData);
-        // localStorage.removeItem(HEARTRATEDATA);
-        // localStorage.removeItem(BLOODPRESSUREDATA);
-        // localStorage.removeItem(BODYTEMPERATURE);
-        // localStorage.removeItem(GLUCOSE);
-        // localStorage.removeItem(OXYGENSATURATION);
+        // let token: string | undefined = localStorage.getItem(PILLSHARE_USER_TOKEN)|| '{}';
+        let user_id: string | undefined = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+        let symptomsData: SymptomsProps | undefined = JSON.parse(localStorage.getItem(SYMPTOMS_CHECK)|| '{}');
+        let attitudeData: AttitudeProps | undefined = JSON.parse(localStorage.getItem(ATTITUDE_CHECK)|| '{}');
+        let feelData: FeelProps | undefined = JSON.parse(localStorage.getItem(FEEL_CHECK)|| '{}');
+        onHealthCheckProcessAPI(user_id, symptomsData, attitudeData, feelData);
+        localStorage.removeItem(SYMPTOMS_CHECK);
+        localStorage.removeItem(ATTITUDE_CHECK);
+        localStorage.removeItem(FEEL_CHECK);
       }
     };
 

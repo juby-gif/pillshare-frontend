@@ -1,8 +1,8 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Row,Col,Container,InputGroup, FormControl } from 'react-bootstrap';
-import Rating from 'react-rating';
+// import Rating from 'react-rating';
 import { MultiSelectComponent,MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns';
 
 import '../../App.css';
@@ -10,20 +10,29 @@ import '../../App.css';
 interface IProps {
     onIntensityClick: (rating:number) => void;
     onValuesChange ?: (value: MultiSelectChangeEventArgs | undefined) => void;
+    onTimeChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onDateChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
+    date ?: string;
+    time ?: string;
     intensity ?:number;
     fieldsObj ?: object;
     dropdownArray ?: {[key: string]: Object }[];
-    values ?: string[];
+    values ?: string[] | number[] | boolean[];
 }
 
 const SymptomsCheckComponent = (props: IProps) : JSX.Element => {
 
-    const { onIntensityClick,
-            onValuesChange,
-            intensity,
-            dropdownArray,
-            fieldsObj,
-            values
+    const { 
+        // onIntensityClick,
+        onValuesChange,
+        onDateChange,
+        onTimeChange,
+        date,
+        time,
+        // intensity,
+        dropdownArray,
+        fieldsObj,
+        values
         } = props;
     return(
         <React.Fragment>
@@ -44,6 +53,8 @@ const SymptomsCheckComponent = (props: IProps) : JSX.Element => {
                                                 placeholder=""
                                                 aria-label="Date"
                                                 type="date"
+                                                onChange = {onDateChange}
+                                                value = {date}
                                             />
                                         </InputGroup>
                                     </Col>
@@ -54,10 +65,16 @@ const SymptomsCheckComponent = (props: IProps) : JSX.Element => {
                                                 placeholder=""
                                                 aria-label="Time"
                                                 type="time"
+                                                onChange = {onTimeChange}
+                                                value = {time}
                                             />
                                         </InputGroup>
                                     </Col>
-                                    <Col xs="8" md="5" lg="4"  className="ml-2 mr-4 mb-3">
+
+
+                                    {/********************** Intensity checker(Phase 2) *********************/}
+
+                                    {/* <Col xs="8" md="5" lg="4"  className="ml-2 mr-4 mb-3">
                                     <label>Intensity:</label><br/>
                                         <Rating 
                                             start = {0}
@@ -67,7 +84,11 @@ const SymptomsCheckComponent = (props: IProps) : JSX.Element => {
                                             onClick={e=>onIntensityClick(e)}
                                             fullSymbol= {<FontAwesomeIcon icon={faStar} /> }
                                         />
-                                    </Col>
+                                    </Col> */}
+
+                                    {/********************** Intensity checker *********************/}
+
+
                                 </Row>
                             </ol>
                         </Row>

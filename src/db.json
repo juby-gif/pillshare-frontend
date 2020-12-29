@@ -271,32 +271,22 @@
   ],
   "health_check_data": [
     {
-      "health_status": "remains the same",
-      "date": "2020-11-21",
-      "time": "05:37",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "date": "2020-12-28",
+      "time": "22:31",
+      "values": [
+        1,
+        15
+      ],
+      "anxietyCheck": true,
+      "depressionCheck": false,
+      "irritabilityCheck": false,
+      "peacefulCheck": false,
+      "happyCheck": false,
+      "othersCheck": true,
+      "othersValue": "mind restlesness",
+      "healthCheck": "Remains the same",
       "id": 1
-    },
-    {
-      "health_status": "improving",
-      "date": "2020-11-01",
-      "time": "04:37",
-      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
-      "id": 2
-    },
-    {
-      "health_status": "bad",
-      "date": "2020-11-11",
-      "time": "21:37",
-      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
-      "id": 3
-    },
-    {
-      "health_status": "bad",
-      "date": "2020-11-23",
-      "time": "14:37",
-      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
-      "id": 4
     }
   ],
   "dashboard_dataset": [

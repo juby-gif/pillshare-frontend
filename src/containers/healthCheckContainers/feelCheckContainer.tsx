@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import FeelCheckComponent from '../../components/healthCheckComponents/feelCheckComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../../constants';
+import { FEEL_CHECK } from '../../constants';
 
 
 interface IProps {
@@ -42,7 +42,18 @@ export default class FeelCheckContainer extends Component<IProps,StateProps> {
       *  Component Life-cycle Management
       *------------------------------------------------------------
   */
-  //Nothing
+  componentDidMount(){
+    if(localStorage.getItem(FEEL_CHECK) !== null && localStorage.getItem(FEEL_CHECK) !== undefined && '{}'){
+      const healthCheckData: StateProps = JSON.parse(localStorage.getItem(FEEL_CHECK)|| '{}');
+      this.setState({
+        healthCheck:healthCheckData.healthCheck,
+      })
+      }
+  }
+
+  componentDidUpdate(){
+    this.onUpdate();
+  }
 
   /* *
       *  API callback functions
@@ -54,33 +65,60 @@ export default class FeelCheckContainer extends Component<IProps,StateProps> {
   */
     
     onImprovingCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
+      if(event.currentTarget.value !== undefined  || event.currentTarget.value !== "") {
+        this.setState({
+          healthCheck:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          healthCheck:undefined,
+        })
+      } 
+      }
 
     onSameCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
+      if(event.currentTarget.value !== undefined  || event.currentTarget.value !== "") {
+        this.setState({
+          healthCheck:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          healthCheck:undefined,
+        })
+      } 
+      }
 
     onBadCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-          })
-    } 
+      if(event.currentTarget.value !== undefined  || event.currentTarget.value !== "") {
+        this.setState({
+          healthCheck:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          healthCheck:undefined,
+        })
+      } 
+      }
 
     onWorseCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        healthCheck:event.currentTarget.value,
-      })
-    } 
+      if(event.currentTarget.value !== undefined  || event.currentTarget.value !== "") {
+        this.setState({
+          healthCheck:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          healthCheck:undefined,
+        })
+      } 
+      }
     
-    private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
-    private fieldsObj: object = { text: 'value', value: 'id' };
+    onUpdate = ():void => {
+      const { healthCheck } = this.state;
+      localStorage.setItem(FEEL_CHECK,JSON.stringify({
+          healthCheck : healthCheck,
+        }))
+      }
     
- 
 
   /* *
       *  Main render function

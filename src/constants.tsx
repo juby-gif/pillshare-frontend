@@ -26,6 +26,9 @@ export const USER_MEDICAL_TABLE_EDIT = "user-medical-table-edit";
 export const PILL_DESCRIPTION = "pill-description";
 export const PILL_DURATION =  "pill-duration";
 export const PILL_REASON = "pill-reason";
+export const ATTITUDE_CHECK = "attitude-check";
+export const FEEL_CHECK = "feel-check";
+export const SYMPTOMS_CHECK = "symptoms-check";
 
 export const SYMPTOMS_DROPDOWN_LIST = [{
     id:1,

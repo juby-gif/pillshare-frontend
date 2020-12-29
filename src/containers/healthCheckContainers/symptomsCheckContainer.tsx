@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { MultiSelectChangeEventArgs } from '@syncfusion/ej2-react-dropdowns'
 
 import SymptomsCheckComponent from '../../components/healthCheckComponents/symptomsCheckComponent';
-import { SYMPTOMS_DROPDOWN_LIST } from '../../constants';
+import { SYMPTOMS_CHECK, SYMPTOMS_DROPDOWN_LIST } from '../../constants';
 
 
 interface IProps {
@@ -10,10 +10,10 @@ interface IProps {
 }
 
 interface StateProps {
-date : string;
-time : string;
+date ?: string;
+time ?: string;
 intensity ?: number;
-values ?: string[];
+values ?: string[] | number[] | boolean[];
 }
 
 export default class SymptomsCheckContainer extends Component<IProps,StateProps> {
@@ -25,8 +25,8 @@ export default class SymptomsCheckContainer extends Component<IProps,StateProps>
     constructor(props:IProps){
         super(props);
         this.state = {
-          date:"",
-          time:"",
+          date:undefined,
+          time:undefined,
           intensity:0,
           values:[],
         }
@@ -46,7 +46,21 @@ export default class SymptomsCheckContainer extends Component<IProps,StateProps>
       *  Component Life-cycle Management
       *------------------------------------------------------------
   */
-  //Nothing
+  componentDidMount(){
+    if(localStorage.getItem(SYMPTOMS_CHECK) !== null && localStorage.getItem(SYMPTOMS_CHECK) !== undefined && '{}'){
+      const symptomsCheckData: StateProps = JSON.parse(localStorage.getItem(SYMPTOMS_CHECK)|| '{}');
+      this.setState({
+        date:symptomsCheckData?.date,
+        time:symptomsCheckData?.time,
+        // intensity:symptomsCheckData.intensity,
+        values:symptomsCheckData?.values,
+      })
+      }
+  }
+
+  componentDidUpdate(){
+    this.onUpdate();
+  }
 
   /* *
       *  API callback functions
@@ -57,15 +71,27 @@ export default class SymptomsCheckContainer extends Component<IProps,StateProps>
       *------------------------------------------------------------
   */
     onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "") {
+        this.setState({
           date:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          date:undefined,
+        })
+      } 
       }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
+      if(event.currentTarget.value !== "") {
+        this.setState({
           time:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          time:undefined,
+        })
+      } 
       }
     
     onIntensityClick = (rating: number): void => {
@@ -75,8 +101,26 @@ export default class SymptomsCheckContainer extends Component<IProps,StateProps>
       }
 
     onValuesChange = (value: MultiSelectChangeEventArgs | undefined): void => {
-     console.log(value? value.value:null);
-    } 
+      if(value?.value.length !== 0) {
+        this.setState({
+          values:value?.value,
+        })
+      } else {
+        this.setState({
+          values:undefined,
+        })
+      } 
+      }
+
+    onUpdate = ():void => {
+      const { date,time,values } = this.state;
+      localStorage.setItem(SYMPTOMS_CHECK,JSON.stringify({
+          date:date,
+          time:time,
+          // intensity:intensity,
+          values:values,
+      }))
+    }
     
     private dropdownArray: { [key: number]: Object }[] = SYMPTOMS_DROPDOWN_LIST;
     private fieldsObj: object = { text: 'value', value: 'id' };
@@ -92,16 +136,24 @@ export default class SymptomsCheckContainer extends Component<IProps,StateProps>
               dropdownArray,
               fieldsObj,
               onValuesChange,
+              onDateChange,
+              onTimeChange,
             } = this;
       const { intensity,
-              values
+              values,
+              date,
+              time,
             } = this.state;
       return (
         <SymptomsCheckComponent
+            date={date}
+            time={time}
             intensity={intensity}
             fieldsObj={fieldsObj}
             dropdownArray={dropdownArray}
             values={values}
+            onDateChange={onDateChange}
+            onTimeChange={onTimeChange}
             onIntensityClick={onIntensityClick}
             onValuesChange={onValuesChange}
         />
