@@ -68,7 +68,7 @@ interface PatchRequestProps{
 data:PatchProps[];
 }
 
-export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
+export const getRemoteMedicalTableInfo = async (user_id: string|null, onSuccessCallBack: (data:DataProps[])=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
     const axios = require('axios').default;
     let data:DataProps[]=[];
     await axios({
@@ -105,7 +105,7 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
       })
 }
 
-export const getMedicalTableInfoById = async (id:string, onSuccessCallBack: (responseData:DataProps)=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
+export const getRemoteMedicalTableInfoById = async (id:string, onSuccessCallBack: (responseData:DataProps)=>void, onFailureCallBack: (responseData: ServerResponse) => void) : Promise<void> =>{
   const axios = require('axios').default;
   await axios({
       method: 'get',
@@ -140,27 +140,7 @@ export const getMedicalTableInfoById = async (id:string, onSuccessCallBack: (res
     })
 }
 
-export const postPillData = async (user_id:string|undefined,data:ServerData, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
-  const axios = require('axios').default;
-  console.log(data)
-      await axios({
-          method: 'post',
-          url: 'http://localhost:3001/medical_information?user_id=' + user_id,
-          data: data,
-          headers: {'Content-Type':'application/json'}
-          
-        })
-        .then(function (response:ServerResponse) {
-            if(response.data !== [] || response.data !== undefined || response.data !== null){
-              onSuccessCallBack(response);
-            } 
-        })
-        .catch(function (error:ServerResponse) {
-          onFailureCallBack(error);
-        });
-  }
-
-export const patchPillData = async (id:string,data:ServerData, onSuccessCallBack: (responseData: PatchRequestProps) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+export const patchRemotePillData = async (id:string,data:ServerData, onSuccessCallBack: (responseData: PatchRequestProps) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
   const axios = require('axios').default;
       await axios({
           method: 'patch',

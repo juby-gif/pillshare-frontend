@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {RouteComponentProps,withRouter} from 'react-router-dom';
 
 import RemoteTableComponent from '../components/remoteTableComponent';
-import { getMedicalTableInfo, getMedicalTableInfoById, patchPillData } from '../API/remoteTableDataAPI';
+import { getRemoteMedicalTableInfo, getRemoteMedicalTableInfoById, patchRemotePillData } from '../API/remoteTableDataAPI';
 import { LOGGED_IN_USER_ID, USER_MEDICAL_TABLE } from '../../constants';
 
 
@@ -118,7 +118,7 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
       const { onSuccessCallBack,onFailureCallBack } = this;
       const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
 
-      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+      getRemoteMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
     }
 
     /* *
@@ -130,14 +130,14 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
     onProcessAPICall(){
       const { id } = this.state;
       const { onSuccessPillTableByIdCallBack,onFailureCallBack } = this;
-      getMedicalTableInfoById(JSON.stringify(id),onSuccessPillTableByIdCallBack,onFailureCallBack);
+      getRemoteMedicalTableInfoById(JSON.stringify(id),onSuccessPillTableByIdCallBack,onFailureCallBack);
     }
 
     // Updated the pill data using PATCH request
     onPatchProcessAPICall(data:DeleteProps){
       const { id } = this.state;
       const { onSuccessPatchRequestCallBack,onFailureCallBack } = this;
-      patchPillData(JSON.stringify(id),data,onSuccessPatchRequestCallBack,onFailureCallBack)
+      patchRemotePillData(JSON.stringify(id),data,onSuccessPatchRequestCallBack,onFailureCallBack)
     }
     
     /* *
@@ -203,7 +203,7 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
       localStorage.removeItem(USER_MEDICAL_TABLE)
 
       // Calling Table API with GET Request to reflect the changes and re-render
-      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+      getRemoteMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
     }
   
     /************** Success Call Backs ***************/ 
