@@ -107,7 +107,7 @@ export default class GlucoseViewMoreContainer extends Component<IProps,StateProp
             indicator.height = am4core.percent(100);
 
             var indicatorLabel = indicator.createChild(am4core.Label);
-            indicatorLabel.text = "No data...";
+            indicatorLabel.text = "No Records found...";
             indicatorLabel.align = "center";
             indicatorLabel.valign = "middle";
             indicatorLabel.fontSize = 20; 
