@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCog, faPencilAlt, faPlus, faTrash, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-import PillDeleteModalContainer from '../containers/modalContainers/pillDeleteModalContainer';
-
 
 interface IProps {
   data : DataProps[];

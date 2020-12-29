@@ -11,6 +11,7 @@ import { StepIconProps } from '@material-ui/core/StepIcon';
 import AttitudeChangeContainer from './healthCheckContainers/attitudeChangeContainer';
 import FeelCheckContainer from './healthCheckContainers/feelCheckContainer';
 import SymptomsCheckContainer from './healthCheckContainers/symptomsCheckContainer';
+import HealthCheckReviewContainer from './healthCheckContainers/healthCheckReviewContainer';
 import HealthCheckComponentWizard from '../components/healthCheckComponentWizard';
 import  { ATTITUDE_CHECK, SYMPTOMS_CHECK, FEEL_CHECK, LOGGED_IN_USER_ID }  from '../constants';
 import { postHealthCheckData } from '../API/healthCheckAPI';
@@ -297,6 +298,8 @@ const CustomizedSteppers = (props:IProps):JSX.Element => {
           return <AttitudeChangeContainer />;
         case 2:
           return <FeelCheckContainer />;
+        case 3:
+        return <HealthCheckReviewContainer />;
         default:
           return '404'; // To be redirected to 404-Page
       }

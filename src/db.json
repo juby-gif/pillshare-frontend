@@ -287,6 +287,25 @@
       "othersValue": "mind restlesness",
       "healthCheck": "Remains the same",
       "id": 1
+    },
+    {
+      "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
+      "date": "2020-12-10",
+      "time": "12:40",
+      "values": [
+        2,
+        3,
+        6
+      ],
+      "anxietyCheck": true,
+      "depressionCheck": false,
+      "irritabilityCheck": false,
+      "peacefulCheck": true,
+      "happyCheck": false,
+      "othersCheck": false,
+      "othersValue": "dizziness",
+      "healthCheck": "Remains the same",
+      "id": 2
     }
   ],
   "dashboard_dataset": [
