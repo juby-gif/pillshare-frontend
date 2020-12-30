@@ -54,7 +54,7 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
                     return;
                 } else {
                     const responseData = {
-                        message : "Incorrect Password",
+                        message : "Wrong Password",
                     }
                     onFailureCallBack(responseData);
                     return;
@@ -62,7 +62,7 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
             }
         }
         const responseData = {
-            message : "You are not a registered User",
+            message : "This user does not match our records",
         }
         onFailureCallBack(responseData);
         }

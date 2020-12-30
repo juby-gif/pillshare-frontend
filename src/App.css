@@ -39,6 +39,30 @@
     --font-family-sans-serif: Open Sans,sans-serif;
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
 }
+/* Login loading dots */
+.loading:after {
+  content: ' .';
+  animation: dots 1s steps(5, end) infinite;}
+
+@keyframes dots {
+  0%, 20% {
+    color: rgba(0,0,0,0);
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  40% {
+    color: green;
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  60% {
+    text-shadow:
+      .25em 0 0 green,
+      .5em 0 0 rgba(0,0,0,0);}
+  80%, 100% {
+    text-shadow:
+      .25em 0 0 green,
+      .5em 0 0 green;}}
 
 /* Position and sizing of burger button */
 .bm-burger-button {
@@ -102,13 +126,6 @@ th,td {
     z-index: 9999; /* Sit on top - higher than any other z-index in your site*/
 }
 
-.circle {
-  border: 2px solid red;
-  background-color: #FFFFFF;
-  height: 100px;
-  border-radius:50%;
-  width: 100px;
-}
 .faCamera:hover{
    display: block;
   position: absolute;
@@ -291,8 +308,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
   padding: 1.25rem 1.5rem;
   background-color: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.05); }
-  .card-footer:last-child {
-    border-radius: 0 0 calc(0.375rem - 1px) calc(0.375rem - 1px); }
+.card-footer:last-child {
+  border-radius: 0 0 calc(0.375rem - 1px) calc(0.375rem - 1px); }
 
 .card-header-tabs {
   margin-right: -0.75rem;

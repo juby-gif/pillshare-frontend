@@ -1,7 +1,10 @@
 import React from 'react';
-import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image } from 'react-bootstrap';
+import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+
  
 interface FuncProps {
     username : string;
@@ -9,6 +12,9 @@ interface FuncProps {
     response : string;
     message : string;
     validated : boolean;
+    success ?: boolean;
+    error ?: boolean;
+    variant ?: string;
     onLoginClick: (event: React.SyntheticEvent) => void;
     onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,8 +25,11 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
     const { username,
             password,
             // response,
-            // message,
-            // validated,
+            variant,
+            success,
+            message,
+            error,
+            validated,
             onLoginClick,
             onUsernameChange,
             onPasswordChange,
@@ -31,19 +40,25 @@ return (
         <Row>
             <Col>
             </Col>
-            <Col lg xs="12" className="p-2" style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
+            <Col sm="8" md="9" xs="12" lg="4" className="p-2" style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
-                    <Col className="mt-3 ml-3">
-                        <Image src={logo} fluid width="80rem"/>
+                    <Col className="mt-5 mb-3 d-flex justify-content-center">
+                        <Image src={logo} fluid width="140rem"/>
                     </Col>
+                    
                 </Row>
-                <Row className="d-flex justify-content-center">
-                    <h3 className="d-flex justify-content-center mb-4 mt-3">Log-in</h3>
-                </Row>
-                <Row className="d-flex justify-content-center">
-                    <Form noValidate>
+                <Row className="mb-2 d-flex justify-content-center">
+                {error && (<Alert variant={variant}>
+                <FontAwesomeIcon style={{fontSize:"1.8rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} />{message}
+                </Alert>)}
+                {success && (<Alert variant={variant}>
+                <FontAwesomeIcon style={{fontSize:"1.8rem"}} className="mr-2" icon={faThumbsUp} /><span style={{font: "300 1.2rem/150% Raleway"}} className="loading">{message}</span>
+                </Alert>)}
+                        
+                    </Row>
+                    <Form className="mb-3" noValidate validated={validated} >
                         <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} sm="5" md="12" lg="10">
+                            <Form.Group as={Col} xs="7" md="5" lg="7">
                                 <Form.Label>
                                     Username
                                 </Form.Label>
@@ -53,13 +68,13 @@ return (
                                     </InputGroup.Prepend>
                                     <FormControl id="inlineFormInputGroup" placeholder="Username" value={username} onChange={onUsernameChange} required />
                                     <Form.Control.Feedback type="invalid">
-                                        Please provide a valid username.
+                                        Please choose a username.
                                     </Form.Control.Feedback>
                                 </InputGroup>
                             </Form.Group>
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} sm="5" md="12" lg="10">
+                            <Form.Group as={Col} xs="7" md="5" lg="7">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={onPasswordChange} required />
                                 <Form.Control.Feedback type="invalid">
@@ -82,11 +97,10 @@ return (
                         </Form.Row>
                         <Form.Row className="d-flex justify-content-center">
                             <Link to="/register" className="mb-2" >
-                                Register Now
+                                New to Pillshare?
                             </Link>
                         </Form.Row>
                     </Form>
-                </Row>
             </Col>
             <Col></Col>
         </Row>

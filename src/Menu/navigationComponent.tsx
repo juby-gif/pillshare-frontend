@@ -91,9 +91,9 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                                 <i className="ni ni-calendar-grid-58" />
                                 <span>Activity</span>
                             </DropdownItem> */}
-                            <DropdownItem to="#help" tag={Link}>
-                                <FontAwesomeIcon className="mr-2" icon={faQuestionCircle} />   
-                                <span>Help</span>
+                            <DropdownItem>
+                                <a style={{textDecoration:"none",color:"#212529"}} href="mailto:juby.varughese@llinstitute.com"><FontAwesomeIcon className="mr-2" icon={faQuestionCircle} />   
+                                <span>Help</span></a>
                             </DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem to="/login" tag={Link} onClick={e => e.preventDefault()}>

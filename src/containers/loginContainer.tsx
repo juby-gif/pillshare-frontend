@@ -16,6 +16,9 @@ password : string;
 response : string;
 message : string;
 validated : boolean;
+error ?: boolean;
+variant ?: string;
+success ?: boolean;
 }
 
 interface ResponseProps {
@@ -36,7 +39,11 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
             password:"",
             response:"",
             message:"",
+            error:false,
+            success:false,
             validated:false,
+            variant:"",
+
     }
     this.onUsernameChange = this.onUsernameChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
@@ -73,7 +80,9 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     */
     onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            validated:false,
+            error:false,
         })
         this.setState({
             username:event.currentTarget.value,
@@ -83,6 +92,8 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             message:"",
+            validated:false,
+            error:false,
         })
         this.setState({
             password:event.currentTarget.value,
@@ -92,7 +103,12 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     onLoginClick = (event: React.SyntheticEvent): void => {
         event.preventDefault();
         const {username,password} = this.state;
-        this.onLoginAPIProcessCall(username,password);
+        if(username !== "" && username !== undefined && password !=="" && password !== undefined){
+            this.onLoginAPIProcessCall(username,password);
+        }
+        this.setState({
+            validated:true,
+        })
     }
 
     onRegisterClick = (event: React.SyntheticEvent): void => {
@@ -104,12 +120,22 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
         localStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token || '{}')
-        this.props.history.push("/dashboard");
+        this.setState({
+            message:"Success! You're Logging in",
+            variant:"success",
+            success:true,
+        })
+        setTimeout(()=>{this.props.history.push("/dashboard")},5000);
 
     }
     
     onFailureCallBack = (responseData: ResponseProps): void => {
-        alert(responseData.message);
+        this.setState({
+            error:true,
+            message:responseData.message,
+            variant:"danger",
+
+        })
     }
 
     /* *
@@ -117,7 +143,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         *------------------------------------------------------------
     */
     render(){
-        const {username,password,response,message,validated} = this.state;
+        const {username,password,response,message,error,validated,variant,success} = this.state;
         const {onUsernameChange,onPasswordChange,onLoginClick,onRegisterClick} = this;
         return(
             <div>
@@ -127,6 +153,9 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
                 response={response}
                 message={message}
                 validated={validated}
+                error={error}
+                success={success}
+                variant={variant}
                 onUsernameChange={onUsernameChange}
                 onPasswordChange={onPasswordChange}
                 onLoginClick={onLoginClick}
