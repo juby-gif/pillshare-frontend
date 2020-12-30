@@ -47,62 +47,69 @@ return (
                     </Col>
                     
                 </Row>
+
+
+                {/* Alert for showing error and success messages */}
+
                 <Row className="mb-2 d-flex justify-content-center">
-                {error && (<Alert variant={variant}>
-                <FontAwesomeIcon style={{fontSize:"1.8rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} />{message}
-                </Alert>)}
-                {success && (<Alert variant={variant}>
-                <FontAwesomeIcon style={{fontSize:"1.8rem"}} className="mr-2" icon={faThumbsUp} /><span style={{font: "300 1.2rem/150% Raleway"}} className="loading">{message}</span>
-                </Alert>)}
-                        
-                    </Row>
-                    <Form className="mb-3" noValidate validated={validated} >
-                        <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} xs="7" md="5" lg="7">
-                                <Form.Label>
-                                    Username
-                                </Form.Label>
-                                <InputGroup className="mb-2">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>@</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl id="inlineFormInputGroup" placeholder="Username" value={username} onChange={onUsernameChange} required />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please choose a username.
-                                    </Form.Control.Feedback>
-                                </InputGroup>
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row className="d-flex justify-content-center">
-                            <Form.Group as={Col} xs="7" md="5" lg="7">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" value={password} onChange={onPasswordChange} required />
+                    {error && (<Alert variant={variant}>
+                    <FontAwesomeIcon style={{fontSize:"1.8rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} />{message}
+                    </Alert>)}
+
+                    {success && (<Alert variant={variant}>
+                    <FontAwesomeIcon style={{fontSize:"1.8rem"}} className="mr-2" icon={faThumbsUp} /><span style={{font: "300 1.2rem/150% Raleway"}} className="loading">{message}</span>
+                    </Alert>)}
+                </Row>
+
+                 {/* Alert for showing error and success messages */}
+
+
+                <Form className="mb-3" noValidate validated={validated} >
+                    <Form.Row className="d-flex justify-content-center">
+                        <Form.Group as={Col} xs="7" md="5" lg="7">
+                            <Form.Label>
+                                Username
+                            </Form.Label>
+                            <InputGroup className="mb-2">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>@</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl id="inlineFormInputGroup" placeholder="Username" value={username} onChange={onUsernameChange} required />
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid password.
+                                    Please choose a username.
                                 </Form.Control.Feedback>
-                            </Form.Group>
-                        </Form.Row>
-                        {/* <Form.Row className="d-flex justify-content-center">
-                            <Form.Check
-                                type="checkbox"
-                                id="autoSizingCheck"
-                                className="mt-2 mb-4"
-                                label="Remember me"
-                            />
-                        </Form.Row> */}
-                        <Form.Row className="d-flex justify-content-center mt-3">
-                            <Button type="submit" className="mb-2" onClick={onLoginClick}>
-                                Login
-                            </Button>
-                        </Form.Row>
-                        <Form.Row className="d-flex justify-content-center">
-                            <Link to="/register" className="mb-2" >
-                                New to Pillshare?
-                            </Link>
-                        </Form.Row>
-                    </Form>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row className="d-flex justify-content-center">
+                        <Form.Group as={Col} xs="7" md="5" lg="7">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" value={password} onChange={onPasswordChange} required />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid password.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Form.Row>
+                    {/* <Form.Row className="d-flex justify-content-center">
+                        <Form.Check
+                            type="checkbox"
+                            id="autoSizingCheck"
+                            className="mt-2 mb-4"
+                            label="Remember me"
+                        />
+                    </Form.Row> */}
+                    <Form.Row className="d-flex justify-content-center mt-3">
+                        <Button type="submit" className="mb-2" onClick={onLoginClick}>
+                            Login
+                        </Button>
+                    </Form.Row>
+                    <Form.Row className="d-flex justify-content-center">
+                        <Link to="/register" className="mb-2" >
+                            New to Pillshare?
+                        </Link>
+                    </Form.Row>
+                </Form>
             </Col>
-            <Col></Col>
         </Row>
     </Container>
 </React.Fragment>
