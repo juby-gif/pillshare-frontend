@@ -110,6 +110,7 @@ return (
                     </Form.Row>
                 </Form>
             </Col>
+            <Col></Col>
         </Row>
     </Container>
 </React.Fragment>
