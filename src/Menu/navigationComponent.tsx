@@ -34,9 +34,9 @@ interface UserNameProps{
 }
 
 const NavigationComponent = (props: IProps) : JSX.Element => {   
-    const userImage:ImageType[]|undefined = JSON.parse(localStorage.getItem(USER_IMAGE)|| '[]');
-    const username:UserNameProps|undefined = JSON.parse(localStorage.getItem(LOGGED_IN_USER_NAME)|| '{}');
-     
+    const userImage:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
+    const username:UserNameProps = JSON.parse(localStorage.getItem(LOGGED_IN_USER_NAME)|| '{}');
+    // console.log(userImage)
     
     return(
         <Navbar expand="md" id="navigation" >
@@ -54,14 +54,14 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                         <DropdownToggle nav>
                             <Media className="align-items-center">
                                 <span className="avatar avatar-sm rounded-circle">
-                                    {userImage?userImage.map((image,index) => (
+                                    {(userImage.length !== 0)?(userImage.map((image,index) => (
                                     <div key={index}>
                                         <img
                                         alt="..."
                                         src={image.dataURL}
                                         />
                                     </div>
-                                    )):(<img
+                                    ))):(<img
                                         alt="default_image"
                                         src={pro}
                                     />)}

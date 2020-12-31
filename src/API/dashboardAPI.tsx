@@ -84,6 +84,7 @@ export const getDashboard = async (user_id:string|null, onSuccessCallBack: (resp
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
+          // console.log(response.data)
       }
 
         )

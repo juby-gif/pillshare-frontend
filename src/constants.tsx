@@ -99,4 +99,3 @@ export const SYMPTOMS_DROPDOWN_LIST = [{
     value:"Edema, ankle joint"
   }
   ];
-

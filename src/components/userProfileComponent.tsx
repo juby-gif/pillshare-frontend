@@ -202,11 +202,13 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
 
                 {/* Header container */}
-                <Container className="d-flex align-items-center header pt-5 pt-lg-8" style={{position:"absolute",
-                    minHeight: "600px",
-                    backgroundImage: `url(${bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center top"
+                <Container className="d-flex align-items-center header pt-5 pt-lg-8" 
+                    style={{
+                        position:"absolute",
+                        minHeight: "600px",
+                        backgroundImage: `url(${bg})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center top"
                     }} fluid
                     >
                         <Row> 
@@ -223,6 +225,57 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
                 {/* Body container */}
                 <Container style={{paddingTop:"25rem"}} className="mt-5" fluid>
+                    <Row>
+                        <Modal
+                            backdrop="static" keyboard={false} 
+                            show={false}
+                            size="lg"
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                            style={{
+                                position: "absolute",
+                                bottom: "0",
+                                background: "rgba(0, 0, 0,0.5)", /* Black see-through */
+                                // color: "#000",
+                                width: "100%",
+                                transition: ".5s ease",
+                                opacity:"1",
+                                fontSize: "16px",
+                                padding: "20px",
+                              }}
+                        >
+                            <Modal.Header>
+                                <Modal.Title id="contained-modal-title-vcenter">
+                                <span style={{fontSize:"100%"}}>Welcome to PillShare!</span>
+                                <img className="ml-5" alt="logo" style={{position:"absolute",float:"right",top:"0.6%",right:"0"}} src={pro} width="80rem" height="60rem" />
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <p>
+                                <b>Pillshare</b> is a medical web app where you can track your pills and vitals at the same time with higher accuracy. 
+                                In addition to this, Pillshare has an in-built sharing feature where you can share your real-time data with anyone that you like around the world. 
+                                You will have the ability to select which data you want to share. 
+                                </p>
+                                <div style={{position: "relative",overflow: "hidden", width: "100%", paddingTop: "56.25%"}}>
+                                <iframe 
+                                    title="Medisafe"
+                                    className="responsive-iframe"
+                                    width="900" 
+                                    height="506" 
+                                    src="https://www.youtube.com/embed/mWqkBjfU3sE" 
+                                    frameBorder="0" 
+                                    allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                >
+                                </iframe>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button onClick={e=>alert("Let's start!")}>Let's get started!</Button>
+                            </Modal.Footer>
+                        </Modal> 
+                    </Row>
+
                     <Row className="mt-5">
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">

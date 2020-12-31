@@ -125,7 +125,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
             variant:"success",
             success:true,
         })
-        setTimeout(()=>{this.props.history.push("/dashboard")},5000);
+        setTimeout(()=>{this.props.history.push("/dashboard")},4000);
 
     }
     

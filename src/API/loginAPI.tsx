@@ -26,10 +26,10 @@ interface ResponseProps {
 
 export const postLoginAPI = async (username:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void) :Promise<void> =>{
     const axios = require('axios').default;
+   
     await axios({
         method: 'get',
         url: 'http://localhost:3001/users',
-        
       })
       .then(function (response:ServerResponse) {
 
@@ -45,7 +45,6 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
                     localStorage.setItem(LOGGED_IN_USER_ID,JSON.stringify(userObj.user_id));
                     localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:userObj.firstName,lastName:userObj.lastName}));
                     localStorage.setItem(USER_IMAGE,JSON.stringify(userObj.images));
-
                     const responseData = {
                         message : "Successfully logged-in",
                         token : USER_TOKEN,

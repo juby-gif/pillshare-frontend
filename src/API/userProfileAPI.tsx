@@ -46,7 +46,7 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
         //   For Debugging purpose only
-        //   console.log(response.data)
+          console.log(response.data)
       }
 
         )

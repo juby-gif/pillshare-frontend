@@ -129,7 +129,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
-                                                <Card.Subtitle className="mb-1 text-muted"><b>HEART RATE</b></Card.Subtitle>
+                                                <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>HEART RATE</b></Card.Subtitle>
                                                 <Card.Title className="mb-2">{heartRate?heartRate.reading:0} beats/min</Card.Title>
                                             </Col>
                                             <Col>
@@ -165,7 +165,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
-                                                <Card.Subtitle className="mb-1 text-muted"><b>BLOOD PRESSURE</b></Card.Subtitle>
+                                                <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>BLOOD PRESSURE</b></Card.Subtitle>
                                                 <Card.Title className="mb-2">{bloodPressure?bloodPressure.systole_reading:0} / {bloodPressure?bloodPressure.diastole_reading:0} mmHg</Card.Title>
                                             </Col>
                                             <Col>
@@ -201,7 +201,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
-                                                <Card.Subtitle className="mb-1 text-muted"><b>BODY TEMPERATURE</b></Card.Subtitle>
+                                                <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>BODY TEMPERATURE</b></Card.Subtitle>
                                                 <Card.Title className="mb-2">{bodyTemperature?bodyTemperature.reading:0}°C</Card.Title>
                                             </Col>
                                             <Col>
@@ -237,7 +237,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
-                                                    <Card.Subtitle className="mb-1 text-muted"><b>GLUCOSE</b></Card.Subtitle>
+                                                    <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>GLUCOSE</b></Card.Subtitle>
                                                     <Card.Title className="mb-2">{glucose?glucose.reading:0} mg/dL</Card.Title>
                                                 </Col>
                                                 <Col>
@@ -273,7 +273,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
-                                                    <Card.Subtitle className="mb-1 text-muted"><b>OXYGEN SATURATION</b></Card.Subtitle>
+                                                    <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>OXYGEN SATURATION</b></Card.Subtitle>
                                                     <Card.Title className="mb-2">{oxygenSaturation?oxygenSaturation.reading:0}%</Card.Title>
                                                 </Col>
                                                 <Col>
