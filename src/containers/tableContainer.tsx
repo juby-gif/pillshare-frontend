@@ -177,9 +177,10 @@ class TableContainer extends Component<IProps & RouteComponentProps,StateProps> 
       // For debugging purpose only
       // console.log(data);
       let tableData:DataProps[] = [];
+      let count:number = 0;
       for(let i=0; i< data.length;i++){
         if (data[i].isDeleted === false){
-          data[i].index = i+1;
+          data[i].index = ++count;
           tableData.push(data[i])
         }
       }
