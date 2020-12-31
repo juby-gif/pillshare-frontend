@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {RouteComponentProps,withRouter} from 'react-router-dom';
 
 import RemoteTableComponent from '../components/remoteTableComponent';
-import { getRemoteMedicalTableInfo, getRemoteMedicalTableInfoById, patchRemotePillData } from '../API/remoteTableDataAPI';
-import { LOGGED_IN_USER_ID, USER_MEDICAL_TABLE } from '../../constants';
+import { getRemoteMedicalTableInfo } from '../API/remoteTableDataAPI';
+import { REMOTE_PAYLOAD, USER_MEDICAL_TABLE } from '../../constants';
 
 
 interface IProps extends RouteComponentProps {
@@ -12,10 +12,6 @@ interface IProps extends RouteComponentProps {
 
 interface StateProps {
 data:DataProps[];
-debuggMode:boolean;
-isDeleted ?:boolean;
-deleteShow?:boolean;
-id?:number;
 }
 
 interface DataProps{
@@ -62,28 +58,8 @@ interface ServerData {
   id?:number;
 }
 
-interface PatchProps {
-  index?:number;
-  before_or_after ?: string;
-  dosage ?: string;
-  dose ?: string;
-  duration ?: string;
-  end_date ?: string;
-  start_date ?: string;
-  missed ?: string[];
-  measure ?: string;
-  name ?: string;
-  reason ?: string;
-  taken ?: string[];
-  intervals ?: IntervalProps;
-  isDeleted :boolean;
-  id?:number;
-}
-interface PatchRequestProps{
-  data:PatchProps[];
-  }
-interface DeleteProps{
-  isDeleted:boolean;
+interface ParamProps {
+  id?:string;
 }
 
 class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateProps> { 
@@ -91,18 +67,9 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
       super(props);
       this.state={
           data:[],
-          debuggMode:props.debuggMode,
-          isDeleted:undefined,
-          deleteShow:false,
-          id:0,
         }
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
         this.onFailureCallBack = this.onFailureCallBack.bind(this);
-        this.onEditClick = this.onEditClick.bind(this);
-        this.onDeleteClick =  this.onDeleteClick.bind(this);
-        this.onDeleteConfirmationClick = this.onDeleteConfirmationClick.bind(this);
-        this.onCancelClick = this.onCancelClick.bind(this);
-        this.onSuccessPatchRequestCallBack = this.onSuccessPatchRequestCallBack.bind(this);
       }
     /* *
         *  Utility
@@ -116,9 +83,12 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
+      const payload:ParamProps = JSON.parse(localStorage.getItem(REMOTE_PAYLOAD) || "");
+      const {Base64} = require('js-base64');
+      const remoteObjJSON:string = Base64.decode(payload.id);
+      const OBJ = JSON.parse(remoteObjJSON);
 
-      getRemoteMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+      getRemoteMedicalTableInfo(OBJ.user_id,onSuccessCallBack,onFailureCallBack)
     }
 
     /* *
@@ -126,60 +96,16 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
         *------------------------------------------------------------
     */
 
-    //To get table data that needs to be updated
-    onProcessAPICall(){
-      const { id } = this.state;
-      const { onSuccessPillTableByIdCallBack,onFailureCallBack } = this;
-      getRemoteMedicalTableInfoById(JSON.stringify(id),onSuccessPillTableByIdCallBack,onFailureCallBack);
-    }
-
-    // Updated the pill data using PATCH request
-    onPatchProcessAPICall(data:DeleteProps){
-      const { id } = this.state;
-      const { onSuccessPatchRequestCallBack,onFailureCallBack } = this;
-      patchRemotePillData(JSON.stringify(id),data,onSuccessPatchRequestCallBack,onFailureCallBack)
-    }
-    
-    /* *
-        *  Event handling functions
-        *------------------------------------------------------------
-    */
-    onEditClick = (event : React.SyntheticEvent,id:number) : void =>{
-      event.preventDefault();
-      this.props.history.push(`/edit/${id}`);
-    }
-
-    onDeleteClick = (event : React.SyntheticEvent,id:number) : void =>{
-      event.preventDefault();
-      this.setState({
-        deleteShow:true,
-        id:id,
-      })
-    }
-
-    onCancelClick = (event : React.SyntheticEvent):void => {
-      event.preventDefault();
-      this.setState({
-        deleteShow:false,
-      })
-    }
-    onDeleteConfirmationClick = (event : React.SyntheticEvent):void => {
-      event.preventDefault();
-      this.onProcessAPICall();
-      this.setState({
-        deleteShow:false,
-      })
-    }
-
     /************** Success Call Backs ***************/ 
 
     onSuccessCallBack = (data:DataProps[]): void => {
       // For debugging purpose only
-      // console.log(data);
+      console.log(data);
       let tableData:DataProps[] = [];
+      let count:number = 0;
       for(let i=0; i< data.length;i++){
         if (data[i].isDeleted === false){
-          data[i].index = i+1;
+          data[i].index = ++count;
           tableData.push(data[i])
         }
       }
@@ -188,23 +114,6 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
             data:tableData,
         })
       }
-  
-    onSuccessPillTableByIdCallBack = (response:DataProps) => {
-      const data:{isDeleted:boolean} = {
-        isDeleted:true,
-      }
-      this.onPatchProcessAPICall(data); 
-    }
-  
-    onSuccessPatchRequestCallBack = (response:PatchRequestProps) => {
-      // console.log(response)
-      const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      localStorage.removeItem(USER_MEDICAL_TABLE)
-
-      // Calling Table API with GET Request to reflect the changes and re-render
-      getRemoteMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
-    }
   
     /************** Success Call Backs ***************/ 
 
@@ -225,18 +134,10 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
     */
 
     render(){
-        const { data,debuggMode,isDeleted,deleteShow } = this.state;
-        const { onEditClick,onDeleteClick ,onCancelClick,onDeleteConfirmationClick} = this;
+        const { data } = this.state;
         return(
             <RemoteTableComponent 
                 data={data}
-                isDeleted={isDeleted}
-                deleteShow={deleteShow}
-                debuggMode={debuggMode}
-                onEditClick={onEditClick}
-                onDeleteClick={onDeleteClick}
-                onCancelClick={onCancelClick}
-                onDeleteConfirmationClick={onDeleteConfirmationClick}
             />
         );
     }

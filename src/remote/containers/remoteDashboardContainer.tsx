@@ -158,7 +158,7 @@ export default class RemoteDashboardContainer extends Component<IProps & RouteCo
     */
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      console.log(responseData);
+      // console.log(responseData);
 
       for(let datum of responseData.data){
         
