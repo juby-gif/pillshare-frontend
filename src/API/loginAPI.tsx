@@ -54,7 +54,7 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
                     return;
                 } else {
                     const responseData = {
-                        message : "Wrong Password",
+                        message : "The password you entered is incorrect",
                     }
                     onFailureCallBack(responseData);
                     return;

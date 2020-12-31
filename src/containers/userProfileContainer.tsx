@@ -18,27 +18,27 @@ imageList:ImageType[];
 }
 
 interface ServerData {
-  firstName: string,
-  middleName: string,
-  lastName: string,
-  username: string,
-  email: string,
-  weight: string;
-  height: string;
-  bodyMassIndexValue:string;
-  age:number,
-  gender:string,
-  dob:string,
-  address:string,
-  city:string,
-  province:string,
-  country:string,
-  zip:string,
-  phone:string,
-  BMI:string,
-  bloodGroup:string,
-  underlyingHealthIssues:string[],
-  otherHealthIssues:string[],
+  firstName?: string,
+  middleName?: string,
+  lastName?: string,
+  username?: string,
+  email?: string,
+  weight?: string;
+  height?: string;
+  bodyMassIndexValue?:string;
+  age?:number,
+  gender?:string,
+  dob?:string,
+  address?:string,
+  city?:string,
+  province?:string,
+  country?:string,
+  zip?:string,
+  phone?:string,
+  BMI?:string,
+  bloodGroup?:string,
+  underlyingHealthIssues?:string,
+  otherHealthIssues?:string,
   images:ImageType[];
 }
 
@@ -46,27 +46,27 @@ interface ServerResponse {
     data: ServerData[];
 }
 interface StateProps {
-    firstName: string,
-    middleName: string,
-    lastName: string,
-    username: string,
-    email: string,
-    weight: string;
-    height: string;
-    bodyMassIndexValue:string;
-    age:number,
-    gender:string,
-    dob:string,
-    address:string,
-    city:string,
-    province:string,
-    country:string,
-    zip:string,
-    phone:string,
-    bmi:string,
-    bloodGroup:string,
-    underlyingHealthIssues:string[],
-    otherHealthIssues:string[],
+    firstName?: string,
+    middleName?: string,
+    lastName?: string,
+    username?: string,
+    email?: string,
+    weight?: string;
+    height?: string;
+    bodyMassIndexValue?:string;
+    age?:number,
+    gender?:string,
+    dob?:string,
+    address?:string,
+    city?:string,
+    province?:string,
+    country?:string,
+    zip?:string,
+    phone?:string,
+    bmi?:string,
+    bloodGroup?:string,
+    underlyingHealthIssues?:string,
+    otherHealthIssues?:string,
     userUpdate: boolean;
     userShow:boolean;
     contactShow:boolean;
@@ -74,6 +74,10 @@ interface StateProps {
     medicalShow:boolean;
     images:ImageType[];
     debuggMode:boolean;
+    saveMode:boolean;
+    userInfoValidated:boolean;
+    contactValidated:boolean;
+    healthValidated:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -82,31 +86,32 @@ file?: File;
 }
 
 interface SaveDataProps {
-  firstName: string,
-  middleName: string,
-  lastName: string,
-  username: string,
-  email: string,
-  weight: string;
-  height: string;
-  age:number,
-  gender:string,
-  dob:string,
-  address:string,
-  city:string,
-  province:string,
-  country:string,
-  zip:string,
-  phone:string,
-  bodyMassIndexValue:string;
-  BMI:string,
-  bloodGroup:string,
-  underlyingHealthIssues:string[],
-  otherHealthIssues:string[],
+  firstName?: string,
+  middleName?: string,
+  lastName?: string,
+  username?: string,
+  email?: string,
+  weight?: string;
+  height?: string;
+  age?:number,
+  gender?:string,
+  dob?:string,
+  address?:string,
+  city?:string,
+  province?:string,
+  country?:string,
+  zip?:string,
+  phone?:string,
+  bodyMassIndexValue?:string;
+  BMI?:string,
+  bloodGroup?:string,
+  underlyingHealthIssues?:string,
+  otherHealthIssues?:string,
   images:ImageType[];
 }
 
 export default class UserProfileContainer extends Component<IProps,StateProps> {
+  reload=()=>window.location.reload();
     constructor(props:IProps){
         super(props);
         this.state = {
@@ -115,27 +120,31 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           healthShow: false,
           medicalShow: false,
           debuggMode:false,
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          username: "",
-          email: "",
-          weight: "",
-          height: "",
-          bodyMassIndexValue: "",
-          age:0,
-          gender:"",
-          dob:"",
-          address:"",
-          city:"",
-          province:"",
-          country:"",
-          zip:"",
-          phone:"",
-          bmi:"",
-          bloodGroup:"",
-          underlyingHealthIssues:[],
-          otherHealthIssues:[],
+          saveMode:false,
+          userInfoValidated:false,
+          contactValidated:false,
+          healthValidated:false,
+          firstName: undefined,
+          middleName: undefined,
+          lastName: undefined,
+          username: undefined,
+          email: undefined,
+          weight: undefined,
+          height: undefined,
+          bodyMassIndexValue: undefined,
+          age:undefined,
+          gender:undefined,
+          dob:undefined,
+          address:undefined,
+          city:undefined,
+          province:undefined,
+          country:undefined,
+          zip:undefined,
+          phone:undefined,
+          bmi:undefined,
+          bloodGroup:undefined,
+          underlyingHealthIssues:undefined,
+          otherHealthIssues:undefined,
           userUpdate: true,
           images: [],
 
@@ -166,6 +175,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         this.onContactInfoBackClick = this.onContactInfoBackClick.bind(this);
 
         // Health Information Update
+        this.onOtherHealthIssuesChange = this.onOtherHealthIssuesChange.bind(this);
+        this.onUnderlyingHealthIssueChange = this.onUnderlyingHealthIssueChange.bind(this);
+        this.onBloodGroupChange = this.onBloodGroupChange.bind(this);
         this.onHealthInfoClick = this.onHealthInfoClick.bind(this);
         this.onHealthInfoSaveClick = this.onHealthInfoSaveClick.bind(this);
         this.onHealthInfoBackClick = this.onHealthInfoBackClick.bind(this);
@@ -195,7 +207,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
       // console.log(responseData.data);
-      if(responseData.data.length > 0 || responseData.data !== null || responseData.data !== undefined){
+      if(responseData.data.length > 0 && responseData.data !== null && responseData.data !== undefined){
         localStorage.setItem(LOGGED_IN_USER,JSON.stringify(responseData.data));
         for (let datum of responseData.data){
           localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:datum.firstName,lastName:datum.lastName}));
@@ -234,6 +246,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
       // For debugging purpose only
       // console.log(responseData);
+      setTimeout(() => {this.setState({
+        saveMode:false,
+      })},4000)
     }
       
     onFailureCallBack = (error: ServerResponse): void => {
@@ -247,68 +262,140 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
-          firstName:event.currentTarget.value,
-      })
-  }
-    onMiddleNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
-            middleName:event.currentTarget.value,
+          firstName:event.currentTarget.value,
         })
+      } else {
+        this.setState({
+          firstName:undefined,
+        })
+      } 
+    }
+    onMiddleNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          middleName:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          middleName:undefined,
+        })
+      } 
     }
     onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
-            lastName:event.currentTarget.value,
+          lastName:event.currentTarget.value,
         })
+      } else {
+        this.setState({
+          lastName:undefined,
+        })
+      } 
     }
     onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
-            username:event.currentTarget.value,
+          username:event.currentTarget.value,
         })
+      } else {
+        this.setState({
+          username:undefined,
+        })
+      } 
     }
     onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
-            email:event.currentTarget.value,
+          email:event.currentTarget.value,
         })
+      } else {
+        this.setState({
+          email:undefined,
+        })
+      } 
     }
     onDOBChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
-            dob:event.currentTarget.value,
+          dob:event.currentTarget.value,
         })
+      } else {
+        this.setState({
+          dob:undefined,
+        })
+      } 
     }
     onAgeChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+      if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined ) {
         this.setState({
-            age:parseInt(event.currentTarget.value),
+          age:event.currentTarget.valueAsNumber,
         })
+      } else {
+        this.setState({
+          age:undefined,
+        })
+      } 
     }
     onMaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        gender:event.currentTarget.value,
-      })
-    } 
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          gender:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          gender:undefined,
+        })
+      } 
+    }
     onFemaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        gender:event.currentTarget.value,
-      })
-    } 
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          gender:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          gender:undefined,
+        })
+      } 
+    }
+
+    lengthChecker = (data:any) => {
+      let count:number = 0;
+      for (let datum in data){
+        if (data.hasOwnProperty(datum)) count++;
+      }
+      if(count !== 0) { return count; }
+      else {return 0};
+    }
     onUserInfoSaveClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
         const { username,firstName,lastName,middleName,email,age,dob,gender} = this.state;
-        localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify({
+        
+        const userInfoData:any = {
           username:username,
           firstName:firstName,
           lastName:lastName,
-          middleName:middleName,
+          middleName:middleName?middleName:"",
           email:email,
           age:age,
           dob:dob,
           gender:gender,
-        }))
-        console.log(username,firstName,lastName,middleName,email,age,dob)
+        }
+        if(username !== undefined && firstName !== undefined && lastName !== undefined && email !== undefined && age !== undefined && dob !== undefined && gender !== undefined){
+          localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify(userInfoData));
+          console.log(username,firstName,lastName,middleName,email,age,gender,dob)
+          this.setState({
+              userShow:false,
+              userInfoValidated:false,
+          })
+        } else{
         this.setState({
-            userShow:false,
+          userInfoValidated:true,
         })
     }
+  }
     onUserInfoBackClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
         this.setState({
@@ -332,39 +419,75 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onAddressChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           address:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          address:undefined,
+        })
+      } 
     }
     onCityChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           city:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          city:undefined,
+        })
+      } 
     }
     onProvinceChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           province:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          province:undefined,
+        })
+      } 
     }
     onCountryChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           country:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          country:undefined,
+        })
+      } 
     }
     onZipChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           zip:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          zip:undefined,
+        })
+      } 
     }
     onPhoneChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      this.setState({
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
           phone:event.currentTarget.value,
-      })
+        })
+      } else {
+        this.setState({
+          phone:undefined,
+        })
+      } 
     }
     onContactInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
       const { address,city,province,country,zip,phone } = this.state;
-      console.log(address,city,province,country,zip,phone )
+      if(address !== undefined && city !== undefined && province !== undefined && country !== undefined && zip !== undefined && phone !== undefined){
       localStorage.setItem(USER_CONTACT_INFORMATION_DATA,JSON.stringify({
         address:address,
         city:city,
@@ -375,7 +498,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       }))
       this.setState({
         contactShow:false,
+        contactValidated:false,
       })
+    } else {
+      this.setState({
+        contactValidated:true,
+      })
+    }
     }
     onContactInfoBackClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
@@ -393,40 +522,89 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onWeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        weight:event.currentTarget.value,
-      })
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          weight:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          weight:undefined,
+        })
+      } 
     }
-
     onHeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      this.setState({
-        height:event.currentTarget.value,
-      })
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          height:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          height:undefined,
+        })
+      } 
     }
     onBodyMassIndexCalculation = (event:React.SyntheticEvent):void => {
       const { weight,height } = this.state;
-      if(parseInt(height)!==0||isNaN(parseInt(height))!){
-        const bodyMassIndexValue = ((parseInt(weight) / parseInt(height) / parseInt(height)) * 10000).toFixed(2);
+      if(parseInt(height?height:"0")!==0||isNaN(parseInt(height?height:"0"))!){
+        const bodyMassIndexValue = ((parseInt(weight?weight:"0") / parseInt(height?height:"0") / parseInt(height?height:"0")) * 10000).toFixed(2);
         this.setState({
           bodyMassIndexValue:bodyMassIndexValue
         })
       }
     }
+
+    onBloodGroupChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          bloodGroup:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          bloodGroup:undefined,
+        })
+      } 
+    }
+
+    onUnderlyingHealthIssueChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          underlyingHealthIssues:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          underlyingHealthIssues:undefined
+        })
+      } 
+    }
+
+    onOtherHealthIssuesChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+        this.setState({
+          otherHealthIssues:event.currentTarget.value,
+        })
+      } else {
+        this.setState({
+          otherHealthIssues:undefined,
+        })
+      } 
+    }
+              // onOtherHealthIssuesChange,
     onHealthInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
       const { weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue } = this.state;
       let bmi_value = "";
-      if( parseInt(bodyMassIndexValue)<18.5){
+      if( parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<18.5){
         bmi_value = "Underweight";
 
-      }else if ( parseInt(bodyMassIndexValue)>=18.5 && parseInt(bodyMassIndexValue)<=24.9 ){
+      }else if ( parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=18.5 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=24.9 ){
         bmi_value = "Normal";
-      }else if( parseInt(bodyMassIndexValue)>=25.0 && parseInt(bodyMassIndexValue)<=29.9 ){
+      }else if( parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=25.0 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=29.9 ){
         bmi_value = "Overweight";
-      }else if( parseInt(bodyMassIndexValue)>=30.0 ){
+      }else if( parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=30.0 ){
         bmi_value = "Obesity";
       }
-      console.log(weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue)
+
+      if (weight !== undefined && height !== undefined && bmi !== undefined && bloodGroup !== undefined && underlyingHealthIssues !== undefined && otherHealthIssues !== undefined && bodyMassIndexValue !== undefined){
       localStorage.setItem(USER_HEALTH_INFORMATION_DATA,JSON.stringify({
         weight:weight,
         height:height,
@@ -439,8 +617,15 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       this.setState({
         healthShow:false,
         bmi:bmi_value,
+        healthValidated:false,
+      })
+    } else {
+      this.setState({
+        healthValidated:true,
       })
     }
+  }
+
     onHealthInfoBackClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
       this.setState({
@@ -457,12 +642,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onMedicalInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      const { username,firstName,lastName,middleName,email,age,dob } = this.state;
-      console.log(username,firstName,lastName,middleName,email,age,dob)
-
-      // For reloading the page to reflect the lastes changes
-      const reload=()=>window.location.reload();
-      reload();
+      // For reloading the page to reflect the lastest changes
+      this.reload();
 
       this.setState({
         medicalShow:false,
@@ -508,12 +689,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         otherHealthIssues:userHealthInformation.otherHealthIssues,
         images:images,
       }
-
+      setTimeout(() => {this.setState({
+        saveMode:true,
+      })},1200);
       updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
       localStorage.removeItem(USER_INFORMATION_DATA);
       localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
       localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);
-
+      setTimeout(() => {this.reload()},5000);
     } 
     
   render () {
@@ -548,9 +731,12 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               onContactInfoBackClick,
 
               // Health Information Update
+              onUnderlyingHealthIssueChange,
+              onOtherHealthIssuesChange,
               onHealthInfoClick,
               onHealthInfoSaveClick,
               onHealthInfoBackClick,
+              onBloodGroupChange,
 
               // Medical Information Update
               onMedicalInfoClick,
@@ -583,12 +769,16 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               underlyingHealthIssues,
               otherHealthIssues,
               userShow,
+              saveMode,
               contactShow,
               healthShow,
               medicalShow,
               bodyMassIndexValue,
               images,
               debuggMode,
+              userInfoValidated,
+              contactValidated,
+              healthValidated,
              } = this.state;
         return(
             <UserProfileComponent 
@@ -596,6 +786,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             contactShow = {contactShow}
             healthShow = {healthShow}
             medicalShow = {medicalShow}
+            saveMode = {saveMode}
+            userInfoValidated = {userInfoValidated}
+            contactValidated = {contactValidated}
+            healthValidated = {healthValidated}
             
             onWeightChange = {onWeightChange}
             onHeightChange = {onHeightChange}
@@ -653,6 +847,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             onHealthInfoClick={onHealthInfoClick}
             onHealthInfoSaveClick = {onHealthInfoSaveClick}
             onHealthInfoBackClick = {onHealthInfoBackClick}
+            onOtherHealthIssuesChange = {onOtherHealthIssuesChange}
+            onUnderlyingHealthIssueChange = {onUnderlyingHealthIssueChange}
+            onBloodGroupChange = {onBloodGroupChange}
 
             // Medical Information Update
             debuggMode={debuggMode} 

@@ -1,27 +1,27 @@
 import { LOGGED_IN_USER } from "../constants";
 
 interface Props{
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    weight: string;
-    height: string;
-    age:number;
-    gender:string;
-    dob:string;
-    address:string;
-    city:string;
-    province:string;
-    country:string;
-    zip:string;
-    phone:string;
-    bodyMassIndexValue:string;
-    BMI:string;
-    bloodGroup:string;
-    underlyingHealthIssues:string[];
-    otherHealthIssues:string[];
+    firstName?: string;
+    middleName?: string;
+    lastName?: string;
+    username?: string;
+    email?: string;
+    weight?: string;
+    height?: string;
+    age?:number;
+    gender?:string;
+    dob?:string;
+    address?:string;
+    city?:string;
+    province?:string;
+    country?:string;
+    zip?:string;
+    phone?:string;
+    bodyMassIndexValue?:string;
+    BMI?:string;
+    bloodGroup?:string;
+    underlyingHealthIssues?:string;
+    otherHealthIssues?:string;
     images:ImageType[];
     id?:number
 }

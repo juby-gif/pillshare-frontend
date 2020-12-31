@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faSignOutAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 
-import pro from '../img/pro-pic.jpg';
+import pro from '../img/pro_pic.jpeg';
 import { LOGGED_IN_USER_NAME, USER_IMAGE } from '../constants';
 
 
