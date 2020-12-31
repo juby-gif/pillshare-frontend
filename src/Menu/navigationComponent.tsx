@@ -47,7 +47,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                 to="/"
                 style={{textShadow: "0 0 10px rgba(0,0,0,1.5)",fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold"}}
                 >
-                    Pillshare
+                    <span style={{fontSize:"80%"}}>Pillshare</span>
                 </Link>
                 <Nav style={{float:"right"}} className="align-items-center d-md-flex" navbar>
                     <UncontrolledDropdown nav>
@@ -57,17 +57,25 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                                     {(userImage.length !== 0)?(userImage.map((image,index) => (
                                     <div key={index}>
                                         <img
+                                        // style={{height:"44px",width:"44px"}}
+                                        height="100%"
+                                        width="100%"
+                                        className="circle"
                                         alt="..."
                                         src={image.dataURL}
                                         />
                                     </div>
                                     ))):(<img
-                                        alt="default_image"
+                                        // style={{height:"28px",width:"28px"}}
+                                         height="100%"
+                                         width="100%"
+                                        className="circle"
+                                        alt="pillshare-default_image"
                                         src={pro}
                                     />)}
                                 </span>
                                 <Media className="ml-2 d-lg-block">
-                                    <span style={{fontFamily: '"Raleway", "Helvetica Neue", Arial, sans-serif',fontWeight:"bold",color:"#fff"}} className="mb-0 text-sm font-weight-bold">
+                                    <span style={{color:"#fff",fontSize:"100%"}} className="mb-0 text-sm font-weight-bold">
                                     {username?(username.firstName+ "  " + username.lastName):""}
                                     </span>
                                 </Media>

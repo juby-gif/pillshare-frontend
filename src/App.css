@@ -51,6 +51,12 @@
   margin: 0 auto;
 }
 
+.circle {
+  border-radius: 50%; 
+  object-fit: fill;
+  background-color: #036599;
+}
+
 .responsive-iframe {
   position: absolute;
   top: 0;
