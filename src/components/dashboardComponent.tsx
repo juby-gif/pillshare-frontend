@@ -268,7 +268,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
-                                                    <Card.Subtitle className="mb-1 text-muted"><b>OXYGEN SATURATION</b></Card.Subtitle>
+                                                    <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>OXYGEN SATURATION</b></Card.Subtitle>
                                                     <Card.Title className="mb-2">{oxygenSaturation?oxygenSaturation.reading:0}%</Card.Title>
                                                 </Col>
                                                 <Col>
