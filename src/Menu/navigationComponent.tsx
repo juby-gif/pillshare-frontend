@@ -1,4 +1,5 @@
 import React from 'react';
+import {RouteComponentProps,withRouter} from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import {
     DropdownMenu,
@@ -33,11 +34,17 @@ interface UserNameProps{
     lastName:string;
 }
 
-const NavigationComponent = (props: IProps) : JSX.Element => {   
+const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element => {   
     const userImage:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
     const username:UserNameProps = JSON.parse(localStorage.getItem(LOGGED_IN_USER_NAME)|| '{}');
-    // console.log(userImage)
-    
+
+    const onLogoutClick = () => {
+        setTimeout(()=>{
+            localStorage.clear();
+            props.history.push("/login")
+        },1500);
+      };
+
     return(
         <Navbar expand="md" id="navigation" >
             <Container fluid>
@@ -104,7 +111,7 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
                                 <span>Help</span></a>
                             </DropdownItem>
                             <DropdownItem divider />
-                            <DropdownItem to="/login" tag={Link} onClick={e => e.preventDefault()}>
+                            <DropdownItem onClick={onLogoutClick}>
                                 <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
                                 <span>Logout</span>
                             </DropdownItem>
@@ -115,4 +122,4 @@ const NavigationComponent = (props: IProps) : JSX.Element => {
         </Navbar>
     )
 }
-export default NavigationComponent;
+export default withRouter(NavigationComponent);

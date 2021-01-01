@@ -1,4 +1,5 @@
 import React from 'react';
+import {RouteComponentProps,withRouter} from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThLarge,faUser,faStethoscope,faHistory,faShareAlt,faSignOutAlt,faRuler,faQuestion } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +12,14 @@ import logo from '../img/logo.png';
 interface IProps{
 
 }
-const SidebarComponent = (props: IProps) : JSX.Element => {
+const SidebarComponent = (props: IProps & RouteComponentProps) : JSX.Element => {
+
+    const onLogoutClick = () => {
+        setTimeout(()=>{
+            localStorage.clear();
+            props.history.push("/login")
+        },1500);
+      };
 
     return(
         <Menu width={ '280px' } >
@@ -23,8 +31,8 @@ const SidebarComponent = (props: IProps) : JSX.Element => {
             <Link id="medication-history" className="menu ml-1 p-2" to="/medication-logs"><FontAwesomeIcon icon={faHistory} />&nbsp;&nbsp;Medication Logs</Link>
             <Link id="share" className="menu ml-1 p-2" to="/share"><FontAwesomeIcon icon={faShareAlt} />&nbsp;&nbsp;Share</Link>
             <a id="help" className="menu ml-1 p-2" href="mailto:juby.varughese@llinstitute.com"><FontAwesomeIcon icon={faQuestion} />&nbsp;&nbsp;Need Help</a>
-            <Link id="logout" className="menu ml-1 p-2" to="/"><FontAwesomeIcon icon={faSignOutAlt} />&nbsp;&nbsp;Logout</Link>
+            <Link id="logout" className="menu ml-1 p-2" to="#" onClick={onLogoutClick}><FontAwesomeIcon icon={faSignOutAlt} />&nbsp;&nbsp;Logout</Link>
         </Menu>
     )
 }
-export default SidebarComponent;
+export default withRouter(SidebarComponent);

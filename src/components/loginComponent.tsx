@@ -51,9 +51,9 @@ return (
 
                 {/* Alert for showing error and success messages */}
 
-                <Row className="mb-2 d-flex justify-content-center">
+                <Row className="mb-2 m-1 d-flex justify-content-center">
                     {error && (<Alert variant={variant}>
-                    <FontAwesomeIcon style={{fontSize:"1.8rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} />{message}
+                    <FontAwesomeIcon style={{fontSize:"1.4rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} />{message}
                     </Alert>)}
 
                     {success && (<Alert variant={variant}>

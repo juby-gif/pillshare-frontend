@@ -129,9 +129,7 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      console.log(user_id)
-
+      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
     /*  *
         *  API callback functions
         *------------------------------------------------------------
