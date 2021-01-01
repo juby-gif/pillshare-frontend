@@ -100,7 +100,7 @@ class RemoteTableContainer extends Component<IProps & RouteComponentProps,StateP
 
     onSuccessCallBack = (data:DataProps[]): void => {
       // For debugging purpose only
-      console.log(data);
+      // console.log(data);
       let tableData:DataProps[] = [];
       let count:number = 0;
       for(let i=0; i< data.length;i++){

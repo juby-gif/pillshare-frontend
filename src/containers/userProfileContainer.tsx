@@ -10,6 +10,7 @@ import {
         USER_CONTACT_INFORMATION_DATA, 
         USER_HEALTH_INFORMATION_DATA,
         USER_IMAGE,
+        FIRST_USER,
        } from '../constants';
 
 
@@ -74,10 +75,12 @@ interface StateProps {
     medicalShow:boolean;
     images:ImageType[];
     debuggMode:boolean;
+    modalfirstShow:boolean;
     saveMode:boolean;
     userInfoValidated:boolean;
     contactValidated:boolean;
     healthValidated:boolean;
+    firstUser?:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -120,6 +123,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           healthShow: false,
           medicalShow: false,
           debuggMode:false,
+          modalfirstShow:false,
           saveMode:false,
           userInfoValidated:false,
           contactValidated:false,
@@ -147,6 +151,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           otherHealthIssues:undefined,
           userUpdate: true,
           images: [],
+          firstUser:JSON.parse(localStorage.getItem(FIRST_USER)||"false"),
 
         }
         this.onWeightChange = this.onWeightChange.bind(this);
@@ -189,6 +194,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
         // Preparing data for API call
         this.onSaveClick = this.onSaveClick.bind(this);
+        this.onGetStartedClick = this.onGetStartedClick.bind(this);
     }
 
 
@@ -201,6 +207,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         *------------------------------------------------------------
     */
       getUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack);
+      this.setState({
+        modalfirstShow:true,
+      })
     }
 
 
@@ -361,14 +370,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
 
-    lengthChecker = (data:any) => {
-      let count:number = 0;
-      for (let datum in data){
-        if (data.hasOwnProperty(datum)) count++;
-      }
-      if(count !== 0) { return count; }
-      else {return 0};
-    }
     onUserInfoSaveClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
         const { username,firstName,lastName,middleName,email,age,dob,gender} = this.state;
@@ -588,10 +589,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         })
       } 
     }
-              // onOtherHealthIssuesChange,
     onHealthInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      const { weight,height,bmi,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue } = this.state;
+      const { weight,height,bloodGroup,underlyingHealthIssues,otherHealthIssues,bodyMassIndexValue } = this.state;
       let bmi_value = "";
       if( parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<18.5){
         bmi_value = "Underweight";
@@ -604,11 +604,11 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         bmi_value = "Obesity";
       }
 
-      if (weight !== undefined && height !== undefined && bmi !== undefined && bloodGroup !== undefined && underlyingHealthIssues !== undefined && otherHealthIssues !== undefined && bodyMassIndexValue !== undefined){
+      if (weight !== undefined && height !== undefined && bmi_value !== undefined && bloodGroup !== undefined && underlyingHealthIssues !== undefined && otherHealthIssues !== undefined && bodyMassIndexValue !== undefined){
       localStorage.setItem(USER_HEALTH_INFORMATION_DATA,JSON.stringify({
         weight:weight,
         height:height,
-        bmi:bmi,
+        bmi:bmi_value,
         bloodGroup:bloodGroup,
         underlyingHealthIssues:underlyingHealthIssues,
         otherHealthIssues:otherHealthIssues,
@@ -642,7 +642,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
     onMedicalInfoSaveClick = (event : React.SyntheticEvent) : void => {
       event.preventDefault();
-      // For reloading the page to reflect the lastest changes
+      // For reloading the page to reflect the latest changes
       this.reload();
 
       this.setState({
@@ -655,6 +655,12 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       this.setState({
         medicalShow:false,
         debuggMode:false,
+      })
+    }
+
+    onGetStartedClick = (event : React.SyntheticEvent) : void =>{
+      this.setState({
+        modalfirstShow:false,
       })
     }
     onSaveClick = (event : React.SyntheticEvent) : void =>{
@@ -691,8 +697,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       }
       setTimeout(() => {this.setState({
         saveMode:true,
+        firstUser:false,
       })},1200);
       updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
+      localStorage.setItem(FIRST_USER,"false");
       localStorage.removeItem(USER_INFORMATION_DATA);
       localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
       localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);
@@ -745,6 +753,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
               // Save 
               onSaveClick,
+              onGetStartedClick,
 
 
             } = this;
@@ -773,20 +782,24 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               contactShow,
               healthShow,
               medicalShow,
+              modalfirstShow,
               bodyMassIndexValue,
               images,
               debuggMode,
               userInfoValidated,
               contactValidated,
               healthValidated,
+              firstUser
              } = this.state;
         return(
             <UserProfileComponent 
             userShow = {userShow}
+            modalfirstShow = {modalfirstShow}
             contactShow = {contactShow}
             healthShow = {healthShow}
             medicalShow = {medicalShow}
             saveMode = {saveMode}
+            firstUser = {firstUser}
             userInfoValidated = {userInfoValidated}
             contactValidated = {contactValidated}
             healthValidated = {healthValidated}
@@ -859,6 +872,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
             //Save function
             onSaveClick = {onSaveClick}
+            onGetStartedClick = {onGetStartedClick}
             />
         );
     }

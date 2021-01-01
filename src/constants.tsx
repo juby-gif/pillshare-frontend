@@ -29,6 +29,7 @@ export const PILL_REASON = "pill-reason";
 export const ATTITUDE_CHECK = "attitude-check";
 export const FEEL_CHECK = "feel-check";
 export const SYMPTOMS_CHECK = "symptoms-check";
+export const FIRST_USER = "e1VTRVI6VFJVRX0=";
 
 export const SYMPTOMS_DROPDOWN_LIST = [{
     id:1,

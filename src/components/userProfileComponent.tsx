@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row,Col,Card,Container,Form, Button, Modal, Alert, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt,faCamera,faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt,faCamera,faCheck,faStarOfLife } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import ImageUploading  from "react-images-uploading";
 
@@ -59,9 +59,11 @@ interface IProps {
 
     //Save
     onSaveClick : (event : React.SyntheticEvent) => void;
+    onGetStartedClick : (event : React.SyntheticEvent) => void;
 
     userShow: boolean;
     saveMode: boolean;
+    modalfirstShow: boolean;
     contactShow: boolean;
     healthShow: boolean;
     medicalShow: boolean;
@@ -91,6 +93,7 @@ interface IProps {
     userInfoValidated:boolean;
     contactValidated:boolean;
     healthValidated:boolean;
+    firstUser?:boolean;
 }
 
 interface ImageType{
@@ -123,6 +126,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             contactShow,
             healthShow,
             medicalShow,
+            modalfirstShow,
+            firstUser,
             bodyMassIndexValue,
             images,
             debuggMode,
@@ -176,6 +181,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
             //Save function
             onSaveClick,
+            onGetStartedClick,
         } =  props;
     return(
         <React.Fragment>
@@ -212,23 +218,22 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                     }} fluid
                     >
                         <Row> 
-
                             <Col lg="12" md="12">
                                 <h1 className="display-2 text-white">Hello {firstName}!</h1>
-                                <p className="text-white mt-0 mb-5">
+                                {firstUser && (<p className="text-white mt-0 mb-5">
                                 <h4>Welcome to the Pillshare Daily Medication Tracker app.</h4>
                                 Please fill out this profile and then the app will unlock the other features for you.
-                                </p>
+                                </p>)}
                             </Col>
                         </Row>
                 </Container>
 
                 {/* Body container */}
                 <Container style={{paddingTop:"25rem"}} className="mt-5" fluid>
-                    <Row>
+                    {(firstUser && modalfirstShow)&&(<Row>
                         <Modal
                             backdrop="static" keyboard={false} 
-                            show={false}
+                            show={modalfirstShow}
                             size="lg"
                             aria-labelledby="contained-modal-title-vcenter"
                             centered
@@ -271,10 +276,10 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 </div>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button onClick={e=>alert("Let's start!")}>Let's get started!</Button>
+                                <Button onClick={onGetStartedClick}>Let's get started!</Button>
                             </Modal.Footer>
                         </Modal> 
-                    </Row>
+                    </Row>)}
 
                     <Row className="mt-5">
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
@@ -340,10 +345,10 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             {firstName} {lastName}
                                             <span className="font-weight-light">, {age}</span>
                                         </h3>
-                                        <div className="h5 font-weight-300">
+                                        {(city && province && country)&&(<div className="h5 font-weight-300">
                                             <FontAwesomeIcon className="ni mr-2" icon={faMapMarkerAlt} />
                                             {city}, {province}, {country}
-                                        </div>
+                                        </div>)}
                                     </div>
                                 </Card.Body>
                             </Card>
@@ -363,7 +368,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             <Row className="align-items-center">
                                                 <Col xs="8">
                                                     <h6 className="heading-small text-muted mb-4">
-                                                        User information
+                                                        User information&nbsp;
+                                                        {firstUser && (<span style={{ fontSize:"0.9rem", color:"rgba(255,0,0,0.7)",fontWeight:"bold"}}>( 
+                                                            <span style={{fontSize:"0.6rem",width: "0.5em",height: "0.5em", fill: "red",verticalAlign: "top"}}>
+                                                                <FontAwesomeIcon icon={faStarOfLife} />
+                                                            </span> Required )
+                                                        </span>)}
                                                     </h6>
                                                 </Col>
                                                 <Col className="text-right" xs="4">
@@ -627,7 +637,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             <Row className="align-items-center">
                                                 <Col xs="8">
                                                     <h6 className="heading-small text-muted mb-4">
-                                                        Contact information
+                                                        Contact information&nbsp;
+                                                        {firstUser && (<span style={{ fontSize:"0.9rem", color:"rgba(255,0,0,0.7)",fontWeight:"bold"}}>( 
+                                                            <span style={{fontSize:"0.6rem",width: "0.5em",height: "0.5em", fill: "red",verticalAlign: "top"}}>
+                                                                <FontAwesomeIcon icon={faStarOfLife} />
+                                                            </span> Required )
+                                                        </span>)}
                                                     </h6>
                                                 </Col>
                                                 <Col className="text-right" xs="4">
@@ -810,7 +825,12 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                             <Row className="align-items-center">
                                                 <Col xs="8">
                                                     <h6 className="heading-small text-muted mb-4">
-                                                        Health information
+                                                        Health information&nbsp;
+                                                        {firstUser && (<span style={{ fontSize:"0.9rem", color:"rgba(255,0,0,0.7)",fontWeight:"bold"}}>( 
+                                                            <span style={{fontSize:"0.6rem",width: "0.5em",height: "0.5em", fill: "red",verticalAlign: "top"}}>
+                                                                <FontAwesomeIcon icon={faStarOfLife} />
+                                                            </span> Required )
+                                                        </span>)}
                                                     </h6>
                                                 </Col>
                                                 <Col className="text-right" xs="4">

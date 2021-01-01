@@ -35,7 +35,7 @@ const RemoteTableComponent = (props:IProps):JSX.Element => {
   const {
         data,
        } = props;
-  console.log(data)
+  // console.log(data)
     return (
       <React.Fragment>
         <Table className="table-responsive mt-3" style={{backgroundColor:"#fff",overflowX: "scroll",whiteSpace: "nowrap",wordBreak: "break-word", tableLayout: "fixed"}} size="sm"  responsive="lg" bordered hover={false}>

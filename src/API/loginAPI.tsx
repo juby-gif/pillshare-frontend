@@ -22,10 +22,19 @@ interface ServerData {
 interface ResponseProps {
   message : string;
   token ?: string;
+  length ?:number;
 }
 
 export const postLoginAPI = async (username:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void) :Promise<void> =>{
     const axios = require('axios').default;
+    const lengthChecker = (data:any) => {
+      let count:number = 0;
+      for (let datum in data){
+        if (data.hasOwnProperty(datum)) count++;
+      }
+      if(count !== 0) { return count; }
+      else {return 0};
+    }
    
     await axios({
         method: 'get',
@@ -38,7 +47,7 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
         
         let userArray: ServerData[] = response.data;
         if (userArray !== null || userArray !== undefined || userArray !== []){
-    
+    console.log(userArray)
         for (let userObj of userArray){
             if(userObj.username === username){
                 if(userObj.password === password){
@@ -46,8 +55,9 @@ export const postLoginAPI = async (username:string, password:string, onSuccessCa
                     localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:userObj.firstName,lastName:userObj.lastName}));
                     localStorage.setItem(USER_IMAGE,JSON.stringify(userObj.images));
                     const responseData = {
-                        message : "Successfully logged-in",
+                        message : "Success! You're Logging in",
                         token : USER_TOKEN,
+                        length : lengthChecker(userObj),
                     }
                     onSuccessCallBack(responseData);
                     return;

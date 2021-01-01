@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { RouteComponentProps  } from 'react-router';
 
 import LoginComponent from '../components/loginComponent';
-import { PILLSHARE_USER_TOKEN } from '../constants';
+// import { PILLSHARE_USER_TOKEN } from '../constants';
 import { postLoginAPI } from '../API/loginAPI';
 import '../App.css';
+import { FIRST_USER } from '../constants';
 
 
 interface IProps {
@@ -22,6 +23,7 @@ success ?: boolean;
 }
 
 interface ResponseProps {
+    length?:number;
     message : string;
     token ?: string;
 }
@@ -119,14 +121,28 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     onSuccessCallBack = (responseData: ResponseProps): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
-        localStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token || '{}')
-        this.setState({
-            message:"Success! You're Logging in",
-            variant:"success",
-            success:true,
-        })
-        setTimeout(()=>{this.props.history.push("/dashboard")},4000);
 
+
+        //For Phase 2
+        // localStorage.setItem(PILLSHARE_USER_TOKEN,responseData.token || '{}')
+
+
+        if((responseData.length?responseData.length:0) >= 18){
+            this.setState({
+                message:responseData.message,
+                variant:"success",
+                success:true,
+            })
+            setTimeout(()=>{this.props.history.push("/dashboard")},4000);
+        }else {
+            localStorage.setItem(FIRST_USER,"true");
+            this.setState({
+                message:responseData.message,
+                variant:"success",
+                success:true,
+            })
+            setTimeout(()=>{this.props.history.push("/user-profile")},4000);
+        }
     }
     
     onFailureCallBack = (responseData: ResponseProps): void => {
