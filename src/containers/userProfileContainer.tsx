@@ -386,7 +386,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         }
         if(username !== undefined && firstName !== undefined && lastName !== undefined && email !== undefined && age !== undefined && dob !== undefined && gender !== undefined){
           localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify(userInfoData));
-          console.log(username,firstName,lastName,middleName,email,age,gender,dob)
           this.setState({
               userShow:false,
               userInfoValidated:false,
@@ -404,7 +403,6 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         })
     }
     onImageChange = (imageList?: ImageType[]) => {
-        console.log(imageList);
         localStorage.setItem(USER_IMAGE,JSON.stringify(imageList));
           this.setState({
             images:imageList as ImageType[],

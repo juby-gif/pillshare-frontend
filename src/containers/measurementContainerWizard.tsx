@@ -233,7 +233,7 @@ const lengthChecker = (data:ServerData|undefined) => {
     */
 
   const onSuccessCallBack = (responseData : ServerResponse) => {
-    console.log(responseData)
+    // console.log(responseData)
   }
   const onFailureCallBack = (responseData:ServerResponse) => {
     console.log(responseData)

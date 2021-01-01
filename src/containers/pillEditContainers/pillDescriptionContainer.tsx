@@ -147,7 +147,6 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
     
     onUpdate = ():void => {
       const { name,dose,dosage,measure,beforeOrAfter } = this.state;
-      console.log(name,dose,dosage,measure,beforeOrAfter)
       localStorage.setItem(PILL_DESCRIPTION,JSON.stringify({
         name:name,
         dose:dose,

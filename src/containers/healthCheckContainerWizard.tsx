@@ -173,7 +173,6 @@ function getSteps() {
     */
     const onHealthCheckAPICall = async (data:ServerData) :Promise<void> =>{
     postHealthCheckData(data,onSuccessCallBack,onFailureCallBack)
-console.log(data);
   }
 
     /* *

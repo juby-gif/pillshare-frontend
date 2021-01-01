@@ -26,9 +26,9 @@ interface DescriptionProps {
 }
 
 interface DurationProps {
-  numberOfDays ?: string;
-  startDate ?: string;
-  endDate ?: string;
+  duration ?: string;
+  start_date ?: string;
+  end_date ?: string;
   morning ?: string;
   afternoon ?: string;
   evening ?: string;
@@ -280,9 +280,9 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
       isDeleted: false,
       dosage:pillDescription?.dosage,
       before_or_after:pillDescription?.beforeOrAfter,
-      duration:pillDuration?.numberOfDays,
-      start_date:pillDuration?.startDate,
-      end_date:pillDuration?.endDate,
+      duration:pillDuration?.duration,
+      start_date:pillDuration?.start_date,
+      end_date:pillDuration?.end_date,
       intervals:{
         part:part,
         time:time,
@@ -301,7 +301,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
   }
 
   const onSuccessGetRequestCallBack = (responseData : DataProps):void =>{
-    console.log(responseData);
+    // console.log(responseData);
   }
   const onFailureCallBack = (responseData:ServerResponseProps) => {
     console.log(responseData)

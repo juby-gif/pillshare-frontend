@@ -67,7 +67,6 @@ export default class PillEditReviewContainer extends Component<IProps,StateProps
       }
       render() {
         const { descriptionData,durationData,reasonData } = this.state;
-        console.log(descriptionData,durationData,reasonData)
         return (
           <PillEditReviewComponent 
               descriptionData={descriptionData}

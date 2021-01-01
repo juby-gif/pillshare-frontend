@@ -248,7 +248,7 @@ const lengthChecker = (data:DescriptionProps | DurationProps | ReasonProps | nul
   */
 
   const onSuccessCallBack = (responseData : ServerResponseProps) => {
-    console.log(responseData)
+    // console.log(responseData)
   }
   const onFailureCallBack = (responseData:ServerResponseProps) => {
     console.log(responseData)

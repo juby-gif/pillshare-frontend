@@ -689,27 +689,30 @@
     {
       "user_id": "1fc257ec-5449-4491-a3fe-d961ed685270",
       "name": "Ranitidine",
-      "dose": "1.5",
-      "measure": "Tablet(s)",
+      "dose": "0.5",
+      "measure": "Pound(s)",
       "isDeleted": false,
-      "dosage": "SID - Once daily",
-      "before_or_after": "Before",
-      "duration": "30",
-      "start_date": "2020-12-30",
-      "end_date": "2021-01-30",
+      "dosage": "BID - Twice daily",
+      "before_or_after": "After",
+      "duration": "67",
+      "start_date": "2020-12-01",
+      "end_date": "2021-02-01",
       "intervals": {
         "part": [
           "Morning",
+          "Afternoon",
           "Night"
         ],
         "time": [
-          "06:30",
-          "22:30"
+          "07:30",
+          "16:37",
+          "23:30"
         ]
       },
       "reason": "Heart Burn and GERD",
       "taken": [
         "Morning",
+        "Afternoon",
         "Night"
       ],
       "missed": [],
