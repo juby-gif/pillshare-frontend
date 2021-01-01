@@ -689,8 +689,8 @@
     {
       "user_id": "1fc257ec-5449-4491-a3fe-d961ed685270",
       "name": "Ranitidine",
-      "dose": "1",
-      "measure": "Tablet",
+      "dose": "1.5",
+      "measure": "Tablet(s)",
       "isDeleted": false,
       "dosage": "SID - Once daily",
       "before_or_after": "Before",

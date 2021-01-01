@@ -39,6 +39,13 @@
     --font-family-sans-serif: Open Sans,sans-serif;
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
 }
+#logout {
+  z-index: 999;
+  width:80%;
+  position:fixed;
+  top:65px;
+  left:10px;
+}
 
 #message {
   position: fixed;
