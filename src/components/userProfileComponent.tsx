@@ -911,7 +911,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                                 <Form.Control
                                                                                     required
                                                                                     type="text-area"
-                                                                                    placeholder="Underlying Health Issues"
+                                                                                    placeholder="Heart disease, Cancer, Diabetes,Blood Pressure,etc."
                                                                                     value={underlyingHealthIssues}
                                                                                     onChange={onUnderlyingHealthIssueChange}
                                                                                 />
@@ -921,7 +921,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                                 <Form.Control
                                                                                     required
                                                                                     type="select"
-                                                                                    placeholder="Other Health Issues"
+                                                                                    placeholder="Fever, Headches, Migraine, Hair fall,etc."
                                                                                     value={otherHealthIssues}
                                                                                     onChange={onOtherHealthIssuesChange}
                                                                                 />

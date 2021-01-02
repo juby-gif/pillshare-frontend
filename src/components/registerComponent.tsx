@@ -57,7 +57,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
         <Container className="d-flex justify-content-center mt-5 p-5" fluid>
             <Col style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
-                    <Col className="p-3">
+                    <Col style={{display:"block",marginBottom: "-4px",position: "relative"}} className="p-3">
                         <Row>
                             <Col>
                                 <Image className="mt-3 ml-3" src={logo} fluid width="80rem"/>
@@ -72,8 +72,8 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                             <Col></Col>
                         </Row>
                     </Col>
-                    <Col className="p-3" style={{borderLeft:"2px solid #000"}}>
-                        <Form>
+                    <Col className="p-3" style={{borderLeft:"2px solid #000",display:"block"}}>
+                        <Form noValidate validated={true}>
                             <Form.Row>
                                 <Form.Group as={Col} md="4" controlId="validationFirstName">
                                     <Form.Label>First name</Form.Label>
@@ -89,7 +89,6 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                 <Form.Group as={Col} md="4" controlId="validationMiddleName">
                                     <Form.Label>Middle name</Form.Label>
                                     <Form.Control
-                                        required
                                         type="text"
                                         placeholder="Middle name"
                                         value={middleName}

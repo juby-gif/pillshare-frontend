@@ -71,7 +71,7 @@ const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element 
                                         {(userImage.length !== 0)?(userImage.map((image,index) => (
                                         <div key={index}>
                                             <img
-                                            // style={{height:"44px",width:"44px"}}
+                                            style={{height:"44px",width:"44px"}}
                                             height="100%"
                                             width="100%"
                                             className="circle"
@@ -99,7 +99,7 @@ const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element 
                                 <DropdownItem header >
                                     <h6 style={{fontSize: ".820rem"}} className="text-overflow m-0">Welcome!</h6>
                                 </DropdownItem>
-                                <DropdownItem to="/user-profile" tag={Link}>
+                                <DropdownItem className="dropdown-item" to="/user-profile" tag={Link}>
                                     <FontAwesomeIcon className="mr-2" icon={faUserAlt} />
                                     <span>My profile</span>
                                 </DropdownItem>
@@ -113,12 +113,12 @@ const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element 
                                     <i className="ni ni-calendar-grid-58" />
                                     <span>Activity</span>
                                 </DropdownItem> */}
-                                <DropdownItem>
-                                    <a style={{textDecoration:"none",color:"#212529"}} href="mailto:juby.varughese@llinstitute.com"><FontAwesomeIcon className="mr-2" icon={faQuestionCircle} />   
+                                <DropdownItem className="dropdown-item">
+                                    <a style={{textDecoration:"none"}} href="mailto:juby.varughese@llinstitute.com"><FontAwesomeIcon className="mr-2" icon={faQuestionCircle} />   
                                     <span>Help</span></a>
                                 </DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem onClick={onLogoutClick}>
+                                <DropdownItem className="dropdown-item" onClick={onLogoutClick}>
                                     <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
                                     <span>Logout</span>
                                 </DropdownItem>

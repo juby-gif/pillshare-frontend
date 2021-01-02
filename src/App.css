@@ -39,6 +39,15 @@
     --font-family-sans-serif: Open Sans,sans-serif;
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
 }
+
+.dropdown-item > a:active {
+  color:#fff;
+}
+.dropdown-item > a {
+  color:#000;
+}
+
+
 #logout {
   z-index: 999;
   width:80%;
