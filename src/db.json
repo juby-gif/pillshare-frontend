@@ -78,6 +78,35 @@
         }
       ],
       "id": 2
+    },
+    {
+      "firstName": "aaa",
+      "middleName": "aaa",
+      "lastName": "aaa",
+      "username": "aaa",
+      "email": "a@a.com",
+      "password": "123",
+      "checkedStatus": true,
+      "authCode": "36d5d4ce-c0fa-423b-830b-87a68b13e369",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 3,
+      "age": 23,
+      "gender": "male",
+      "dob": "2020-12-30",
+      "address": "67 Olympic Pl",
+      "city": "London",
+      "province": "ON",
+      "country": "Canada",
+      "zip": "N6G 3P8",
+      "phone": "6474703597",
+      "bodyMassIndexValue": "29.74",
+      "weight": "89",
+      "height": "173",
+      "BMI": "Overweight",
+      "bloodGroup": "O+",
+      "underlyingHealthIssues": "Diabetes,Blood Pressure",
+      "otherHealthIssues": "Fever,bone dislocation,blindness",
+      "images": []
     }
   ],
   "heart_rate_measurements": [
@@ -120,6 +149,14 @@
       "time": "01:48",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 5
+    },
+    {
+      "instrumentID": 1,
+      "reading": 76,
+      "date": "2021-01-13",
+      "time": "23:06",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 6
     }
   ],
   "blood_pressure_measurements": [
@@ -167,6 +204,15 @@
       "time": "01:48",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 5
+    },
+    {
+      "instrumentID": 2,
+      "systoleReading": 123,
+      "diastoleReading": 89,
+      "date": "2020-12-31",
+      "time": "22:07",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 6
     }
   ],
   "body_temperature_measurements": [
@@ -209,6 +255,14 @@
       "time": "01:48",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 5
+    },
+    {
+      "instrumentID": 3,
+      "reading": 36,
+      "date": "2020-12-31",
+      "time": "22:07",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 6
     }
   ],
   "glucose_measurements": [
@@ -251,6 +305,14 @@
       "time": "01:48",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 5
+    },
+    {
+      "instrumentID": 4,
+      "reading": 110,
+      "date": "2021-01-02",
+      "time": "22:07",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 6
     }
   ],
   "oxygen_saturation_measurements": [
@@ -293,6 +355,14 @@
       "time": "01:49",
       "user_id": "2c54abf6-4546-49ca-8bf0-68b37e8a1d68",
       "id": 5
+    },
+    {
+      "instrumentID": 5,
+      "reading": 91,
+      "date": "2021-01-12",
+      "time": "23:07",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "id": 6
     }
   ],
   "health_check_data": [
@@ -459,7 +529,49 @@
       },
       "alerts_sent": 23,
       "alerts_responded": 20,
-      "id": 2
+      "id": 3
+    },
+    {
+      "firstName": "aaa",
+      "user_id": "ab9b22b8-8cda-41d0-a1c9-c88b21caf935",
+      "heart_rate": {
+        "instrument_id": 1,
+        "reading": 75,
+        "percentage": 3.48,
+        "time": "Since last month"
+      },
+      "blood_pressure": {
+        "instrument_id": 2,
+        "systole_reading": 125,
+        "diastole_reading": 80,
+        "percentage": 2.01,
+        "time": "Since 9am today"
+      },
+      "body_temperature": {
+        "instrument_id": 3,
+        "reading": 34,
+        "percentage": 2.45,
+        "time": "Since yesterday"
+      },
+      "glucose": {
+        "instrument_id": 4,
+        "reading": 117,
+        "percentage": 0.02,
+        "time": "Since friday"
+      },
+      "oxygen_saturation": {
+        "instrument_id": 5,
+        "reading": 89,
+        "percentage": 1.5,
+        "time": "Since yesterday"
+      },
+      "health_check": {
+        "health_status": "improving",
+        "time": "Since monday"
+      },
+      "alerts_sent": 23,
+      "alerts_responded": 20,
+      "id": 4
     }
   ],
   "medication_logs": [

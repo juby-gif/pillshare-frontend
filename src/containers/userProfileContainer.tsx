@@ -662,13 +662,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onSaveClick = (event : React.SyntheticEvent) : void =>{
+      
       const { bodyMassIndexValue } = this.state
       const { onPatchRequestSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
-      const userInformation = JSON.parse(localStorage.getItem(USER_INFORMATION_DATA) || '{}');
-      const userContactInformation = JSON.parse(localStorage.getItem(USER_CONTACT_INFORMATION_DATA) || '{}');
-      const userHealthInformation = JSON.parse(localStorage.getItem(USER_HEALTH_INFORMATION_DATA) || '{}');
-      const images = JSON.parse(localStorage.getItem(USER_IMAGE) || '{}');
+      const user_id:string|undefined = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
+      const userInformation:any = JSON.parse(localStorage.getItem(USER_INFORMATION_DATA) || '{}');
+      const userContactInformation:any = JSON.parse(localStorage.getItem(USER_CONTACT_INFORMATION_DATA) || '{}');
+      const userHealthInformation:any = JSON.parse(localStorage.getItem(USER_HEALTH_INFORMATION_DATA) || '{}');
+      const images:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
       const data:SaveDataProps = {
         firstName: userInformation.firstName,
         middleName: userInformation.middleName,

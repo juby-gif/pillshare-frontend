@@ -811,8 +811,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         readOnly
                                                         required
                                                         type="tel"
-                                                        placeholder="Province/State"
-                                                        pattern="[+]{} [0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                                        placeholder="Phone number"
+                                                        pattern="[789][0-9]{9}"
                                                         value={phone}
                                                     />
                                                 </Form.Group>

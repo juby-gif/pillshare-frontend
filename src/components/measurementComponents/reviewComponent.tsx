@@ -51,15 +51,15 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                     <Row>
                                         <Form>
                                             <Form.Row className="ml-5 mt-5 mr-5">
-                                                <Form.Group as={Col} xs="5" md="4" lg="4" controlId="formGridValue">
+                                                <Form.Group as={Col} xs="5" md="5" lg="4" controlId="formGridValue">
                                                 <Form.Label>Heart Rate(beats/min)</Form.Label>
                                                 <Form.Control type="number" placeholder="%" value={heartRateReading.reading} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="11" md="4" lg="4" controlId="formGridTime">
                                                 <Form.Label>Date</Form.Label>
                                                 <Form.Control type="date" placeholder="Date" value={heartRateReading.date} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="9" md="4" lg="4" controlId="formGridTime">
                                                 <Form.Label>Time</Form.Label>
                                                 <Form.Control type="time" placeholder="Time" value={heartRateReading.time} disabled/>
                                                 </Form.Group>
@@ -81,7 +81,7 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                     <Row>
                                         <Form>
                                             <Form.Row className="ml-5 mt-5 mr-5">
-                                                <Form.Group as={Col} xs="5" md="4" lg="2" controlId="formGridSValue">
+                                                <Form.Group as={Col} xs="8" md="4" lg="2" controlId="formGridSValue">
                                                     <Form.Label>Systole(mmHg)</Form.Label>
                                                     <Form.Control type="number" placeholder="%" value={bloodPressureReading.systoleReading} disabled/>
                                                 </Form.Group>
@@ -89,11 +89,11 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                                     <Form.Label>Diastole(mmHg)</Form.Label>
                                                     <Form.Control type="number" placeholder="%" value={bloodPressureReading.diastoleReading} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="3" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="11" md="4" lg="3" controlId="formGridTime">
                                                     <Form.Label>Date</Form.Label>
                                                     <Form.Control type="date" placeholder="Date" value={bloodPressureReading.date} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="3" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="9" md="4" lg="3" controlId="formGridTime">
                                                     <Form.Label>Time</Form.Label>
                                                     <Form.Control type="time" placeholder="Time" value={bloodPressureReading.time} disabled/>
                                                 </Form.Group>
@@ -119,11 +119,11 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                                     <Form.Label>Temperature(Celsius)</Form.Label>
                                                     <Form.Control type="number" placeholder="%" value={bodyTemperatureReading.reading} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="11" md="4" lg="4" controlId="formGridTime">
                                                     <Form.Label>Date</Form.Label>
                                                     <Form.Control type="date" placeholder="Date" value={bodyTemperatureReading.date} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="9" md="4" lg="4" controlId="formGridTime">
                                                     <Form.Label>Time</Form.Label>
                                                     <Form.Control type="time" placeholder="Time" value={bodyTemperatureReading.time} disabled/>
                                                 </Form.Group>
@@ -149,11 +149,11 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                                     <Form.Label>Glucose(mg/dL)</Form.Label>
                                                     <Form.Control type="number" placeholder="%" value={glucoseReading.reading} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="11" md="4" lg="4" controlId="formGridTime">
                                                     <Form.Label>Date</Form.Label>
                                                     <Form.Control type="date" placeholder="Date" value={glucoseReading.date} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="9" md="4" lg="4" controlId="formGridTime">
                                                     <Form.Label>Time</Form.Label>
                                                     <Form.Control type="time" placeholder="Time" value={glucoseReading.time} disabled/>
                                                 </Form.Group>
@@ -179,11 +179,11 @@ const ReviewComponent = (props:IProps) : JSX.Element => {
                                                     <Form.Label>Oxygen Saturation(mg/dL)</Form.Label>
                                                     <Form.Control type="number" placeholder="%" value={oxygenSaturationReading.reading} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="11" md="4" lg="4" controlId="formGridTime">
                                                     <Form.Label>Date</Form.Label>
                                                     <Form.Control type="date" placeholder="Date" value={oxygenSaturationReading.date} disabled/>
                                                 </Form.Group>
-                                                <Form.Group as={Col} xs="8" md="4" lg="4" controlId="formGridTime">
+                                                <Form.Group as={Col} xs="9" md="4" lg="3" controlId="formGridTime">
                                                     <Form.Label>Time</Form.Label>
                                                     <Form.Control type="time" placeholder="Time" value={oxygenSaturationReading.time} disabled/>
                                                 </Form.Group>

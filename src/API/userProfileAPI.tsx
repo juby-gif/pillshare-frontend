@@ -46,7 +46,7 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
         //   For Debugging purpose only
-          console.log(response.data)
+          // console.log(response.data)
       }
 
         )
@@ -55,7 +55,7 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
       })
 }
 
-export const updateUserProfileAPI = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void, data:Props) :Promise<void> =>{
+export const updateUserProfileAPI = async (user_id: string|undefined, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void, data:Props) :Promise<void> =>{
     let userObjArr = JSON.parse(localStorage.getItem(LOGGED_IN_USER)|| '[]')
     const getUserID = (userObjArr:Props[]):number|undefined => {
     for (let userObj of userObjArr){
