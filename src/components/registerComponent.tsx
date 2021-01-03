@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Container, Button, InputGroup, Row, Image } from 'react-bootstrap';
+import { Form, Col, Container, Button, InputGroup, Row, Image, Alert } from 'react-bootstrap';
 
 import logo from '../img/logo.png';
 
@@ -16,6 +16,10 @@ checkedStatus : boolean;
 response : string;
 message : string;
 validated : boolean;
+passwordErrorAlert : boolean;
+passwordSuccessAlert : boolean;
+registerSuccess : boolean;
+registerFailure : boolean;
 onFirstNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
 onMiddleNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
 onLastNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -39,8 +43,12 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
         retypePassword,
         checkedStatus,
         // response,
-        // message,
-        // validated,
+        message,
+        registerSuccess,
+        registerFailure,
+        validated,
+        passwordErrorAlert,
+        passwordSuccessAlert,
         onFirstNameChange,
         onMiddleNameChange,
         onLastNameChange,
@@ -54,6 +62,16 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
      } = props;
     return (
     <React.Fragment>
+        {registerSuccess && (
+        <Container className="p-1" fluid>
+           <Alert variant="success">{message}</Alert>
+        </Container>
+        )}
+        {registerFailure && (
+        <Container className="p-1" fluid>
+            <Alert variant="danger">{message}</Alert>
+        </Container>
+        )}
         <Container className="d-flex justify-content-center mt-5 p-5" fluid>
             <Col style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
@@ -73,7 +91,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                         </Row>
                     </Col>
                     <Col className="p-3" style={{borderLeft:"2px solid #000",display:"block"}}>
-                        <Form noValidate validated={true}>
+                        <Form noValidate validated={validated}>
                             <Form.Row>
                                 <Form.Group as={Col} md="4" controlId="validationFirstName">
                                     <Form.Label>First name</Form.Label>
@@ -84,7 +102,9 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         value={firstName}
                                         onChange={onFirstNameChange}
                                     />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                            Please provide your first name.
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group as={Col} md="4" controlId="validationMiddleName">
                                     <Form.Label>Middle name</Form.Label>
@@ -94,7 +114,6 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         value={middleName}
                                         onChange={onMiddleNameChange}
                                     />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group as={Col} md="4" controlId="validationLastName">
                                     <Form.Label>Last name</Form.Label>
@@ -105,7 +124,9 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         value={lastName}
                                         onChange={onLastNameChange}
                                     />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                            Please provide your last name.
+                                        </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                                     <Form.Label>Username</Form.Label>
@@ -165,9 +186,17 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         required 
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        Please provide a valid password.
+                                        Please retype your password.
                                     </Form.Control.Feedback>
                                 </Form.Group>
+                                {passwordSuccessAlert && (
+                                <Col sm="11" md="7" lg="4">
+                                    <Alert style={{width:"20rem"}} variant="success">Password Matched</Alert>
+                                </Col>)}
+                                {passwordErrorAlert && (
+                                <Col sm="11" md="7" lg="4">
+                                    <Alert variant="danger">Passwords do not match</Alert>
+                                </Col>)}
                             </Form.Row>
                             <Form.Group>
                                 <Form.Check
@@ -177,6 +206,9 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                     onChange={onChangeCheck}
                                     required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    This field is required.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Button type="submit" onClick={onRegisterClick}>Register</Button>
                         </Form>

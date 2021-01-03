@@ -22,6 +22,10 @@ checkedStatus : boolean;
 response : string;
 message : string;
 validated : boolean;
+passwordErrorAlert : boolean;
+passwordSuccessAlert : boolean;
+registerSuccess : boolean;
+registerFailure : boolean;
 }
 
 interface ResponseProps {
@@ -47,6 +51,10 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             response : "",
             message : "",
             validated:false,
+            passwordErrorAlert:false,
+            passwordSuccessAlert:false,
+            registerSuccess:false,
+            registerFailure:false,
     }
     this.onFirstNameChange = this.onFirstNameChange.bind(this);
     this.onMiddleNameChange = this.onMiddleNameChange.bind(this);
@@ -115,6 +123,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             firstName:event.currentTarget.value,
+            validated:false,
         })
     }
 
@@ -133,6 +142,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             lastName:event.currentTarget.value,
+            validated:false,
         })
     }
 
@@ -142,6 +152,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             username:event.currentTarget.value,
+            validated:false,
         })
     }
 
@@ -151,6 +162,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             email:event.currentTarget.value,
+            validated:false,
         })
     }
 
@@ -160,6 +172,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             password:event.currentTarget.value,
+            validated:false,
+            passwordErrorAlert:false,
         })
     }
 
@@ -169,6 +183,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         })
         this.setState({
             retypePassword:event.currentTarget.value,
+            validated:false,
+            passwordErrorAlert:false,
         })
     }
 
@@ -179,23 +195,37 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
        
         this.setState({
             checkedStatus:event.currentTarget.checked,
+            validated:false,
         })
     }
 
     onRegisterClick = (event: React.SyntheticEvent): void => {
         event.preventDefault();
         const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus} = this.state;
-        if(firstName !== "" && lastName !== "" && username !== "" && password !==""){
+        if(firstName !== "" && lastName !== "" && username !== "" && email !== "" && password !=="" && retypePassword !=="" && checkedStatus !== false){
 
             if( password === retypePassword ){
                 const authCode:string = uuidv4();
                 const user_id:string = uuidv4();
-                this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,authCode,user_id);
+                this.setState({
+                    passwordSuccessAlert:true,
+                })
+                setTimeout(()=>{this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,authCode,user_id)
+                    this.setState({
+                        passwordSuccessAlert:false,
+                    })
+                },2000);
+                
             } else {
-                console.error("Your Password does not match");
+                this.setState({
+                    passwordErrorAlert:true,
+                })
             }
         } else {
-            alert (" Please enter all the required fields")
+            // alert (" Please enter all the required fields")
+            this.setState({
+                validated:true,
+            })
         }
         
     }
@@ -208,13 +238,29 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onSuccessCallBack = (responseData: ResponseProps): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
-        alert(responseData.message)
-        this.props.history.push("/login");
-
+        this.setState({
+            registerSuccess:true,
+            message:responseData.message,
+        })
+        alert("HI")
+        setTimeout(() =>{
+            this.setState({
+                registerSuccess:false,
+            })
+            this.props.history.push("/login");
+        },5500)
     }
     
     onFailureCallBack = (responseData: ResponseProps): void => {
-        alert(responseData.message);
+        setTimeout(()=>{
+        this.setState({
+            registerFailure:true,
+            message:responseData.message,
+        })
+        },3000)
+        this.setState({
+            registerFailure:false,
+        })
     }
 
     /* *
@@ -222,7 +268,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         *------------------------------------------------------------
     */
     render(){
-        const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus,response,message,validated} = this.state;
+        const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus,response,message,validated,passwordErrorAlert,passwordSuccessAlert,registerSuccess,registerFailure} = this.state;
         const {onFirstNameChange,onMiddleNameChange,onLastNameChange,onUsernameChange,onEmailChange,onPasswordChange,onRetypePasswordChange,onChangeCheck,onRegisterClick,onSignInClick} = this;
         return(
             <div>
@@ -238,6 +284,10 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
                     response={response}
                     message={message}
                     validated={validated}
+                    registerSuccess={registerSuccess}
+                    registerFailure={registerFailure}
+                    passwordErrorAlert={passwordErrorAlert}
+                    passwordSuccessAlert={passwordSuccessAlert}
                     onFirstNameChange={onFirstNameChange}
                     onMiddleNameChange={onMiddleNameChange}
                     onLastNameChange={onLastNameChange}

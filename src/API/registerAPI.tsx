@@ -33,7 +33,7 @@ export const postRegisterAPI = async (postData:ServerData, onSuccessCallBack: (r
           .then(function (response:ServerResponse) {
               if(response.data !== [] || response.data !== undefined || response.data !== null){
                 const responseData : ResponseProps = {
-                    message : "You are successfully registered",
+                    message : "You are successfully registered!",
                 }
                 onSuccessCallBack(responseData);
               } else {
