@@ -292,7 +292,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 multiple={false}
                                                 value={images}
                                                 onChange={onImageChange}
-                                                maxNumber={2}
+                                                maxNumber={22}
                                             >
                                                 {({
                                                 onImageUpload,

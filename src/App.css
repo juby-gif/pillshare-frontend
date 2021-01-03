@@ -47,6 +47,11 @@
   color:#000;
 }
 
+.login{
+  
+  box-shadow: 0 49px 8px 0 rgba(99, 86, 86, 0.2), 0 57px 40px 0 rgba(0, 0, 0, 0.19);
+  
+}
 
 #logout {
   z-index: 999;

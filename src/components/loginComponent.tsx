@@ -36,16 +36,15 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
     } = props;
 return (
 <React.Fragment>
-    <Container  fluid className="p-5">
+    <Container style={{backgroundColor:"#f5f5dc",width:"100%",height:"100vh"}} fluid className="p-5">
         <Row>
             <Col>
             </Col>
-            <Col sm="8" md="9" xs="12" lg="4" className="p-2" style={{border:"2px solid #000", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
+            <Col sm="8" md="9" xs="12" lg="4" className="login p-2" style={{backgroundColor:"#f0f5f2",border:"2px solid #fff", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
                     <Col className="mt-5 mb-3 d-flex justify-content-center">
                         <Image src={logo} fluid width="140rem"/>
                     </Col>
-                    
                 </Row>
 
 
