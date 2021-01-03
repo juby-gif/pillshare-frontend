@@ -76,7 +76,7 @@ export default class PillDescriptionContainer extends Component<IProps,StateProp
           measure: descriptionData.measure,
           beforeOrAfter: descriptionData.before_or_after,
       })
-      }},500);
+      }},700);
     }
 
     componentDidUpdate(){

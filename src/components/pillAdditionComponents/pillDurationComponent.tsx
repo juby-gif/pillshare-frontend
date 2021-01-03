@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row,Col,Container,Form } from 'react-bootstrap';
+import { Col,Container,Form } from 'react-bootstrap';
 
 import '../../App.css';
 
@@ -43,46 +43,47 @@ const PillDurationComponent = (props: IProps) : JSX.Element => {
             <div id="app" style={{height: "100%"}}>
                 <div id="outer-container" style={{height: "100%"}}>
                     <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
-                        <Row>
-                            <Col xs="9" md="7" lg="5">
-                                <Form.Group controlId="pill-duration">
-                                    <Form.Label>How long you have to take this pill?</Form.Label>
-                                    <Form.Control type="number" placeholder="Number of days" onChange={onNumberOfDaysChange} value={numberOfDays} min="0" />
-                                </Form.Group>
-                            </Col>
-                            <Col xs="10" md="5" lg="3">
-                                <Form.Group controlId="pill-start-date">
-                                    <Form.Label>Start Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Start Date" onChange={onStartDateChange} value={startDate} />
-                                </Form.Group>
-                            </Col>
-                            <Col xs="10" md="5" lg="3">
+                        <Form  noValidate validated={true}>
+                            <Form.Row>
+                                <Col xs="9" md="7" lg="5">
+                                    <Form.Group controlId="pill-duration">
+                                        <Form.Label>How long you have to take this pill?</Form.Label>
+                                        <Form.Control type="number" placeholder="Number of days" onChange={onNumberOfDaysChange} value={numberOfDays} min="0" required/>
+                                    </Form.Group>
+                                </Col>
+                                <Col xs="10" md="5" lg="3">
+                                    <Form.Group controlId="pill-start-date">
+                                        <Form.Label>Start Date</Form.Label>
+                                        <Form.Control type="date" placeholder="Start Date" onChange={onStartDateChange} value={startDate} required/>
+                                    </Form.Group>
+                                </Col>
+                                <Col xs="10" md="5" lg="3">
+                                    <Form.Group controlId="pill-end-date">
+                                        <Form.Label>End Date</Form.Label>
+                                        <Form.Control type="date" placeholder="End Date" onChange={onEndDateChange} value={endDate} required/>
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
                                 <Form.Group controlId="pill-end-date">
-                                    <Form.Label>End Date</Form.Label>
-                                    <Form.Control type="date" placeholder="End Date" onChange={onEndDateChange} value={endDate} />
+                                    <Form.Label className="ml-3 mt-4"><b>Intervals</b></Form.Label>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Group controlId="pill-end-date">
-                                <Form.Label className="ml-3 mt-4"><b>Intervals</b></Form.Label>
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Col xs="8" md="4" lg="3">
-                                <Form.Group controlId="pill-dosage">
-                                    <Form.Label>Morning</Form.Label>
-                                    <Form.Control type="time" onChange={onMorningTimeChange} value={morning} />
-                                </Form.Group>
-                            </Col>
-                            <Col xs="8" md="4" lg="3">
-                                <Form.Group controlId="pill-dosage">
-                                    <Form.Label>Afternoon</Form.Label>
-                                    <Form.Control type="time" onChange={onAfternoonTimeChange} value={afternoon} />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col xs="8" md="4" lg="3">
+                                    <Form.Group controlId="pill-dosage">
+                                        <Form.Label>Morning</Form.Label>
+                                        <Form.Control type="time" onChange={onMorningTimeChange} value={morning} />
+                                    </Form.Group>
+                                </Col>
+                                <Col xs="8" md="4" lg="3">
+                                    <Form.Group controlId="pill-dosage">
+                                        <Form.Label>Afternoon</Form.Label>
+                                        <Form.Control type="time" onChange={onAfternoonTimeChange} value={afternoon} />
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
                             <Col xs="8" md="4" lg="3">
                                 <Form.Group controlId="pill-dosage">
                                     <Form.Label>Evening</Form.Label>
@@ -95,7 +96,8 @@ const PillDurationComponent = (props: IProps) : JSX.Element => {
                                     <Form.Control type="time" onChange={onNightTimeChange} value={night} />
                                 </Form.Group>
                             </Col>
-                        </Row>
+                        </Form.Row>
+                        </Form>
                     </Container>
                     {/* ----------------------The page content ends here---------------------- */}
                 </div>

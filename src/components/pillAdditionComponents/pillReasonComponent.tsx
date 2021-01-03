@@ -19,10 +19,12 @@ const { reason,
                     <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
                         <Row>
                             <Col xs="12" md="12" lg="12">
-                                <Form.Group controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Reason for taking this medication</Form.Label>
-                                    <Form.Control as="textarea" rows={4} value={reason} onChange={onReasonChange} placeholder="Please enter your reason here..." />
-                                </Form.Group>
+                                <Form noValidate validated={true}>
+                                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Reason for taking this medication</Form.Label>
+                                        <Form.Control as="textarea" rows={4} value={reason} onChange={onReasonChange} placeholder="Please enter your reason here..." required/>
+                                    </Form.Group>
+                                </Form>
                             </Col>
                             <Col>
                             </Col>
