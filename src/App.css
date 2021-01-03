@@ -40,6 +40,14 @@
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
 }
 
+.card-button{
+  background-color:#036599;
+  text-align:center;
+}
+.card-button:hover{
+  background-color:  rgba(3, 101, 153, 0.8);
+}
+
 .dropdown-item > a:active {
   color:#fff;
 }
@@ -48,7 +56,7 @@
 }
 
 .login{
-  
+
   box-shadow: 0 49px 8px 0 rgba(99, 86, 86, 0.2), 0 57px 40px 0 rgba(0, 0, 0, 0.19);
   
 }
@@ -878,11 +886,36 @@ a.btn-icon-only {
   .display-2 {
   font-size: calc(1.5rem + 1.8vw);
     } }
+
 @media (max-width: 860px){
   h3.display-3 {
   font-size: calc(1.0rem + 1.8vw);
     } }
 
+@media (min-width: 860px){
+.display-6 {
+  font-size: calc(7.6rem + 2vw);
+  font-weight: 900;
+}
+}
+@media (max-width: 860px){
+  .display-6 {
+  font-size: calc(3.5rem + 1.8vw);
+  font-weight: 900
+    } }
+
+@media (max-width: 860px){
+  h4.display-6 {
+  font-size: calc(0.8rem + 1.8vw);
+  font-weight: 400;
+    } }
+
+@media (min-width: 860px){
+  h4.display-6 {
+  font-size: calc(0.4rem + 1.8vw);
+  font-weight: 400;
+    } }
+    
 @media (min-width: 860px){
   h3.display-3 {
   font-size: calc(1.2rem + 1.8vw);

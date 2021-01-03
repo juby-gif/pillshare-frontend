@@ -21,10 +21,11 @@ import HeartRateViewMoreContainer from './viewMoreContainers/heartRateContainer'
 import BloodPressureViewMoreContainer from './viewMoreContainers/bloodPressureContainer';
 import BodyTemperatureViewMoreContainer from './viewMoreContainers/bodyTemperatureContainer';
 import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
-// import HealthCheckViewMoreContainer from './viewMoreContainers/healthCheckContainer';
 import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
 import PillAdditionContainerWizard from './pillAdditionContainerWizard';
 import PillEditContainerWizard from './pillEditContainerWizard';
+
+import PageNotFoundComponent from '../Menu/404Component'; 
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -54,7 +55,6 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/add-pills" exact component={PillAdditionContainerWizard} />
                <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
                <Route path="/edit/:id" exact component={PillEditContainerWizard} />
-               {/* <Route path="/user-profile-update" exact component={UserProfileUpdateContainer} /> */}
 
                {/* *************************** Client Side *************************** */}
 
@@ -69,6 +69,11 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/remote-glucose" exact component={RemoteGlucoseContainer} />
                <Route path="/remote-oxygen-saturation" exact component={RemoteOxygenSaturationContainer} />
                <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
+
+              {/* *************************** 404 page *************************** */}
+               <Route component={PageNotFoundComponent} />
+              {/* *************************** 404 page *************************** */}
+
 
                {/* *************************** Remote Side *************************** */}
 
