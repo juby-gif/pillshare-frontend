@@ -13,6 +13,7 @@ interface BloodPressureProps {
   time?: string;
   instrumentID?: number;
   user_id?:string;
+  validated :boolean;
 
 }
 
@@ -25,12 +26,13 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
     constructor(props:IProps) {
       super(props);
       this.state = {
-        diastoleReading:0,
-        systoleReading:0,
+        diastoleReading:undefined,
+        systoleReading:undefined,
         date:undefined,
         time:undefined,
         instrumentID:undefined,
         user_id:undefined,
+        validated:false,
         
       };
       this.onBloodPressureSystoleReadingChange = this.onBloodPressureSystoleReadingChange.bind(this);
@@ -128,15 +130,17 @@ export default class BloodPressureContainer extends Component<IProps,BloodPressu
 
       onUpdate = (): void => {
       const { systoleReading,diastoleReading,date,time,user_id } = this.state;
-      const bloodPressureData = {
-        instrumentID:BLOOD_PRESSURE_INSTRUMENT,
-        systoleReading:systoleReading,
-        diastoleReading:diastoleReading,
-        date:date,
-        time:time,
-        user_id:user_id,
+      if(systoleReading !== 0 && systoleReading !== undefined && diastoleReading !== 0 && diastoleReading !== undefined && date !== undefined && date !== "" && time !== undefined && time !== ""){
+        const bloodPressureData = {
+          instrumentID:BLOOD_PRESSURE_INSTRUMENT,
+          systoleReading:systoleReading,
+          diastoleReading:diastoleReading,
+          date:date,
+          time:time,
+          user_id:user_id,
+        }
+        localStorage.setItem(BLOODPRESSUREDATA,JSON.stringify(bloodPressureData));
       }
-      localStorage.setItem(BLOODPRESSUREDATA,JSON.stringify(bloodPressureData));
     }
 
     /* *

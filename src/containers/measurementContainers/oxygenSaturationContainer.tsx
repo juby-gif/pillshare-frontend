@@ -11,6 +11,7 @@ interface OxygenSaturationProps {
   time?: string;
   instrumentID?: number;
   user_id?: string;
+  validated: boolean;
 
 }
 
@@ -23,11 +24,12 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
     constructor(props:IProps) {
       super(props);
       this.state = {
-          reading:0,
+          reading:undefined,
           date:undefined,
           time:undefined,
-          instrumentID:0,
+          instrumentID:undefined,
           user_id:undefined,
+          validated:false,
       };
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -111,14 +113,16 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
 
     onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
-      const oxygenSaturationData = {
-        instrumentID:OXYGEN_SATURATION_INSTRUMENT,
-        reading:reading,
-        date:date,
-        time:time,
-        user_id:user_id,
+      if( reading !== undefined && date !== undefined && time !== undefined){
+        const oxygenSaturationData = {
+          instrumentID:OXYGEN_SATURATION_INSTRUMENT,
+          reading:reading,
+          date:date,
+          time:time,
+          user_id:user_id,
+        }
+        localStorage.setItem(OXYGENSATURATION,JSON.stringify(oxygenSaturationData));
       }
-      localStorage.setItem(OXYGENSATURATION,JSON.stringify(oxygenSaturationData));
     }
 
     /* *

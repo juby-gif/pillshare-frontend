@@ -12,6 +12,7 @@ interface GlucoseProps {
   time?: string;
   instrumentID?: number;
   user_id?: string;
+  validated : boolean;
 
 }
 
@@ -24,11 +25,12 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
     constructor(props:IProps) {
       super(props);
       this.state = {
-        reading:0,
+        reading:undefined,
         date:undefined,
         time:undefined,
-        instrumentID:0,
+        instrumentID:undefined,
         user_id:undefined,
+        validated:false,
         
       };
       this.onGlucoseReadingChange = this.onGlucoseReadingChange.bind(this);
@@ -113,14 +115,16 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
 
     onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
-      const glucoseData = {
-        instrumentID:GLUCOSE_INSTRUMENT,
-        reading:reading,
-        date:date,
-        time:time,
-        user_id:user_id,
-      }
-      localStorage.setItem(GLUCOSE,JSON.stringify(glucoseData));
+      if( reading !== undefined && date !== undefined && time !== undefined){
+        const glucoseData = {
+          instrumentID:GLUCOSE_INSTRUMENT,
+          reading:reading,
+          date:date,
+          time:time,
+          user_id:user_id,
+        }
+        localStorage.setItem(GLUCOSE,JSON.stringify(glucoseData));
+      } 
     }
 
     /* *

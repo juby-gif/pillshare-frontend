@@ -12,6 +12,7 @@ interface HeartRateProps {
   time?: string;
   instrumentID?: number;
   user_id?: string;
+  validated:boolean;
 
 }
 
@@ -25,11 +26,12 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
     constructor(props:IProps) {
       super(props);
       this.state = {
-        reading:0,
+        reading:undefined,
         date:undefined,
         time:undefined,
-        instrumentID:0,
+        instrumentID:undefined,
         user_id:this.user_id,
+        validated:false,
         
       };
       this.onHeartRateReadingChange = this.onHeartRateReadingChange.bind(this);
@@ -110,14 +112,16 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
 
     onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
-      const heartRateData = {
-        instrumentID:HEART_RATE_INSTRUMENT,
-        reading:reading,
-        date:date,
-        time:time,
-        user_id:user_id,
+      if(reading !== undefined && date !== undefined && time !== undefined){
+        const heartRateData = {
+          instrumentID:HEART_RATE_INSTRUMENT,
+          reading:reading,
+          date:date,
+          time:time,
+          user_id:user_id,
+        }
+        localStorage.setItem(HEARTRATEDATA,JSON.stringify(heartRateData));
       }
-      localStorage.setItem(HEARTRATEDATA,JSON.stringify(heartRateData));
     }
 
     /* *

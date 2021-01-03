@@ -12,6 +12,7 @@ interface BodyTemperatureProps {
   time?: string;
   instrumentID?: number;
   user_id?: string;
+  validated:boolean;
 
 }
 
@@ -24,11 +25,12 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
     constructor(props:IProps) {
       super(props);
       this.state = {
-        reading:0,
+        reading:undefined,
         date:undefined,
         time:undefined,
-        instrumentID:0,
-        user_id: undefined,        
+        instrumentID:undefined,
+        user_id: undefined, 
+        validated:false,       
       };
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
       this.onDateChange = this.onDateChange.bind(this);
@@ -109,15 +111,16 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
 
       onUpdate = (): void => {
       const { reading,date,time,user_id } = this.state;
-
-      const bodyTemperatureData = {
-        instrumentID:BODY_TEMPERATURE_INSTRUMENT,
-        reading:reading,
-        date:date,
-        time:time,
-        user_id:user_id,
+      if( reading !== undefined && date !== undefined && time !== undefined){
+        const bodyTemperatureData = {
+          instrumentID:BODY_TEMPERATURE_INSTRUMENT,
+          reading:reading,
+          date:date,
+          time:time,
+          user_id:user_id,
+        }
+        localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
       }
-      localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
     }
 
     /*  *
