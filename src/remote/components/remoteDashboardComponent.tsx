@@ -123,9 +123,9 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
 
                         <h6 className="mt-3 display-2 d-flex justify-content-center">You're viewing {firstName}'s Health Stats</h6>
 
-                        <Container  className="p-4" style={{margin: "auto",width: "70%",border: "3px solid white"}} fluid>
+                        <Container  className="pt-4" style={{margin: "auto",width: "80%",border: "3px solid white", padding:"auto"}} fluid>
                             <CardDeck>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -161,7 +161,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                     </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -197,7 +197,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -233,7 +233,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -269,7 +269,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                     </Card>
-                                    <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                    <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -330,7 +330,7 @@ const RemoteDashboardComponent = (props: IProps) : JSX.Element => {
                                         <span className="ml-5">
                                             <span className="ml-5">
                                                 <span className="ml-5">
-                                                    <Link to="/" className="more-details ml-5" style={{position:"sticky"}}>
+                                                    <Link to="/health-check-status" className="more-details ml-5" style={{position:"sticky"}}>
                                                         view more
                                                     </Link>
                                                 </span>

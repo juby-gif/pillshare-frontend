@@ -81,6 +81,7 @@ interface StateProps {
     contactValidated:boolean;
     healthValidated:boolean;
     firstUser?:boolean;
+    bmiStatus:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -119,6 +120,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         super(props);
         this.state = {
           userShow: false,
+          bmiStatus: false,
           contactShow: false,
           healthShow: false,
           medicalShow: false,
@@ -524,6 +526,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
           weight:event.currentTarget.value,
+          bmiStatus:false,
         })
       } else {
         this.setState({
@@ -535,6 +538,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
         this.setState({
           height:event.currentTarget.value,
+          bmiStatus:false,
         })
       } else {
         this.setState({
@@ -547,7 +551,8 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       if(parseInt(height?height:"0")!==0||isNaN(parseInt(height?height:"0"))!){
         const bodyMassIndexValue = ((parseInt(weight?weight:"0") / parseInt(height?height:"0") / parseInt(height?height:"0")) * 10000).toFixed(2);
         this.setState({
-          bodyMassIndexValue:bodyMassIndexValue
+          bodyMassIndexValue:bodyMassIndexValue,
+          bmiStatus:true,
         })
       }
     }
@@ -778,6 +783,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               otherHealthIssues,
               userShow,
               saveMode,
+              bmiStatus,
               contactShow,
               healthShow,
               medicalShow,
@@ -793,6 +799,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         return(
             <UserProfileComponent 
             userShow = {userShow}
+            bmiStatus ={bmiStatus}
             modalfirstShow = {modalfirstShow}
             contactShow = {contactShow}
             healthShow = {healthShow}

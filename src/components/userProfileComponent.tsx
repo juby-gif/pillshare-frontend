@@ -63,6 +63,7 @@ interface IProps {
 
     userShow: boolean;
     saveMode: boolean;
+    bmiStatus: boolean;
     modalfirstShow: boolean;
     contactShow: boolean;
     healthShow: boolean;
@@ -123,6 +124,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             underlyingHealthIssues,
             otherHealthIssues,
             userShow,
+            bmiStatus,
             contactShow,
             healthShow,
             medicalShow,
@@ -884,10 +886,10 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                                     placeholder="BMI Value"
                                                                                     value={bodyMassIndexValue}
                                                                                 />
-                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<18.5 ? <Alert className="mt-2" variant="warning">Underweight</Alert>:""}
-                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=18.5 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=24.9 ? <Alert className="mt-2" variant="success">Normal</Alert>:""}
-                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=25.0 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=29.9 ? <Alert className="mt-2" variant="warning">Overweight</Alert>:""}
-                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=30.0 ? <Alert className="mt-2" variant="danger">Obesity</Alert>:""}
+                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<18.5 ? bmiStatus && <Alert className="mt-2" variant="warning">Underweight</Alert>:""}
+                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=18.5 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=24.9 ? bmiStatus && <Alert className="mt-2" variant="success">Normal</Alert>:""}
+                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=25.0 && parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")<=29.9 ? bmiStatus && <Alert className="mt-2" variant="warning">Overweight</Alert>:""}
+                                                                                {parseInt(bodyMassIndexValue?bodyMassIndexValue:"0")>=30.0 ? bmiStatus && <Alert className="mt-2" variant="danger">Obesity</Alert>:""}
                                                                             </Form.Group>
                                                                             <Form.Group>
                                                                                 <Form.Label>Check BMI?</Form.Label>
