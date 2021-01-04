@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router,withRouter, Route, Switch } from 'react-router-dom'
 import { RouteComponentProps  } from 'react-router';
 
+
+// Middleware
+import RequiresAuth from '../helpers/requiresAuth';
+
 import RegisterContainer from './registerContainer';
 import LoginContainer from './loginContainer';
 import DashboardContainer from './dashboardContainer';
@@ -42,19 +46,19 @@ class AppContainers extends Component<RouteComponentProps> {
 
               {/* *************************** Client Side *************************** */}
 
-               <Route path="/dashboard" exact component={DashboardContainer} />
-               <Route path="/user-profile" exact component={UserProfileContainer} />
-               <Route path="/health-check" exact component={HealthCheckContainer} />
-               <Route path="/medication-logs" exact component={MedicationLogsContainer} />
-               <Route path="/measurement" exact component={MeasurementContainerWizard} />
-               <Route path="/share" exact component={ShareContainer} />
-               <Route path="/heart-rate" exact component={HeartRateViewMoreContainer} />
-               <Route path="/blood-pressure" exact component={BloodPressureViewMoreContainer} />
-               <Route path="/body-temperature" exact component={BodyTemperatureViewMoreContainer} />
-               <Route path="/glucose" exact component={GlucoseViewMoreContainer} />
-               <Route path="/add-pills" exact component={PillAdditionContainerWizard} />
-               <Route path="/oxygen-saturation" exact component={OxygenSaturationViewMoreContainer} />
-               <Route path="/edit/:id" exact component={PillEditContainerWizard} />
+               <Route path="/dashboard" exact component={RequiresAuth(DashboardContainer)} />
+               <Route path="/user-profile" exact component={RequiresAuth(UserProfileContainer)} />
+               <Route path="/health-check" exact component={RequiresAuth(HealthCheckContainer)} />
+               <Route path="/medication-logs" exact component={RequiresAuth(MedicationLogsContainer)} />
+               <Route path="/measurement" exact component={RequiresAuth(MeasurementContainerWizard)} />
+               <Route path="/share" exact component={RequiresAuth(ShareContainer)} />
+               <Route path="/heart-rate" exact component={RequiresAuth(HeartRateViewMoreContainer)} />
+               <Route path="/blood-pressure" exact component={RequiresAuth(BloodPressureViewMoreContainer)} />
+               <Route path="/body-temperature" exact component={RequiresAuth(BodyTemperatureViewMoreContainer)} />
+               <Route path="/glucose" exact component={RequiresAuth(GlucoseViewMoreContainer)} />
+               <Route path="/add-pills" exact component={RequiresAuth(PillAdditionContainerWizard)} />
+               <Route path="/oxygen-saturation" exact component={RequiresAuth(OxygenSaturationViewMoreContainer)} />
+               <Route path="/edit/:id" exact component={RequiresAuth(PillEditContainerWizard)} />
 
                {/* *************************** Client Side *************************** */}
 

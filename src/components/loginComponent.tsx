@@ -36,7 +36,7 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
     } = props;
 return (
 <React.Fragment>
-    <Container style={{backgroundColor:"#f5f5dc",width:"100%",height:"100vh"}} fluid className="p-5">
+    <Container style={{backgroundColor:"#fff",width:"100%",height:"100vh"}} fluid className="p-5">
         <Row>
             <Col>
             </Col>
