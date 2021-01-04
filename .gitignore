@@ -23,6 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 /src/containers/modalContainers
 /src/components/modalComponents
-*.json
-/src/components/tableComponent.js
-\src\App.css
+/src/App.css
+/src/db.json

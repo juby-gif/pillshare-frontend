@@ -25,7 +25,7 @@ import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSatura
 import PillAdditionContainerWizard from './pillAdditionContainerWizard';
 import PillEditContainerWizard from './pillEditContainerWizard';
 
-import PageNotFoundComponent from '../Menu/404Component'; 
+import NotFound404Component from '../Menu/404Component'; 
 
 class AppContainers extends Component<RouteComponentProps> {
   render() {
@@ -71,7 +71,7 @@ class AppContainers extends Component<RouteComponentProps> {
                <Route path="/remote-medication-logs" exact component={RemoteMedicationLogsContainer} />
 
               {/* *************************** 404 page *************************** */}
-               <Route component={PageNotFoundComponent} />
+               <Route component={NotFound404Component} />
               {/* *************************** 404 page *************************** */}
 
 

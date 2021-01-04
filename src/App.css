@@ -804,7 +804,7 @@ a.btn-icon-only {
   transition: all 0.15s ease; }
 
 .card-profile-image img:hover {
-    /* transform: translate(-50%, -33%); */
+    transform: translate(-50%, -33%);
    }
 
 .card-profile-stats {
@@ -906,13 +906,13 @@ a.btn-icon-only {
 
 @media (max-width: 860px){
   h4.display-6 {
-  font-size: calc(0.8rem + 1.8vw);
+  font-size: calc(0.8rem + 0.5vw);
   font-weight: 400;
     } }
 
 @media (min-width: 860px){
   h4.display-6 {
-  font-size: calc(0.4rem + 1.8vw);
+  font-size: calc(0.4rem + 1.3vw);
   font-weight: 400;
     } }
     

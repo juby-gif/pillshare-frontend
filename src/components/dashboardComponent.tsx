@@ -111,16 +111,16 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                     <SidebarComponent />
                     {/* --- Sidebar ---*/}
 
-                    <div id="page-wrap" style={{height: "100%",overflow:"auto"}}>
+                    <div id="page-wrap" style={{height: "100%",overflow:"hidden"}}>
                         {/* ----------------------The page content starts here---------------------- */}
 
                         {/* --- Navigation ---*/}
                         <NavigationComponent />
                         {/* --- Navigation ---*/}
 
-                        <Container  className="p-4" style={{margin: "auto",width: "70%",border: "3px solid white"}} fluid>
+                        <Container  className="pt-4" style={{margin: "auto",width: "80%",border: "3px solid white", padding:"auto"}} fluid>
                             <CardDeck>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -156,7 +156,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         </span>
                                     </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -192,7 +192,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                     <Card.Body>
                                         <Row>
                                             <Col xs={7}>
@@ -228,7 +228,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                 </Card>
-                                <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -264,7 +264,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                             </span>
                                         </span>
                                     </Card>
-                                    <Card className="mb-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
+                                    <Card className="mt-4" style={{ minWidth: '18rem',maxWidth:'19.6rem',borderRadius:"18px 18px 18px 18px" }} >
                                         <Card.Body>
                                             <Row>
                                                 <Col xs={7}>
@@ -347,7 +347,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
 
                         </Container>
                         <Container style={{margin: "auto",width: "80%",border: "3px solid white",padding: "16px"}} fluid>
-                            <Card id="alert-issued" className="mb-4 mr-4" style={{ minWidth: '22rem',maxWidth:'22rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
+                            <Card id="alert-issued" className="mb-4 mr-4" style={{ minWidth: '18rem',maxWidth:'18rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
                                 <Card.Body>
                                     <Row>
                                         <Col xs={7}>
@@ -362,7 +362,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                     </Row>
                                 </Card.Body>
                             </Card>
-                            <Card id="alert-responded" className="mb-4 mr-4" style={{display: "block", minWidth: '22rem',maxWidth:'22rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
+                            <Card id="alert-responded" className="mb-4 mr-4" style={{display: "block", minWidth: '18rem',maxWidth:'18rem',minHeight:"7rem",maxHeight:"7rem", borderRadius:"18px 18px 18px 18px" }} >
                                 <Card.Body>
                                     <Row>
                                         <Col xs={7}>

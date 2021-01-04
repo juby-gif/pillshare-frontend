@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card, Container, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import logo from '../img/404-logo.png';
 
@@ -24,7 +25,7 @@ render(){
     return(
         <React.Fragment>
             <Navbar style={{backgroundColor:"#036599"}}>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="#">
                     <img
                         alt="logo"
                         src={logo}
@@ -35,13 +36,13 @@ render(){
                 </Navbar.Brand>
             </Navbar>
             <Container fluid>   
-                <Card className="m-2" style={{ width: '100%', border:"none" }}>
+                <Card className="m-2" style={{ display:"flex", border:"none", position:"absolute"  }}>
                     <Card.Body>
                         <Card.Title className="display-6">404</Card.Title>
-                        <h4 className="display-6 text-muted">The page you've requested doesn't exist.</h4>
+                        <h4 className="display-6 text-muted">Sorry! The page you've requested seems to be doesn't exist.</h4>
                     </Card.Body>
                     <Card.Footer style={{ border:"none" }}>
-                        <Button className="card-button p-3" size="lg">Back to Dashboard</Button>
+                        <Link to="/dashboard"><Button className="card-button p-3" size="lg">Back to Dashboard</Button></Link>
                     </Card.Footer>
                 </Card>
             </Container>
