@@ -70,10 +70,11 @@ const MeasurementComponentWizard = (props: IProps) : JSX.Element => {
                                                                     Back
                                                                 </Button>
                                                                 <Button
+                                                                    style={{ width:"10rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
                                                                     variant="contained"
                                                                     color="primary"
                                                                     onClick={handleNext}
-                                                                    className={classes.button}
+                                                                    // className={classes.button}
                                                                 >
                                                                     {activeStep === steps.length - 1 ? 'Save and Submit' : 'Save and Next'}
                                                                 </Button>

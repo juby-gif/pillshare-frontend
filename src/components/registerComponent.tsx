@@ -22,6 +22,7 @@ passwordErrorAlert : boolean;
 passwordSuccessAlert : boolean;
 registerSuccess : boolean;
 registerFailure : boolean;
+isLoading : boolean;
 onFirstNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
 onMiddleNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
 onLastNameChange : (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -48,6 +49,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
         registerSuccess,
         registerFailure,
         validated,
+        isLoading,
         passwordErrorAlert,
         passwordSuccessAlert,
         onFirstNameChange,
@@ -63,12 +65,12 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
     return (
     <React.Fragment>
         {registerSuccess && (
-        <Container style={{position:"absolute"}} className="p-1" fluid>
+        <Container style={{position:"absolute"}} className="alert-registration p-1" fluid>
            <Alert variant="success">{message}</Alert>
         </Container>
         )}
         {registerFailure && (
-        <Container style={{position:"absolute"}}  className="p-1" fluid>
+        <Container style={{position:"absolute"}} className="alert-registration p-1" fluid>
             <Alert variant="danger">{message}</Alert>
         </Container>
         )}
@@ -206,7 +208,13 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                             This field is required.
                                         </Form.Control.Feedback>
                                     </Form.Group>
-                                    <Button size="lg" style={{ width:"14rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}} onClick={onRegisterClick}>Get Started!</Button><br /><br />
+                                    <Button 
+                                        size="lg" style={{ width:"14rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                        disabled={isLoading}
+                                        onClick={!isLoading ? onRegisterClick : undefined}
+                                        className="mb-2">
+                                        {isLoading ? 'Getting started...' : 'Get Started!'}
+                                    </Button>
                                     Already have an account? <Link style={{textDecoration:"none"}} to="/login">Sign-in</Link>
                                 </Form>
                             </Col>

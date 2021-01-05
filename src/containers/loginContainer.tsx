@@ -20,6 +20,7 @@ validated : boolean;
 error ?: boolean;
 variant ?: string;
 success ?: boolean;
+isLoading: boolean,
 }
 
 interface ResponseProps {
@@ -44,6 +45,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
             error:false,
             success:false,
             validated:false,
+            isLoading:false,
             variant:"",
 
     }
@@ -106,6 +108,9 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         event.preventDefault();
         const {username,password} = this.state;
         if(username !== "" && username !== undefined && password !=="" && password !== undefined){
+            this.setState({
+                isLoading:true,
+            })
             this.onLoginAPIProcessCall(username,password);
         }
         this.setState({
@@ -128,12 +133,18 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
 
 
         if((responseData.length?responseData.length:0) >= 18){
-            this.setState({
-                message:responseData.message,
-                variant:"success",
-                success:true,
-            })
-            setTimeout(()=>{this.props.history.push("/dashboard")},4000);
+            setTimeout(()=>{
+                this.setState({
+                    message:responseData.message,
+                    variant:"success",
+                    success:true,
+                })},2000);
+            setTimeout(()=>{
+                this.setState({
+                    isLoading:false,
+                })
+                this.props.history.push("/dashboard")
+            },4000);
         }else {
             localStorage.setItem(FIRST_USER,"true");
             this.setState({
@@ -141,17 +152,22 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
                 variant:"success",
                 success:true,
             })
-            setTimeout(()=>{this.props.history.push("/user-profile")},4000);
+            setTimeout(()=>{
+                this.setState({
+                    isLoading:false,
+                })
+                this.props.history.push("/user-profile")
+            },4000);
         }
     }
     
     onFailureCallBack = (responseData: ResponseProps): void => {
-        this.setState({
+        setTimeout(()=>{this.setState({
             error:true,
             message:responseData.message,
             variant:"danger",
-
-        })
+            isLoading:false,
+        })},1000);
     }
 
     /* *
@@ -159,12 +175,13 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         *------------------------------------------------------------
     */
     render(){
-        const {username,password,response,message,error,validated,variant,success} = this.state;
+        const {username,password,response,message,error,validated,variant,success,isLoading} = this.state;
         const {onUsernameChange,onPasswordChange,onLoginClick,onRegisterClick} = this;
         return(
             <div>
                 <LoginComponent
                 username={username}
+                isLoading={isLoading}
                 password={password}
                 response={response}
                 message={message}

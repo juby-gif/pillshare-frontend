@@ -84,6 +84,10 @@
   background-color: #036599;
 }
 
+.alert-registration {
+  z-index: 9999;
+}
+
 .responsive-iframe {
   position: absolute;
   top: 0;
@@ -213,6 +217,7 @@ th,td {
 
 .more-details {
   font-size: 0.8rem;
+  color:#036599;
 }
 
 html {

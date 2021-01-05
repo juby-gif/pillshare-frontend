@@ -169,7 +169,15 @@ const TableComponent = (props:IProps):JSX.Element => {
           }               
           </tbody>
         </Table>
-        {debuggMode && <Link to="/add-pills"><Button className="m-3"><FontAwesomeIcon style={{fontSize:"0.8rem",color:"#fff"}} icon={faPlus} /> Add new pill</Button></Link>}
+        {debuggMode &&
+          <Link to="/add-pills">
+            <Button
+              style={{ width:"9rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+              className="m-3">
+                <FontAwesomeIcon style={{fontSize:"0.8rem",color:"#fff"}} icon={faPlus} />{' '}
+                Add new pill
+            </Button>
+          </Link>}
         {deleteShow === true && (
         <Modal
         backdrop="static"

@@ -26,6 +26,7 @@ passwordErrorAlert : boolean;
 passwordSuccessAlert : boolean;
 registerSuccess : boolean;
 registerFailure : boolean;
+isLoading : boolean;
 }
 
 interface ResponseProps {
@@ -55,6 +56,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             passwordSuccessAlert:false,
             registerSuccess:false,
             registerFailure:false,
+            isLoading:false,
     }
     this.onFirstNameChange = this.onFirstNameChange.bind(this);
     this.onMiddleNameChange = this.onMiddleNameChange.bind(this);
@@ -208,6 +210,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
                 const user_id:string = uuidv4();
                 this.setState({
                     passwordSuccessAlert:true,
+                    isLoading:true,
                 })
                 setTimeout(()=>{this.onRegisterAPIProcessCall(firstName,middleName,lastName,username,email,password,checkedStatus,authCode,user_id)
                     this.setState({
@@ -236,9 +239,9 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             registerSuccess:true,
             message:responseData.message,
         })
-        alert("HI")
         setTimeout(() =>{
             this.setState({
+                isLoading:false,
                 registerSuccess:false,
             })
             this.props.history.push("/login");
@@ -248,6 +251,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onFailureCallBack = (responseData: ResponseProps): void => {
         setTimeout(()=>{
         this.setState({
+            isLoading:false,
             registerFailure:true,
             message:responseData.message,
         })
@@ -262,7 +266,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         *------------------------------------------------------------
     */
     render(){
-        const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus,response,message,validated,passwordErrorAlert,passwordSuccessAlert,registerSuccess,registerFailure} = this.state;
+        const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus,response,message,validated,passwordErrorAlert,passwordSuccessAlert,registerSuccess,registerFailure,isLoading} = this.state;
         const {onFirstNameChange,onMiddleNameChange,onLastNameChange,onUsernameChange,onEmailChange,onPasswordChange,onRetypePasswordChange,onChangeCheck,onRegisterClick} = this;
         return(
             <div>
@@ -278,6 +282,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
                     response={response}
                     message={message}
                     validated={validated}
+                    isLoading={isLoading}
                     registerSuccess={registerSuccess}
                     registerFailure={registerFailure}
                     passwordErrorAlert={passwordErrorAlert}

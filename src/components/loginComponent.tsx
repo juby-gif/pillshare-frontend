@@ -14,6 +14,7 @@ interface FuncProps {
     validated : boolean;
     success ?: boolean;
     error ?: boolean;
+    isLoading : boolean;
     variant ?: string;
     onLoginClick: (event: React.SyntheticEvent) => void;
     onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,6 +31,7 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
             message,
             error,
             validated,
+            isLoading,
             onLoginClick,
             onUsernameChange,
             onPasswordChange,
@@ -98,14 +100,21 @@ return (
                         />
                     </Form.Row> */}
                     <Form.Row className="d-flex justify-content-center mt-3">
-                        <Button type="submit" className="mb-2" onClick={onLoginClick}>
-                            Login
+                        <Button
+                            style={{ width:"7rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}} 
+                            disabled={isLoading}
+                            onClick={!isLoading ? onLoginClick : undefined}
+                            className="mb-2">
+                            {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
                     </Form.Row>
                     <Form.Row className="d-flex justify-content-center">
-                        <Link to="/register" className="mb-2" >
+                        {!isLoading && (<Link to="/register" style={{color:"#036599"}} className="mb-2" >
                             New to Pillshare?
-                        </Link>
+                        </Link>)}
+                        {isLoading && (<Link to="/register" style={{color:"rgba(3, 101, 153, 0.274)"}} className="mb-2" >
+                            New to Pillshare?
+                        </Link>)}
                     </Form.Row>
                 </Form>
             </Col>

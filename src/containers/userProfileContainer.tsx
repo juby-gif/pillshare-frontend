@@ -82,6 +82,7 @@ interface StateProps {
     healthValidated:boolean;
     firstUser?:boolean;
     bmiStatus:boolean;
+    isLoading:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -126,6 +127,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           medicalShow: false,
           debuggMode:false,
           modalfirstShow:false,
+          isLoading:false,
           saveMode:false,
           userInfoValidated:false,
           contactValidated:false,
@@ -259,6 +261,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       // console.log(responseData);
       setTimeout(() => {this.setState({
         saveMode:false,
+        isLoading:false,
       })},4000)
     }
       
@@ -699,10 +702,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         otherHealthIssues:userHealthInformation.otherHealthIssues,
         images:images,
       }
+      this.setState({
+        isLoading:true,
+      })
       setTimeout(() => {this.setState({
         saveMode:true,
         firstUser:false,
-      })},1200);
+      })},2200);
       updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
       localStorage.setItem(FIRST_USER,"false");
       localStorage.removeItem(USER_INFORMATION_DATA);
@@ -794,11 +800,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               userInfoValidated,
               contactValidated,
               healthValidated,
+              isLoading,
               firstUser
              } = this.state;
         return(
             <UserProfileComponent 
             userShow = {userShow}
+            isLoading = {isLoading}
             bmiStatus ={bmiStatus}
             modalfirstShow = {modalfirstShow}
             contactShow = {contactShow}

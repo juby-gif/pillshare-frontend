@@ -62,6 +62,7 @@ interface IProps {
     onGetStartedClick : (event : React.SyntheticEvent) => void;
 
     userShow: boolean;
+    isLoading: boolean;
     saveMode: boolean;
     bmiStatus: boolean;
     modalfirstShow: boolean;
@@ -137,6 +138,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             userInfoValidated,
             healthValidated,
             contactValidated,
+            isLoading,
 
 
             // User Information Update
@@ -381,6 +383,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                                 <Col className="text-right" xs="4">
                                                     <Button
+                                                        style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
                                                         color="primary"
                                                         onClick={onUserInfoClick}
                                                         size="sm"
@@ -524,8 +527,16 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             </Container>
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <Button onClick={onUserInfoSaveClick}>Update</Button>
-                                                            <Button onClick={onUserInfoBackClick}>Back</Button>
+                                                            <Button
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onUserInfoSaveClick}>
+                                                                Update
+                                                            </Button>
+                                                            <Button
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onUserInfoBackClick}>
+                                                                    Back
+                                                            </Button>
                                                         </Modal.Footer>
                                                     </Modal>
 
@@ -650,6 +661,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                                 <Col className="text-right" xs="4">
                                                     <Button
+                                                        style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
                                                         color="primary"
                                                         onClick={onContactInfoClick}
                                                         size="sm"
@@ -741,8 +753,16 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             </Container>
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <Button onClick={onContactInfoSaveClick}>Update</Button>
-                                                            <Button onClick={onContactInfoBackClick}>Back</Button>
+                                                            <Button 
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onContactInfoSaveClick}>
+                                                                    Update
+                                                            </Button>
+                                                            <Button 
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onContactInfoBackClick}>
+                                                                    Back
+                                                            </Button>
                                                         </Modal.Footer>
                                                     </Modal>
 
@@ -838,6 +858,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                                 <Col className="text-right" xs="4">
                                                     <Button
+                                                        style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
                                                         color="primary"
                                                         onClick={onHealthInfoClick}
                                                         size="sm"
@@ -935,8 +956,16 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             </Container>
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <Button onClick={onHealthInfoSaveClick}>Update</Button>
-                                                            <Button onClick={onHealthInfoBackClick}>Back</Button>
+                                                            <Button
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onHealthInfoSaveClick}>
+                                                                Update
+                                                            </Button>
+                                                            <Button 
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onHealthInfoBackClick}>
+                                                                    Back
+                                                            </Button>
                                                         </Modal.Footer>
                                                     </Modal>
 
@@ -1029,6 +1058,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                                 <Col  xs="5" lg="4" className="text-right">
                                                     <Button
+                                                        style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
                                                         color="primary"
                                                         onClick={onMedicalInfoClick}
                                                         size="sm"
@@ -1047,8 +1077,17 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                                     <TableContainer debuggMode={debuggMode} />
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <a href="/user-profile" ><Button onClick={onMedicalInfoSaveClick}>Save</Button></a>
-                                                            <Button onClick={onMedicalInfoBackClick}>Back</Button>
+                                                            <a href="/user-profile" >
+                                                                <Button
+                                                                    style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                    onClick={onMedicalInfoSaveClick}>
+                                                                        Save
+                                                                </Button></a>
+                                                            <Button
+                                                                style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                                                onClick={onMedicalInfoBackClick}>
+                                                                    Back
+                                                            </Button>
                                                         </Modal.Footer>
                                                     </Modal>
 
@@ -1087,7 +1126,13 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
                                         {/* UUID Information */}
                                     </Form>
-                                    <Button onClick={onSaveClick} className="mt-5">Save</Button>
+                                    <Button 
+                                        style={{ width:"5rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                        disabled={isLoading}
+                                        onClick={!isLoading ? onSaveClick : undefined}
+                                        className="mt-5">
+                                        {isLoading ? 'Saving…' : 'Save'}
+                                    </Button>
                                 </Card.Body>
                             </Card>
                         </Col>

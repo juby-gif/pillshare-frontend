@@ -102,7 +102,12 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                                         required
                                     />
                                 </Form.Group>
-                                <Button onClick={onModalClickShow} variant="primary">Get sharable link</Button>
+                                <Button
+                                    style={{ width:"10rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                    onClick={onModalClickShow} 
+                                    variant="primary">
+                                        Get sharable link
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Container>
@@ -138,9 +143,19 @@ const ShareComponent = (props:IProps): JSX.Element =>  {
                         </Modal.Body>
                         <Modal.Footer>
                             <CopyToClipboard text={process.env.REACT_APP_WWW_DOMAIN + '/remote/' + payload}>
-                                <Button>Copy to clipboard</Button>
+                                <Button
+                                    style={{ width:"10rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                >
+                                    Copy to clipboard
+                                </Button>
                             </CopyToClipboard>
-                            <Link to="#" onClick={onBackClick}><Button>Back</Button></Link>
+                            <Link to="#" onClick={onBackClick}>
+                                <Button
+                                    style={{ width:"4rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}}
+                                >
+                                    Back
+                                </Button>
+                            </Link>
                         </Modal.Footer>
                     </Modal>)}
 
