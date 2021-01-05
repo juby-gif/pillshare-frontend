@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Container, Button, InputGroup, Row, FormControl,Image, Alert } from 'react-bootstrap';
+import { Form, Col, Container, Button, InputGroup, Row, FormControl, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,7 +43,7 @@ return (
             <Col sm="8" md="9" xs="12" lg="4" className="login p-2" style={{backgroundColor:"#f0f5f2",border:"2px solid #fff", borderWidth: ".2rem .2rem .2rem",borderRadius: "18px 18px 18px 18px"}}>
                 <Row>
                     <Col className="mt-5 mb-3 d-flex justify-content-center">
-                        <Image src={logo} fluid width="140rem"/>
+                        <img alt="logo" src={logo} draggable="false" width="140rem"/>
                     </Col>
                 </Row>
 

@@ -278,7 +278,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 </div>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button onClick={onGetStartedClick}>Let's get started!</Button>
+                            <Button size="lg" style={{ width:"10rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}} onClick={onGetStartedClick}>Let's get started!</Button>
+                            
                             </Modal.Footer>
                         </Modal> 
                     </Row>)}

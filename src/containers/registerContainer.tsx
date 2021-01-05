@@ -63,7 +63,6 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onRetypePasswordChange = this.onRetypePasswordChange.bind(this);
-    this.onSignInClick = this.onSignInClick.bind(this);
     this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
     this.onFailureCallBack = this.onFailureCallBack.bind(this);
     this.onChangeCheck = this.onChangeCheck.bind(this);
@@ -230,11 +229,6 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         
     }
 
-    onSignInClick = (event: React.SyntheticEvent): void => {
-        event.preventDefault();
-        this.props.history.push("/login")
-    }
-
     onSuccessCallBack = (responseData: ResponseProps): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
@@ -269,7 +263,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     */
     render(){
         const {firstName,middleName,lastName,username,email,password,retypePassword,checkedStatus,response,message,validated,passwordErrorAlert,passwordSuccessAlert,registerSuccess,registerFailure} = this.state;
-        const {onFirstNameChange,onMiddleNameChange,onLastNameChange,onUsernameChange,onEmailChange,onPasswordChange,onRetypePasswordChange,onChangeCheck,onRegisterClick,onSignInClick} = this;
+        const {onFirstNameChange,onMiddleNameChange,onLastNameChange,onUsernameChange,onEmailChange,onPasswordChange,onRetypePasswordChange,onChangeCheck,onRegisterClick} = this;
         return(
             <div>
                 <RegisterComponent
@@ -296,7 +290,6 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
                     onPasswordChange={onPasswordChange}
                     onRetypePasswordChange={onRetypePasswordChange}
                     onChangeCheck={onChangeCheck}
-                    onSignInClick={onSignInClick}
                     onRegisterClick={onRegisterClick}
                 />
             </div>
