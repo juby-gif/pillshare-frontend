@@ -234,7 +234,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
 
                 {/* Body container */}
                 <Container style={{paddingTop:"25rem"}} className="mt-5" fluid>
-                    {(firstUser && modalfirstShow)&&(<Row>
+                    {(firstUser === true && modalfirstShow === true)&&(<Row>
                         <Modal
                             backdrop="static" keyboard={false} 
                             show={modalfirstShow}
@@ -242,7 +242,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                             aria-labelledby="contained-modal-title-vcenter"
                             centered
                             style={{
-                                position: "absolute",
+                                position: "fixed",
                                 bottom: "0",
                                 background: "rgba(0, 0, 0,0.5)", /* Black see-through */
                                 // color: "#000",
@@ -265,7 +265,8 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 In addition to this, Pillshare has an in-built sharing feature where you can share your real-time data with anyone that you like around the world. 
                                 You will have the ability to select which data you want to share. 
                                 </p>
-                                <div style={{position: "relative",overflow: "hidden", width: "100%", paddingTop: "56.25%"}}>
+                                <p>To get started, please fill up your user information correctly. Pillshare could provide valuable and efficient assistance to its users only when you give <b>accurate information</b></p>
+                                {/* <div style={{position: "relative",overflow: "hidden", width: "100%", paddingTop: "56.25%"}}>
                                 <iframe 
                                     title="Medisafe"
                                     className="responsive-iframe"
@@ -277,7 +278,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                     allowFullScreen
                                 >
                                 </iframe>
-                                </div>
+                                </div> */}
                             </Modal.Body>
                             <Modal.Footer>
                             <Button size="lg" style={{ width:"10rem", backgroundColor:"#036599", boxShadow: "5px 5px 3px rgba(46, 46, 46, 0.62)"}} onClick={onGetStartedClick}>Let's get started!</Button>

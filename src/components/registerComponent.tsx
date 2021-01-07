@@ -87,7 +87,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                 </Col>
                             </Row>
                         </Card>
-                        <Card className="p-4 login">
+                        <Card style={{backgroundColor:"rgba(0,0,0,0.03)"}} className="p-4 login">
                             <Col>
                                 <Form noValidate validated={validated}>
                                     <Form.Row>
@@ -214,7 +214,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
                                         onClick={!isLoading ? onRegisterClick : undefined}
                                         className="mb-2">
                                         {isLoading ? 'Getting started...' : 'Get Started!'}
-                                    </Button>
+                                    </Button><br /><br />
                                     Already have an account? <Link style={{textDecoration:"none"}} to="/login">Sign-in</Link>
                                 </Form>
                             </Col>

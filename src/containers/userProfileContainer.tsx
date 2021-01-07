@@ -211,9 +211,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         *------------------------------------------------------------
     */
       getUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack);
-      this.setState({
+      setTimeout(() =>{this.setState({
         modalfirstShow:true,
-      })
+      })},5000)
     }
 
 
