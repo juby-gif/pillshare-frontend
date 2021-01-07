@@ -68,6 +68,7 @@ interface StateProps {
     bloodGroup?:string,
     underlyingHealthIssues?:string,
     otherHealthIssues?:string,
+    message?:string,
     userUpdate: boolean;
     userShow:boolean;
     contactShow:boolean;
@@ -83,6 +84,7 @@ interface StateProps {
     firstUser?:boolean;
     bmiStatus:boolean;
     isLoading:boolean;
+    errorMode:boolean;
 }
 interface ImageType{
 dataURL?: string;
@@ -129,6 +131,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           modalfirstShow:false,
           isLoading:false,
           saveMode:false,
+          errorMode:false,
           userInfoValidated:false,
           contactValidated:false,
           healthValidated:false,
@@ -154,6 +157,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
           underlyingHealthIssues:undefined,
           otherHealthIssues:undefined,
           userUpdate: true,
+          message:undefined,
           images: [],
           firstUser:JSON.parse(localStorage.getItem(FIRST_USER)||"false"),
 
@@ -255,14 +259,46 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       
     }
 
+    lengthChecker = (data:ServerData[] | null) => {
+      let count:number = 0;
+      for (let datum in data){
+        if (data.hasOwnProperty(datum)) count++;
+      }
+      if(count !== 0) { return count; }
+      else {return 0};
+    }
+
     onPatchRequestSuccessCallBack = (responseData: ServerResponse): void => {
 
       // For debugging purpose only
       // console.log(responseData);
+      if(this.lengthChecker(responseData.data) >25){
+        if(this.state.firstUser){
+          setTimeout(() => {this.setState({
+            saveMode:true,
+            message:"Congratulations! You have successfully unlocked the features.",
+            firstUser:false,
+          })},2200);
+        }else{
+        setTimeout(() => {this.setState({
+          saveMode:true,
+          message:"You have successfully saved your data!",
+        })},2200);
+      }
+      localStorage.setItem(FIRST_USER,"false");
+      }else{
+        setTimeout(() => {this.setState({
+          errorMode:true,
+          message:"Sorry, you have to complete the required fields before moving forward",
+        })},2200);
+      }
       setTimeout(() => {this.setState({
         saveMode:false,
+        errorMode:false,
         isLoading:false,
-      })},4000)
+        message:undefined,
+      })},6000)
+      setTimeout(() => {this.reload()},7000);
     }
       
     onFailureCallBack = (error: ServerResponse): void => {
@@ -705,16 +741,11 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       this.setState({
         isLoading:true,
       })
-      setTimeout(() => {this.setState({
-        saveMode:true,
-        firstUser:false,
-      })},2200);
+      
       updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
-      localStorage.setItem(FIRST_USER,"false");
       localStorage.removeItem(USER_INFORMATION_DATA);
       localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
       localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);
-      setTimeout(() => {this.reload()},5000);
     } 
     
   render () {
@@ -767,7 +798,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
 
             } = this;
-      const { firstName,
+      const { 
+              message,
+              firstName,
               middleName,
               lastName,
               username,
@@ -789,6 +822,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
               otherHealthIssues,
               userShow,
               saveMode,
+              errorMode,
               bmiStatus,
               contactShow,
               healthShow,
@@ -813,10 +847,12 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
             healthShow = {healthShow}
             medicalShow = {medicalShow}
             saveMode = {saveMode}
+            errorMode = {errorMode}
             firstUser = {firstUser}
             userInfoValidated = {userInfoValidated}
             contactValidated = {contactValidated}
             healthValidated = {healthValidated}
+            message = {message}
             
             onWeightChange = {onWeightChange}
             onHeightChange = {onHeightChange}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row,Col,Card,Container,Form, Button, Modal, Alert, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt,faCamera,faCheck,faStarOfLife } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt,faCamera,faCheck,faStarOfLife,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import ImageUploading  from "react-images-uploading";
 
@@ -64,6 +64,7 @@ interface IProps {
     userShow: boolean;
     isLoading: boolean;
     saveMode: boolean;
+    errorMode: boolean;
     bmiStatus: boolean;
     modalfirstShow: boolean;
     contactShow: boolean;
@@ -96,6 +97,7 @@ interface IProps {
     contactValidated:boolean;
     healthValidated:boolean;
     firstUser?:boolean;
+    message?:string;
 }
 
 interface ImageType{
@@ -104,7 +106,9 @@ interface ImageType{
     [key: string]: any;
     }
 const UserProfileComponent = (props: IProps) : JSX.Element => {
-    const { firstName,
+    const { 
+            message,
+            firstName,
             middleName,
             lastName,
             username,
@@ -135,6 +139,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
             images,
             debuggMode,
             saveMode,
+            errorMode,
             userInfoValidated,
             healthValidated,
             contactValidated,
@@ -205,11 +210,19 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                 {/* Alert for saving */}
                 {saveMode && (<Container id="message" style={{paddingTop:"3rem"}} fluid>
                     <Alert variant="success">
-                        <FontAwesomeIcon style={{fontSize:"1.3rem",color:"green"}} className="mr-2" icon={faCheck} /><span style={{fontSize:"1rem"}}>Your profile was saved successfully</span>
+                        <FontAwesomeIcon style={{fontSize:"1.3rem",color:"green"}} className="mr-2" icon={faCheck} /><span style={{fontSize:"1rem"}}>{message}</span>
                     </Alert>
                 </Container>)}
                 {/* Alert for saving */}
 
+
+                {/* Alert for error */}
+                {errorMode && (<Container id="message" style={{paddingTop:"3rem"}} fluid>
+                    <Alert variant="danger">
+                        <FontAwesomeIcon style={{fontSize:"1.3rem",color:"red"}} className="mr-2" icon={faExclamationTriangle} /><span style={{fontSize:"1rem"}}>{message}</span>
+                    </Alert>
+                </Container>)}
+                {/* Alert for error */}
 
                 {/* Header container */}
                 <Container className="d-flex align-items-center header pt-5 pt-lg-8" 
