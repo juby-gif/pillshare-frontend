@@ -276,7 +276,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         if(this.state.firstUser){
           setTimeout(() => {this.setState({
             saveMode:true,
-            message:"Congratulations! You have successfully unlocked the features.",
+            message:"Congratulations! You have successfully unlocked all the features.",
             firstUser:false,
           })},2200);
         }else{
