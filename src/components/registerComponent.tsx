@@ -74,7 +74,7 @@ const RegisterComponent = (props:IProps): JSX.Element =>  {
             <Alert variant="danger">{message}</Alert>
         </Container>
         )}
-        <Container className="p-5" fluid>
+        <Container className="p-2" fluid>
             <Col>
                 <Row>
                     <CardGroup style={{margin:"auto"}}>

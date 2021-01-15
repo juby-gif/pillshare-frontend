@@ -28,6 +28,7 @@ import GlucoseViewMoreContainer from './viewMoreContainers/glucoseContainer';
 import OxygenSaturationViewMoreContainer from './viewMoreContainers/oxygenSaturationContainer';
 import PillAdditionContainerWizard from './pillAdditionContainerWizard';
 import PillEditContainerWizard from './pillEditContainerWizard';
+import HomePageComponent from '../components/homepageComponent';
 
 import NotFound404Component from '../Menu/404Component'; 
 
@@ -46,6 +47,7 @@ class AppContainers extends Component<RouteComponentProps> {
 
               {/* *************************** Client Side *************************** */}
 
+               <Route path="/" exact component={HomePageComponent} />
                <Route path="/dashboard" exact component={RequiresAuth(DashboardContainer)} />
                <Route path="/user-profile" exact component={RequiresAuth(UserProfileContainer)} />
                <Route path="/health-check" exact component={RequiresAuth(HealthCheckContainer)} />
