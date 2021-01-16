@@ -18,15 +18,15 @@ const HomePageComponent = (props:IProps):JSX.Element => {
             <div className="section banner-full">
 	            <Container>
 		            <Row>
-                        <div className="col-lg-4 justify-content-xs-center">
+                        <div className="col-lg-5 justify-content-xs-center">
                             <div className="image" data-aos="flip-right">
                                 <img draggable={false} src={watch} alt="Iphone-Black"/>
                             </div>
                         </div>
-                        <div className="col-lg-8 align-self-center">
+                        <div className="col-lg-7 align-self-center">
                             <div className="block">
                                 <div className="logo mb-4">
-                                    <img draggable={false} src={logo} alt="logo" width="173rem" height="45rem"/>
+                                    <img draggable={false} src={logo} alt="logo" width="213rem" height="55rem"/>
                                 </div>
                                 <h1>Introducing Game Changing
                                     <br />Health tracking App</h1>
