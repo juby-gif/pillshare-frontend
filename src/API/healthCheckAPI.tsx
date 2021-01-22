@@ -24,7 +24,7 @@ export const postHealthCheckData = async (data:ServerData, onSuccessCallBack: (r
     console.log(data)
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/health_check_data',
+            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/health_check_data",            
             data: data,
             headers: {'Content-Type':'application/json'}
             

@@ -69,7 +69,7 @@ export const getSharableLinkAPI = async (user_id:string|undefined, onSuccessCall
     const {Base64} = require('js-base64');
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/users?user_id='+ user_id,
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users?user_id=" + user_id,
       })
       .then(function (response:ServerResponse){
         for (let datum of response.data){

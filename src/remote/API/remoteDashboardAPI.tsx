@@ -96,7 +96,7 @@ interface BloodPressureProps {
     const remoteObj:ParamProps = JSON.parse(remoteObjJSON);
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/dashboard_dataset/?user_id=' + remoteObj.user_id,
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/dashboard_dataset/?user_id=" + remoteObj.user_id,
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)

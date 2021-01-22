@@ -73,7 +73,7 @@ export const getMedicalTableInfo = async (user_id: string|null, onSuccessCallBac
     let data:DataProps[]=[];
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/medical_information?user_id=' + user_id,
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/medical_information?user_id=" + user_id,
       })
       .then(function (response:ServerResponse){
         
@@ -109,7 +109,7 @@ export const getMedicalTableInfoById = async (id:string, onSuccessCallBack: (res
   const axios = require('axios').default;
   await axios({
       method: 'get',
-      url: 'http://localhost:3001/medical_information?id=' + id,
+      url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/medical_information?id=" + id,      
     })
     .then(function (response:ServerResponse){
       for(let datum of response.data){
@@ -145,7 +145,7 @@ export const postPillData = async (user_id:string|undefined,data:ServerData, onS
   console.log(data)
       await axios({
           method: 'post',
-          url: 'http://localhost:3001/medical_information?user_id=' + user_id,
+          url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/medical_information?user_id=" + user_id,
           data: data,
           headers: {'Content-Type':'application/json'}
           
@@ -164,7 +164,7 @@ export const patchPillData = async (id:string,data:ServerData, onSuccessCallBack
   const axios = require('axios').default;
       await axios({
           method: 'patch',
-          url: 'http://localhost:3001/medical_information/' + id,
+          url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/medical_information/" + id,
           data: data,
           headers: {'Content-Type':'application/json'}
           

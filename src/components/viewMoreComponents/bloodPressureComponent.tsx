@@ -45,7 +45,7 @@ return(
                     <div className="p-3 mb-5" style={{width: "90%",height: "30rem",objectFit: "cover", margin:"auto"}} id="chartdiv"></div>
 
                     <Container fluid className="mt-5">
-                        <CardDeck style={{margin: "auto",width: "55%",}}>
+                        <CardDeck style={{margin: "auto",width: "65%",}}>
                         <Card className="mb-4 text-center" style={{ color:"#fff",backgroundColor:"rgb(102,0,0)",minWidth: '15rem',maxWidth:'15rem',borderRadius:"18px 18px 18px 18px" }}>
                                 <Card.Body>
                                     <Row className="mb-2">

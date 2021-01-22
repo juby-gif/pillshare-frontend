@@ -25,7 +25,7 @@ export const postRegisterAPI = async (postData:ServerData, onSuccessCallBack: (r
     const axios = require('axios').default;
         await axios({
             method: 'post',
-            url: 'http://localhost:3001/users',
+            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users",
             data: postData,
             headers: {'Content-Type':'application/json'}
             

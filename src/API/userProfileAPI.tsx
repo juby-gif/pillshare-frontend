@@ -41,7 +41,7 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
     const axios = require('axios').default;
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/users?user_id=' + user_id,
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users?user_id=" + user_id,
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
@@ -66,7 +66,7 @@ export const updateUserProfileAPI = async (user_id: string|undefined, onSuccessC
     const axios = require('axios').default;
     await axios({
             method: 'patch',
-            url: 'http://localhost:3001/users/' + getUserID(userObjArr) +'/',
+            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users/" + getUserID(userObjArr) +'/',            
             data: data,
             headers: {'Content-Type':'application/json'}
         })

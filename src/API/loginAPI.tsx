@@ -35,10 +35,10 @@ interface ResponseProps {
       if(count !== 0) { return count; }
       else {return 0};
     }
-   
+    
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/users',
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users",
       })
       .then(function (response:ServerResponse) {
 

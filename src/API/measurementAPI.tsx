@@ -1,4 +1,3 @@
-import { URL } from '../constants';
 interface BodyTemperatureProps {
     reading ?: number;
     date ?: string;
@@ -60,7 +59,7 @@ export const postTimeSeriesData = async (data:ServerData | undefined,name:string
     const axios = require('axios').default;
     await axios( {
           method: 'post',
-          url: URL + name,
+          url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/" + name,
           data: data,
           headers: {'Content-Type':'application/json'}})
           .then(function (responseData:ServerResponse) {

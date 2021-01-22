@@ -11,7 +11,7 @@ export const getOxygenSaturationData = async (user_id: string|null, onSuccessCal
     const axios = require('axios').default;
     await axios({
         method: 'get',
-        url: 'http://localhost:3001/oxygen_saturation_measurements?user_id=' + user_id,
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/oxygen_saturation_measurements?user_id=" + user_id,        
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
