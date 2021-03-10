@@ -34,6 +34,6 @@ export const postRegisterAPI = async (postData:ServerData, onSuccessCallBack: (r
                 onSuccessCallBack(message);
           })
           .catch(function (error:ServerErrResponse) {
-            onFailureCallBack(error.response.data.message);
+            onFailureCallBack(error.response?error.response.data.message:"Server Error");
           });
     }

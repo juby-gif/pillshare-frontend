@@ -1,12 +1,12 @@
-import { USER_TOKEN, LOGGED_IN_USER_ID, LOGGED_IN_USER_NAME, USER_IMAGE } from '../constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 
 interface ServerResponse {
     data:ServerData;
   }
 interface ServerData{
-  accessToken?: string;
-  refreshToken?: string;
-  length?: number;
+  accessToken: string;
+  refreshToken: string;
+  length: number;
   message: string;
 }
 
@@ -16,8 +16,7 @@ interface ServerErrResponse {
 
 interface ResponseProps {
   message : string;
-  token ?: string;
-  length ?:number;
+  length :number;
 }
 
   export const postLoginAPI = async (email:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: string) => void) :Promise<void> =>{
@@ -41,6 +40,9 @@ interface ResponseProps {
         // console.log(response.data.accessToken)
         // console.log(response.data.length)
         // console.log(response.data.message)
+
+        localStorage.setItem(ACCESS_TOKEN,response.data.accessToken)
+        localStorage.setItem(REFRESH_TOKEN,response.data.refreshToken)
         const responseData = {
           message : response.data.message,
           length : response.data.length,
@@ -51,7 +53,7 @@ interface ResponseProps {
       })
 
       .catch(function (error:ServerErrResponse) {
-        const errorResponse:string = error.response.data.message
+        const errorResponse:string = error.response?error.response.data.message:"Server Error"
         onFailureCallBack(errorResponse)
       });
   }
