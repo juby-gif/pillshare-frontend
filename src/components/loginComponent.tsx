@@ -7,7 +7,7 @@ import { faThumbsUp, faExclamationTriangle } from '@fortawesome/free-solid-svg-i
 
  
 interface FuncProps {
-    username : string;
+    email : string;
     password : string;
     response : string;
     message : string;
@@ -17,13 +17,13 @@ interface FuncProps {
     isLoading : boolean;
     variant ?: string;
     onLoginClick: (event: React.SyntheticEvent) => void;
-    onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onEmailChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onRegisterClick: (event: React.SyntheticEvent) => void;
 }
 
 const LoginComponent = (props: FuncProps) : JSX.Element => {
-    const { username,
+    const { email,
             password,
             // response,
             variant,
@@ -33,7 +33,7 @@ const LoginComponent = (props: FuncProps) : JSX.Element => {
             validated,
             isLoading,
             onLoginClick,
-            onUsernameChange,
+            onEmailChange,
             onPasswordChange,
     } = props;
 return (
@@ -69,15 +69,12 @@ return (
                     <Form.Row className="d-flex justify-content-center">
                         <Form.Group as={Col} xs="7" md="5" lg="7">
                             <Form.Label>
-                                Username
+                                Email
                             </Form.Label>
                             <InputGroup className="mb-2">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text>@</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl id="inlineFormInputGroup" placeholder="Username" value={username} onChange={onUsernameChange} required />
+                                <FormControl id="inlineFormInputGroup" type="email" placeholder="email" value={email} onChange={onEmailChange} required />
                                 <Form.Control.Feedback type="invalid">
-                                    Please choose a username.
+                                    Please choose a email.
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>

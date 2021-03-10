@@ -1,9 +1,3 @@
-
-
-interface ServerResponse {
-    data: ServerData[];
-  }
-  
 interface ServerData {
     firstName : string;
     middleName : string;
@@ -16,34 +10,30 @@ interface ServerData {
     user_id ?: string;
 }
 
+interface MessageProps{
+  message:string;
+}
 interface ResponseProps {
-    message : string;
-   
+  data : MessageProps;
 }
 
-export const postRegisterAPI = async (postData:ServerData, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: ResponseProps) => void) :Promise<void> =>{
+interface ServerErrResponse {
+  response : ResponseProps;
+}
+
+export const postRegisterAPI = async (postData:ServerData, onSuccessCallBack: (responseData: string) => void, onFailureCallBack: (responseData: string) => void) :Promise<void> =>{
     const axios = require('axios').default;
         await axios({
             method: 'post',
-            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users",
+            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/register",
             data: postData,
             headers: {'Content-Type':'application/json'}
-            
           })
-          .then(function (response:ServerResponse) {
-              if(response.data !== [] || response.data !== undefined || response.data !== null){
-                const responseData : ResponseProps = {
-                    message : "Congratulations! You are successfully registered!",
-                }
-                onSuccessCallBack(responseData);
-              } else {
-                const responseData : ResponseProps = {
-                    message:"Registration Failed"
-                }
-                onFailureCallBack(responseData);
-              }
+          .then(function (response:ResponseProps) {
+              const message:string  = response.data.message
+                onSuccessCallBack(message);
           })
-          .catch(function (error:ServerResponse) {
-            console.log(error);
+          .catch(function (error:ServerErrResponse) {
+            onFailureCallBack(error.response.data.message);
           });
     }

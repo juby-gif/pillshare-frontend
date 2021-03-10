@@ -29,9 +29,7 @@ registerFailure : boolean;
 isLoading : boolean;
 }
 
-interface ResponseProps {
-    message : string;
-}
+
 export default class RegisterContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
     /*   *
@@ -106,8 +104,6 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
             email: email,
             password: password,
             checkedStatus: checkedStatus,
-            authCode:authCode,
-            user_id:user_id,
             };
             postRegisterAPI(postData,onSuccessCallBack,onFailureCallBack);
         }
@@ -120,7 +116,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            registerFailure:false,
         })
         this.setState({
             firstName:event.currentTarget.value,
@@ -130,7 +127,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onMiddleNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            registerFailure:false,
         })
         this.setState({
             middleName:event.currentTarget.value,
@@ -139,7 +137,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            registerFailure:false,
         })
         this.setState({
             lastName:event.currentTarget.value,
@@ -149,7 +148,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            registerFailure:false,
         })
         this.setState({
             username:event.currentTarget.value,
@@ -159,7 +159,8 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
 
     onEmailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
-            message:""
+            message:"",
+            registerFailure:false,
         })
         this.setState({
             email:event.currentTarget.value,
@@ -170,6 +171,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             message:"",
+            registerFailure:false,
         })
         this.setState({
             password:event.currentTarget.value,
@@ -181,6 +183,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onRetypePasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             message:"",
+            registerFailure:false,
         })
         this.setState({
             retypePassword:event.currentTarget.value,
@@ -192,6 +195,7 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
     onChangeCheck = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             message:"",
+            registerFailure:false,
         })
        
         this.setState({
@@ -232,12 +236,12 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         
     }
 
-    onSuccessCallBack = (responseData: ResponseProps): void => {
+    onSuccessCallBack = (responseData: string): void => {
         // For debugging purpose only
         // console.log("Message => ",responseData.message,"Token => ",responseData.token);
         this.setState({
             registerSuccess:true,
-            message:responseData.message,
+            message:responseData,
         })
         setTimeout(() =>{
             this.setState({
@@ -248,14 +252,14 @@ export default class RegisterContainer extends Component<IProps & RouteComponent
         },5500)
     }
     
-    onFailureCallBack = (responseData: ResponseProps): void => {
+    onFailureCallBack = (responseData: string): void => {
         setTimeout(()=>{
         this.setState({
             isLoading:false,
             registerFailure:true,
-            message:responseData.message,
+            message:responseData,
         })
-        },3000)
+        },1000)
         this.setState({
             registerFailure:false,
         })

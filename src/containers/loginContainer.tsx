@@ -12,7 +12,7 @@ interface IProps {
 
 }
 interface StateProps {
-username : string;
+email : string;
 password : string;
 response : string;
 message : string;
@@ -38,7 +38,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
     constructor(props:IProps & RouteComponentProps){
         super(props);
         this.state={
-            username:"",
+            email:"",
             password:"",
             response:"",
             message:"",
@@ -49,7 +49,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
             variant:"",
 
     }
-    this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onRegisterClick = this.onRegisterClick.bind(this);
@@ -73,23 +73,23 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         *  API callback functions
         *------------------------------------------------------------
     */
-    onLoginAPIProcessCall = (username:string,password:string):void => {
+    onLoginAPIProcessCall = (email:string,password:string):void => {
         const { onSuccessCallBack,onFailureCallBack } = this;
-        postLoginAPI(username,password,onSuccessCallBack,onFailureCallBack);        
+        postLoginAPI(email,password,onSuccessCallBack,onFailureCallBack);        
     }
 
     /* *
         *  Event handling functions
         *------------------------------------------------------------
     */
-    onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onEmailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             message:"",
             validated:false,
             error:false,
         })
         this.setState({
-            username:event.currentTarget.value,
+            email:event.currentTarget.value,
         })
     }
 
@@ -106,12 +106,12 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
 
     onLoginClick = (event: React.SyntheticEvent): void => {
         event.preventDefault();
-        const {username,password} = this.state;
-        if(username !== "" && username !== undefined && password !=="" && password !== undefined){
+        const {email,password} = this.state;
+        if(email !== "" && email !== undefined && password !=="" && password !== undefined){
             this.setState({
                 isLoading:true,
             })
-            this.onLoginAPIProcessCall(username,password);
+            this.onLoginAPIProcessCall(email,password);
         }
         this.setState({
             validated:true,
@@ -161,10 +161,10 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         }
     }
     
-    onFailureCallBack = (responseData: ResponseProps): void => {
+    onFailureCallBack = (responseData: string): void => {
         setTimeout(()=>{this.setState({
             error:true,
-            message:responseData.message,
+            message:responseData,
             variant:"danger",
             isLoading:false,
         })},1000);
@@ -175,12 +175,12 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
         *------------------------------------------------------------
     */
     render(){
-        const {username,password,response,message,error,validated,variant,success,isLoading} = this.state;
-        const {onUsernameChange,onPasswordChange,onLoginClick,onRegisterClick} = this;
+        const {email,password,response,message,error,validated,variant,success,isLoading} = this.state;
+        const {onEmailChange,onPasswordChange,onLoginClick,onRegisterClick} = this;
         return(
             <div>
                 <LoginComponent
-                username={username}
+                email={email}
                 isLoading={isLoading}
                 password={password}
                 response={response}
@@ -189,7 +189,7 @@ export default class LoginContainer extends Component<IProps & RouteComponentPro
                 error={error}
                 success={success}
                 variant={variant}
-                onUsernameChange={onUsernameChange}
+                onEmailChange={onEmailChange}
                 onPasswordChange={onPasswordChange}
                 onLoginClick={onLoginClick}
                 onRegisterClick={onRegisterClick}
