@@ -1,6 +1,7 @@
 import { LOGGED_IN_USER } from "../constants";
+import  LocalStorageService from '../localStorageService';
 
-interface Props{
+interface ServerData{
     firstName?: string;
     middleName?: string;
     lastName?: string;
@@ -8,7 +9,7 @@ interface Props{
     email?: string;
     weight?: string;
     height?: string;
-    age?:number;
+    age?:string;
     gender?:string;
     dob?:string;
     address?:string;
@@ -22,7 +23,7 @@ interface Props{
     bloodGroup?:string;
     underlyingHealthIssues?:string;
     otherHealthIssues?:string;
-    images:ImageType[];
+    // images:ImageType[];
     id?:number
 }
 
@@ -32,16 +33,27 @@ interface ImageType{
     [key: string]: any;
     }
     
-
+interface ServerPatchResponse{
+ data:ServerPatchData;
+}
+interface ServerPatchData{
+  message: string;
+  length: number;
+}
 interface ServerResponse {
-    data: Props[];
+    data: ServerData;
 }
 
-export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+const localStorageService:any = LocalStorageService.getService()
+export const getUserProfileAPI = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerPatchResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
     await axios({
-        method: 'get',
-        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users?user_id=" + user_id,
+        headers: {
+          'Authorization': `JWT ${localStorageService.getAccessToken()}`,
+          'Content-Type': 'application/json', 
+          'Accept' : 'application/json',
+        },
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/user",
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
@@ -50,32 +62,30 @@ export const getUserProfileAPI = async (user_id: string|null, onSuccessCallBack:
       }
 
         )
-      .catch(function (error:ServerResponse) {
+      .catch(function (error:ServerPatchResponse) {
          onFailureCallBack(error)
       })
 }
 
-export const updateUserProfileAPI = async (user_id: string|undefined, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void, data:Props) :Promise<void> =>{
-    let userObjArr = JSON.parse(localStorage.getItem(LOGGED_IN_USER)|| '[]')
-    const getUserID = (userObjArr:Props[]):number|undefined => {
-    for (let userObj of userObjArr){
-        return userObj.id;
-        }
-    }   
+export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: ServerPatchResponse) => void, onFailureCallBack: (responseData: ServerPatchResponse) => void, data:ServerData) :Promise<void> =>{
     
     const axios = require('axios').default;
     await axios({
             method: 'patch',
-            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/users/" + getUserID(userObjArr) +'/',            
+            url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/update-user",            
             data: data,
-            headers: {'Content-Type':'application/json'}
+            headers: {
+              'Authorization': `JWT ${localStorageService.getAccessToken()}`,
+              'Content-Type': 'application/json', 
+              'Accept' : 'application/json',
+            }
         })
-      .then(function (response:ServerResponse){
+      .then(function (response:ServerPatchResponse){
           onSuccessCallBack(response)
       }
 
         )
-      .catch(function (error:ServerResponse) {
+      .catch(function (error:ServerPatchResponse) {
          onFailureCallBack(error)
       })
 }

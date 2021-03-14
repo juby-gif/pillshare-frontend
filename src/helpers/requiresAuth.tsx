@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 
-import { LOGGED_IN_USER_ID } from '../constants';
+import  LocalStorageService from '../localStorageService';
 
-
+const localStorageService:any = LocalStorageService.getService()
 const RequiresAuth =  (ComponentToBeChecked:any) => {
     class Authenticate extends Component {
         render() {
-            if (localStorage.getItem(LOGGED_IN_USER_ID) === "" || localStorage.getItem(LOGGED_IN_USER_ID) === undefined || localStorage.getItem(LOGGED_IN_USER_ID) === null){
+            if (localStorageService.getAccessToken() === "" || localStorageService.getAccessToken() === null){
                 return <Redirect to="/login" />
 
             } else {

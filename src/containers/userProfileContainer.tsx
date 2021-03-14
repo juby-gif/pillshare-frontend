@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import UserProfileComponent from '../components/userProfileComponent';
-import { getUserProfileAPI, updateUserProfileAPI } from '../API/userProfileAPI';
+import { getUserProfileAPI, updateUserProfileAPI }  from '../API/userProfileAPI';
+import  LocalStorageService from '../localStorageService';
 import { 
         LOGGED_IN_USER, 
         LOGGED_IN_USER_ID,
@@ -11,6 +12,7 @@ import {
         USER_HEALTH_INFORMATION_DATA,
         USER_IMAGE,
         FIRST_USER,
+        USER_DATA,
        } from '../constants';
 
 
@@ -27,7 +29,7 @@ interface ServerData {
   weight?: string;
   height?: string;
   bodyMassIndexValue?:string;
-  age?:number,
+  age?:string,
   gender?:string,
   dob?:string,
   address?:string,
@@ -36,15 +38,23 @@ interface ServerData {
   country?:string,
   zip?:string,
   phone?:string,
-  BMI?:string,
+  bmi?:string,
   bloodGroup?:string,
   underlyingHealthIssues?:string,
   otherHealthIssues?:string,
-  images:ImageType[];
+  // images:ImageType[];
 }
 
 interface ServerResponse {
-    data: ServerData[];
+    data: ServerData;
+}
+
+interface ServerPatchData {
+  message: string;
+  length: number;
+}
+interface ServerPatchResponse {
+  data:ServerPatchData;
 }
 interface StateProps {
     firstName?: string,
@@ -55,7 +65,7 @@ interface StateProps {
     weight?: string;
     height?: string;
     bodyMassIndexValue?:string;
-    age?:number,
+    age?:string,
     gender?:string,
     dob?:string,
     address?:string,
@@ -100,7 +110,7 @@ interface SaveDataProps {
   email?: string,
   weight?: string;
   height?: string;
-  age?:number,
+  age?:string,
   gender?:string,
   dob?:string,
   address?:string,
@@ -114,9 +124,10 @@ interface SaveDataProps {
   bloodGroup?:string,
   underlyingHealthIssues?:string,
   otherHealthIssues?:string,
-  images:ImageType[];
+  // images:ImageType[];
 }
 
+const localStorageService:any = LocalStorageService.getService()
 export default class UserProfileContainer extends Component<IProps,StateProps> {
   reload=()=>window.location.reload();
     constructor(props:IProps){
@@ -208,13 +219,12 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
 
     /* *
         *  API callback functions
         *------------------------------------------------------------
     */
-      getUserProfileAPI(user_id,onSuccessCallBack,onFailureCallBack);
+      getUserProfileAPI(onSuccessCallBack,onFailureCallBack);
       setTimeout(() =>{this.setState({
         modalfirstShow:true,
       })},5000)
@@ -223,56 +233,100 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      // console.log(responseData.data);
-      if(responseData.data.length > 0 && responseData.data !== null && responseData.data !== undefined){
-        localStorage.setItem(LOGGED_IN_USER,JSON.stringify(responseData.data));
-        for (let datum of responseData.data){
-          localStorage.setItem(LOGGED_IN_USER_NAME,JSON.stringify({firstName:datum.firstName,lastName:datum.lastName}));
-          this.setState({
-            firstName: datum.firstName,
-            middleName: datum.middleName,
-            lastName: datum.lastName,
-            username: datum.username,
-            email: datum.email,
-            weight: datum.weight,
-            height: datum.height,
-            age:datum.age,
-            gender:datum.gender,
-            dob:datum.dob,
-            address:datum.address,
-            city:datum.city,
-            province:datum.province,
-            country:datum.country,
-            bodyMassIndexValue:datum.bodyMassIndexValue,
-            zip:datum.zip,
-            phone:datum.phone,
-            bmi:datum.BMI,
-            bloodGroup:datum.bloodGroup,
-            underlyingHealthIssues:datum.underlyingHealthIssues,
-            otherHealthIssues:datum.otherHealthIssues,
-            images:datum.images,
+      console.log(responseData.data);
+      if (this.lengthChecker(responseData) <20){
+        localStorage.setItem(FIRST_USER,"true");
+      }
+      if(this.lengthChecker(responseData) > 0 && responseData.data !== null && responseData.data !== undefined){
+        const firstName:string|undefined = responseData.data.firstName !== "" ?responseData.data.firstName:undefined;
+        const middleName:string|undefined = responseData.data.middleName !== "" ?responseData.data.middleName:undefined;
+        const lastName:string|undefined = responseData.data.lastName !== "" ?responseData.data.lastName:undefined;
+        const username:string|undefined = responseData.data.username !== "" ?responseData.data.username:undefined;
+        const email:string|undefined =  responseData.data.email !== "" ?responseData.data.email:undefined;
+        const weight:string|undefined =  responseData.data.weight !== "" ?responseData.data.weight:undefined;
+        const height:string|undefined =  responseData.data.height !== "" ?responseData.data.height:undefined;
+        const age:string|undefined = responseData.data.age !== "" ?responseData.data.age:undefined;
+        const gender:string|undefined = responseData.data.gender !== "" ?responseData.data.gender:undefined;
+        const dob:string|undefined = responseData.data.dob !== "" ?responseData.data.dob:undefined;
+        const address:string|undefined = responseData.data.address !== "" ?responseData.data.address:undefined;
+        const city:string|undefined = responseData.data.city !== "" ?responseData.data.city:undefined;
+        const province:string|undefined = responseData.data.province !== "" ?responseData.data.province:undefined;
+        const country:string|undefined = responseData.data.country !== "" ?responseData.data.country:undefined;
+        const bodyMassIndexValue:string|undefined = responseData.data.bodyMassIndexValue !== "" ?responseData.data.bodyMassIndexValue:undefined;
+        const zip:string|undefined = responseData.data.zip !== "" ?responseData.data.zip:undefined;
+        const phone:string|undefined = responseData.data.phone !== "" ?responseData.data.phone:undefined;
+        const bmi:string|undefined = responseData.data.bmi !== "" ?responseData.data.bmi:undefined;
+        const bloodGroup:string|undefined = responseData.data.bloodGroup !== "" ?responseData.data.bloodGroup:undefined;
+        const underlyingHealthIssues:string|undefined = responseData.data.underlyingHealthIssues !== "" ?responseData.data.underlyingHealthIssues:undefined;
+        const otherHealthIssues:string|undefined = responseData.data.otherHealthIssues !== "" ?responseData.data.otherHealthIssues:undefined;
+
+const userData:ServerData = {
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            weight: weight,
+            height: height,
+            age:age,
+            gender:gender,
+            dob:dob,
+            address:address,
+            city:city,
+            province:province,
+            country:country,
+            bodyMassIndexValue:bodyMassIndexValue,
+            zip:zip,
+            phone:phone,
+            bmi:bmi,
+            bloodGroup:bloodGroup,
+            underlyingHealthIssues:underlyingHealthIssues,
+            otherHealthIssues:otherHealthIssues,
+}
+        localStorage.setItem(USER_DATA,JSON.stringify(userData))
+        this.setState({
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            weight: weight,
+            height: height,
+            age:age,
+            gender:gender,
+            dob:dob,
+            address:address,
+            city:city,
+            province:province,
+            country:country,
+            bodyMassIndexValue:bodyMassIndexValue,
+            zip:zip,
+            phone:phone,
+            bmi:bmi,
+            bloodGroup:bloodGroup,
+            underlyingHealthIssues:underlyingHealthIssues,
+            otherHealthIssues:otherHealthIssues,
+            // images:responseData.data.images !== [] ?responseData.data.images:[],
             debuggMode:false,
           })
-          return;
+       
         }
-      }
-      
     }
 
-    lengthChecker = (data:ServerData[] | null) => {
+    lengthChecker = (data:ServerResponse | null) => {
       let count:number = 0;
-      for (let datum in data){
-        if (data.hasOwnProperty(datum)) count++;
+      for (let datum in data?.data){
+        if (data?.data.hasOwnProperty(datum)) count++;
       }
       if(count !== 0) { return count; }
       else {return 0};
     }
 
-    onPatchRequestSuccessCallBack = (responseData: ServerResponse): void => {
+    onPatchRequestSuccessCallBack = (responseData: ServerPatchResponse): void => {
 
       // For debugging purpose only
-      // console.log(responseData);
-      if(this.lengthChecker(responseData.data) >25){
+      console.log(responseData.data.message);
+      if(responseData.data.length >=20){
         if(this.state.firstUser){
           setTimeout(() => {this.setState({
             saveMode:true,
@@ -282,14 +336,15 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         }else{
         setTimeout(() => {this.setState({
           saveMode:true,
-          message:"You have successfully saved your data!",
+          message:responseData.data.message,
         })},2200);
       }
       localStorage.setItem(FIRST_USER,"false");
+      localStorage.removeItem(USER_DATA)
       }else{
         setTimeout(() => {this.setState({
           errorMode:true,
-          message:"Sorry, you have to complete the required fields before moving forward",
+          message:responseData.data.message,
         })},2200);
       }
       setTimeout(() => {this.setState({
@@ -298,11 +353,11 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
         isLoading:false,
         message:undefined,
       })},6000)
-      setTimeout(() => {this.reload()},7000);
+      // setTimeout(() => {this.reload()},7000);
     }
       
-    onFailureCallBack = (error: ServerResponse): void => {
-        console.error(error);
+    onFailureCallBack = (error: ServerPatchResponse): void => {
+        console.error(error.data.message);
     }
 
     // User Information Update
@@ -312,7 +367,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           firstName:event.currentTarget.value,
         })
@@ -323,7 +378,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onMiddleNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           middleName:event.currentTarget.value,
         })
@@ -334,7 +389,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           lastName:event.currentTarget.value,
         })
@@ -345,7 +400,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           username:event.currentTarget.value,
         })
@@ -356,7 +411,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           email:event.currentTarget.value,
         })
@@ -367,7 +422,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onDOBChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           dob:event.currentTarget.value,
         })
@@ -378,9 +433,9 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onAgeChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.valueAsNumber !== 0 && !isNaN(event.currentTarget.valueAsNumber) && event.currentTarget.valueAsNumber !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
-          age:event.currentTarget.valueAsNumber,
+          age:event.currentTarget.value,
         })
       } else {
         this.setState({
@@ -389,7 +444,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onMaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           gender:event.currentTarget.value,
         })
@@ -400,7 +455,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onFemaleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           gender:event.currentTarget.value,
         })
@@ -414,19 +469,16 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     onUserInfoSaveClick = (event : React.SyntheticEvent) : void => {
         event.preventDefault();
         const { username,firstName,lastName,middleName,email,age,dob,gender} = this.state;
-        
-        const userInfoData:any = {
-          username:username,
-          firstName:firstName,
-          lastName:lastName,
-          middleName:middleName?middleName:"",
-          email:email,
-          age:age,
-          dob:dob,
-          gender:gender,
-        }
+       
         if(username !== undefined && firstName !== undefined && lastName !== undefined && email !== undefined && age !== undefined && dob !== undefined && gender !== undefined){
-          localStorage.setItem(USER_INFORMATION_DATA,JSON.stringify(userInfoData));
+          LocalStorageService.updateField(USER_DATA,"username",username)
+          LocalStorageService.updateField(USER_DATA,"firstName",firstName)
+          LocalStorageService.updateField(USER_DATA,"lastName",lastName)
+          LocalStorageService.updateField(USER_DATA,"middleName",middleName)
+          LocalStorageService.updateField(USER_DATA,"email",email)
+          LocalStorageService.updateField(USER_DATA,"age",age)
+          LocalStorageService.updateField(USER_DATA,"dob",dob)
+          LocalStorageService.updateField(USER_DATA,"gender",gender)
           this.setState({
               userShow:false,
               userInfoValidated:false,
@@ -459,7 +511,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onAddressChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           address:event.currentTarget.value,
         })
@@ -470,7 +522,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onCityChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           city:event.currentTarget.value,
         })
@@ -481,7 +533,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onProvinceChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           province:event.currentTarget.value,
         })
@@ -492,7 +544,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onCountryChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           country:event.currentTarget.value,
         })
@@ -503,7 +555,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onZipChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           zip:event.currentTarget.value,
         })
@@ -514,7 +566,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onPhoneChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           phone:event.currentTarget.value,
         })
@@ -528,14 +580,13 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       event.preventDefault();
       const { address,city,province,country,zip,phone } = this.state;
       if(address !== undefined && city !== undefined && province !== undefined && country !== undefined && zip !== undefined && phone !== undefined){
-      localStorage.setItem(USER_CONTACT_INFORMATION_DATA,JSON.stringify({
-        address:address,
-        city:city,
-        province:province,
-        country:country,
-        zip:zip,
-        phone:phone,
-      }))
+      
+      LocalStorageService.updateField(USER_DATA,"address",address)
+      LocalStorageService.updateField(USER_DATA,"city",city)
+      LocalStorageService.updateField(USER_DATA,"province",province)
+      LocalStorageService.updateField(USER_DATA,"country",country)
+      LocalStorageService.updateField(USER_DATA,"zip",zip)
+      LocalStorageService.updateField(USER_DATA,"phone",phone)
       this.setState({
         contactShow:false,
         contactValidated:false,
@@ -562,7 +613,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       })
     }
     onWeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           weight:event.currentTarget.value,
           bmiStatus:false,
@@ -574,7 +625,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       } 
     }
     onHeightChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           height:event.currentTarget.value,
           bmiStatus:false,
@@ -597,7 +648,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
 
     onBloodGroupChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           bloodGroup:event.currentTarget.value,
         })
@@ -609,7 +660,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
 
     onUnderlyingHealthIssueChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           underlyingHealthIssues:event.currentTarget.value,
         })
@@ -621,7 +672,7 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     }
 
     onOtherHealthIssuesChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
-      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined ) {
+      if(event.currentTarget.value !== "" && event.currentTarget.value !== undefined && event.currentTarget.value !== null ) {
         this.setState({
           otherHealthIssues:event.currentTarget.value,
         })
@@ -647,15 +698,14 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
       }
 
       if (weight !== undefined && height !== undefined && bmi_value !== undefined && bloodGroup !== undefined && underlyingHealthIssues !== undefined && otherHealthIssues !== undefined && bodyMassIndexValue !== undefined){
-      localStorage.setItem(USER_HEALTH_INFORMATION_DATA,JSON.stringify({
-        weight:weight,
-        height:height,
-        bmi:bmi_value,
-        bloodGroup:bloodGroup,
-        underlyingHealthIssues:underlyingHealthIssues,
-        otherHealthIssues:otherHealthIssues,
-        bodyMassIndexValue:bodyMassIndexValue,
-      }))
+      
+      LocalStorageService.updateField(USER_DATA,"weight",weight)
+      LocalStorageService.updateField(USER_DATA,"height",height)
+      LocalStorageService.updateField(USER_DATA,"bmi",bmi_value)
+      LocalStorageService.updateField(USER_DATA,"bloodGroup",bloodGroup)
+      LocalStorageService.updateField(USER_DATA,"underlyingHealthIssues",underlyingHealthIssues)
+      LocalStorageService.updateField(USER_DATA,"otherHealthIssues",otherHealthIssues)
+      LocalStorageService.updateField(USER_DATA,"bodyMassIndexValue",bodyMassIndexValue)
       this.setState({
         healthShow:false,
         bmi:bmi_value,
@@ -708,44 +758,38 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
     onSaveClick = (event : React.SyntheticEvent) : void =>{
       
       const { bodyMassIndexValue } = this.state
-      const { onPatchRequestSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|undefined = JSON.parse(sessionStorage.getItem(LOGGED_IN_USER) || '{}').user_id;
-      const userInformation:any = JSON.parse(localStorage.getItem(USER_INFORMATION_DATA) || '{}');
-      const userContactInformation:any = JSON.parse(localStorage.getItem(USER_CONTACT_INFORMATION_DATA) || '{}');
-      const userHealthInformation:any = JSON.parse(localStorage.getItem(USER_HEALTH_INFORMATION_DATA) || '{}');
-      const images:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
+      const { onPatchRequestSuccessCallBack, onFailureCallBack } = this;
+      const userData:any = JSON.parse(localStorage.getItem(USER_DATA) || '{}');
+      // const images:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
       const data:SaveDataProps = {
-        firstName: userInformation.firstName,
-        middleName: userInformation.middleName,
-        lastName: userInformation.lastName,
-        username: userInformation.username,
-        email: userInformation.email,
-        age:userInformation.age,
-        gender:userInformation.gender,
-        dob:userInformation.dob,
-        address:userContactInformation.address,
-        city:userContactInformation.city,
-        province:userContactInformation.province,
-        country:userContactInformation.country,
-        zip:userContactInformation.zip,
-        phone:userContactInformation.phone,
+        firstName: userData.firstName,
+        middleName: userData.middleName,
+        lastName: userData.lastName,
+        username: userData.username,
+        email: userData.email,
+        age:userData.age,
+        gender:userData.gender,
+        dob:userData.dob,
+        address:userData.address,
+        city:userData.city,
+        province:userData.province,
+        country:userData.country,
+        zip:userData.zip,
+        phone:userData.phone,
         bodyMassIndexValue:bodyMassIndexValue,
-        weight: userHealthInformation.weight,
-        height: userHealthInformation.height,
-        BMI:userHealthInformation.bmi,
-        bloodGroup:userHealthInformation.bloodGroup,
-        underlyingHealthIssues:userHealthInformation.underlyingHealthIssues,
-        otherHealthIssues:userHealthInformation.otherHealthIssues,
-        images:images,
+        weight: userData.weight,
+        height: userData.height,
+        BMI:userData.bmi,
+        bloodGroup:userData.bloodGroup,
+        underlyingHealthIssues:userData.underlyingHealthIssues,
+        otherHealthIssues:userData.otherHealthIssues,
+        // images:images,
       }
       this.setState({
         isLoading:true,
       })
       
-      updateUserProfileAPI(user_id,onPatchRequestSuccessCallBack,onFailureCallBack,data);
-      localStorage.removeItem(USER_INFORMATION_DATA);
-      localStorage.removeItem(USER_CONTACT_INFORMATION_DATA);
-      localStorage.removeItem(USER_HEALTH_INFORMATION_DATA);
+      updateUserProfileAPI(onPatchRequestSuccessCallBack,onFailureCallBack,data);
     } 
     
   render () {

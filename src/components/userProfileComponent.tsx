@@ -77,7 +77,7 @@ interface IProps {
     email?: string,
     weight?: string;
     height?: string;
-    age?:number,
+    age?:string,
     gender?:string,
     dob?:string,
     address?:string,
@@ -306,7 +306,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                 <Row className="justify-content-center">
                                     <Col className="order-lg-2" lg="3">
                                         <div className="card-profile-image">
-                                            <ImageUploading
+                                            {/* <ImageUploading
                                             resolutionType="absolute"
                                                 multiple={false}
                                                 value={images}
@@ -351,7 +351,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                         </a>
                                                     </div>
                                                 )}
-                                            </ImageUploading>
+                                            </ImageUploading> */}
                                         </div>
                                     </Col>
                                 </Row>
@@ -1088,7 +1088,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             </Modal.Title>
                                                         </Modal.Header>
                                                         <Modal.Body className="show-grid">
-                                                                    <TableContainer debuggMode={debuggMode} />
+                                                                    {/* <TableContainer debuggMode={debuggMode} /> */}
                                                         </Modal.Body>
                                                         <Modal.Footer>
                                                             <a href="/user-profile" >
@@ -1109,7 +1109,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                            <Col style={{width:"100%"}}><TableContainer debuggMode={false}/></Col>
+                                            {/* <Col style={{width:"100%"}}><TableContainer debuggMode={false}/></Col> */}
                                             </Row>
                                         </span>
 

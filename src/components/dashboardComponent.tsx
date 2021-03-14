@@ -108,14 +108,14 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                 <div id="outer-container" style={{height: "100%"}}>
 
                     {/* --- Sidebar ---*/}
-                    <SidebarComponent />
+                    {/* <SidebarComponent /> */}
                     {/* --- Sidebar ---*/}
 
                     <div id="page-wrap" style={{height: "100%",overflow:"hidden"}}>
                         {/* ----------------------The page content starts here---------------------- */}
 
                         {/* --- Navigation ---*/}
-                        <NavigationComponent />
+                        {/* <NavigationComponent /> */}
                         {/* --- Navigation ---*/}
 
                         <Container  className="pt-4" style={{margin: "auto",width: "80%",border: "3px solid white", padding:"auto"}} fluid>

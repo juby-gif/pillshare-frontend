@@ -1,3 +1,5 @@
+import  LocalStorageService from '../localStorageService';
+
 interface BloodPressureProps {
   diastole_reading:number;
   systole_reading:number;
@@ -76,15 +78,32 @@ interface ServerData {
   oxygen_saturation : OxygenSaturationProps,
 }
 
-export const getDashboard = async (user_id:string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+interface DashboardRequestProps {
+  params : string|null;
+}
+
+const localStorageService:any = LocalStorageService.getService()
+// console.log(`JWT ${localStorageService.getAccessToken()}`)
+export const getDashboard = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
+    const postData: DashboardRequestProps ={
+      params : "36ac075a-8881-417d-9b56-fa6d2b7d9b3e",
+    }
+    
     await axios({
         method: 'get',
-        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/dashboard_dataset?user_id=" + user_id,
+        // data: postData,
+        // headers: {
+        //   'Authorization': `JWT ${localStorageService.getAccessToken()}`,
+        //   'Content-Type': 'application/json', 
+        //   'Accept' : 'application/json',
+        // },
+        url:"http://innovationspace.ca:3001/dashboard_dataset?user_id=1fc257ec-5449-4491-a3fe-d961ed685270"
+        // url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/dashboard",
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
-          // console.log(response.data)
+          console.log(response.data)
       }
 
         )

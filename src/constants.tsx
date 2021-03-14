@@ -15,6 +15,7 @@ export const OXYGEN_SATURATION_INSTRUMENT = 5;
 export const LOGGED_IN_USER_ID = "logged-in-user-id";
 export const LOGGED_IN_USER_NAME = "user-name";
 export const USER_INFORMATION_DATA = "user-information-data";
+export const USER_DATA = "bsxF+FOWDxon13v0XLCPo/raSPShQB3QcDPpthCnGvU=";
 export const USER_CONTACT_INFORMATION_DATA = "user-contact-information-data";
 export const USER_HEALTH_INFORMATION_DATA = "user-health-information-data";
 export const USER_MEDICAL_INFORMATION_DATA = "user-medical-information-data";

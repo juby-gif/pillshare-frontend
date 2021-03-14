@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
+import  LocalStorageService from '../localStorageService';
 
 interface ServerResponse {
     data:ServerData;
@@ -14,11 +14,17 @@ interface ServerErrResponse {
   response:ServerResponse;
 }
 
+interface TokenProps {
+  access_token: string;
+  refresh_token: string;
+}
+
 interface ResponseProps {
   message : string;
   length :number;
 }
 
+const localStorageService:any = LocalStorageService.getService()
   export const postLoginAPI = async (email:string, password:string, onSuccessCallBack: (responseData: ResponseProps) => void, onFailureCallBack: (responseData: string) => void) :Promise<void> =>{
     const axios = require('axios').default;
     
@@ -41,8 +47,12 @@ interface ResponseProps {
         // console.log(response.data.length)
         // console.log(response.data.message)
 
-        localStorage.setItem(ACCESS_TOKEN,response.data.accessToken)
-        localStorage.setItem(REFRESH_TOKEN,response.data.refreshToken)
+
+        const tokenObj: TokenProps = {
+          access_token: response.data.accessToken,
+          refresh_token: response.data.refreshToken,
+        }
+        localStorageService.setToken(tokenObj)
         const responseData = {
           message : response.data.message,
           length : response.data.length,
@@ -53,6 +63,7 @@ interface ResponseProps {
       })
 
       .catch(function (error:ServerErrResponse) {
+        console.log(error)
         const errorResponse:string = error.response?error.response.data.message:"Server Error"
         onFailureCallBack(errorResponse)
       });

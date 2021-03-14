@@ -129,12 +129,12 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
+      // const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '');
     /*  *
         *  API callback functions
         *------------------------------------------------------------
     */
-      getDashboard(user_id,onSuccessCallBack,onFailureCallBack);
+      getDashboard(onSuccessCallBack,onFailureCallBack);
      }
 
     /* *
@@ -149,22 +149,23 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
     */
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      //console.log(responseData);
+      console.log(responseData);
+      if (responseData !== undefined && responseData !== null){
+            for(let datum of responseData.data){
+              this.setState({
+                alerts_responded : datum.alerts_responded,
+                alerts_sent : datum.alerts_sent,
+                blood_pressure : datum.blood_pressure,
+                body_temperature : datum.body_temperature,
+                glucose : datum.glucose,
+                health_check : datum.health_check,
+                heart_rate : datum.heart_rate,
+                medical_information : datum.medical_information,
+                oxygen_saturation : datum.oxygen_saturation,
 
-      for(let datum of responseData.data){
-        this.setState({
-          alerts_responded : datum.alerts_responded,
-          alerts_sent : datum.alerts_sent,
-          blood_pressure : datum.blood_pressure,
-          body_temperature : datum.body_temperature,
-          glucose : datum.glucose,
-          health_check : datum.health_check,
-          heart_rate : datum.heart_rate,
-          medical_information : datum.medical_information,
-          oxygen_saturation : datum.oxygen_saturation,
-
-        })
-        return;
+              })
+              return;
+            }
       }
     }
       
