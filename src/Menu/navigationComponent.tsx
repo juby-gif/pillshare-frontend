@@ -14,9 +14,9 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faSignOutAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
-
 import pro from '../img/pro_pic.jpeg';
-import { LOGGED_IN_USER_NAME, USER_IMAGE } from '../constants';
+import { USER_IMAGE } from '../constants';
+import  LocalStorageService from '../localStorageService';
 
 
 interface IProps {
@@ -29,14 +29,38 @@ interface ImageType{
     [key: string]: any;
     }
 
-interface UserNameProps{
-    firstName:string;
-    lastName:string;
+interface ServerResponse {
+    data:UserProps;
 }
-
-const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element => {   
+interface UserProps{
+    fName:string;
+    lName:string;
+}
+const localStorageService:any = LocalStorageService.getService()
+const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element => { 
+    const axios = require('axios').default;  
     const userImage:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
-    const username:UserNameProps = JSON.parse(localStorage.getItem(LOGGED_IN_USER_NAME)|| '{}');
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
+
+    React.useEffect(() => {
+        axios.get(
+            process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/nav-header",
+            {headers: {
+                'Authorization': `JWT ${localStorageService.getAccessToken()}`,
+                'Content-Type': 'application/json', 
+                'Accept' : 'application/json',
+            }}
+            )
+        .then(function(response:ServerResponse) {
+            // console.log(response);
+        setFirstName(response.data?.fName);
+        setLastName((response.data?.lName));
+        })
+        .catch(function(error:UserProps) {
+        //   console.log(error);
+        })
+        }, [axios]);
 
     // Logout functionality for phase
     const [logout,setLogout] = useState(false);
@@ -90,7 +114,7 @@ const NavigationComponent = (props: IProps & RouteComponentProps) : JSX.Element 
                                     </span>
                                     <Media className="ml-2 d-lg-block">
                                         <span style={{color:"#fff",fontSize:"100%"}} className="mb-0 text-sm font-weight-bold">
-                                        {username?(username.firstName+ "  " + username.lastName):""}
+                                        {(firstName !== "" && lastName !=="")?(firstName+ "  " + lastName):""}
                                         </span>
                                     </Media>
                                 </Media>
