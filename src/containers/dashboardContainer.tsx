@@ -11,40 +11,34 @@ interface IProps {
 }
 interface StateProps {
   show:boolean;
-  alerts_responded : number;
-  alerts_sent : number;
-  blood_pressure ?: BloodPressureProps;
-  body_temperature ?: BodyTemperatureProps;
+  alertsResponded : number;
+  alertsSent : number;
+  bloodPressure ?: BloodPressureProps;
+  bodyTemperature ?: BodyTemperatureProps;
   glucose ?: GlucoseProps;
-  health_check ?: HealthCheckProps;
-  heart_rate ?: HeartRateProps;
-  medical_information ?: MedicalProps[];
-  oxygen_saturation ?: OxygenSaturationProps;
+  heartRate ?: HeartRateProps;
+  medicalInformation ?: MedicalProps[];
+  oxygenSaturation ?: OxygenSaturationProps;
 }
 
 interface BloodPressureProps {
-  diastole_reading:number;
-  systole_reading:number;
+  diastoleReading:number;
+  systoleReading:number;
   percentage:number;
-  instrument_id:number;
+  instrumentId:number;
   time:string;
 }
 interface BodyTemperatureProps {
   reading :number;
   percentage :number;
-  instrument_id :number;
+  instrumentId :number;
   time :string;
 }
 
 interface GlucoseProps {
   reading:number;
   percentage:number;
-  instrument_id:number;
-  time:string;
-}
-
-interface HealthCheckProps {
-  health_status:string;
+  instrumentId:number;
   time:string;
 }
 
@@ -85,19 +79,18 @@ interface IntervalProps {
 }
 
 interface ServerResponse {
-data: ServerData[];
+data: ServerData;
 }
 
 interface ServerData {
-  alerts_responded : number,
-  alerts_sent : number,
-  blood_pressure : BloodPressureProps,
-  body_temperature : BodyTemperatureProps,
+  alertsResponded : number,
+  alertsSent : number,
+  bloodPressure : BloodPressureProps,
+  bodyTemperature : BodyTemperatureProps,
   glucose : GlucoseProps,
-  health_check : HealthCheckProps,
-  heart_rate : HeartRateProps,
-  medical_information : MedicalProps[],
-  oxygen_saturation : OxygenSaturationProps,
+  heartRate : HeartRateProps,
+  medicalInformation : MedicalProps[],
+  oxygenSaturation : OxygenSaturationProps,
 }
 export default class DashboardContainer extends Component<IProps & RouteComponentProps,StateProps> {
 
@@ -108,15 +101,14 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
     constructor(props:IProps & RouteComponentProps){
         super(props);
         this.state = {
-          alerts_responded : 0,
-          alerts_sent : 0,
-          blood_pressure : undefined,
-          body_temperature : undefined,
+          alertsResponded : 0,
+          alertsSent : 0,
+          bloodPressure : undefined,
+          bodyTemperature : undefined,
           glucose : undefined,
-          health_check : undefined,
-          heart_rate : undefined,
-          medical_information : [],
-          oxygen_saturation : undefined,
+          heartRate : undefined,
+          medicalInformation : [],
+          oxygenSaturation : undefined,
           show: false,
         }
         this.onSuccessCallBack = this.onSuccessCallBack.bind(this);
@@ -151,21 +143,18 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
       // For debugging purpose only
       console.log(responseData);
       if (responseData !== undefined && responseData !== null){
-            for(let datum of responseData.data){
+            
               this.setState({
-                alerts_responded : datum.alerts_responded,
-                alerts_sent : datum.alerts_sent,
-                blood_pressure : datum.blood_pressure,
-                body_temperature : datum.body_temperature,
-                glucose : datum.glucose,
-                health_check : datum.health_check,
-                heart_rate : datum.heart_rate,
-                medical_information : datum.medical_information,
-                oxygen_saturation : datum.oxygen_saturation,
-
+                alertsResponded : responseData.data?.alertsResponded,
+                alertsSent : responseData.data?.alertsSent,
+                bloodPressure : responseData.data?.bloodPressure,
+                bodyTemperature : responseData.data?.bodyTemperature,
+                glucose : responseData.data?.glucose,
+                heartRate : responseData.data?.heartRate,
+                oxygenSaturation : responseData.data?.oxygenSaturation,
               })
               return;
-            }
+            
       }
     }
       
@@ -178,7 +167,7 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
       *------------------------------------------------------------
   */
   render () {
-    const { show,alerts_responded,alerts_sent,blood_pressure,body_temperature,glucose,health_check,heart_rate,medical_information,oxygen_saturation } = this.state;
+    const { show,alertsResponded,alertsSent,bloodPressure,bodyTemperature,glucose,heartRate,medicalInformation,oxygenSaturation } = this.state;
     
     //For Debugging purpose only
     // console.log(
@@ -187,16 +176,15 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
 
     return (
         <DashboardComponent 
-          alertsResponded = {alerts_responded}
+          alertsResponded = {alertsResponded}
           show={show}
-          alertsSent = {alerts_sent}
-          bloodPressure = {blood_pressure}
-          bodyTemperature = {body_temperature}
+          alertsSent = {alertsSent}
+          bloodPressure = {bloodPressure}
+          bodyTemperature = {bodyTemperature}
           glucose = {glucose}
-          healthCheck = {health_check}
-          heartRate = {heart_rate}
-          medicalInformation = {medical_information}
-          oxygenSaturation  ={oxygen_saturation}
+          heartRate = {heartRate}
+          medicalInformation = {medicalInformation}
+          oxygenSaturation  ={oxygenSaturation}
 
         />
       

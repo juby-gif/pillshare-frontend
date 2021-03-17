@@ -19,36 +19,30 @@ interface IProps {
     bloodPressure ?: BloodPressureProps;
     bodyTemperature ?: BodyTemperatureProps;
     glucose ?: GlucoseProps;
-    healthCheck ?: HealthCheckProps;
     heartRate ?: HeartRateProps;
     medicalInformation ?: MedicalProps[];
     oxygenSaturation ?: OxygenSaturationProps;
 
 }
  
-  interface BloodPressureProps {
-    diastole_reading:number;
-    systole_reading:number;
+interface BloodPressureProps {
+    diastoleReading:number;
+    systoleReading:number;
     percentage:number;
-    instrument_id:number;
+    instrumentId:number;
     time:string;
   }
   interface BodyTemperatureProps {
     reading :number;
     percentage :number;
-    instrument_id :number;
+    instrumentId :number;
     time :string;
   }
   
   interface GlucoseProps {
     reading:number;
     percentage:number;
-    instrument_id:number;
-    time:string;
-  }
-  
-  interface HealthCheckProps {
-    health_status:string;
+    instrumentId:number;
     time:string;
   }
   
@@ -80,7 +74,7 @@ interface IProps {
     name : string;
     reason : string;
     taken: string[];
-    id:number;
+    id: number;
   }
   
   interface IntervalProps {
@@ -98,7 +92,6 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
         bloodPressure,
         bodyTemperature,
         glucose,
-        // healthCheck,
         heartRate,
         oxygenSaturation,
     } = props;
@@ -108,14 +101,14 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                 <div id="outer-container" style={{height: "100%"}}>
 
                     {/* --- Sidebar ---*/}
-                    {/* <SidebarComponent /> */}
+                    <SidebarComponent />
                     {/* --- Sidebar ---*/}
 
                     <div id="page-wrap" style={{height: "100%",overflow:"hidden"}}>
                         {/* ----------------------The page content starts here---------------------- */}
 
                         {/* --- Navigation ---*/}
-                        {/* <NavigationComponent /> */}
+                        <NavigationComponent />
                         {/* --- Navigation ---*/}
 
                         <Container  className="pt-4" style={{margin: "auto",width: "80%",border: "3px solid white", padding:"auto"}} fluid>
@@ -161,7 +154,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
                                         <Row>
                                             <Col xs={7}>
                                                 <Card.Subtitle style={{fontSize:"0.8rem"}} className="mb-1 text-muted"><b>BLOOD PRESSURE</b></Card.Subtitle>
-                                                <Card.Title className="mb-2">{bloodPressure?bloodPressure.systole_reading:0} / {bloodPressure?bloodPressure.diastole_reading:0} mmHg</Card.Title>
+                                                <Card.Title className="mb-2">{bloodPressure?bloodPressure.systoleReading:0} / {bloodPressure?bloodPressure.diastoleReading:0} mmHg</Card.Title>
                                             </Col>
                                             <Col>
                                                 <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -340,7 +333,7 @@ const DashboardComponent = (props: IProps) : JSX.Element => {
 
         {/* --------------------Table-------------------- */}
 
-                        <TableContainer debuggMode={show} />
+                        {/* <TableContainer debuggMode={show} /> */}
 
         {/* --------------------Table-------------------- */}
 

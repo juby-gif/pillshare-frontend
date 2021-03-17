@@ -56,6 +56,14 @@ interface ServerPatchData {
 interface ServerPatchResponse {
   data:ServerPatchData;
 }
+
+interface ServerPatchErrData {
+  message:string;
+  length:number;
+}
+interface ServerPatchErrResponse {
+  data: ServerPatchErrData
+}
 interface StateProps {
     firstName?: string,
     middleName?: string,
@@ -127,7 +135,7 @@ interface SaveDataProps {
   // images:ImageType[];
 }
 
-const localStorageService:any = LocalStorageService.getService()
+// const localStorageService:any = LocalStorageService.getService()
 export default class UserProfileContainer extends Component<IProps,StateProps> {
   reload=()=>window.location.reload();
     constructor(props:IProps){
@@ -313,6 +321,10 @@ const userData:ServerData = {
         }
     }
 
+    onFailureCallBack = (error: ServerPatchResponse): void => {
+      console.error(error.data.message);
+  }
+
     lengthChecker = (data:ServerResponse | null) => {
       let count:number = 0;
       for (let datum in data?.data){
@@ -356,8 +368,8 @@ const userData:ServerData = {
       // setTimeout(() => {this.reload()},7000);
     }
       
-    onFailureCallBack = (error: ServerPatchResponse): void => {
-        console.error(error.data.message);
+    onPatchFailureCallBack = (error: ServerPatchErrResponse): void => {
+        console.log(error.data?.message);
     }
 
     // User Information Update
@@ -758,7 +770,7 @@ const userData:ServerData = {
     onSaveClick = (event : React.SyntheticEvent) : void =>{
       
       const { bodyMassIndexValue } = this.state
-      const { onPatchRequestSuccessCallBack, onFailureCallBack } = this;
+      const { onPatchRequestSuccessCallBack, onPatchFailureCallBack } = this;
       const userData:any = JSON.parse(localStorage.getItem(USER_DATA) || '{}');
       // const images:ImageType[] = localStorage.getItem(USER_IMAGE) === "undefined"?[]:JSON.parse(localStorage.getItem(USER_IMAGE)||'[]');
       const data:SaveDataProps = {
@@ -789,7 +801,7 @@ const userData:ServerData = {
         isLoading:true,
       })
       
-      updateUserProfileAPI(onPatchRequestSuccessCallBack,onFailureCallBack,data);
+      updateUserProfileAPI(onPatchRequestSuccessCallBack,onPatchFailureCallBack,data);
     } 
     
   render () {

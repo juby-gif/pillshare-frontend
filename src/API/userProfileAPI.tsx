@@ -40,12 +40,21 @@ interface ServerPatchData{
   message: string;
   length: number;
 }
+
+interface ServerPatchErrData {
+  message:string;
+  length:number;
+}
+
+interface ServerPatchErrResponse {
+  data:ServerPatchErrData;
+}
 interface ServerResponse {
     data: ServerData;
 }
 
 const localStorageService:any = LocalStorageService.getService()
-export const getUserProfileAPI = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerPatchResponse) => void) :Promise<void> =>{
+export const getUserProfileAPI = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerPatchErrResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
     await axios({
         headers: {
@@ -67,7 +76,7 @@ export const getUserProfileAPI = async (onSuccessCallBack: (responseData: Server
       })
 }
 
-export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: ServerPatchResponse) => void, onFailureCallBack: (responseData: ServerPatchResponse) => void, data:ServerData) :Promise<void> =>{
+export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: ServerPatchResponse) => void, onFailureCallBack: (responseData: ServerPatchErrResponse) => void, data:ServerData) :Promise<void> =>{
     
     const axios = require('axios').default;
     await axios({
@@ -85,7 +94,7 @@ export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: Ser
       }
 
         )
-      .catch(function (error:ServerPatchResponse) {
+      .catch(function (error:ServerPatchErrResponse) {
          onFailureCallBack(error)
       })
 }
