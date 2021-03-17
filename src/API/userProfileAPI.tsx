@@ -76,7 +76,7 @@ export const getUserProfileAPI = async (onSuccessCallBack: (responseData: Server
       })
 }
 
-export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: ServerPatchResponse) => void, onFailureCallBack: (responseData: ServerPatchErrResponse) => void, data:ServerData) :Promise<void> =>{
+export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: ServerPatchResponse) => void, onFailureCallBack: (responseData: ServerPatchErrData) => void, data:ServerData) :Promise<void> =>{
     
     const axios = require('axios').default;
     await axios({
@@ -94,7 +94,8 @@ export const updateUserProfileAPI = async (onSuccessCallBack: (responseData: Ser
       }
 
         )
-      .catch(function (error:ServerPatchErrResponse) {
-         onFailureCallBack(error)
+      .catch(function (error:any) {
+        console.log(error.response.data.message)
+         onFailureCallBack(error.response?.data)
       })
 }

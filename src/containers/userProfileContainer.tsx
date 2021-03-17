@@ -368,8 +368,15 @@ const userData:ServerData = {
       // setTimeout(() => {this.reload()},7000);
     }
       
-    onPatchFailureCallBack = (error: ServerPatchErrResponse): void => {
-        console.log(error.data?.message);
+    onPatchFailureCallBack = (error: ServerPatchErrData): void => {
+      setTimeout(() => {this.setState({
+        errorMode:true,
+        message:error.message,
+        isLoading:false,
+      })},2200);
+      setTimeout(() => {this.setState({
+        errorMode:false,
+      })},7200);
     }
 
     // User Information Update
