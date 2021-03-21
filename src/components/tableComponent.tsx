@@ -66,9 +66,8 @@ const TableComponent = (props:IProps):JSX.Element => {
                   <th>End Date</th>
                   <th>Prescribed Intervals</th>
                   <th>Reason for taking this medication</th>
-                  <th><tr>Status: <div></div><div></div><div></div><div></div><FontAwesomeIcon className="yaggrw" style={{fontSize:"1.5rem",color:"red"}} icon={faCircle} /></tr>Taken / Missed<tr></tr></th>
                   {debuggMode && <th><FontAwesomeIcon style={{fontSize:"1.1rem",color:" #0b4dad"}} icon={faCog} /></th>}
-              </tr>
+                   </tr>
           </thead>
           <tbody style={{backgroundColor:"#fff"}}>
             {data?data.map((info,index) => (
@@ -92,10 +91,10 @@ const TableComponent = (props:IProps):JSX.Element => {
                   {info.duration}
                 </td>
                 <td style={{width: '6rem', textAlign: 'center'}}>
-                  {info.start_date}
+                  {info.start_date?.split("T")[0]}
                 </td>
                 <td style={{width: '6rem', textAlign: 'center'}}>
-                  {info.end_date}
+                  {info.end_date?.split("T")[0]}
                 </td>
                 <td>
                   <Table borderless={true} hover={false} variant="light" responsive="xl">
@@ -134,27 +133,7 @@ const TableComponent = (props:IProps):JSX.Element => {
                 <td>
                   {info.reason}
                 </td>
-                <td>
-                  <Table borderless={true} hover={false} variant="light" responsive="xl">
-                    <tbody>
-                      <tr>
-                        <tr>
-                          {info.taken?info.taken.map((part,index)=>
-                              <tr key={index}>
-                                  <b>Taken:</b>&nbsp;&nbsp;{part}
-                              </tr>):"-"}
-                        </tr>
-                        <tr>
-                          {info.missed?info.missed.map((part,index)=>
-                              <tr key={index}>
-                                  <b>Missed:</b>&nbsp;&nbsp;{part}
-                              </tr>):"-"}
-                        </tr>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </td>
-                {debuggMode && (
+               {debuggMode && (
                           <tr>
                             <td style={{border: "none"}}>
                               <Link to="#" onClick={e => onEditClick(e,info.id?info.id:0)}><FontAwesomeIcon style={{fontSize:"1rem",color:" #fb8c0d"}} icon={faPencilAlt} /></Link>

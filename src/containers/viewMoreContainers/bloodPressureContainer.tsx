@@ -51,10 +51,8 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
     }
     componentDidMount(){
         const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      if(user_id !== null){
-        getBloodPressureData(user_id,onSuccessCallBack,onFailureCallBack);
-      }
+        getBloodPressureData(onSuccessCallBack,onFailureCallBack);
+
     }
 
     componentWillUnmount() {
@@ -68,9 +66,10 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         let diastoleReadingData: Array<number> = [];
         
         for(let datum of responseData.data){
+            let date = datum.time.split("T")[0]
         
             // Need to add time for plotting (Phase 2)
-            let timestamp:number = moment.utc(`${datum.date} ${datum.time}`).unix()
+            let timestamp:number = moment.utc(`${date}`).unix()
             
             // Getting reading for calculating average,min and max
             systoleReadingData.push(parseInt(datum.systoleReading))

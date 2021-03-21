@@ -240,8 +240,10 @@ export default class UserProfileContainer extends Component<IProps,StateProps> {
 
 
     onSuccessCallBack = (responseData: ServerResponse): void => {
+      
       // For debugging purpose only
-      console.log(responseData.data);
+      // console.log(responseData.data);
+
       if (this.lengthChecker(responseData) <20){
         localStorage.setItem(FIRST_USER,"true");
       }

@@ -48,10 +48,7 @@ export default class GlucoseViewMoreContainer extends Component<IProps,StateProp
     }
     componentDidMount(){
         const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
-      if(user_id !== null){
-        getGlucoseData(user_id,onSuccessCallBack,onFailureCallBack);
-      }
+        getGlucoseData(onSuccessCallBack,onFailureCallBack);
     }
 
     componentWillUnmount() {
@@ -63,9 +60,10 @@ export default class GlucoseViewMoreContainer extends Component<IProps,StateProp
         let graphData: DataProps[] = [];
         let readingData: Array<number> = [];
         for(let datum of responseData.data){
+            let date = datum.time.split("T")[0]
         
             // Need to add time for plotting (Phase 2)
-            let timestamp:number = moment.utc(`${datum.date} ${datum.time}`).unix()
+            let timestamp:number = moment.utc(`${date}`).unix()
             
             // Getting reading for calculating average,min and max
             readingData.push(parseInt(datum.reading))

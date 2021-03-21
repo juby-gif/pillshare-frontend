@@ -74,7 +74,7 @@ interface ServerData {
 
 
 
-const localStorageService:any = LocalStorageService.getService()
+const localStorageService:any = LocalStorageService.getService();
 // console.log(`JWT ${localStorageService.getAccessToken()}`)
 export const getDashboard = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
@@ -91,7 +91,7 @@ export const getDashboard = async (onSuccessCallBack: (responseData: ServerRespo
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
-          console.log(response.data)
+          // console.log(response.data)
       }
 
         )

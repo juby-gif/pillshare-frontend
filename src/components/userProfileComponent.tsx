@@ -1088,7 +1088,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                             </Modal.Title>
                                                         </Modal.Header>
                                                         <Modal.Body className="show-grid">
-                                                                    {/* <TableContainer debuggMode={debuggMode} /> */}
+                                                                    <TableContainer debuggMode={debuggMode} />
                                                         </Modal.Body>
                                                         <Modal.Footer>
                                                             <a href="/user-profile" >
@@ -1109,7 +1109,7 @@ const UserProfileComponent = (props: IProps) : JSX.Element => {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                            {/* <Col style={{width:"100%"}}><TableContainer debuggMode={false}/></Col> */}
+                                            <Col style={{width:"100%"}}><TableContainer debuggMode={false}/></Col>
                                             </Row>
                                         </span>
 

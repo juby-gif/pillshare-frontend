@@ -141,7 +141,7 @@ export default class DashboardContainer extends Component<IProps & RouteComponen
     */
     onSuccessCallBack = (responseData: ServerResponse): void => {
       // For debugging purpose only
-      console.log(responseData);
+      // console.log(responseData);
       if (responseData !== undefined && responseData !== null){
             
               this.setState({

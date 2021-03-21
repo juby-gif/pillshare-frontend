@@ -1,3 +1,4 @@
+import  LocalStorageService from '../localStorageService';
 interface ServerResponse{
     data:ServerData[];
 }
@@ -8,11 +9,18 @@ interface ServerData{
     time:string;
 }
 
-export const getBloodPressureData = async (user_id: string|null, onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
+const localStorageService:any = LocalStorageService.getService();
+
+export const getBloodPressureData = async (onSuccessCallBack: (responseData: ServerResponse) => void, onFailureCallBack: (responseData: ServerResponse) => void) :Promise<void> =>{
     const axios = require('axios').default;
     await axios({
         method: 'get',
-        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/blood_pressure_measurements?user_id=" + user_id,        
+        headers: {
+            'Authorization': `JWT ${localStorageService.getAccessToken()}`,
+            'Content-Type': 'application/json', 
+            'Accept' : 'application/json',
+          },
+        url: process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + "/api/v1/blood-pressure-datum",        
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)

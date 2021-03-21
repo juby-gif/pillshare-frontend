@@ -116,9 +116,9 @@ class TableContainer extends Component<IProps & RouteComponentProps,StateProps> 
     */
     componentDidMount(){
       const { onSuccessCallBack,onFailureCallBack } = this;
-      const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
+      // const user_id:string|null = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID) || '')
 
-      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+      getMedicalTableInfo(onSuccessCallBack,onFailureCallBack)
     }
 
     /* *
@@ -204,7 +204,7 @@ class TableContainer extends Component<IProps & RouteComponentProps,StateProps> 
       localStorage.removeItem(USER_MEDICAL_TABLE)
 
       // Calling Table API with GET Request to reflect the changes and re-render
-      getMedicalTableInfo(user_id,onSuccessCallBack,onFailureCallBack)
+      getMedicalTableInfo(onSuccessCallBack,onFailureCallBack)
     }
   
     /************** Success Call Backs ***************/ 
