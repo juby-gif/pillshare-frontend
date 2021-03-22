@@ -66,10 +66,9 @@ export default class BloodPressureViewMoreContainer extends Component<IProps,Sta
         let diastoleReadingData: Array<number> = [];
         
         for(let datum of responseData.data){
-            let date = datum.time.split("T")[0]
         
             // Need to add time for plotting (Phase 2)
-            let timestamp:number = moment.utc(`${date}`).unix()
+            let timestamp:number = moment.utc(`${datum.time}`).unix()
             
             // Getting reading for calculating average,min and max
             systoleReadingData.push(parseInt(datum.systoleReading))

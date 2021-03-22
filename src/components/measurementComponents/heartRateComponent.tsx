@@ -4,19 +4,15 @@ import { Col,Form } from 'react-bootstrap';
 
 interface IProps {
     reading?:number;
-    date?:string;
     time?:string;
     onHeartRateReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const HeartRateComponent = (props:IProps) : JSX.Element => {
     const { 
         reading,
-        date,
         time,
         onHeartRateReadingChange,
-        onDateChange,
         onTimeChange,
         // onSaveClick,
      } = props;
@@ -32,15 +28,8 @@ const HeartRateComponent = (props:IProps) : JSX.Element => {
                     </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} xs="9" md="3" lg="3" controlId="formGridTime">
-                    <Form.Label>Date</Form.Label>
-                    <Form.Control type="date" placeholder="Date" value={date} onChange={onDateChange} required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please provide the date taken.
-                    </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} xs="9" md="3" lg="3" controlId="formGridTime">
                     <Form.Label>Time</Form.Label>
-                    <Form.Control type="time" placeholder="Time" value={time} onChange={onTimeChange} required/>
+                    <Form.Control type="datetime-local" placeholder="Time" value={time} onChange={onTimeChange} required/>
                     <Form.Control.Feedback type="invalid">
                         Please provide the time taken.
                     </Form.Control.Feedback>

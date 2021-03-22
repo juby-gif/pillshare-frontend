@@ -4,19 +4,15 @@ import { Col,Form } from 'react-bootstrap';
 
 interface IProps {
     reading?:number;
-    date?:string;
     time?:string;
     onBodyTemperatureReadingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const BodyTemperatureComponent = (props:IProps) : JSX.Element => {
     const { 
         reading,
-        date,
         time,
         onBodyTemperatureReadingChange,
-        onDateChange,
         onTimeChange,
      } = props;
     return(
@@ -27,19 +23,12 @@ const BodyTemperatureComponent = (props:IProps) : JSX.Element => {
                     <Form.Label>Enter the reading</Form.Label>
                     <Form.Control type="number" placeholder="Celsius" value={reading} onChange={onBodyTemperatureReadingChange} required min="0"/>
                     <Form.Control.Feedback type="invalid">
-                        Please provide your body temperature.
-                    </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} xs="9" md="4" lg="3" controlId="formGridTime">
-                    <Form.Label>Date</Form.Label>
-                    <Form.Control type="date" placeholder="Date" value={date} onChange={onDateChange} required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please provide the date taken.
+                        Please provide your body temperature without decimals.
                     </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} xs="9" md="4" lg="3" controlId="formGridTime">
                     <Form.Label>Time</Form.Label>
-                    <Form.Control type="time" placeholder="Time" value={time} onChange={onTimeChange} required/>
+                    <Form.Control type="datetime-local" placeholder="Time" value={time} onChange={onTimeChange} required/>
                     <Form.Control.Feedback type="invalid">
                         Please provide the time taken.
                     </Form.Control.Feedback>

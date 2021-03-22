@@ -22,7 +22,7 @@ export const getHeartRateData = async (onSuccessCallBack: (responseData: ServerR
       })
       .then(function (response:ServerResponse){
           onSuccessCallBack(response)
-          console.log(response)
+          // console.log(response)
       }
 
         )

@@ -8,10 +8,8 @@ interface IProps {
 }
 interface GlucoseProps {
   reading?: number;
-  date?: string;
   time?: string;
   instrumentID?: number;
-  user_id?: string;
   validated : boolean;
 
 }
@@ -26,15 +24,12 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
       super(props);
       this.state = {
         reading:undefined,
-        date:undefined,
         time:undefined,
         instrumentID:undefined,
-        user_id:undefined,
         validated:false,
         
       };
       this.onGlucoseReadingChange = this.onGlucoseReadingChange.bind(this);
-      this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onUpdate = this.onUpdate.bind(this);
     }
@@ -52,12 +47,9 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
    componentDidMount(){
     if(localStorage.getItem(GLUCOSE) !== '{}' || localStorage.getItem(GLUCOSE) !== undefined){
       const glucoseReadingData: GlucoseProps = JSON.parse(localStorage.getItem(GLUCOSE)|| '{}');
-      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:glucoseReadingData.reading,
-        date: glucoseReadingData.date,
         time:glucoseReadingData.time,
-        user_id:user_id,
       })
       }
     }
@@ -89,18 +81,6 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
       } 
     }
 
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
-        this.setState({
-          date:event.currentTarget.value,
-        })
-      } else{
-        this.setState({
-          date:undefined,
-        })
-      } 
-    }
-
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
         this.setState({
@@ -114,17 +94,14 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
     }
 
     onUpdate = (): void => {
-      const { reading,date,time,user_id } = this.state;
-      if( reading !== undefined && date !== undefined && time !== undefined){
+      const { reading,time } = this.state;
         const glucoseData = {
           instrumentID:GLUCOSE_INSTRUMENT,
           reading:reading,
-          date:date,
           time:time,
-          user_id:user_id,
         }
         localStorage.setItem(GLUCOSE,JSON.stringify(glucoseData));
-      } 
+  
     }
 
     /* *
@@ -132,16 +109,14 @@ export default class GlucoseContainer extends Component<IProps,GlucoseProps> {
         *------------------------------------------------------------
     */
     render() {
-      const { reading,date,time } = this.state;
-      const { onGlucoseReadingChange,onDateChange,onTimeChange, } = this;
+      const { reading,time } = this.state;
+      const { onGlucoseReadingChange,onTimeChange, } = this;
       
       return (
         <GlucoseComponent 
           reading={reading}
-          date={date}
           time={time}
           onGlucoseReadingChange={onGlucoseReadingChange}
-          onDateChange={onDateChange}
           onTimeChange={onTimeChange}
         />
       );

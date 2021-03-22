@@ -60,10 +60,9 @@ export default class OxygenSaturationViewMoreContainer extends Component<IProps,
         let graphData: DataProps[] = [];
         let readingData: Array<number> = [];
         for(let datum of responseData.data){
-            let date = datum.time.split("T")[0]
         
             // Need to add time for plotting (Phase 2)
-            let timestamp:number = moment.utc(`${date}`).unix()
+            let timestamp:number = moment.utc(`${datum.time}`).unix()
             
             // Getting reading for calculating average,min and max
             readingData.push(parseInt(datum.reading))

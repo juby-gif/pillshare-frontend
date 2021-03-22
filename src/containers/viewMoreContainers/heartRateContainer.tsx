@@ -60,16 +60,15 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
         let graphData: DataProps[] = [];
         let readingData: Array<number> = [];
         for(let datum of responseData.data){
-            let date = datum.time.split("T")[0]
         
             // Need to add time for plotting (Phase 2)
-            let timestamp:number = moment.utc(`${date}`).unix()
+            // let timestamp:number = moment.utc(`${datum.time}`).unix()
             
             // Getting reading for calculating average,min and max
             readingData.push(parseInt(datum.reading))
 
             // Added date component only for plotting
-            graphData.push({date:moment.unix(timestamp).utcOffset('-0000').format("YYYY-MM-DD HH:mm"),value:datum.reading})
+            graphData.push({date:datum.time,value:datum.reading})
         }
     
         let chart:any = am4core.create("chartdiv", am4charts.XYChart);
@@ -157,6 +156,7 @@ export default class HeartRateViewMoreContainer extends Component<IProps,StatePr
             dateAxis.renderer.minGridDistance = 60;
             dateAxis.title.text = "Day";
             dateAxis.title.fontWeight = "bold";
+            
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.title.text = "Heart Rate (bpm)";
             valueAxis.title.fontWeight = "bold";

@@ -8,10 +8,8 @@ interface IProps {
 }
 interface BodyTemperatureProps {
   reading?: number;
-  date?: string;
   time?: string;
   instrumentID?: number;
-  user_id?: string;
   validated:boolean;
 
 }
@@ -26,14 +24,11 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       super(props);
       this.state = {
         reading:undefined,
-        date:undefined,
         time:undefined,
         instrumentID:undefined,
-        user_id: undefined, 
         validated:false,       
       };
       this.onBodyTemperatureReadingChange = this.onBodyTemperatureReadingChange.bind(this);
-      this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onUpdate = this.onUpdate.bind(this);
     }
@@ -50,12 +45,9 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
    componentDidMount(){
     if(localStorage.getItem(BODYTEMPERATURE) !== '{}' || localStorage.getItem(BODYTEMPERATURE) !== undefined){
       const bodyTemperatureReadingData: BodyTemperatureProps = JSON.parse(localStorage.getItem(BODYTEMPERATURE)|| '{}');
-      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:bodyTemperatureReadingData.reading,
-        date: bodyTemperatureReadingData.date,
         time:bodyTemperatureReadingData.time,
-        user_id: user_id,
       })
       }
     }
@@ -85,17 +77,6 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
       } 
     }
 
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
-        this.setState({
-          date:event.currentTarget.value,
-        })
-      } else{
-        this.setState({
-          date:undefined,
-        })
-      } 
-    }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
@@ -110,17 +91,13 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
     }
 
       onUpdate = (): void => {
-      const { reading,date,time,user_id } = this.state;
-      if( reading !== undefined && date !== undefined && time !== undefined){
+      const { reading,time } = this.state;
         const bodyTemperatureData = {
           instrumentID:BODY_TEMPERATURE_INSTRUMENT,
           reading:reading,
-          date:date,
           time:time,
-          user_id:user_id,
-        }
-        localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
       }
+      localStorage.setItem(BODYTEMPERATURE,JSON.stringify(bodyTemperatureData));
     }
 
     /*  *
@@ -128,16 +105,14 @@ export default class BodyTemperatureContainer extends Component<IProps,BodyTempe
         *------------------------------------------------------------
     */
     render() {
-      const { reading,date,time } = this.state;
-      const { onBodyTemperatureReadingChange,onDateChange,onTimeChange, } = this;
+      const { reading,time } = this.state;
+      const { onBodyTemperatureReadingChange,onTimeChange, } = this;
       
       return (
         <BodyTemperatureComponent 
           reading={reading}
-          date={date}
           time={time}
           onBodyTemperatureReadingChange={onBodyTemperatureReadingChange}
-          onDateChange={onDateChange}
           onTimeChange={onTimeChange}
         />
       );

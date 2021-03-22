@@ -11,7 +11,6 @@ interface ReadingProps {
   reading: number;
   systoleReading?: number;
   diastoleReading?: number
-  date: string;
   time: string;
 }
 
@@ -27,11 +26,11 @@ export default class ReviewContainer extends Component<IProps,StateProps> {
     constructor(props:IProps) {
         super(props);
         this.state = {
-          heartRateReading : {reading:0,date:"",time:""},
-          bloodPressureReading : {reading:0,date:"",time:""},
-          bodyTemperatureReading : {reading:0,date:"",time:""},
-          glucoseReading : {reading:0,date:"",time:""},
-          oxygenSaturationReading : {reading:0,date:"",time:""},
+          heartRateReading : {reading:0,time:""},
+          bloodPressureReading : {reading:0,time:""},
+          bodyTemperatureReading : {reading:0,time:""},
+          glucoseReading : {reading:0,time:""},
+          oxygenSaturationReading : {reading:0,time:""},
         };
       }
 

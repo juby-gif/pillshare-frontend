@@ -8,10 +8,8 @@ interface IProps {
 }
 interface HeartRateProps {
   reading?: number;
-  date?: string;
   time?: string;
   instrumentID?: number;
-  user_id?: string;
   validated:boolean;
 
 }
@@ -22,20 +20,17 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *  Initializer
         *------------------------------------------------------------
     */
-    user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
+   
     constructor(props:IProps) {
       super(props);
       this.state = {
         reading:undefined,
-        date:undefined,
         time:undefined,
         instrumentID:undefined,
-        user_id:this.user_id,
         validated:false,
         
       };
       this.onHeartRateReadingChange = this.onHeartRateReadingChange.bind(this);
-      this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onUpdate = this.onUpdate.bind(this);
     }
@@ -54,7 +49,6 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       const heartRateReadingData: HeartRateProps = JSON.parse(localStorage.getItem(HEARTRATEDATA)|| '{}');
       this.setState({
         reading:heartRateReadingData.reading,
-        date: heartRateReadingData.date,
         time:heartRateReadingData.time,
       })
       }
@@ -86,20 +80,10 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
       } 
     }
 
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
-        this.setState({
-          date:event.currentTarget.value,
-        })
-      } else{
-        this.setState({
-          date:undefined,
-        })
-      } 
-    }
 
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
+        
         this.setState({
           time:event.currentTarget.value,
         })
@@ -111,17 +95,14 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
     }
 
     onUpdate = (): void => {
-      const { reading,date,time,user_id } = this.state;
-      if(reading !== undefined && date !== undefined && time !== undefined){
+      const { reading,time } = this.state;
         const heartRateData = {
           instrumentID:HEART_RATE_INSTRUMENT,
           reading:reading,
-          date:date,
           time:time,
-          user_id:user_id,
         }
         localStorage.setItem(HEARTRATEDATA,JSON.stringify(heartRateData));
-      }
+
     }
 
     /* *
@@ -129,16 +110,14 @@ export default class HeartRateContainer extends Component<IProps,HeartRateProps>
         *------------------------------------------------------------
     */
        render() {
-      const { reading,date,time } = this.state;
-      const { onHeartRateReadingChange,onDateChange,onTimeChange, } = this;
+      const { reading,time } = this.state;
+      const { onHeartRateReadingChange,onTimeChange, } = this;
       
       return (
         <HeartRateComponent 
           reading={reading}
-          date={date}
           time={time}
           onHeartRateReadingChange={onHeartRateReadingChange}
-          onDateChange={onDateChange}
           onTimeChange={onTimeChange}
         />
       );

@@ -7,10 +7,8 @@ interface IProps {
 }
 interface OxygenSaturationProps {
   reading?: number;
-  date?: string;
   time?: string;
   instrumentID?: number;
-  user_id?: string;
   validated: boolean;
 
 }
@@ -25,14 +23,11 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       super(props);
       this.state = {
           reading:undefined,
-          date:undefined,
           time:undefined,
           instrumentID:undefined,
-          user_id:undefined,
           validated:false,
       };
       this.onOxygenSaturationReadingChange = this.onOxygenSaturationReadingChange.bind(this);
-      this.onDateChange = this.onDateChange.bind(this);
       this.onTimeChange = this.onTimeChange.bind(this);
       this.onUpdate = this.onUpdate.bind(this);
     }
@@ -50,12 +45,9 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
    componentDidMount(){
     if(localStorage.getItem(OXYGENSATURATION) !== '{}' || localStorage.getItem(OXYGENSATURATION) !== undefined){
       const oxygenSaturationReadingData: OxygenSaturationProps = JSON.parse(localStorage.getItem(OXYGENSATURATION)|| '{}');
-      const user_id = JSON.parse(localStorage.getItem(LOGGED_IN_USER_ID)|| '' )
       this.setState({
         reading:oxygenSaturationReadingData.reading,
-        date: oxygenSaturationReadingData.date,
         time:oxygenSaturationReadingData.time,
-        user_id:user_id,
       })
       }
     }
@@ -87,18 +79,6 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
       } 
     }
 
-    onDateChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
-        this.setState({
-          date:event.currentTarget.value,
-        })
-      } else{
-        this.setState({
-          date:undefined,
-        })
-      } 
-    }
-
     onTimeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       if(event.currentTarget.value !== ""  && event.currentTarget.value !== undefined) {
         this.setState({
@@ -112,17 +92,13 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
     }
 
     onUpdate = (): void => {
-      const { reading,date,time,user_id } = this.state;
-      if( reading !== undefined && date !== undefined && time !== undefined){
+      const { reading,time } = this.state;
         const oxygenSaturationData = {
           instrumentID:OXYGEN_SATURATION_INSTRUMENT,
           reading:reading,
-          date:date,
           time:time,
-          user_id:user_id,
         }
         localStorage.setItem(OXYGENSATURATION,JSON.stringify(oxygenSaturationData));
-      }
     }
 
     /* *
@@ -130,16 +106,14 @@ export default class OxygenSaturationContainer extends Component<IProps,OxygenSa
         *------------------------------------------------------------
     */
     render() {
-      const { reading,date,time } = this.state;
-      const { onOxygenSaturationReadingChange,onDateChange,onTimeChange, } = this;
+      const { reading,time } = this.state;
+      const { onOxygenSaturationReadingChange,onTimeChange, } = this;
       
       return (
         <OxygenSaturationComponent 
           reading={reading}
-          date={date}
           time={time}
           onOxygenSaturationReadingChange={onOxygenSaturationReadingChange}
-          onDateChange={onDateChange}
           onTimeChange={onTimeChange}
         />
       );
